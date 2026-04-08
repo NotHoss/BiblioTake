@@ -32,7 +32,6 @@
 
 - **Dashboard utente**
     - Riepilogo attività (recensioni scritte, prestiti attivi)
-    - Eventuale wishlist (opzionale possiamo anche non metterlo perche siamo pieni di crud)
 - **Gestione recensioni**
     - Creazione di nuove recensioni
     - Modifica e cancellazione delle recensioni esistenti
@@ -40,9 +39,6 @@
     - Visualizzazione dei libri presi in prestito attivi
     - Storico dei prestiti
     - Richiesta di nuovi prestiti su libri non prestati
-- **Wishlist (se lo mettiamo)**
-    - Aggiunta e rimozione libri (o se avanza tempo un crud vero e proprio)
-    - Lista dei libri salvati
 
 ## Area Admin
 
