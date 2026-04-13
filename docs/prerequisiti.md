@@ -529,6 +529,46 @@ Ogni pagina con un form deve avere un `<noscript>` che avvisa l'utente:
 
 ## PHP
 
+PHP è un linguaggio di scripting lato server: il codice viene eseguito dal server, non dal browser. Quando un utente visita `catalogo.php`, il server esegue il file PHP, produce HTML puro, e manda solo quell'HTML al browser. Il browser non vede mai il codice PHP — vede lo stesso risultato che vedrebbe con un file `.html` statico.
+
+Questo è il meccanismo fondamentale:
+
+```
+Browser                    Server
+  │                          │
+  │  GET /catalogo.php       │
+  │ ────────────────────>    │
+  │                          │  1. Esegue catalogo.php
+  │                          │  2. Apre connessione al DB
+  │                          │  3. Esegue query, prepara dati
+  │                          │  4. Produce HTML
+  │  HTTP 200 + HTML         │
+  │ <────────────────────    │
+  │                          │
+  │  (il browser vede        │
+  │   solo HTML puro)        │
+```
+
+**Ciclo di vita di una richiesta** — ogni richiesta HTTP è indipendente. Il server esegue il file PHP da capo ogni volta, non mantiene stato tra una richiesta e l'altra. L'unico meccanismo per portare informazioni da una richiesta alla successiva è la sessione (salvata lato server, identificata da un cookie di sessione nel browser).
+
+**Tag PHP** — il codice PHP vive dentro i tag `<?php ... ?>`. Tutto quello che è fuori da quei tag viene stampato letteralmente come HTML. Nella maggior parte dei file di questo progetto, però, il codice PHP è separato dall'HTML grazie al pattern Model-View: i modelli sono PHP puro, le view sono HTML con piccole interpolazioni PHP.
+
+```php
+<?php
+// Questo è PHP: eseguito lato server, non visibile al browser
+$titolo = 'Il Nome della Rosa';
+?>
+<!-- Questo è HTML: viene inviato al browser -->
+<h2><?= htmlspecialchars($titolo, ENT_QUOTES, 'UTF-8') ?></h2>
+<!-- Il browser riceve: <h2>Il Nome della Rosa</h2> -->
+```
+
+`<?= ... ?>` è la forma breve di `<?php echo ... ?>` — usata nelle view per stampare variabili.
+
+**Inclusione di file** — `require_once` inserisce il contenuto di un altro file PHP nel punto in cui viene chiamato, come se fosse scritto lì. È il meccanismo con cui i modelli caricano le funzioni e i template.
+
+---
+
 ### Pattern Model-View — la regola più importante
 
 Ogni file PHP ha un ruolo preciso. Non si mescolano mai logica e HTML.
