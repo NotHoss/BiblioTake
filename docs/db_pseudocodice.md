@@ -18,6 +18,7 @@ Tabelle: `snake_case` singolare minuscolo. PK: `id INT`. FK: `{tabella}_id INT`.
     - email: *VARCHAR* `UNIQUE`
     - username: *VARCHAR*
     - password: *VARCHAR* *(hash bcrypt)*
+    - foto_profilo: *VARCHAR(255)* *(path immagine profilo, es. `images/place-holder.jpg`)*
     - attivo: *BOOLEAN*
     - ruolo: *ENUM* (`visitor`, `utente`, `admin`)
 
@@ -32,15 +33,8 @@ Tabelle: `snake_case` singolare minuscolo. PK: `id INT`. FK: `{tabella}_id INT`.
     - lingua: *VARCHAR*
     - descrizione: *TEXT*
     - pagine: *INT*
+    - copertina: *VARCHAR(255)* *(path copertina, es. `images/place-holder.jpg`)*
     - categoria: *VARCHAR*
-
-- **tag**
-    - <u>id</u>: *INT*
-    - nome: *VARCHAR* `UNIQUE`
-
-- **libro_tag** *(tabella di collegamento)*
-    - <u>libro_id</u>: *INT → FK* → libro.id
-    - <u>tag_id</u>: *INT → FK* → tag.id
 
 - **prestito**
     - <u>id</u>: *INT*
@@ -68,7 +62,6 @@ Tabelle: `snake_case` singolare minuscolo. PK: `id INT`. FK: `{tabella}_id INT`.
 - **utente — prestito**: Effettua (1,N)
 - **utente — recensione**: Scrive (0,N)
 - **libro — recensione**: È recensito da (0,N)
-- **libro — tag**: Classificato da (0,N) — tramite `libro_tag`
 
 ---
 
