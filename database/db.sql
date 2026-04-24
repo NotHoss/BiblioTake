@@ -83,12 +83,12 @@ CREATE INDEX idx_prestito_libro_stato ON prestito (libro_id, stato);
 CREATE INDEX idx_recensione_libro ON recensione (libro_id);
 
 INSERT INTO biblioteca (id, indirizzo, telefono, email) VALUES
-	(1, 'Via Garibaldi 12, MilanoPadova', '+39 02 88997766', 'contatti@bibliotake-padova.it');
+	(1, 'Via Garibaldi 12, Padova', '+39 02 88997766', 'contatti@bibliotake-padova.it');
 
 INSERT INTO utente (id, email, username, password, foto_profilo, attivo, ruolo) VALUES
 	(101, 'luca.rossi@gmail.com', 'luca.rossi', '$2y$10$e0NRm7l8iA92f1bR6xL4fOd8kSMNw2w5sY4qC8x0Qh7oA3fXvYf4K', 'images/place-holder.jpg', TRUE, 'utente'),
 	(102, 'chiara.bianchi@gmail.com', 'chiara.b', '$2y$10$N4f7mZ3sWQk2p8r9dT1uMuoYV6W8h2xVb9jQ4mN3eL7pR6cS2dA1O', 'images/place-holder.jpg', TRUE, 'utente'),
-	(103, 'marco.verdi@gmail.com', 'marco.verdi', '$2y$10$A8h2kP5tR3mQ7vX1nD6yEuL4bS9zF2cH5jK8qW3rN0pT6mV4xC7Zg', 'images/place-holder.jpg', FALSE, 'visitor'),
+	(103, 'marco.verdi@gmail.com', 'marco.verdi', '$2y$10$A8h2kP5tR3mQ7vX1nD6yEuL4bS9zF2cH5jK8qW3rN0pT6mV4xC7Zg', 'images/place-holder.jpg', FALSE, 'utente'),
 	(104, 'admin@bibliotake.it', 'admin.bibliotake', '$2y$10$T7pQ2mN5vR8xC1zK4hD6yEa9sL3fW0uJ7bM2nP5qR8tV1xC4zH6Yd', 'images/place-holder.jpg', TRUE, 'admin');
 
 INSERT INTO libro (
