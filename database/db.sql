@@ -18,7 +18,7 @@ CREATE TABLE utente (
 	password VARCHAR(255) NOT NULL,
 	foto_profilo VARCHAR(255) NOT NULL,
 	attivo BOOLEAN NOT NULL DEFAULT TRUE,
-	ruolo ENUM('visitor', 'utente', 'admin') NOT NULL DEFAULT 'visitor'
+	ruolo ENUM('utente', 'admin') NOT NULL DEFAULT 'utente'
 );
 
 CREATE TABLE libro (
