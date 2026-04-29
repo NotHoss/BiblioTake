@@ -20,7 +20,7 @@ Tabelle: `snake_case` singolare minuscolo. PK: `id INT`. FK: `{tabella}_id INT`.
     - password: *VARCHAR* *(hash bcrypt)*
     - foto_profilo: *VARCHAR(255)* *(path immagine profilo, es. `images/place-holder.jpg`)*
     - attivo: *BOOLEAN*
-    - ruolo: *ENUM* (`visitor`, `utente`, `admin`)
+    - ruolo: *ENUM* (`utente`, `admin`)
 
 - **libro**
     - <u>id</u>: *INT*
