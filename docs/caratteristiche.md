@@ -6,7 +6,7 @@
     - Presentazione del sito
     - Barra di ricerca rapida (risultati in un'altra pagina)
     - Accesso a categorie di libri
-    - Sezione con ultimi libri insetriti
+    - Sezione con ultimi libri inseriti
 - **Catalogo libri**
     - Barra di ricerca rapida (risultati in un'altra pagina)
     - Visualizzazione dell’elenco completo dei libri disponibili
