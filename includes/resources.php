@@ -20,6 +20,8 @@ foreach ($__functionFiles as $__file) {
 }
 unset($__file, $__path, $__functionFiles);
 
+require_once __DIR__ . '/variables.php';
+
 $conn = getConnection();
 
 ?>
