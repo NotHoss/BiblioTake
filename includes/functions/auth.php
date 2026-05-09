@@ -53,6 +53,34 @@ function logoutUser() {
     session_destroy();
 }
 
+function registerUser($conn, $email, $username, $password) {
+    // Controllo unicita email
+    $stmt = $conn->prepare('SELECT id FROM utente WHERE email = ?');
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $exists = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if ($exists !== null) {
+        return false;
+    }
+
+    $hash   = password_hash($password, PASSWORD_BCRYPT);
+    $avatar = DEFAULT_AVATAR;
+    $ruolo  = 'utente';
+    $attivo = 1;
+
+    $stmt = $conn->prepare(
+        'INSERT INTO utente (email, username, password, foto_profilo, attivo, ruolo)
+         VALUES (?, ?, ?, ?, ?, ?)'
+    );
+    $stmt->bind_param('ssssis', $email, $username, $hash, $avatar, $attivo, $ruolo);
+    $ok = $stmt->execute();
+    $stmt->close();
+
+    return $ok;
+}
+
 function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }
