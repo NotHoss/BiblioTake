@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/functions/db.php';
+require_once __DIR__ . '/functions/auth.php';
 
 // File di dominio caricati solo se gia presenti sul branch corrente.
 // Gli altri membri del team li introducono via merge: il guard evita
