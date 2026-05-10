@@ -81,8 +81,48 @@ function registerUser($conn, $email, $username, $password) {
     return $ok;
 }
 
+function requireLogin() {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id'])) {
+        $intended = urlencode($_SERVER['REQUEST_URI']);
+        header('Location: login.php?intended=' . $intended);
+        exit;
+    }
+}
+
+function requireRole($role) {
+    requireLogin();
+    if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== $role) {
+        header('Location: 403.php');
+        exit;
+    }
+}
+
+function getCurrentUser($conn) {
+    if (!isset($_SESSION['user_id'])) {
+        return null;
+    }
+    $id   = (int) $_SESSION['user_id'];
+    $stmt = $conn->prepare(
+        'SELECT id, email, username, foto_profilo, ruolo, attivo
+         FROM utente
+         WHERE id = ?'
+    );
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $user = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    return $user;
+}
+
 function isLoggedIn() {
     return isset($_SESSION['user_id']);
+}
+
+function isAdmin() {
+    return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 }
 
 ?>
