@@ -215,5 +215,48 @@ function getUtenteById($conn, $utenteId) {
     return $utente;
 }
 
+// =====================================================================
+// FUNZIONI ADMIN - Gestione Libri (CRUD)
+// =====================================================================
+
+function getCategorieLibri($conn) {
+    $stmt = $conn->prepare('SELECT DISTINCT categoria FROM libro ORDER BY categoria ASC');
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $categorie = [];
+    while ($row = $result->fetch_assoc()) {
+        $categorie[] = $row['categoria'];
+    }
+    $stmt->close();
+    return $categorie;
+}
+
+function validateAndProcessCopertina($file) {
+    // Verifica che il file sia stato caricato
+    if (!is_uploaded_file($file['tmp_name'])) {
+        return null;
+    }
+    
+    // Verifica la dimensione massima (5MB)
+    $maxSize = 5 * 1024 * 1024;
+    if ($file['size'] > $maxSize) {
+        return null;
+    }
+    
+    // Verifica l'estensione
+    $allowedExtensions = ['jpg', 'jpeg'];
+    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    if (!in_array($ext, $allowedExtensions, true)) {
+        return null;
+    }
+    
+    // Verifica che sia effettivamente un'immagine JPG usando getimagesize
+    $imageInfo = @getimagesize($file['tmp_name']);
+    if ($imageInfo === false || !in_array($imageInfo[2], [IMAGETYPE_JPEG], true)) {
+        return null;
+    }
+    
+    return $file;
+}
 
 ?>
