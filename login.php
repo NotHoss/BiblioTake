@@ -24,7 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         if (loginUser($conn, $emailValore, $password)) {
-            header('Location: ' . $intended);
+            // Sanifica intended per prevenire open redirect
+            $safe = 'dashboard.php';
+            if (
+                preg_match('#^[a-zA-Z0-9_./?=&%-]+$#', $intended)
+                && strpos($intended, '//') === false
+                && strpos($intended, ':') === false
+            ) {
+                $safe = $intended;
+            }
+            header('Location: ' . $safe);
             exit;
         }
         $errors[] = 'Credenziali non valide o account non attivo.';
