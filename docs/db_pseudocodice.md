@@ -12,13 +12,16 @@ Tabelle: `snake_case` singolare minuscolo. PK: `id INT`. FK: `{tabella}_id INT`.
     - indirizzo: *VARCHAR* `UNIQUE`
     - telefono: *VARCHAR*
     - email: *VARCHAR*
+    - orario_lun_ven: *VARCHAR*
+    - orario_sabato: *VARCHAR*
+    - orario_domenica: *VARCHAR*
 
 - **utente**
     - <u>id</u>: *INT*
     - email: *VARCHAR* `UNIQUE`
     - username: *VARCHAR*
     - password: *VARCHAR* *(hash bcrypt)*
-    - foto_profilo: *VARCHAR(255)* *(path immagine profilo, es. `images/place-holder.jpg`)*
+    - foto_profilo: *VARCHAR*
     - attivo: *BOOLEAN*
     - ruolo: *ENUM* (`utente`, `admin`)
 
@@ -33,7 +36,7 @@ Tabelle: `snake_case` singolare minuscolo. PK: `id INT`. FK: `{tabella}_id INT`.
     - lingua: *VARCHAR*
     - descrizione: *TEXT*
     - pagine: *INT*
-    - copertina: *VARCHAR(255)* *(path copertina, es. `images/place-holder.jpg`)*
+    - copertina: *VARCHAR*
     - categoria: *VARCHAR*
 
 - **prestito**
@@ -49,6 +52,7 @@ Tabelle: `snake_case` singolare minuscolo. PK: `id INT`. FK: `{tabella}_id INT`.
     - <u>id</u>: *INT*
     - valutazione: *INT* *(1–5)*
     - testo: *TEXT*
+    - censura: *BOOLEAN* *(default FALSE)*
     - data: *DATETIME*
     - libro_id: *INT → FK* → libro.id
     - utente_id: *INT → FK* → utente.id
@@ -69,5 +73,7 @@ Tabelle: `snake_case` singolare minuscolo. PK: `id INT`. FK: `{tabella}_id INT`.
 
 - **Valutazione media** di `libro`: dato derivato — si calcola come `AVG(recensione.valutazione)` al momento della query, non viene salvato.
 - **Disponibilità** di `libro`: dato derivato — si calcola contando i `prestito` con `stato = 'attivo'` per quel libro.
+- **Disponibilità admin** di `libro`: nel pannello admin i libri prenotati includono sia `stato = 'attivo'` sia `stato = 'in_ritardo'`.
 - La PK di `biblioteca` è `id` numerico: cambiare l'indirizzo non rompe le FK in `prestito`.
-- I campi `edizione`, `anno`, `lingua`, `pagine` sono stati mantenuti da `libro` perché utili alla visualizzazione del catalogo.
+- I campi orari di `biblioteca` (`orario_lun_ven`, `orario_sabato`, `orario_domenica`) vengono usati sia nella dashboard admin (modifica generalità) sia nella pagina contatti.
+- I campi `edizione`, `anno`, `lingua`, `pagine`, `copertina` sono mantenuti in `libro` perché utili alla visualizzazione del catalogo e della gestione admin.
