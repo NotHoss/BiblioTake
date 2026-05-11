@@ -3,13 +3,13 @@ session_start();
 require_once 'includes/resources.php';
 
 if (isLoggedIn()) {
-    header('Location: dashboard.php');
+    header('Location: ' . (isAdmin() ? 'admin/index.php' : 'index.php'));
     exit;
 }
 
 $errors      = array();
 $emailValore = '';
-$intended    = isset($_GET['intended']) ? $_GET['intended'] : 'dashboard.php';
+$intended    = isset($_GET['intended']) ? $_GET['intended'] : '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $emailValore = isset($_POST['email'])    ? trim($_POST['email'])     : '';
@@ -25,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         if (loginUser($conn, $emailValore, $password)) {
             // Sanifica intended per prevenire open redirect
-            $safe = 'dashboard.php';
-            if (
+            $safe = isAdmin() ? 'admin/index.php' : 'index.php';
+            if ($intended !== '' &&
                 preg_match('#^[a-zA-Z0-9_./?=&%-]+$#', $intended)
                 && strpos($intended, '//') === false
                 && strpos($intended, ':') === false

@@ -1,0 +1,219 @@
+<?php
+// =====================================================================
+// FUNZIONI ADMIN - Gestione Dashboard, Statistiche, Utenti
+// =====================================================================
+
+function getStatisticheGenerali($conn) {
+    $stats = [
+        'libri_totali' => 0,
+        'libri_prenotati' => 0,
+        'libri_non_prenotati' => 0,
+        'utenti_totali' => 0,
+        'nuovi_iscritti' => null,
+        'prestiti_attivi' => 0,
+        'prestiti_ritardo' => 0,
+        'recensioni_totali' => 0,
+    ];
+
+    $result = $conn->query('SELECT COUNT(*) AS totale FROM libro');
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $stats['libri_totali'] = (int) $row['totale'];
+    }
+
+    $result = $conn->query("SELECT COUNT(DISTINCT libro_id) AS totale FROM prestito WHERE stato IN ('attivo', 'in_ritardo')");
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $stats['libri_prenotati'] = (int) $row['totale'];
+    }
+
+    $stats['libri_non_prenotati'] = $stats['libri_totali'] - $stats['libri_prenotati'];
+
+    $result = $conn->query('SELECT COUNT(*) AS totale FROM utente');
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $stats['utenti_totali'] = (int) $row['totale'];
+    }
+
+    $dateColumn = getUtenteDateColumn($conn);
+    if ($dateColumn !== '') {
+        $sql = 'SELECT COUNT(*) AS totale FROM utente WHERE ' . $dateColumn . ' >= DATE_SUB(NOW(), INTERVAL 30 DAY)';
+        $result = $conn->query($sql);
+        if ($result) {
+            $row = $result->fetch_assoc();
+            $stats['nuovi_iscritti'] = (int) $row['totale'];
+        }
+    }
+
+    $result = $conn->query("SELECT COUNT(*) AS totale FROM prestito WHERE stato = 'attivo'");
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $stats['prestiti_attivi'] = (int) $row['totale'];
+    }
+
+    $result = $conn->query("SELECT COUNT(*) AS totale FROM prestito WHERE stato = 'in_ritardo'");
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $stats['prestiti_ritardo'] = (int) $row['totale'];
+    }
+
+    $result = $conn->query('SELECT COUNT(*) AS totale FROM recensione');
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $stats['recensioni_totali'] = (int) $row['totale'];
+    }
+
+    return $stats;
+}
+
+function getBibliotecaInfo($conn) {
+    $hasOrari = bibliotecaHasOrariColumns($conn);
+
+    if ($hasOrari) {
+        $stmt = $conn->prepare(
+            'SELECT id, indirizzo, telefono, email, orario_lun_ven, orario_sabato, orario_domenica
+             FROM biblioteca
+             ORDER BY id ASC
+             LIMIT 1'
+        );
+    } else {
+        $stmt = $conn->prepare(
+            'SELECT id, indirizzo, telefono, email
+             FROM biblioteca
+             ORDER BY id ASC
+             LIMIT 1'
+        );
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $biblioteca = $result->fetch_assoc();
+    $stmt->close();
+
+    if ($biblioteca && !$hasOrari) {
+        $biblioteca['orario_lun_ven'] = '9:00 - 19:00';
+        $biblioteca['orario_sabato'] = '9:00 - 13:00';
+        $biblioteca['orario_domenica'] = 'Chiuso';
+    }
+
+    return $biblioteca ?: null;
+}
+
+function updateBibliotecaInfo($conn, $bibliotecaId, array $dati) {
+    $hasOrari = bibliotecaHasOrariColumns($conn);
+
+    if ($hasOrari) {
+        $stmt = $conn->prepare(
+            'UPDATE biblioteca
+             SET indirizzo = ?, telefono = ?, email = ?, orario_lun_ven = ?, orario_sabato = ?, orario_domenica = ?
+             WHERE id = ?'
+        );
+        $stmt->bind_param(
+            'ssssssi',
+            $dati['indirizzo'],
+            $dati['telefono'],
+            $dati['email'],
+            $dati['orario_lun_ven'],
+            $dati['orario_sabato'],
+            $dati['orario_domenica'],
+            $bibliotecaId
+        );
+    } else {
+        $stmt = $conn->prepare(
+            'UPDATE biblioteca
+             SET indirizzo = ?, telefono = ?, email = ?
+             WHERE id = ?'
+        );
+        $stmt->bind_param(
+            'sssi',
+            $dati['indirizzo'],
+            $dati['telefono'],
+            $dati['email'],
+            $bibliotecaId
+        );
+    }
+
+    return $stmt->execute();
+}
+
+function bibliotecaHasOrariColumns($conn) {
+    $stmt = $conn->prepare(
+        "SELECT COUNT(*) AS totale
+         FROM information_schema.columns
+         WHERE table_schema = DATABASE()
+           AND table_name = 'biblioteca'
+           AND column_name IN ('orario_lun_ven', 'orario_sabato', 'orario_domenica')"
+    );
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+
+    return (int) ($row['totale'] ?? 0) === 3;
+}
+
+function getUtenteDateColumn($conn) {
+    $candidateColumns = ['data_registrazione', 'data_iscrizione', 'created_at', 'created_on'];
+
+    foreach ($candidateColumns as $column) {
+        $stmt = $conn->prepare(
+            'SELECT COUNT(*) AS totale
+             FROM information_schema.columns
+             WHERE table_schema = ? AND table_name = \'utente\' AND column_name = ?'
+        );
+        $dbName = 'bibliotake';
+        $stmt->bind_param('ss', $dbName, $column);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+
+        if ((int) $row['totale'] > 0) {
+            return $column;
+        }
+    }
+
+    return '';
+}
+
+function getAllUtenti($conn, $limit = 200) {
+    $stmt = $conn->prepare('SELECT id, username, email, ruolo, attivo, foto_profilo FROM utente ORDER BY id DESC LIMIT ?');
+    $stmt->bind_param('i', $limit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+
+    return $rows;
+}
+
+function getUtentiConPrestiti($conn, $limit = 200) {
+    $stmt = $conn->prepare(
+    'SELECT u.id, u.username, u.email, u.ruolo, u.attivo, u.foto_profilo,
+        (SELECT COUNT(*) FROM prestito p WHERE p.utente_id = u.id) AS prestiti_totali,
+        (SELECT COUNT(*) FROM prestito p WHERE p.utente_id = u.id AND p.stato = \'attivo\') AS prestiti_attivi
+     FROM utente u
+         ORDER BY u.id DESC
+         LIMIT ?'
+    );
+    $stmt->bind_param('i', $limit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+
+    return $rows;
+}
+
+function getUtenteById($conn, $utenteId) {
+    $stmt = $conn->prepare('SELECT id, username, email, ruolo, attivo, foto_profilo FROM utente WHERE id = ?');
+    $stmt->bind_param('i', $utenteId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $utente = $result->fetch_assoc();
+    $stmt->close();
+
+    return $utente;
+}
+
+
+?>

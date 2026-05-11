@@ -36,3 +36,11 @@ main          ← codice stabile, riceve solo merge da develop
 | `docs/caratteristiche.md` | Funzionalità e aree del sito |
 | `docs/requisiti.md` | Requisiti tecnici e di accessibilità |
 | `docs/convenzioni.md` | Convenzioni di naming per tutto il progetto |
+
+## Login
+### Admin
+- Email: admin@bibliotake.it
+- Password: adminadmin
+### User
+- Email: user@gmail.com
+- Password: useruser
