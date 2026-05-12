@@ -63,8 +63,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                 && $dati['utente_id'] > 0
                 && strtotime($dati['data_fine']) >= strtotime($dati['data_inizio']);
 
+            // Validazione aggiuntiva: verifica che libro e utente esistano
+            if ($formValido) {
+                if (!isLibroExists($conn, $dati['libro_id'])) {
+                    $message = 'Errore: il libro specificato non esiste.';
+                    $formValido = false;
+                } elseif (!isUtenteExists($conn, $dati['utente_id'])) {
+                    $message = 'Errore: l\'utente specificato non esiste.';
+                    $formValido = false;
+                }
+            }
+
             if (!$formValido) {
-                $message = 'Dati non validi: controlla campi, stato e date.';
+                if ($message === '') {
+                    $message = 'Dati non validi: controlla campi, stato e date.';
+                }
                 $prestitoInModifica = getPrestitoById($conn, $prestitoId);
             } else {
                 if (updatePrestito($conn, $prestitoId, $dati)) {

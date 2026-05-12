@@ -259,4 +259,34 @@ function validateAndProcessCopertina($file) {
     return $file;
 }
 
+// =====================================================================
+// FUNZIONI ADMIN - Validazione Dati
+// =====================================================================
+
+function isLibroExists($conn, $libroId) {
+    if ((int) $libroId <= 0) {
+        return false;
+    }
+    $stmt = $conn->prepare('SELECT id FROM libro WHERE id = ? LIMIT 1');
+    $stmt->bind_param('i', $libroId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $exists = $result->fetch_assoc() !== null;
+    $stmt->close();
+    return $exists;
+}
+
+function isUtenteExists($conn, $utenteId) {
+    if ((int) $utenteId <= 0) {
+        return false;
+    }
+    $stmt = $conn->prepare('SELECT id FROM utente WHERE id = ? LIMIT 1');
+    $stmt->bind_param('i', $utenteId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $exists = $result->fetch_assoc() !== null;
+    $stmt->close();
+    return $exists;
+}
+
 ?>
