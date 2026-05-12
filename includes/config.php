@@ -19,7 +19,10 @@ define('MIN_USERNAME_LENGTH', 3);
 define('MAX_USERNAME_LENGTH', 50);
 
 // Avatar di default per i nuovi utenti
-define('DEFAULT_AVATAR', 'images/place-holder.jpg');
+define('DEFAULT_AVATAR', 'images/default-avatar.jpg');
+
+// Copertina di default per i nuovi libri
+define('DEFAULT_COVER', 'images/default-cover.jpg');
 
 // In sviluppo gli errori sono visibili. In produzione invertire i due flag.
 error_reporting(E_ALL);

@@ -237,7 +237,7 @@
                                     $rawPath = (string) ($utente['foto_profilo'] ?? '');
                                     $fotoSrc = '';
                                     if ($rawPath === '') {
-                                        $fotoSrc = '/BiblioTake/images/place-holder.jpg';
+                                        $fotoSrc = '/BiblioTake/' . ltrim(DEFAULT_AVATAR, '/');
                                     } elseif (preg_match('#^(https?://|/)#i', $rawPath)) {
                                         $fotoSrc = $rawPath;
                                     } else {

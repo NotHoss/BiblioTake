@@ -38,14 +38,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
         if (isset($_POST['delete_copertina']) && $_POST['delete_copertina'] === '1') {
             if (!empty($libro['copertina'])) {
                 $basename = basename($libro['copertina']);
-                if ($basename !== 'place-holder.jpg') {
+                if ($basename !== basename(DEFAULT_COVER)) {
                     $pathToDelete = __DIR__ . '/../' . $libro['copertina'];
                     if (is_file($pathToDelete)) {
                         @unlink($pathToDelete);
                     }
                 }
             }
-            $dati['copertina'] = 'images/place-holder.jpg';
+            $dati['copertina'] = DEFAULT_COVER;
         }
 
         // Gestione upload nuovo file copertina (facoltativo)
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
             // Rimuovi eventuale copertina esistente (se non placeholder)
             if (!empty($libro['copertina'])) {
                 $basenameOld = basename($libro['copertina']);
-                if ($basenameOld !== 'place-holder.jpg') {
+                if ($basenameOld !== basename(DEFAULT_COVER)) {
                     $old = __DIR__ . '/../' . $libro['copertina'];
                     if (is_file($old)) {@unlink($old);}    
                 }

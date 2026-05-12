@@ -95,7 +95,7 @@
                 <?php
                     $canDeleteCover = true;
                     if (!empty($libro['copertina'])) {
-                        $canDeleteCover = (basename($libro['copertina']) !== 'place-holder.jpg');
+                        $canDeleteCover = (basename($libro['copertina']) !== basename(DEFAULT_COVER));
                     }
                 ?>
                 <p>

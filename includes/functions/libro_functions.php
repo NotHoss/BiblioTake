@@ -243,7 +243,7 @@ function createLibro($conn, array $dati) {
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     );
     
-    $copertina = $dati['copertina'] !== '' ? $dati['copertina'] : 'images/place-holder.jpg';
+    $copertina = $dati['copertina'] !== '' ? $dati['copertina'] : DEFAULT_COVER;
     $edizione = (int) ($dati['edizione'] ?? 1);
     $anno = (int) ($dati['anno'] ?? date('Y'));
     $pagine = (int) ($dati['pagine'] ?? 0);
@@ -276,7 +276,7 @@ function updateLibro($conn, $id, array $dati) {
          WHERE id = ?'
     );
     
-    $copertina = $dati['copertina'] !== '' ? $dati['copertina'] : 'images/place-holder.jpg';
+    $copertina = $dati['copertina'] !== '' ? $dati['copertina'] : DEFAULT_COVER;
     $edizione = (int) ($dati['edizione'] ?? 1);
     $anno = (int) ($dati['anno'] ?? date('Y'));
     $pagine = (int) ($dati['pagine'] ?? 0);
@@ -331,10 +331,10 @@ function deleteLibroWithCascade($conn, $id) {
             $conn->commit();
             $stmt->close();
 
-            // Dopo il commit, rimuovi il file della copertina solo se non è il place-holder
+            // Dopo il commit, rimuovi il file della copertina solo se non è la copertina di default
             if (!empty($copertinaPath)) {
                 $basename = basename($copertinaPath);
-                if ($basename !== 'place-holder.jpg') {
+                if ($basename !== basename(DEFAULT_COVER)) {
                     $fileToDelete = __DIR__ . '/../' . $copertinaPath;
                     if (is_file($fileToDelete)) {
                         @unlink($fileToDelete);
