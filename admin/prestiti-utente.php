@@ -2,6 +2,10 @@
 require_once '../includes/resources.php';
 requireRole('admin');
 
+if ($conn instanceof mysqli && function_exists('aggiornaPrestitiScaduti')) {
+    aggiornaPrestitiScaduti($conn);
+}
+
 $pageTitle = 'Prestiti utente — Admin BiblioTake';
 $currentPage = 'admin';
 $message = '';
@@ -83,6 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                 if (updatePrestito($conn, $prestitoId, $dati)) {
                     $message = 'Prestito aggiornato con successo.';
                     $utenteId = $dati['utente_id'];
+                    if (function_exists('aggiornaPrestitiScaduti')) {
+                        aggiornaPrestitiScaduti($conn);
+                    }
                 } else {
                     $message = 'Aggiornamento non riuscito.';
                     $prestitoInModifica = getPrestitoById($conn, $prestitoId);

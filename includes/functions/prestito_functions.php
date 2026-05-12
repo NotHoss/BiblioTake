@@ -1,31 +1,6 @@
 <?php
 function aggiornaPrestitiScaduti($conn) {
 // Porta in stato 'in_ritardo' tutti i prestiti ancora 'attivo' la cui data_fine è già passata.
-// Va richiamata prima di leggere liste/statistiche dei prestiti, oppure dal bootstrap comune.
-/*Da capire in quali file che usano i prestiti richiamare la funzione di aggiornamento:
-
-prestiti.php
-dashboard.php
-richiedi-prestito.php
-restituisci.php
-index.php
-prestiti-utente.php
-libri.php
-utenti.php
-recensioni.php
-aggiungi-libro.php
-modifica-libro.php
-elimina-libro.php
-
-Esempio su come richiamare l'aggiornamento automatico dei prestiti in resource.php subito dopo la connessione:
-
-```php
-$conn = getConnection();
-aggiornaPrestitiScaduti($conn);
-```
-
-In questo modo ogni modello che passa da `resources.php` trova i prestiti già allineati allo stato corretto prima di eseguire le proprie query. */
-
     $stmt = $conn->prepare(
         "UPDATE prestito
          SET stato = 'in_ritardo'

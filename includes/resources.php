@@ -25,4 +25,9 @@ require_once __DIR__ . '/variables.php';
 
 $conn = getConnection();
 
+// Aggiorna automaticamente i prestiti scaduti prima di qualsiasi operazione
+if ($conn instanceof mysqli && function_exists('aggiornaPrestitiScaduti')) {
+    aggiornaPrestitiScaduti($conn);
+}
+
 ?>
