@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></title>
-</head>
-<body>
-    <h1>Dashboard Admin — TEST</h1>
+<?php require_once __DIR__ . '/template/header.php'; ?>
+
+    <h1>Dashboard amministrazione</h1>
 
     <?php if ($errorMessage !== ''): ?>
         <div>
@@ -104,5 +98,5 @@
             <li><a href="recensioni.php">Controllo recensioni utenti</a></li>
         </ul>
     </section>
-</body>
-</html>
+
+<?php require_once __DIR__ . '/template/footer.php'; ?>

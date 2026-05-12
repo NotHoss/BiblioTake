@@ -10,6 +10,9 @@ define('DB_NAME', 'bibliotake');
 define('SITE_NAME',        'BiblioTake');
 define('SITE_DESCRIPTION', 'Biblioteca digitale del corso di Tecnologie Web');
 
+// Web root - percorso dalla radice web del server
+define('WEB_ROOT', '/BiblioTake/');
+
 // Paginazione del catalogo
 define('MAX_PER_PAGINA', 12);
 

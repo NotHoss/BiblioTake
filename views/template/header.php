@@ -57,21 +57,21 @@ $navLinks = array(
             <?php endforeach; ?>
 
             <?php if (isset($_SESSION['user_id'])): ?>
-                <?php if (isset($currentPage) && $currentPage === 'dashboard'): ?>
-                    <li aria-current="page" class="current-page">Area utente</li>
-                <?php else: ?>
-                    <li><a href="dashboard.php">Area utente</a></li>
-                <?php endif; ?>
-
                 <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
                     <?php if (isset($currentPage) && $currentPage === 'admin'): ?>
                         <li aria-current="page" class="current-page">Amministrazione</li>
                     <?php else: ?>
                         <li><a href="admin/index.php">Amministrazione</a></li>
                     <?php endif; ?>
+                <?php else: ?>
+                    <?php if (isset($currentPage) && $currentPage === 'dashboard'): ?>
+                        <li aria-current="page" class="current-page">Area utente</li>
+                    <?php else: ?>
+                        <li><a href="dashboard.php">Area utente</a></li>
+                    <?php endif; ?>
                 <?php endif; ?>
 
-                <li><a href="logout.php">Esci</a></li>
+                <li><a href="<?= htmlspecialchars(WEB_ROOT . 'logout.php', ENT_QUOTES, 'UTF-8') ?>">Esci</a></li>
             <?php else: ?>
                 <?php if (isset($currentPage) && $currentPage === 'login'): ?>
                     <li aria-current="page" class="current-page">Accedi</li>

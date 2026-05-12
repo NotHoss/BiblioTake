@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></title>
-</head>
-<body>
-    <?php $adminViewMode = $adminViewMode ?? 'list'; ?>
+<?php
+    $adminViewMode = $adminViewMode ?? 'list';
+    $hideAdminNav = true;
+    require_once __DIR__ . '/template/header.php';
+?>
 
     <?php if ($adminViewMode === 'prestiti'): ?>
-        <h1>Prestiti utente — TEST</h1>
+        <h1>Prestiti utenti</h1>
         <p><a href="utenti.php">Torna agli utenti</a></p>
 
         <?php if ($errorMessage !== ''): ?>
@@ -139,7 +135,7 @@
         <?php endif; ?>
 
     <?php elseif ($adminViewMode === 'reviews'): ?>
-        <h1>Recensioni utenti — TEST</h1>
+        <h1>Recensioni utenti</h1>
         <p><a href="utenti.php">Torna agli utenti</a></p>
 
         <?php if ($errorMessage !== ''): ?>
@@ -205,7 +201,7 @@
         <?php endif; ?>
 
     <?php else: ?>
-        <h1>Gestione Utenti — TEST</h1>
+        <h1>Gestione utenti</h1>
 
         <?php if ($errorMessage !== ''): ?>
             <div><?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') ?></div>
@@ -248,7 +244,7 @@
                             </td>
                             <td><?= htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars((string) $utente['email'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars((string) $utente['ruolo'], ENT_QUOTES, 'UTF-8') ?></td>
+                            <td><?= ((string) $utente['ruolo'] === 'admin') ? 'Amministratore' : 'Utente' ?></td>
                             <td><?= ((int) $utente['attivo'] === 1) ? 'Sì' : 'No' ?></td>
                             <td><?= htmlspecialchars((string) $utente['prestiti_totali'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars((string) $utente['prestiti_attivi'], ENT_QUOTES, 'UTF-8') ?></td>
@@ -263,5 +259,5 @@
             </table>
         <?php endif; ?>
     <?php endif; ?>
-</body>
-</html>
+
+<?php require_once __DIR__ . '/template/footer.php'; ?>

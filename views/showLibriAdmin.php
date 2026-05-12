@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></title>
-</head>
-<body>
+<?php require_once __DIR__ . '/template/header.php'; ?>
+
     <?php $adminViewMode = $adminViewMode ?? 'list'; ?>
 
     <?php if ($adminViewMode === 'create'): ?>
-        <h1>Aggiungi libro — TEST</h1>
+        <h1>Aggiungi libro</h1>
         <p><a href="libri.php">Torna ai libri</a></p>
 
         <?php if ($errorMessage !== ''): ?>
@@ -63,7 +57,7 @@
         </form>
 
     <?php elseif ($adminViewMode === 'edit'): ?>
-        <h1>Modifica libro — TEST</h1>
+        <h1>Modifica libro</h1>
         <p><a href="libri.php">Torna ai libri</a></p>
 
         <?php if ($errorMessage !== ''): ?>
@@ -136,7 +130,7 @@
         <?php endif; ?>
 
     <?php elseif ($adminViewMode === 'delete'): ?>
-        <h1>Elimina libro — TEST</h1>
+        <h1>Elimina libro</h1>
         <p><a href="libri.php">Torna ai libri</a></p>
 
         <?php if ($errorMessage !== ''): ?>
@@ -155,7 +149,7 @@
         <?php endif; ?>
 
     <?php else: ?>
-        <h1>Gestione Libri — TEST</h1>
+        <h1>Gestione libri</h1>
         <p><a href="aggiungi-libro.php">Inserisci nuovo libro</a></p>
 
         <?php if ($errorMessage !== ''): ?>
@@ -197,5 +191,5 @@
             </table>
         <?php endif; ?>
     <?php endif; ?>
-</body>
-</html>
+
+<?php require_once __DIR__ . '/template/footer.php'; ?>

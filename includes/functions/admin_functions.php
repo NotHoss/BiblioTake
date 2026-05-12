@@ -176,7 +176,7 @@ function getUtenteDateColumn($conn) {
 }
 
 function getAllUtenti($conn, $limit = 200) {
-    $stmt = $conn->prepare('SELECT id, username, email, ruolo, attivo, foto_profilo FROM utente ORDER BY id DESC LIMIT ?');
+    $stmt = $conn->prepare("SELECT id, username, email, ruolo, attivo, foto_profilo FROM utente WHERE ruolo <> 'admin' ORDER BY id DESC LIMIT ?");
     $stmt->bind_param('i', $limit);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -188,12 +188,13 @@ function getAllUtenti($conn, $limit = 200) {
 
 function getUtentiConPrestiti($conn, $limit = 200) {
     $stmt = $conn->prepare(
-    'SELECT u.id, u.username, u.email, u.ruolo, u.attivo, u.foto_profilo,
+    "SELECT u.id, u.username, u.email, u.ruolo, u.attivo, u.foto_profilo,
         (SELECT COUNT(*) FROM prestito p WHERE p.utente_id = u.id) AS prestiti_totali,
-        (SELECT COUNT(*) FROM prestito p WHERE p.utente_id = u.id AND p.stato = \'attivo\') AS prestiti_attivi
+        (SELECT COUNT(*) FROM prestito p WHERE p.utente_id = u.id AND p.stato = 'attivo') AS prestiti_attivi
      FROM utente u
+     WHERE u.ruolo <> 'admin'
          ORDER BY u.id DESC
-         LIMIT ?'
+         LIMIT ?"
     );
     $stmt->bind_param('i', $limit);
     $stmt->execute();
