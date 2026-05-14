@@ -1,6 +1,6 @@
 <?php
 function aggiornaPrestitiScaduti($conn) {
-// Porta in stato 'in_ritardo' tutti i prestiti ancora 'attivo' la cui data_fine è già passata.
+    // Porta in stato 'in_ritardo' tutti i prestiti ancora 'attivo' la cui data_fine è già passata.
     $stmt = $conn->prepare(
         "UPDATE prestito
          SET stato = 'in_ritardo'
@@ -13,10 +13,26 @@ function aggiornaPrestitiScaduti($conn) {
     }
 
     $stmt->execute();
-    $aggiornati = $stmt->affected_rows;
+    $aggiornati_attivo_to_ritardo = $stmt->affected_rows;
     $stmt->close();
 
-    return $aggiornati;
+    // Riporta in stato 'attivo' i prestiti attualmente 'in_ritardo' la cui data_fine è nel futuro.
+    $stmt2 = $conn->prepare(
+        "UPDATE prestito
+         SET stato = 'attivo'
+         WHERE stato = 'in_ritardo'
+           AND data_fine > NOW()"
+    );
+
+    if (!$stmt2) {
+        return $aggiornati_attivo_to_ritardo;
+    }
+
+    $stmt2->execute();
+    $aggiornati_ritardo_to_attivo = $stmt2->affected_rows;
+    $stmt2->close();
+
+    return $aggiornati_attivo_to_ritardo + $aggiornati_ritardo_to_attivo;
 }
 
 // Normalizzazione e formattazione date per i prestiti
