@@ -46,14 +46,20 @@ $navLinks = array(
                 $langAttr  = isset($link['lang']) ? ' lang="' . $link['lang'] . '"' : '';
             ?>
                 <?php if ($isCurrent): ?>
-                    <li aria-current="page" class="current-page">
-                        <span<?= $langAttr ?>><?= htmlspecialchars($link['label'], ENT_QUOTES, 'UTF-8') ?></span>
-                    </li>
-                <?php else: ?>
-                    <li>
-                        <a href="<?= htmlspecialchars($link['href'], ENT_QUOTES, 'UTF-8') ?>"<?= $langAttr ?>><?= htmlspecialchars($link['label'], ENT_QUOTES, 'UTF-8') ?></a>
-                    </li>
-                <?php endif; ?>
+                        <li aria-current="page" class="current-page">
+                            <span<?= $langAttr ?>><?= htmlspecialchars($link['label'], ENT_QUOTES, 'UTF-8') ?></span>
+                        </li>
+                    <?php else: ?>
+                        <?php
+                            $href = $link['href'];
+                            if (!preg_match('#^(https?://|/)#i', $href)) {
+                                $href = rtrim(WEB_ROOT, '/') . '/' . ltrim($href, '/');
+                            }
+                        ?>
+                        <li>
+                            <a href="<?= htmlspecialchars($href, ENT_QUOTES, 'UTF-8') ?>"<?= $langAttr ?>><?= htmlspecialchars($link['label'], ENT_QUOTES, 'UTF-8') ?></a>
+                        </li>
+                    <?php endif; ?>
             <?php endforeach; ?>
 
             <?php if (isset($_SESSION['user_id'])): ?>
@@ -61,28 +67,28 @@ $navLinks = array(
                     <?php if (isset($currentPage) && $currentPage === 'admin'): ?>
                         <li aria-current="page" class="current-page">Amministrazione</li>
                     <?php else: ?>
-                        <li><a href="admin/index.php">Amministrazione</a></li>
+                        <li><a href="<?= htmlspecialchars(rtrim(WEB_ROOT, '/') . '/admin/index.php', ENT_QUOTES, 'UTF-8') ?>">Amministrazione</a></li>
                     <?php endif; ?>
                 <?php else: ?>
                     <?php if (isset($currentPage) && $currentPage === 'dashboard'): ?>
                         <li aria-current="page" class="current-page">Area utente</li>
                     <?php else: ?>
-                        <li><a href="dashboard.php">Area utente</a></li>
+                        <li><a href="<?= htmlspecialchars(rtrim(WEB_ROOT, '/') . '/dashboard.php', ENT_QUOTES, 'UTF-8') ?>">Area utente</a></li>
                     <?php endif; ?>
                 <?php endif; ?>
 
-                <li><a href="<?= htmlspecialchars(WEB_ROOT . 'logout.php', ENT_QUOTES, 'UTF-8') ?>">Esci</a></li>
+                <li><a href="<?= htmlspecialchars(rtrim(WEB_ROOT, '/') . '/logout.php', ENT_QUOTES, 'UTF-8') ?>">Esci</a></li>
             <?php else: ?>
-                <?php if (isset($currentPage) && $currentPage === 'login'): ?>
+                    <?php if (isset($currentPage) && $currentPage === 'login'): ?>
                     <li aria-current="page" class="current-page">Accedi</li>
                 <?php else: ?>
-                    <li><a href="login.php">Accedi</a></li>
+                    <li><a href="<?= htmlspecialchars(rtrim(WEB_ROOT, '/') . '/login.php', ENT_QUOTES, 'UTF-8') ?>">Accedi</a></li>
                 <?php endif; ?>
 
                 <?php if (isset($currentPage) && $currentPage === 'register'): ?>
                     <li aria-current="page" class="current-page">Registrati</li>
                 <?php else: ?>
-                    <li><a href="register.php">Registrati</a></li>
+                    <li><a href="<?= htmlspecialchars(rtrim(WEB_ROOT, '/') . '/register.php', ENT_QUOTES, 'UTF-8') ?>">Registrati</a></li>
                 <?php endif; ?>
             <?php endif; ?>
         </ul>
