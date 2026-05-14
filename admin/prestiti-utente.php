@@ -37,20 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                 $message = 'Prestito non trovato.';
             }
         } elseif ($azione === 'salva_modifica') {
-            $dataInizioRaw = trim((string) ($_POST['data_inizio'] ?? ''));
-            $dataFineRaw = trim((string) ($_POST['data_fine'] ?? ''));
-            $dataInizio = str_replace('T', ' ', $dataInizioRaw);
-            $dataFine = str_replace('T', ' ', $dataFineRaw);
-            if (strlen($dataInizio) === 16) {
-                $dataInizio .= ':00';
-            }
-            if (strlen($dataFine) === 16) {
-                $dataFine .= ':00';
-            }
+            $dataInizioNorm = normalizeDateTimeForDb(trim((string) ($_POST['data_inizio'] ?? '')));
+            $dataFineNorm = normalizeDateTimeForDb(trim((string) ($_POST['data_fine'] ?? '')));
 
             $dati = [
-                'data_inizio' => $dataInizio,
-                'data_fine' => $dataFine,
+                'data_inizio' => $dataInizioNorm ?? '',
+                'data_fine' => $dataFineNorm ?? '',
                 'stato' => trim((string) ($_POST['stato'] ?? '')),
                 'biblioteca_id' => 1,
                 'libro_id' => (int) ($_POST['libro_id'] ?? 0),
@@ -66,6 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                 && $dati['libro_id'] > 0
                 && $dati['utente_id'] > 0
                 && strtotime($dati['data_fine']) >= strtotime($dati['data_inizio']);
+
+            if ($dataInizioNorm === null || $dataFineNorm === null) {
+                $message = 'Formato data non valido.';
+                $formValido = false;
+            }
 
             // Validazione aggiuntiva: verifica che libro e utente esistano
             if ($formValido) {

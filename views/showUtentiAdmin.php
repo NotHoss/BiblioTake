@@ -39,7 +39,7 @@
                             <input
                                 type="datetime-local"
                                 name="data_inizio"
-                                value="<?= htmlspecialchars(date('Y-m-d\\TH:i', strtotime((string) $prestitoInModifica['data_inizio'])), ENT_QUOTES, 'UTF-8') ?>"
+                                value="<?= htmlspecialchars(formatDateTimeForInput($prestitoInModifica['data_inizio']), ENT_QUOTES, 'UTF-8') ?>"
                                 required
                             >
                         </label>
@@ -49,7 +49,7 @@
                             <input
                                 type="datetime-local"
                                 name="data_fine"
-                                value="<?= htmlspecialchars(date('Y-m-d\\TH:i', strtotime((string) $prestitoInModifica['data_fine'])), ENT_QUOTES, 'UTF-8') ?>"
+                                value="<?= htmlspecialchars(formatDateTimeForInput($prestitoInModifica['data_fine']), ENT_QUOTES, 'UTF-8') ?>"
                                 required
                             >
                         </label>

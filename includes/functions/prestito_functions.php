@@ -19,6 +19,39 @@ function aggiornaPrestitiScaduti($conn) {
     return $aggiornati;
 }
 
+// Normalizzazione e formattazione date per i prestiti
+function normalizeDateTimeForDb($input) {
+    $s = str_replace('T', ' ', trim((string) $input));
+    if ($s === '') {
+        return null;
+    }
+    // Se manca i secondi, aggiungili
+    if (preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/', $s)) {
+        $s .= ':00';
+    }
+    $dt = DateTime::createFromFormat('Y-m-d H:i:s', $s);
+    if ($dt === false) {
+        return null;
+    }
+    return $dt->format('Y-m-d H:i:s');
+}
+
+function formatDateTimeForInput($dbDatetime) {
+    if (empty($dbDatetime)) {
+        return '';
+    }
+    $dt = DateTime::createFromFormat('Y-m-d H:i:s', $dbDatetime);
+    if ($dt === false) {
+        $ts = strtotime($dbDatetime);
+        if ($ts === false) {
+            return '';
+        }
+        $dt = new DateTime('@' . $ts);
+        $dt->setTimezone(new DateTimeZone(date_default_timezone_get()));
+    }
+    return $dt->format('Y-m-d\\TH:i');
+}
+
 function getPrestitiByUtente($conn, $utenteId) {
     $stmt = $conn->prepare(
         'SELECT p.id, p.data_inizio, p.data_fine, p.stato, l.titolo AS libro_titolo, l.autore
