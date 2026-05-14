@@ -1,5 +1,3 @@
-<?php require_once __DIR__ . '/template/header.php'; ?>
-
     <?php $adminViewMode = $adminViewMode ?? 'list'; ?>
 
     <?php if ($adminViewMode === 'create'): ?>
@@ -192,4 +190,4 @@
         <?php endif; ?>
     <?php endif; ?>
 
-<?php require_once __DIR__ . '/template/footer.php'; ?>
+

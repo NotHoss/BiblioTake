@@ -1,8 +1,4 @@
-<?php
-    $adminViewMode = $adminViewMode ?? 'list';
-    $hideAdminNav = true;
-    require_once __DIR__ . '/template/header.php';
-?>
+<?php $adminViewMode = $adminViewMode ?? 'list'; ?>
 
     <?php if ($adminViewMode === 'prestiti'): ?>
         <h1>Prestiti utenti</h1>
@@ -260,4 +256,4 @@
         <?php endif; ?>
     <?php endif; ?>
 
-<?php require_once __DIR__ . '/template/footer.php'; ?>
+

@@ -160,7 +160,7 @@ function getUtenteDateColumn($conn) {
              FROM information_schema.columns
              WHERE table_schema = ? AND table_name = \'utente\' AND column_name = ?'
         );
-        $dbName = 'bibliotake';
+        $dbName = DB_NAME;
         $stmt->bind_param('ss', $dbName, $column);
         $stmt->execute();
         $result = $stmt->get_result();

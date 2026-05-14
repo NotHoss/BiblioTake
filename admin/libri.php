@@ -12,7 +12,9 @@ $libri = [];
 if ($conn instanceof mysqli && $errorMessage === '') {
     $libri = getLibriAdmin($conn, 500);
 }
+require_once __DIR__ . '/../views/template/header.php';
 require_once __DIR__ . '/../views/showLibriAdmin.php';
+require_once __DIR__ . '/../views/template/footer.php';
 
 if ($conn instanceof mysqli) {
     $conn->close();
