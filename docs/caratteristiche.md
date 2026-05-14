@@ -39,6 +39,7 @@
     - Visualizzazione dei libri presi in prestito attivi
     - Storico dei prestiti
     - Richiesta di nuovi prestiti su libri non prestati
+    - Proroga di 1 mese dei prestiti attivi 
 
 ## Area Admin
 

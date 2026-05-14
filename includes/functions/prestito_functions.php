@@ -136,15 +136,81 @@ function concludePrestito($conn, $prestitoId) {
 }
 
 function prorogaPrestito($conn, $prestitoId) {
-    $stmt = $conn->prepare(
+    // Recupera data_fine e stato
+    $stmt = $conn->prepare('SELECT data_fine, stato FROM prestito WHERE id = ? LIMIT 1');
+    if (!$stmt) {
+        return ['success' => false, 'message' => 'Errore interno.'];
+    }
+    $stmt->bind_param('i', $prestitoId);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $row = $res->fetch_assoc();
+    $stmt->close();
+
+    if (!$row) {
+        return ['success' => false, 'message' => 'Prestito non trovato.'];
+    }
+
+    if ($row['stato'] !== 'attivo') {
+        return ['success' => false, 'message' => 'Impossibile prorogare: lo stato del prestito non è attivo.'];
+    }
+
+    $dataFine = $row['data_fine'];
+    $tsFine = strtotime($dataFine);
+    if ($tsFine === false) {
+        return ['success' => false, 'message' => 'Formato data non valido.'];
+    }
+
+    $now = time();
+    $delta = $tsFine - $now;
+    $weekSeconds = 7 * 24 * 3600;
+
+    if ($delta > $weekSeconds) {
+        // Calcola tempo rimanente in giorni/ore
+        $days = (int) floor($delta / 86400);
+        $hours = (int) floor(($delta % 86400) / 3600);
+
+        $parts = [];
+        if ($days > 0) {
+            $parts[] = $days . ' ' . ($days === 1 ? 'giorno' : 'giorni');
+        }
+        if ($hours > 0) {
+            $parts[] = $hours . ' ' . ($hours === 1 ? 'ora' : 'ore');
+        }
+
+        if ($parts) {
+            $remaining = implode(' e ', $parts);
+        } else {
+            $remaining = 'meno di un ora';
+        }
+
+        // Verbo corretto: singolare se manca esattamente 1 unità temporale, plurale altrimenti
+        $totalUnits = $days + $hours;
+        $verb = ($totalUnits === 1) ? 'manca' : 'mancano';
+
+        return ['success' => false, 'message' => "Non puoi ancora prorogare il tuo prestito, $verb $remaining."];
+    }
+
+    // Esegui la proroga di 30 giorni
+    $stmt2 = $conn->prepare(
         "UPDATE prestito
-                 SET data_fine = DATE_ADD(data_fine, INTERVAL 30 DAY)
+         SET data_fine = DATE_ADD(data_fine, INTERVAL 30 DAY)
          WHERE id = ?
            AND stato = 'attivo'"
     );
-    $stmt->bind_param('i', $prestitoId);
+    if (!$stmt2) {
+        return ['success' => false, 'message' => 'Errore interno.'];
+    }
+    $stmt2->bind_param('i', $prestitoId);
+    $ok = $stmt2->execute();
+    $affected = $stmt2->affected_rows;
+    $stmt2->close();
 
-    return $stmt->execute();
+    if ($ok && $affected > 0) {
+        return ['success' => true, 'message' => 'Prestito prorogato di 30 giorni.'];
+    }
+
+    return ['success' => false, 'message' => 'Operazione non riuscita.'];
 }
 
 function updatePrestito($conn, $prestitoId, array $dati) {

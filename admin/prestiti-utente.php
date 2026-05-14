@@ -24,9 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                 ? 'Prestito concluso con successo.'
                 : 'Operazione non riuscita.';
         } elseif ($azione === 'proroga') {
-            $message = prorogaPrestito($conn, $prestitoId)
-                ? 'Prestito prorogato di 30 giorni.'
-                : 'Operazione non riuscita.';
+            $res = prorogaPrestito($conn, $prestitoId);
+            if (is_array($res)) {
+                $message = $res['message'] ?? 'Operazione non riuscita.';
+            } elseif ($res === true) {
+                $message = 'Prestito prorogato di 30 giorni.';
+            } else {
+                $message = 'Operazione non riuscita.';
+            }
         } elseif ($azione === 'elimina') {
             $message = deletePrestitoWithReferences($conn, $prestitoId)
                 ? 'Prestito eliminato con successo.'
