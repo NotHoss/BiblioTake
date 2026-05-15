@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS recensione;
 DROP TABLE IF EXISTS prestito;
+DROP TABLE IF EXISTS libro_tag;
+DROP TABLE IF EXISTS tag;
 DROP TABLE IF EXISTS libro;
 DROP TABLE IF EXISTS utente;
 DROP TABLE IF EXISTS biblioteca;
@@ -36,6 +38,25 @@ CREATE TABLE libro (
 	categoria VARCHAR(100) NOT NULL,
 	CHECK (edizione > 0),
 	CHECK (pagine > 0)
+);
+
+CREATE TABLE tag (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE libro_tag (
+	libro_id INT NOT NULL,
+	tag_id   INT NOT NULL,
+	PRIMARY KEY (libro_id, tag_id),
+	CONSTRAINT libro_tag_libro_fk FOREIGN KEY (libro_id)
+		REFERENCES libro(id)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	CONSTRAINT libro_tag_tag_fk FOREIGN KEY (tag_id)
+		REFERENCES tag(id)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
 );
 
 CREATE TABLE prestito (
@@ -98,6 +119,22 @@ INSERT INTO libro (
 	(202, '9788806223129', 'Sapiens', 'Yuval Noah Harari', 'Bompiani', 9, 2020, 'Italiano', 'Saggio sulla storia dell umanita dalle origini all eta contemporanea.', 538, 'images/place-holder.jpg', 'Saggistica'),
 	(203, '9780140449136', 'The Odyssey', 'Homer', 'Penguin Classics', 3, 2018, 'Inglese', 'Traduzione annotata del poema epico greco.', 560, 'images/place-holder.jpg', 'Classici'),
 	(204, '9788817168358', 'Norwegian Wood', 'Haruki Murakami', 'Einaudi', 12, 2019, 'Italiano', 'Romanzo di formazione ambientato nel Giappone degli anni Sessanta.', 336, 'images/place-holder.jpg', 'Narrativa contemporanea');
+
+INSERT INTO tag (id, nome) VALUES
+	(1, 'Medioevo'),
+	(2, 'Giallo'),
+	(3, 'Storia'),
+	(4, 'Filosofia'),
+	(5, 'Giappone'),
+	(6, 'Formazione');
+
+INSERT INTO libro_tag (libro_id, tag_id) VALUES
+	(201, 1),
+	(201, 2),
+	(202, 3),
+	(202, 4),
+	(204, 5),
+	(204, 6);
 
 INSERT INTO prestito (
 	id, data_inizio, data_fine, stato, biblioteca_id, libro_id, utente_id
