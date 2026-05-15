@@ -25,9 +25,10 @@ $breadcrumb      = array(
     array('label' => $libro['titolo'],                 'href' => ''),
 );
 
-$tags        = getTagsByLibroId($conn, $libroId);
-$recensioni  = getRecensioniByLibroId($conn, $libroId);
-$disponibile = isLibroDisponibile($conn, $libroId);
+$tags          = getTagsByLibroId($conn, $libroId);
+$recensioni    = getRecensioniByLibroId($conn, $libroId);
+$disponibile   = isLibroDisponibile($conn, $libroId);
+$utenteLoggato = isLoggedIn();
 
 require_once 'views/template/header.php';
 require_once 'views/showDettaglioLibro.php';

@@ -82,11 +82,13 @@
 
     <section id="azioni-libro">
         <h3>Azioni</h3>
-        <?php if ($disponibile): ?>
-            <p>Per richiedere il prestito devi aver effettuato l'accesso.</p>
-            <a href="login.php">Accedi per richiedere il prestito</a>
-        <?php else: ?>
+        <?php if (!$disponibile): ?>
             <p>Questo libro non è al momento disponibile per il prestito.</p>
+        <?php elseif ($utenteLoggato): ?>
+            <p>Il libro è disponibile per il prestito.</p>
+        <?php else: ?>
+            <p>Per richiedere il prestito devi aver effettuato l'accesso.</p>
+            <a href="login.php?intended=dettaglio-libro.php?id=<?= (int) $libro['id'] ?>">Accedi per richiedere il prestito</a>
         <?php endif; ?>
     </section>
 </article>
