@@ -8,15 +8,15 @@
             <tbody>
                 <tr>
                     <th scope="row">Indirizzo</th>
-                    <td>Via Garibaldi 12, Padova</td>
+                    <td><?= htmlspecialchars($biblioteca['indirizzo'], ENT_QUOTES, 'UTF-8') ?></td>
                 </tr>
                 <tr>
                     <th scope="row">Telefono</th>
-                    <td><a href="tel:+390288997766">+39 02 88997766</a></td>
+                    <td><a href="tel:<?= htmlspecialchars($biblioteca['telefono'], ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($biblioteca['telefono'], ENT_QUOTES, 'UTF-8') ?></a></td>
                 </tr>
                 <tr>
                     <th scope="row">Email</th>
-                    <td><a href="mailto:contatti@bibliotake-padova.it">contatti@bibliotake-padova.it</a></td>
+                    <td><a href="mailto:<?= htmlspecialchars($biblioteca['email'], ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($biblioteca['email'], ENT_QUOTES, 'UTF-8') ?></a></td>
                 </tr>
             </tbody>
         </table>
@@ -35,15 +35,15 @@
             <tbody>
                 <tr>
                     <td>Lunedì – Venerdì</td>
-                    <td>9:00 – 19:00</td>
+                    <td><?= htmlspecialchars($biblioteca['orario_lun_ven'], ENT_QUOTES, 'UTF-8') ?></td>
                 </tr>
                 <tr>
                     <td>Sabato</td>
-                    <td>9:00 – 13:00</td>
+                    <td><?= htmlspecialchars($biblioteca['orario_sabato'], ENT_QUOTES, 'UTF-8') ?></td>
                 </tr>
                 <tr>
                     <td>Domenica</td>
-                    <td>Chiuso</td>
+                    <td><?= htmlspecialchars($biblioteca['orario_domenica'], ENT_QUOTES, 'UTF-8') ?></td>
                 </tr>
             </tbody>
         </table>

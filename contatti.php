@@ -10,6 +10,8 @@ $breadcrumb      = array(
     array('label' => 'Contatti', 'href' => ''),
 );
 
+$biblioteca = getBibliotecaInfo($conn);
+
 require_once 'views/template/header.php';
 require_once 'views/showContatti.php';
 require_once 'views/template/footer.php';
