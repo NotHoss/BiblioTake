@@ -77,6 +77,8 @@
             <?php foreach ($libri as $libro): ?>
                 <li>
                     <article class="libro-card">
+                        <img src="<?= htmlspecialchars(!empty($libro['copertina']) ? $libro['copertina'] : 'images/place-holder.jpg', ENT_QUOTES, 'UTF-8') ?>"
+                             alt="<?= htmlspecialchars('Copertina del libro ' . $libro['titolo'] . ' di ' . $libro['autore'], ENT_QUOTES, 'UTF-8') ?>">
                         <h4>
                             <a href="dettaglio-libro.php?id=<?= (int) $libro['id'] ?>">
                                 <?= htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8') ?>

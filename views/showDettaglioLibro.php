@@ -1,6 +1,9 @@
 <article id="dettaglio-libro">
     <h2><?= htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8') ?></h2>
 
+    <img src="<?= htmlspecialchars(!empty($libro['copertina']) ? $libro['copertina'] : 'images/place-holder.jpg', ENT_QUOTES, 'UTF-8') ?>"
+         alt="<?= htmlspecialchars('Copertina del libro ' . $libro['titolo'] . ' di ' . $libro['autore'], ENT_QUOTES, 'UTF-8') ?>">
+
     <section id="info-libro">
         <h3>Informazioni sul libro</h3>
         <table>
