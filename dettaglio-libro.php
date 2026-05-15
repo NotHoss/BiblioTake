@@ -19,6 +19,11 @@ $pageTitle       = htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8') . ' â
 $pageDescription = 'Scheda del libro ' . htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8') . ' di ' . htmlspecialchars($libro['autore'], ENT_QUOTES, 'UTF-8') . '. Informazioni, disponibilitÃ  e recensioni.';
 $pageKeywords    = htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8') . ', ' . htmlspecialchars($libro['autore'], ENT_QUOTES, 'UTF-8') . ', biblioteca, prestito';
 $currentPage     = 'catalogo';
+$breadcrumb      = array(
+    array('label' => 'Home',                           'href' => 'index.php'),
+    array('label' => 'Catalogo',                       'href' => 'catalogo.php'),
+    array('label' => $libro['titolo'],                 'href' => ''),
+);
 
 $tags        = getTagsByLibroId($conn, $libroId);
 $recensioni  = getRecensioniByLibroId($conn, $libroId);

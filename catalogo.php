@@ -5,6 +5,10 @@ $pageTitle       = 'Catalogo libri — BiblioTake';
 $pageDescription = 'Sfoglia il catalogo completo della biblioteca. Filtra per categoria, autore, anno o disponibilità.';
 $pageKeywords    = 'catalogo, libri, biblioteca, ricerca, filtri, prestito';
 $currentPage     = 'catalogo';
+$breadcrumb      = array(
+    array('label' => 'Home',     'href' => 'index.php'),
+    array('label' => 'Catalogo', 'href' => ''),
+);
 
 $filtri = [
     'cerca'       => isset($_GET['cerca'])       ? trim($_GET['cerca'])       : '',

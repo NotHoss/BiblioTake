@@ -5,6 +5,9 @@ $pageTitle       = 'BiblioTake — Biblioteca digitale';
 $pageDescription = 'Scopri il catalogo della biblioteca: cerca libri, consulta le schede e richiedi un prestito.';
 $pageKeywords    = 'biblioteca, libri, catalogo, prestito, BiblioTake';
 $currentPage     = 'home';
+$breadcrumb      = array(
+    array('label' => 'Home', 'href' => ''),
+);
 
 $libriRecenti = getLibriRecenti($conn, 6);
 $categorie    = getCategorie($conn);

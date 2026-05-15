@@ -5,6 +5,10 @@ $pageTitle       = 'Contatti — BiblioTake';
 $pageDescription = 'Contatta la biblioteca BiblioTake per informazioni su prestiti, catalogo e servizi offerti.';
 $pageKeywords    = 'contatti, biblioteca, BiblioTake, informazioni, email, telefono';
 $currentPage     = 'contatti';
+$breadcrumb      = array(
+    array('label' => 'Home',     'href' => 'index.php'),
+    array('label' => 'Contatti', 'href' => ''),
+);
 
 require_once 'views/template/header.php';
 require_once 'views/showContatti.php';
