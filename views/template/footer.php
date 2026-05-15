@@ -1,0 +1,35 @@
+</main>
+
+<footer>
+    <ul>
+        <li>
+            <a href="https://validator.w3.org/check?uri=referer">
+                <img src="https://www.w3.org/Icons/valid-xhtml10"
+                     alt="Pagina conforme allo standard HTML del W3C"
+                     width="88" height="31">
+            </a>
+        </li>
+        <li>
+            <a href="https://jigsaw.w3.org/css-validator/check/referer">
+                <img src="https://jigsaw.w3.org/css-validator/images/vcss"
+                     alt="CSS conforme alle specifiche W3C"
+                     width="88" height="31">
+            </a>
+        </li>
+        <li>
+            <a href="https://www.w3.org/WAI/WCAG2AA-Conformance">
+                <img src="https://www.w3.org/WAI/wcag2AA-blue"
+                     alt="Pagina conforme al livello AA delle WCAG 2.1"
+                     width="88" height="31">
+            </a>
+        </li>
+    </ul>
+
+    <p>
+        &copy; <time datetime="<?= date('Y') ?>"><?= date('Y') ?></time>
+        <?= htmlspecialchars(SITE_NAME, ENT_QUOTES, 'UTF-8') ?>
+    </p>
+</footer>
+
+</body>
+</html>

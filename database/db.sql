@@ -1,7 +1,5 @@
-DROP TABLE IF EXISTS libro_tag;
 DROP TABLE IF EXISTS recensione;
 DROP TABLE IF EXISTS prestito;
-DROP TABLE IF EXISTS tag;
 DROP TABLE IF EXISTS libro;
 DROP TABLE IF EXISTS utente;
 DROP TABLE IF EXISTS biblioteca;
@@ -18,8 +16,9 @@ CREATE TABLE utente (
 	email VARCHAR(255) NOT NULL UNIQUE,
 	username VARCHAR(100) NOT NULL,
 	password VARCHAR(255) NOT NULL,
+	foto_profilo VARCHAR(255) NOT NULL,
 	attivo BOOLEAN NOT NULL DEFAULT TRUE,
-	ruolo ENUM('visitor', 'utente', 'admin') NOT NULL DEFAULT 'visitor'
+	ruolo ENUM('utente', 'admin') NOT NULL DEFAULT 'utente'
 );
 
 CREATE TABLE libro (
@@ -33,14 +32,10 @@ CREATE TABLE libro (
 	lingua VARCHAR(100) NOT NULL,
 	descrizione TEXT,
 	pagine INT NOT NULL,
+	copertina VARCHAR(255) NOT NULL,
 	categoria VARCHAR(100) NOT NULL,
 	CHECK (edizione > 0),
 	CHECK (pagine > 0)
-);
-
-CREATE TABLE tag (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	nome VARCHAR(100) NOT NULL UNIQUE
 );
 
 CREATE TABLE prestito (
@@ -84,46 +79,25 @@ CREATE TABLE recensione (
 	CHECK (valutazione BETWEEN 1 AND 5)
 );
 
-CREATE TABLE libro_tag (
-	libro_id INT NOT NULL,
-	tag_id INT NOT NULL,
-	PRIMARY KEY (libro_id, tag_id),
-	CONSTRAINT libro_tag_libro_fk FOREIGN KEY (libro_id)
-		REFERENCES libro(id)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE,
-	CONSTRAINT libro_tag_tag_fk FOREIGN KEY (tag_id)
-		REFERENCES tag(id)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE
-);
-
 CREATE INDEX idx_prestito_libro_stato ON prestito (libro_id, stato);
 CREATE INDEX idx_recensione_libro ON recensione (libro_id);
 
 INSERT INTO biblioteca (id, indirizzo, telefono, email) VALUES
-	(1, 'Via Garibaldi 12, MilanoPadova', '+39 02 88997766', 'contatti@bibliotake-padova.it');
+	(1, 'Via Garibaldi 12, Padova', '+39 02 88997766', 'contatti@bibliotake-padova.it');
 
-INSERT INTO utente (id, email, username, password, attivo, ruolo) VALUES
-	(101, 'luca.rossi@gmail.com', 'luca.rossi', '$2y$10$e0NRm7l8iA92f1bR6xL4fOd8kSMNw2w5sY4qC8x0Qh7oA3fXvYf4K', TRUE, 'utente'),
-	(102, 'chiara.bianchi@gmail.com', 'chiara.b', '$2y$10$N4f7mZ3sWQk2p8r9dT1uMuoYV6W8h2xVb9jQ4mN3eL7pR6cS2dA1O', TRUE, 'utente'),
-	(103, 'marco.verdi@gmail.com', 'marco.verdi', '$2y$10$A8h2kP5tR3mQ7vX1nD6yEuL4bS9zF2cH5jK8qW3rN0pT6mV4xC7Zg', FALSE, 'visitor'),
-	(104, 'admin@bibliotake.it', 'admin.bibliotake', '$2y$10$T7pQ2mN5vR8xC1zK4hD6yEa9sL3fW0uJ7bM2nP5qR8tV1xC4zH6Yd', TRUE, 'admin');
+INSERT INTO utente (id, email, username, password, foto_profilo, attivo, ruolo) VALUES
+	(101, 'luca.rossi@gmail.com', 'luca.rossi', '$2y$10$e0NRm7l8iA92f1bR6xL4fOd8kSMNw2w5sY4qC8x0Qh7oA3fXvYf4K', 'images/place-holder.jpg', TRUE, 'utente'),
+	(102, 'chiara.bianchi@gmail.com', 'chiara.b', '$2y$10$N4f7mZ3sWQk2p8r9dT1uMuoYV6W8h2xVb9jQ4mN3eL7pR6cS2dA1O', 'images/place-holder.jpg', TRUE, 'utente'),
+	(103, 'marco.verdi@gmail.com', 'marco.verdi', '$2y$10$A8h2kP5tR3mQ7vX1nD6yEuL4bS9zF2cH5jK8qW3rN0pT6mV4xC7Zg', 'images/place-holder.jpg', FALSE, 'utente'),
+	(104, 'admin@bibliotake.it', 'admin.bibliotake', '$2y$10$T7pQ2mN5vR8xC1zK4hD6yEa9sL3fW0uJ7bM2nP5qR8tV1xC4zH6Yd', 'images/place-holder.jpg', TRUE, 'admin');
 
 INSERT INTO libro (
-	id, codice_isbn, titolo, autore, casa_editrice, edizione, anno, lingua, descrizione, pagine, categoria
+	id, codice_isbn, titolo, autore, casa_editrice, edizione, anno, lingua, descrizione, pagine, copertina, categoria
 ) VALUES
-	(201, '9788804668236', 'Il nome della rosa', 'Umberto Eco', 'Bompiani', 15, 2021, 'Italiano', 'Romanzo storico investigativo ambientato in un monastero medievale.', 624, 'Romanzo storico'),
-	(202, '9788806223129', 'Sapiens', 'Yuval Noah Harari', 'Bompiani', 9, 2020, 'Italiano', 'Saggio sulla storia dell umanita dalle origini all eta contemporanea.', 538, 'Saggistica'),
-	(203, '9780140449136', 'The Odyssey', 'Homer', 'Penguin Classics', 3, 2018, 'Inglese', 'Traduzione annotata del poema epico greco.', 560, 'Classici'),
-	(204, '9788817168358', 'Norwegian Wood', 'Haruki Murakami', 'Einaudi', 12, 2019, 'Italiano', 'Romanzo di formazione ambientato nel Giappone degli anni Sessanta.', 336, 'Narrativa contemporanea');
-
-INSERT INTO tag (id, nome) VALUES
-	(301, 'classico'),
-	(302, 'mistero'),
-	(303, 'storia'),
-	(304, 'filosofia'),
-	(305, 'giappone');
+	(201, '9788804668236', 'Il nome della rosa', 'Umberto Eco', 'Bompiani', 15, 2021, 'Italiano', 'Romanzo storico investigativo ambientato in un monastero medievale.', 624, 'images/place-holder.jpg', 'Romanzo storico'),
+	(202, '9788806223129', 'Sapiens', 'Yuval Noah Harari', 'Bompiani', 9, 2020, 'Italiano', 'Saggio sulla storia dell umanita dalle origini all eta contemporanea.', 538, 'images/place-holder.jpg', 'Saggistica'),
+	(203, '9780140449136', 'The Odyssey', 'Homer', 'Penguin Classics', 3, 2018, 'Inglese', 'Traduzione annotata del poema epico greco.', 560, 'images/place-holder.jpg', 'Classici'),
+	(204, '9788817168358', 'Norwegian Wood', 'Haruki Murakami', 'Einaudi', 12, 2019, 'Italiano', 'Romanzo di formazione ambientato nel Giappone degli anni Sessanta.', 336, 'images/place-holder.jpg', 'Narrativa contemporanea');
 
 INSERT INTO prestito (
 	id, data_inizio, data_fine, stato, biblioteca_id, libro_id, utente_id
@@ -136,12 +110,4 @@ INSERT INTO recensione (id, valutazione, testo, data, libro_id, utente_id) VALUE
 	(501, 5, 'Trama avvincente e personaggi memorabili, uno dei miei preferiti.', '2026-03-20 18:45:00', 201, 101),
 	(502, 4, 'Molto interessante e ricco di spunti, a tratti impegnativo.', '2026-03-27 09:20:00', 202, 102),
 	(503, 5, 'Edizione ottima, note utili e traduzione scorrevole.', '2026-03-25 14:10:00', 203, 104);
-
-INSERT INTO libro_tag (libro_id, tag_id) VALUES
-	(201, 301),
-	(201, 302),
-	(202, 303),
-	(202, 304),
-	(203, 301),
-	(204, 305);
 
