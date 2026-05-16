@@ -15,52 +15,87 @@ function getStatisticheGenerali($conn) {
         'recensioni_totali' => 0,
     ];
 
-    $result = $conn->query('SELECT COUNT(*) AS totale FROM libro');
-    if ($result) {
-        $row = $result->fetch_assoc();
-        $stats['libri_totali'] = (int) $row['totale'];
+    $stmt = $conn->prepare('SELECT COUNT(*) AS totale FROM libro');
+    if ($stmt) {
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res ? $res->fetch_assoc() : null;
+        if ($row) {
+            $stats['libri_totali'] = (int) $row['totale'];
+        }
+        $stmt->close();
     }
 
-    $result = $conn->query("SELECT COUNT(DISTINCT libro_id) AS totale FROM prestito WHERE stato IN ('attivo', 'in_ritardo')");
-    if ($result) {
-        $row = $result->fetch_assoc();
-        $stats['libri_prenotati'] = (int) $row['totale'];
+    $stmt = $conn->prepare("SELECT COUNT(DISTINCT libro_id) AS totale FROM prestito WHERE stato IN ('attivo', 'in_ritardo')");
+    if ($stmt) {
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res ? $res->fetch_assoc() : null;
+        if ($row) {
+            $stats['libri_prenotati'] = (int) $row['totale'];
+        }
+        $stmt->close();
     }
 
     $stats['libri_non_prenotati'] = $stats['libri_totali'] - $stats['libri_prenotati'];
 
-    $result = $conn->query('SELECT COUNT(*) AS totale FROM utente');
-    if ($result) {
-        $row = $result->fetch_assoc();
-        $stats['utenti_totali'] = (int) $row['totale'];
+    $stmt = $conn->prepare('SELECT COUNT(*) AS totale FROM utente');
+    if ($stmt) {
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res ? $res->fetch_assoc() : null;
+        if ($row) {
+            $stats['utenti_totali'] = (int) $row['totale'];
+        }
+        $stmt->close();
     }
 
     $dateColumn = getUtenteDateColumn($conn);
     if ($dateColumn !== '') {
         $sql = 'SELECT COUNT(*) AS totale FROM utente WHERE ' . $dateColumn . ' >= DATE_SUB(NOW(), INTERVAL 30 DAY)';
-        $result = $conn->query($sql);
-        if ($result) {
-            $row = $result->fetch_assoc();
-            $stats['nuovi_iscritti'] = (int) $row['totale'];
+        $stmt = $conn->prepare($sql);
+        if ($stmt) {
+            $stmt->execute();
+            $res = $stmt->get_result();
+            $row = $res ? $res->fetch_assoc() : null;
+            if ($row) {
+                $stats['nuovi_iscritti'] = (int) $row['totale'];
+            }
+            $stmt->close();
         }
     }
 
-    $result = $conn->query("SELECT COUNT(*) AS totale FROM prestito WHERE stato = 'attivo'");
-    if ($result) {
-        $row = $result->fetch_assoc();
-        $stats['prestiti_attivi'] = (int) $row['totale'];
+    $stmt = $conn->prepare("SELECT COUNT(*) AS totale FROM prestito WHERE stato = 'attivo'");
+    if ($stmt) {
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res ? $res->fetch_assoc() : null;
+        if ($row) {
+            $stats['prestiti_attivi'] = (int) $row['totale'];
+        }
+        $stmt->close();
     }
 
-    $result = $conn->query("SELECT COUNT(*) AS totale FROM prestito WHERE stato = 'in_ritardo'");
-    if ($result) {
-        $row = $result->fetch_assoc();
-        $stats['prestiti_ritardo'] = (int) $row['totale'];
+    $stmt = $conn->prepare("SELECT COUNT(*) AS totale FROM prestito WHERE stato = 'in_ritardo'");
+    if ($stmt) {
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res ? $res->fetch_assoc() : null;
+        if ($row) {
+            $stats['prestiti_ritardo'] = (int) $row['totale'];
+        }
+        $stmt->close();
     }
 
-    $result = $conn->query('SELECT COUNT(*) AS totale FROM recensione');
-    if ($result) {
-        $row = $result->fetch_assoc();
-        $stats['recensioni_totali'] = (int) $row['totale'];
+    $stmt = $conn->prepare('SELECT COUNT(*) AS totale FROM recensione');
+    if ($stmt) {
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res ? $res->fetch_assoc() : null;
+        if ($row) {
+            $stats['recensioni_totali'] = (int) $row['totale'];
+        }
+        $stmt->close();
     }
 
     return $stats;
