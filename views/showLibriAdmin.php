@@ -35,22 +35,9 @@
                         <option value="__NEW__">+ Aggiungi nuova categoria</option>
                     </select>
                 </label>
-                <input type="text" name="categoria_nuova" id="categoria-nuova" placeholder="Nome nuova categoria" style="display: none;">
+                <input type="text" name="categoria_nuova" id="categoria-nuova" placeholder="Nome nuova categoria">
             </p>
-            <script>
-                document.getElementById('categoria-select').addEventListener('change', function() {
-                    const nuovaInput = document.getElementById('categoria-nuova');
-                    const selectEl = document.getElementById('categoria-select');
-                    if (this.value === '__NEW__') {
-                        nuovaInput.style.display = 'inline-block';
-                        nuovaInput.required = true;
-                    } else {
-                        nuovaInput.style.display = 'none';
-                        nuovaInput.required = false;
-                        nuovaInput.value = '';
-                    }
-                });
-            </script>
+            
             <p><button type="submit">Salva libro</button></p>
         </form>
 
@@ -67,6 +54,7 @@
         <?php else: ?>
             <form method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?= htmlspecialchars((string) $libroId, ENT_QUOTES, 'UTF-8') ?>">
+                <?= render_csrf_input() ?>
                 <p><label>ISBN <input type="text" name="codice_isbn" value="<?= htmlspecialchars((string) $libro['codice_isbn'], ENT_QUOTES, 'UTF-8') ?>"></label></p>
                 <p><label>Titolo <input type="text" name="titolo" value="<?= htmlspecialchars((string) $libro['titolo'], ENT_QUOTES, 'UTF-8') ?>"></label></p>
                 <p><label>Autore <input type="text" name="autore" value="<?= htmlspecialchars((string) $libro['autore'], ENT_QUOTES, 'UTF-8') ?>"></label></p>
@@ -109,20 +97,9 @@
                             <option value="__NEW__">+ Aggiungi nuova categoria</option>
                         </select>
                     </label>
-                    <input type="text" name="categoria_nuova" id="categoria-nuova-edit" placeholder="Nome nuova categoria" style="display: none;">
+                    <input type="text" name="categoria_nuova" id="categoria-nuova-edit" placeholder="Nome nuova categoria">
                 </p>
-                <script>
-                    (function(){
-                        var sel = document.getElementById('categoria-select-edit');
-                        var nuova = document.getElementById('categoria-nuova-edit');
-                        if (sel) {
-                            sel.addEventListener('change', function(){
-                                if (this.value === '__NEW__') { nuova.style.display = 'inline-block'; nuova.required = true; }
-                                else { nuova.style.display = 'none'; nuova.required = false; nuova.value = ''; }
-                            });
-                        }
-                    })();
-                </script>
+                
                 <p><button type="submit">Aggiorna libro</button></p>
             </form>
         <?php endif; ?>
@@ -142,6 +119,7 @@
             <?php if ($message !== ''): ?><p><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?></p><?php endif; ?>
             <form method="post">
                 <input type="hidden" name="id" value="<?= htmlspecialchars((string) $libroId, ENT_QUOTES, 'UTF-8') ?>">
+                <?= render_csrf_input() ?>
                 <p><button type="submit">Conferma eliminazione</button></p>
             </form>
         <?php endif; ?>

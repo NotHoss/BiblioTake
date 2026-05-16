@@ -105,21 +105,21 @@
                                 <td><?= htmlspecialchars((string) $prestito['data_fine'], ENT_QUOTES, 'UTF-8') ?></td>
                                 <td>
                                     <?php $statoPrestito = (string) $prestito['stato']; ?>
-                                    <form method="post" style="display:inline;">
+                                    <form method="post">
                                         <input type="hidden" name="prestito_id" value="<?= htmlspecialchars((string) $prestito['id'], ENT_QUOTES, 'UTF-8') ?>">
                                         <input type="hidden" name="utente_id" value="<?= htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8') ?>">
                                         <?php if ($statoPrestito === 'attivo'): ?>
                                             <button type="submit" name="azione" value="modifica">Modifica</button>
-                                            <button type="submit" name="azione" value="elimina" onclick="return confirm('Eliminare questo prestito?');">Elimina</button>
+                                            <button type="submit" name="azione" value="elimina">Elimina</button>
                                             <button type="submit" name="azione" value="concludi">Concludi</button>
                                             <button type="submit" name="azione" value="proroga">Proroga</button>
                                         <?php elseif ($statoPrestito === 'in_ritardo'): ?>
                                             <button type="submit" name="azione" value="modifica">Modifica</button>
-                                            <button type="submit" name="azione" value="elimina" onclick="return confirm('Eliminare questo prestito?');">Elimina</button>
+                                            <button type="submit" name="azione" value="elimina">Elimina</button>
                                             <button type="submit" name="azione" value="concludi">Concludi</button>
                                         <?php else: ?>
                                             <button type="submit" name="azione" value="modifica">Modifica</button>
-                                            <button type="submit" name="azione" value="elimina" onclick="return confirm('Eliminare questo prestito?');">Elimina</button>
+                                            <button type="submit" name="azione" value="elimina">Elimina</button>
                                         <?php endif; ?>
                                     </form>
                                 </td>
@@ -183,7 +183,7 @@
                             <td><?= htmlspecialchars((string) $recensione['data'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= $recensione['censura'] ? 'Sì' : 'No' ?></td>
                             <td>
-                                <form method="post" style="display:inline;">
+                                <form method="post">
                                     <input type="hidden" name="recensione_id" value="<?= htmlspecialchars((string) $recensione['id'], ENT_QUOTES, 'UTF-8') ?>">
                                     <input type="hidden" name="utente_id" value="<?= htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8') ?>">
                                     <button type="submit" name="azione" value="censura"><?= $recensione['censura'] ? 'Mostra' : 'Censura' ?></button>

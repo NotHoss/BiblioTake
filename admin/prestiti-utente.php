@@ -2,10 +2,6 @@
 require_once '../includes/resources.php';
 requireRole('admin');
 
-if ($conn instanceof mysqli && function_exists('aggiornaPrestitiScaduti')) {
-    aggiornaPrestitiScaduti($conn);
-}
-
 $pageTitle = 'Prestiti utente — Admin BiblioTake';
 $currentPage = 'admin';
 $message = '';
