@@ -9,29 +9,10 @@ $errorMessage = '';
 
 $utenteId = isset($_GET['utente_id']) ? (int) $_GET['utente_id'] : (isset($_POST['utente_id']) ? (int) $_POST['utente_id'] : 0);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '' && isset($_POST['recensione_id'], $_POST['azione'])) {
-    $recensioneId = (int) $_POST['recensione_id'];
-    $azione = (string) $_POST['azione'];
-
-    if ($azione === 'elimina' || $azione === 'censura') {
-        try {
-            if ($azione === 'elimina') {
-                if (deleteRecensione($conn, $recensioneId)) {
-                    $message = 'Operazione completata con successo.';
-                } else {
-                    $message = 'Operazione non riuscita.';
-                }
-            } else {
-                if (censuraRecensione($conn, $recensioneId)) {
-                    $message = 'Operazione completata con successo.';
-                } else {
-                    $message = 'Operazione non riuscita.';
-                }
-            }
-        } catch (Throwable $e) {
-            $message = 'Operazione non riuscita: ' . $e->getMessage();
-        }
-    }
+$res = null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '') {
+    $res = handleRecensioniActions($conn, $_POST);
+    $message = $res['message'] ?? $message;
 }
 
 $utenti = [];
