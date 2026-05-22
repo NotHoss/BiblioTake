@@ -1,0 +1,38 @@
+<h1>Recensioni utenti</h1>
+<p><a href="utenti.php">Torna agli utenti</a></p>
+
+[MESSAGES]
+
+<form method="get">
+    <p>
+        <label>Utente
+            <select name="utente_id">
+                <option value="0">Tutti gli utenti</option>
+                [UTENTI_OPTIONS]
+            </select>
+        </label>
+    </p>
+    <p><button type="submit">Filtra recensioni</button></p>
+</form>
+
+[EMPTY_MESSAGE]
+
+<div [TABLE_DISPLAY]>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Utente</th>
+                <th>Libro</th>
+                <th>Voto</th>
+                <th>Testo</th>
+                <th>Data</th>
+                <th>Censurata</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            [TABLE_ROWS]
+        </tbody>
+    </table>
+</div>

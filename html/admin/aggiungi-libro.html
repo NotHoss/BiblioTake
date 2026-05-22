@@ -1,0 +1,29 @@
+<h1>Aggiungi libro</h1>
+<p><a href="libri.php">Torna ai libri</a></p>
+
+[MESSAGES]
+
+<form method="post" enctype="multipart/form-data">
+    <p><label>ISBN <input type="text" name="codice_isbn" value="[CODICE_ISBN]" required></label></p>
+    <p><label>Titolo <input type="text" name="titolo" value="[TITOLO]" required></label></p>
+    <p><label>Autore <input type="text" name="autore" value="[AUTORE]" required></label></p>
+    <p><label>Casa editrice <input type="text" name="casa_editrice" value="[CASA_EDITRICE]" required></label></p>
+    <p><label>Edizione <input type="number" name="edizione" value="[EDIZIONE]"></label></p>
+    <p><label>Anno <input type="number" name="anno" value="[ANNO]" required></label></p>
+    <p><label>Lingua <input type="text" name="lingua" value="[LINGUA]" required></label></p>
+    <p><label>Descrizione <textarea name="descrizione" required>[DESCRIZIONE]</textarea></label></p>
+    <p><label>Pagine <input type="number" name="pagine" value="[PAGINE]" required></label></p>
+    <p><label>Copertina (JPG, max 5MB, facoltativa) <input type="file" name="copertina_file" accept=".jpg,.jpeg,image/jpeg"></label></p>
+    <p>
+        <label>Categoria
+            <select name="categoria" id="categoria-select" required>
+                <option value="">-- Scegli una categoria --</option>
+                [CATEGORIE_OPTIONS]
+                <option value="__NEW__">+ Aggiungi nuova categoria</option>
+            </select>
+        </label>
+        <input type="text" name="categoria_nuova" id="categoria-nuova" placeholder="Nome nuova categoria">
+    </p>
+    
+    <p><button type="submit">Salva libro</button></p>
+</form>

@@ -1,259 +1,263 @@
-<?php $adminViewMode = $adminViewMode ?? 'list'; ?>
+<?php
+$adminViewMode = $adminViewMode ?? 'list';
 
-    <?php if ($adminViewMode === 'prestiti'): ?>
-        <h1>Prestiti utenti</h1>
-        <p><a href="utenti.php">Torna agli utenti</a></p>
+$errorMsg = '';
+if (!empty($errorMessage)) {
+    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+}
+$successMsg = '';
+if (!empty($message)) {
+    $successMsg = '<p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>';
+}
+$messages = $errorMsg . $successMsg;
 
-        <?php if ($errorMessage !== ''): ?>
-            <div><?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') ?></div>
-        <?php endif; ?>
+if ($adminViewMode === 'prestiti') {
+    $template = file_get_contents(__DIR__ . '/../html/admin/prestiti-utente.html');
+    
+    $utentiOptions = '';
+    foreach ($utenti as $utente) {
+        $selected = ($utenteId === (int) $utente['id']) ? 'selected' : '';
+        $val = htmlspecialchars((string) $utente['id'], ENT_QUOTES, 'UTF-8');
+        $label = htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8');
+        $utentiOptions .= "<option value=\"{$val}\" {$selected}>{$label}</option>";
+    }
 
-        <?php if ($message !== ''): ?><p><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?></p><?php endif; ?>
+    if ($utenteId > 0) {
+        $modificaPrestitoDisplay = 'style="display:none;"';
+        $prestitoEn = [
+            '[PRESTITO_IN_MODIFICA_ID]' => '',
+            '[UTENTE_ID]' => htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8'),
+            '[DATA_INIZIO]' => '',
+            '[DATA_FINE]' => '',
+            '[STATO_OPTIONS]' => '',
+            '[LIBRO_ID]' => '',
+            '[NUOVO_UTENTE_ID]' => '',
+        ];
+        
+        if (!empty($prestitoInModifica)) {
+            $modificaPrestitoDisplay = '';
+            $statiPrestito = ['attivo', 'in_ritardo', 'concluso'];
+            $statiOptions = '';
+            foreach ($statiPrestito as $stato) {
+                $sel = ($prestitoInModifica['stato'] === $stato) ? 'selected' : '';
+                $statiOptions .= '<option value="' . htmlspecialchars($stato, ENT_QUOTES, 'UTF-8') . '" ' . $sel . '>' . htmlspecialchars($stato, ENT_QUOTES, 'UTF-8') . '</option>';
+            }
+            
+            $prestitoEn = [
+                '[PRESTITO_IN_MODIFICA_ID]' => htmlspecialchars((string) $prestitoInModifica['id'], ENT_QUOTES, 'UTF-8'),
+                '[UTENTE_ID]' => htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8'),
+                '[DATA_INIZIO]' => htmlspecialchars(formatDateTimeForInput($prestitoInModifica['data_inizio']), ENT_QUOTES, 'UTF-8'),
+                '[DATA_FINE]' => htmlspecialchars(formatDateTimeForInput($prestitoInModifica['data_fine']), ENT_QUOTES, 'UTF-8'),
+                '[STATO_OPTIONS]' => $statiOptions,
+                '[LIBRO_ID]' => htmlspecialchars((string) $prestitoInModifica['libro_id'], ENT_QUOTES, 'UTF-8'),
+                '[NUOVO_UTENTE_ID]' => htmlspecialchars((string) $prestitoInModifica['utente_id'], ENT_QUOTES, 'UTF-8'),
+            ];
+        }
 
-        <form method="get">
-            <p>
-                <label>Utente
-                    <select name="utente_id">
-                        <option value="0">Seleziona utente</option>
-                        <?php foreach ($utenti as $utente): ?>
-                            <option value="<?= htmlspecialchars((string) $utente['id'], ENT_QUOTES, 'UTF-8') ?>" <?= $utenteId === (int) $utente['id'] ? 'selected' : '' ?>>
-                                <?= htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8') ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </label>
-            </p>
-            <p><button type="submit">Visualizza prestiti</button></p>
-        </form>
+        $emptyPrestitiMessage = '';
+        $tableDisplay = '';
+        $tableRows = '';
+        
+        if (empty($prestiti)) {
+            $emptyPrestitiMessage = '<p>Nessun prestito trovato.</p>';
+            $tableDisplay = 'style="display:none;"';
+        } else {
+            foreach ($prestiti as $prestito) {
+                $id = htmlspecialchars((string) $prestito['id'], ENT_QUOTES, 'UTF-8');
+                $titolo = htmlspecialchars((string) $prestito['libro_titolo'], ENT_QUOTES, 'UTF-8');
+                $stato = htmlspecialchars((string) $prestito['stato'], ENT_QUOTES, 'UTF-8');
+                $inizio = htmlspecialchars((string) $prestito['data_inizio'], ENT_QUOTES, 'UTF-8');
+                $fine = htmlspecialchars((string) $prestito['data_fine'], ENT_QUOTES, 'UTF-8');
+                $utenteIdSafe = htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8');
+                
+                $statoPrestito = (string) $prestito['stato'];
+                $actions = '';
+                if ($statoPrestito === 'attivo') {
+                    $actions = '
+                        <button type="submit" name="azione" value="modifica">Modifica</button>
+                        <button type="submit" name="azione" value="elimina">Elimina</button>
+                        <button type="submit" name="azione" value="concludi">Concludi</button>
+                        <button type="submit" name="azione" value="proroga">Proroga</button>
+                    ';
+                } elseif ($statoPrestito === 'in_ritardo') {
+                    $actions = '
+                        <button type="submit" name="azione" value="modifica">Modifica</button>
+                        <button type="submit" name="azione" value="elimina">Elimina</button>
+                        <button type="submit" name="azione" value="concludi">Concludi</button>
+                    ';
+                } else {
+                    $actions = '
+                        <button type="submit" name="azione" value="modifica">Modifica</button>
+                        <button type="submit" name="azione" value="elimina">Elimina</button>
+                    ';
+                }
 
-        <?php if ($utenteId > 0): ?>
-            <?php if (!empty($prestitoInModifica)): ?>
-                <h2>Modifica prestito #<?= htmlspecialchars((string) $prestitoInModifica['id'], ENT_QUOTES, 'UTF-8') ?></h2>
-                <form method="post">
-                    <input type="hidden" name="azione" value="salva_modifica">
-                    <input type="hidden" name="prestito_id" value="<?= htmlspecialchars((string) $prestitoInModifica['id'], ENT_QUOTES, 'UTF-8') ?>">
-                    <input type="hidden" name="utente_id" value="<?= htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8') ?>">
+                $tableRows .= "<tr>
+                    <td>{$id}</td>
+                    <td>{$titolo}</td>
+                    <td>{$stato}</td>
+                    <td>{$inizio}</td>
+                    <td>{$fine}</td>
+                    <td>
+                        <form method=\"post\">
+                            <input type=\"hidden\" name=\"prestito_id\" value=\"{$id}\">
+                            <input type=\"hidden\" name=\"utente_id\" value=\"{$utenteIdSafe}\">
+                            {$actions}
+                        </form>
+                    </td>
+                </tr>\n";
+            }
+        }
 
-                    <p>
-                        <label>Data inizio
-                            <input
-                                type="datetime-local"
-                                name="data_inizio"
-                                value="<?= htmlspecialchars(formatDateTimeForInput($prestitoInModifica['data_inizio']), ENT_QUOTES, 'UTF-8') ?>"
-                                required
-                            >
-                        </label>
-                    </p>
-                    <p>
-                        <label>Data fine
-                            <input
-                                type="datetime-local"
-                                name="data_fine"
-                                value="<?= htmlspecialchars(formatDateTimeForInput($prestitoInModifica['data_fine']), ENT_QUOTES, 'UTF-8') ?>"
-                                required
-                            >
-                        </label>
-                    </p>
-                    <p>
-                        <label>Stato
-                            <select name="stato" required>
-                                <?php $statiPrestito = ['attivo', 'in_ritardo', 'concluso']; ?>
-                                <?php foreach ($statiPrestito as $stato): ?>
-                                    <option value="<?= htmlspecialchars($stato, ENT_QUOTES, 'UTF-8') ?>" <?= $prestitoInModifica['stato'] === $stato ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($stato, ENT_QUOTES, 'UTF-8') ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </label>
-                    </p>
-                    <p>
-                        <label>Libro ID
-                            <input type="number" name="libro_id" min="1" value="<?= htmlspecialchars((string) $prestitoInModifica['libro_id'], ENT_QUOTES, 'UTF-8') ?>" required>
-                        </label>
-                    </p>
-                    <p>
-                        <label>Utente ID
-                            <input type="number" name="nuovo_utente_id" min="1" value="<?= htmlspecialchars((string) $prestitoInModifica['utente_id'], ENT_QUOTES, 'UTF-8') ?>" required>
-                        </label>
-                    </p>
-                    <p><button type="submit">Aggiorna prestito</button></p>
+        echo strtr($template, array_merge([
+            '[MESSAGES]' => $messages,
+            '[UTENTI_OPTIONS]' => $utentiOptions,
+            '[PRESTITI_CONTENT_DISPLAY]' => '',
+            '[MODIFICA_PRESTITO_DISPLAY]' => $modificaPrestitoDisplay,
+            '[EMPTY_PRESTITI_MESSAGE]' => $emptyPrestitiMessage,
+            '[TABLE_DISPLAY]' => $tableDisplay,
+            '[TABLE_ROWS]' => $tableRows,
+        ], $prestitoEn));
+
+    } else {
+        echo strtr($template, [
+            '[MESSAGES]' => $messages,
+            '[UTENTI_OPTIONS]' => $utentiOptions,
+            '[PRESTITI_CONTENT_DISPLAY]' => 'style="display:none;"',
+            '[MODIFICA_PRESTITO_DISPLAY]' => 'style="display:none;"',
+            '[PRESTITO_IN_MODIFICA_ID]' => '',
+            '[UTENTE_ID]' => '',
+            '[DATA_INIZIO]' => '',
+            '[DATA_FINE]' => '',
+            '[STATO_OPTIONS]' => '',
+            '[LIBRO_ID]' => '',
+            '[NUOVO_UTENTE_ID]' => '',
+            '[EMPTY_PRESTITI_MESSAGE]' => '',
+            '[TABLE_DISPLAY]' => 'style="display:none;"',
+            '[TABLE_ROWS]' => '',
+        ]);
+    }
+} elseif ($adminViewMode === 'reviews') {
+    $template = file_get_contents(__DIR__ . '/../html/admin/recensioni.html');
+    
+    $utentiOptions = '';
+    foreach ($utenti as $utente) {
+        $selected = ($utenteId === (int) $utente['id']) ? 'selected' : '';
+        $val = htmlspecialchars((string) $utente['id'], ENT_QUOTES, 'UTF-8');
+        $label = htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8');
+        $utentiOptions .= "<option value=\"{$val}\" {$selected}>{$label}</option>";
+    }
+    
+    if (empty($recensioni)) {
+        echo strtr($template, [
+            '[MESSAGES]' => $messages,
+            '[UTENTI_OPTIONS]' => $utentiOptions,
+            '[EMPTY_MESSAGE]' => '<p>Nessuna recensione trovata.</p>',
+            '[TABLE_DISPLAY]' => 'style="display:none;"',
+            '[TABLE_ROWS]' => '',
+        ]);
+        return;
+    }
+
+    $tableRows = '';
+    $utenteIdSafe = htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8');
+    foreach ($recensioni as $recensione) {
+        $id = htmlspecialchars((string) $recensione['id'], ENT_QUOTES, 'UTF-8');
+        $username = htmlspecialchars((string) $recensione['username'], ENT_QUOTES, 'UTF-8');
+        $titolo = htmlspecialchars((string) $recensione['libro_titolo'], ENT_QUOTES, 'UTF-8');
+        $voto = htmlspecialchars((string) $recensione['valutazione'], ENT_QUOTES, 'UTF-8');
+        $testo = htmlspecialchars((string) mb_substr($recensione['testo'], 0, 80), ENT_QUOTES, 'UTF-8') . '...';
+        $data = htmlspecialchars((string) $recensione['data'], ENT_QUOTES, 'UTF-8');
+        $censurata = $recensione['censura'] ? 'Sì' : 'No';
+        
+        $censuraLabel = $recensione['censura'] ? 'Mostra' : 'Censura';
+
+        $tableRows .= "<tr>
+            <td>{$id}</td>
+            <td>{$username}</td>
+            <td>{$titolo}</td>
+            <td>{$voto}</td>
+            <td>{$testo}</td>
+            <td>{$data}</td>
+            <td>{$censurata}</td>
+            <td>
+                <form method=\"post\">
+                    <input type=\"hidden\" name=\"recensione_id\" value=\"{$id}\">
+                    <input type=\"hidden\" name=\"utente_id\" value=\"{$utenteIdSafe}\">
+                    <button type=\"submit\" name=\"azione\" value=\"censura\">{$censuraLabel}</button>
+                    <button type=\"submit\" name=\"azione\" value=\"elimina\">Elimina</button>
                 </form>
-                <hr>
-            <?php endif; ?>
+            </td>
+        </tr>\n";
+    }
 
-            <?php if (empty($prestiti)): ?>
-                <p>Nessun prestito trovato.</p>
-            <?php else: ?>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Libro</th>
-                            <th>Stato</th>
-                            <th>Inizio</th>
-                            <th>Fine</th>
-                            <th>Azioni</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($prestiti as $prestito): ?>
-                            <tr>
-                                <td><?= htmlspecialchars((string) $prestito['id'], ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= htmlspecialchars((string) $prestito['libro_titolo'], ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= htmlspecialchars((string) $prestito['stato'], ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= htmlspecialchars((string) $prestito['data_inizio'], ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= htmlspecialchars((string) $prestito['data_fine'], ENT_QUOTES, 'UTF-8') ?></td>
-                                <td>
-                                    <?php $statoPrestito = (string) $prestito['stato']; ?>
-                                    <form method="post">
-                                        <input type="hidden" name="prestito_id" value="<?= htmlspecialchars((string) $prestito['id'], ENT_QUOTES, 'UTF-8') ?>">
-                                        <input type="hidden" name="utente_id" value="<?= htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8') ?>">
-                                        <?php if ($statoPrestito === 'attivo'): ?>
-                                            <button type="submit" name="azione" value="modifica">Modifica</button>
-                                            <button type="submit" name="azione" value="elimina">Elimina</button>
-                                            <button type="submit" name="azione" value="concludi">Concludi</button>
-                                            <button type="submit" name="azione" value="proroga">Proroga</button>
-                                        <?php elseif ($statoPrestito === 'in_ritardo'): ?>
-                                            <button type="submit" name="azione" value="modifica">Modifica</button>
-                                            <button type="submit" name="azione" value="elimina">Elimina</button>
-                                            <button type="submit" name="azione" value="concludi">Concludi</button>
-                                        <?php else: ?>
-                                            <button type="submit" name="azione" value="modifica">Modifica</button>
-                                            <button type="submit" name="azione" value="elimina">Elimina</button>
-                                        <?php endif; ?>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php endif; ?>
-        <?php endif; ?>
+    echo strtr($template, [
+        '[MESSAGES]' => $messages,
+        '[UTENTI_OPTIONS]' => $utentiOptions,
+        '[EMPTY_MESSAGE]' => '',
+        '[TABLE_DISPLAY]' => '',
+        '[TABLE_ROWS]' => $tableRows,
+    ]);
+} else {
+    // List mode
+    $template = file_get_contents(__DIR__ . '/../html/admin/utenti.html');
+    
+    if (empty($utenti)) {
+        echo strtr($template, [
+            '[MESSAGES]' => $messages,
+            '[EMPTY_MESSAGE]' => '<p>Nessun utente trovato.</p>',
+            '[TABLE_DISPLAY]' => 'style="display:none;"',
+            '[TABLE_ROWS]' => '',
+        ]);
+        return;
+    }
 
-    <?php elseif ($adminViewMode === 'reviews'): ?>
-        <h1>Recensioni utenti</h1>
-        <p><a href="utenti.php">Torna agli utenti</a></p>
+    $tableRows = '';
+    foreach ($utenti as $utente) {
+        $id = htmlspecialchars((string) $utente['id'], ENT_QUOTES, 'UTF-8');
+        $username = htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8');
+        $email = htmlspecialchars((string) $utente['email'], ENT_QUOTES, 'UTF-8');
+        $ruolo = ((string) $utente['ruolo'] === 'admin') ? 'Amministratore' : 'Utente';
+        $attivo = ((int) $utente['attivo'] === 1) ? 'Sì' : 'No';
+        $prestitiT = htmlspecialchars((string) $utente['prestiti_totali'], ENT_QUOTES, 'UTF-8');
+        $prestitiA = htmlspecialchars((string) $utente['prestiti_attivi'], ENT_QUOTES, 'UTF-8');
+        
+        $rawPath = (string) ($utente['foto_profilo'] ?? '');
+        $fotoSrc = '';
+        if ($rawPath === '') {
+            $fotoSrc = '/BiblioTake/' . ltrim(DEFAULT_AVATAR, '/');
+        } elseif (preg_match('#^(https?://|/)#i', $rawPath)) {
+            $fotoSrc = $rawPath;
+        } else {
+            $fotoSrc = '/BiblioTake/' . ltrim($rawPath, '/');
+        }
+        $fotoSrcSafe = htmlspecialchars($fotoSrc, ENT_QUOTES, 'UTF-8');
 
-        <?php if ($errorMessage !== ''): ?>
-            <div><?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') ?></div>
-        <?php endif; ?>
+        $tableRows .= "<tr>
+            <td>{$id}</td>
+            <td>
+                <img src=\"{$fotoSrcSafe}\" alt=\"Foto profilo di {$username}\" width=\"48\" height=\"48\">
+            </td>
+            <td>{$username}</td>
+            <td>{$email}</td>
+            <td>{$ruolo}</td>
+            <td>{$attivo}</td>
+            <td>{$prestitiT}</td>
+            <td>{$prestitiA}</td>
+            <td>
+                <a href=\"prestiti-utente.php?utente_id={$id}\">Prestiti</a>
+                |
+                <a href=\"recensioni.php?utente_id={$id}\">Recensioni</a>
+            </td>
+        </tr>\n";
+    }
 
-        <?php if ($message !== ''): ?><p><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?></p><?php endif; ?>
-
-        <form method="get">
-            <p>
-                <label>Utente
-                    <select name="utente_id">
-                        <option value="0">Tutti gli utenti</option>
-                        <?php foreach ($utenti as $utente): ?>
-                            <option value="<?= htmlspecialchars((string) $utente['id'], ENT_QUOTES, 'UTF-8') ?>" <?= $utenteId === (int) $utente['id'] ? 'selected' : '' ?>>
-                                <?= htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8') ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </label>
-            </p>
-            <p><button type="submit">Filtra recensioni</button></p>
-        </form>
-
-        <?php if (empty($recensioni)): ?>
-            <p>Nessuna recensione trovata.</p>
-        <?php else: ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Utente</th>
-                        <th>Libro</th>
-                        <th>Voto</th>
-                        <th>Testo</th>
-                        <th>Data</th>
-                        <th>Censurata</th>
-                        <th>Azioni</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($recensioni as $recensione): ?>
-                        <tr>
-                            <td><?= htmlspecialchars((string) $recensione['id'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars((string) $recensione['username'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars((string) $recensione['libro_titolo'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars((string) $recensione['valutazione'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars((string) mb_substr($recensione['testo'], 0, 80), ENT_QUOTES, 'UTF-8') ?>...</td>
-                            <td><?= htmlspecialchars((string) $recensione['data'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= $recensione['censura'] ? 'Sì' : 'No' ?></td>
-                            <td>
-                                <form method="post">
-                                    <input type="hidden" name="recensione_id" value="<?= htmlspecialchars((string) $recensione['id'], ENT_QUOTES, 'UTF-8') ?>">
-                                    <input type="hidden" name="utente_id" value="<?= htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8') ?>">
-                                    <button type="submit" name="azione" value="censura"><?= $recensione['censura'] ? 'Mostra' : 'Censura' ?></button>
-                                    <button type="submit" name="azione" value="elimina">Elimina</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-
-    <?php else: ?>
-        <h1>Gestione utenti</h1>
-
-        <?php if ($errorMessage !== ''): ?>
-            <div><?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') ?></div>
-        <?php endif; ?>
-
-        <?php if (empty($utenti)): ?>
-            <p>Nessun utente trovato.</p>
-        <?php else: ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Foto</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Ruolo</th>
-                        <th>Attivo</th>
-                        <th>Prestiti totali</th>
-                        <th>Prestiti attivi</th>
-                        <th>Azioni</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($utenti as $utente): ?>
-                        <tr>
-                            <td><?= htmlspecialchars((string) $utente['id'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td>
-                                <?php
-                                    $rawPath = (string) ($utente['foto_profilo'] ?? '');
-                                    $fotoSrc = '';
-                                    if ($rawPath === '') {
-                                        $fotoSrc = '/BiblioTake/' . ltrim(DEFAULT_AVATAR, '/');
-                                    } elseif (preg_match('#^(https?://|/)#i', $rawPath)) {
-                                        $fotoSrc = $rawPath;
-                                    } else {
-                                        $fotoSrc = '/BiblioTake/' . ltrim($rawPath, '/');
-                                    }
-                                ?>
-                                <img src="<?= htmlspecialchars($fotoSrc, ENT_QUOTES, 'UTF-8') ?>" alt="Foto profilo di <?= htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8') ?>" width="48" height="48">
-                            </td>
-                            <td><?= htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars((string) $utente['email'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= ((string) $utente['ruolo'] === 'admin') ? 'Amministratore' : 'Utente' ?></td>
-                            <td><?= ((int) $utente['attivo'] === 1) ? 'Sì' : 'No' ?></td>
-                            <td><?= htmlspecialchars((string) $utente['prestiti_totali'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars((string) $utente['prestiti_attivi'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td>
-                                <a href="prestiti-utente.php?utente_id=<?= htmlspecialchars((string) $utente['id'], ENT_QUOTES, 'UTF-8') ?>">Prestiti</a>
-                                |
-                                <a href="recensioni.php?utente_id=<?= htmlspecialchars((string) $utente['id'], ENT_QUOTES, 'UTF-8') ?>">Recensioni</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-    <?php endif; ?>
+    echo strtr($template, [
+        '[MESSAGES]' => $messages,
+        '[EMPTY_MESSAGE]' => '',
+        '[TABLE_DISPLAY]' => '',
+        '[TABLE_ROWS]' => $tableRows,
+    ]);
+}
 
 

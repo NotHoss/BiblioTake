@@ -8,111 +8,97 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$navLinks = array(
-    array('key' => 'home',      'href' => 'index.php',     'label' => 'Home',      'lang' => 'en'),
-    array('key' => 'catalogo',  'href' => 'catalogo.php',  'label' => 'Catalogo'),
-    array('key' => 'about',     'href' => 'about.php',     'label' => 'Chi siamo'),
-    array('key' => 'contatti',  'href' => 'contatti.php',  'label' => 'Contatti'),
+$template = file_get_contents(__DIR__ . '/../../html/template/header.html');
+
+$navItems = array(
+    array('key' => 'home',     'href' => 'index.php',    'label' => 'Home',        'lang' => 'en'),
+    array('key' => 'catalogo', 'href' => 'catalogo.php', 'label' => 'Catalogo'),
+    array('key' => 'about',    'href' => 'about.php',    'label' => 'Chi siamo'),
+    array('key' => 'contatti', 'href' => 'contatti.php', 'label' => 'Contatti'),
 );
-?>
-<!DOCTYPE html>
-<html lang="it" xml:lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= htmlspecialchars(isset($pageTitle) ? $pageTitle : SITE_NAME, ENT_QUOTES, 'UTF-8') ?></title>
-    <meta name="description" content="<?= htmlspecialchars(isset($pageDescription) ? $pageDescription : SITE_DESCRIPTION, ENT_QUOTES, 'UTF-8') ?>">
-    <meta name="keywords"    content="<?= htmlspecialchars(isset($pageKeywords)    ? $pageKeywords    : '',                ENT_QUOTES, 'UTF-8') ?>">
-</head>
-<body>
 
-<a href="#main-content" class="skip-link">Vai al contenuto</a>
+$siteName = htmlspecialchars(SITE_NAME, ENT_QUOTES, 'UTF-8');
+$pageTitle = isset($pageTitle) && $pageTitle !== '' ? $pageTitle : SITE_NAME;
+$pageDescription = isset($pageDescription) && $pageDescription !== '' ? $pageDescription : SITE_DESCRIPTION;
+$pageKeywords = isset($pageKeywords) ? $pageKeywords : '';
 
-<header>
-    <div id="logo">
-        <h1>
-            <?php if (isset($currentPage) && $currentPage === 'home'): ?>
-                <?= htmlspecialchars(SITE_NAME, ENT_QUOTES, 'UTF-8') ?>
-            <?php else: ?>
-                <a href="index.php"><?= htmlspecialchars(SITE_NAME, ENT_QUOTES, 'UTF-8') ?></a>
-            <?php endif; ?>
-        </h1>
-    </div>
+$navigation = array();
+$baseUrl = rtrim(WEB_ROOT, '/');
 
-    <nav aria-label="Navigazione principale">
-        <ul>
-            <?php foreach ($navLinks as $link):
-                $isCurrent = (isset($currentPage) && $currentPage === $link['key']);
-                $langAttr  = isset($link['lang']) ? ' lang="' . $link['lang'] . '"' : '';
-            ?>
-                <?php if ($isCurrent): ?>
-                        <li aria-current="page" class="current-page">
-                            <span<?= $langAttr ?>><?= htmlspecialchars($link['label'], ENT_QUOTES, 'UTF-8') ?></span>
-                        </li>
-                    <?php else: ?>
-                        <?php
-                            $href = $link['href'];
-                            if (!preg_match('#^(https?://|/)#i', $href)) {
-                                $href = rtrim(WEB_ROOT, '/') . '/' . ltrim($href, '/');
-                            }
-                        ?>
-                        <li>
-                            <a href="<?= htmlspecialchars($href, ENT_QUOTES, 'UTF-8') ?>"<?= $langAttr ?>><?= htmlspecialchars($link['label'], ENT_QUOTES, 'UTF-8') ?></a>
-                        </li>
-                    <?php endif; ?>
-            <?php endforeach; ?>
+foreach ($navItems as $item) {
+    $isCurrent = isset($currentPage) && $currentPage === $item['key'];
+    $label = htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8');
+    $langAttr = isset($item['lang']) ? ' lang="' . htmlspecialchars($item['lang'], ENT_QUOTES, 'UTF-8') . '"' : '';
 
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                    <?php if (isset($currentPage) && $currentPage === 'admin'): ?>
-                        <li aria-current="page" class="current-page">Amministrazione</li>
-                    <?php else: ?>
-                        <li><a href="<?= htmlspecialchars(rtrim(WEB_ROOT, '/') . '/admin/index.php', ENT_QUOTES, 'UTF-8') ?>">Amministrazione</a></li>
-                    <?php endif; ?>
-                <?php else: ?>
-                    <?php if (isset($currentPage) && $currentPage === 'dashboard'): ?>
-                        <li aria-current="page" class="current-page">Area utente</li>
-                    <?php else: ?>
-                        <li><a href="<?= htmlspecialchars(rtrim(WEB_ROOT, '/') . '/dashboard.php', ENT_QUOTES, 'UTF-8') ?>">Area utente</a></li>
-                    <?php endif; ?>
-                <?php endif; ?>
+    if ($isCurrent) {
+        $navigation[] = '<li aria-current="page" class="current-page"><span' . $langAttr . '>' . $label . '</span></li>';
+        continue;
+    }
 
-                <li><a href="<?= htmlspecialchars(rtrim(WEB_ROOT, '/') . '/logout.php', ENT_QUOTES, 'UTF-8') ?>">Esci</a></li>
-            <?php else: ?>
-                    <?php if (isset($currentPage) && $currentPage === 'login'): ?>
-                    <li aria-current="page" class="current-page">Accedi</li>
-                <?php else: ?>
-                    <li><a href="<?= htmlspecialchars(rtrim(WEB_ROOT, '/') . '/login.php', ENT_QUOTES, 'UTF-8') ?>">Accedi</a></li>
-                <?php endif; ?>
+    $href = $item['href'];
+    if (!preg_match('#^(https?://|/)#i', $href)) {
+        $href = $baseUrl . '/' . ltrim($href, '/');
+    }
 
-                <?php if (isset($currentPage) && $currentPage === 'register'): ?>
-                    <li aria-current="page" class="current-page">Registrati</li>
-                <?php else: ?>
-                    <li><a href="<?= htmlspecialchars(rtrim(WEB_ROOT, '/') . '/register.php', ENT_QUOTES, 'UTF-8') ?>">Registrati</a></li>
-                <?php endif; ?>
-            <?php endif; ?>
-        </ul>
-    </nav>
-</header>
+    $navigation[] = '<li><a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '"' . $langAttr . '>' . $label . '</a></li>';
+}
 
-<?php if (!empty($breadcrumb) && is_array($breadcrumb)): ?>
-<nav class="breadcrumb" aria-label="Percorso nel sito">
-    <ul>
-        <?php
-        $lastIndex = count($breadcrumb) - 1;
-        foreach ($breadcrumb as $i => $crumb):
-            $isLast = ($i === $lastIndex);
-        ?>
-            <li>
-                <?php if ($isLast || empty($crumb['href'])): ?>
-                    <span aria-current="page"><?= htmlspecialchars($crumb['label'], ENT_QUOTES, 'UTF-8') ?></span>
-                <?php else: ?>
-                    <a href="<?= htmlspecialchars($crumb['href'], ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($crumb['label'], ENT_QUOTES, 'UTF-8') ?></a>
-                <?php endif; ?>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-</nav>
-<?php endif; ?>
+if (isset($_SESSION['user_id'])) {
+    if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+        if (isset($currentPage) && $currentPage === 'admin') {
+            $navigation[] = '<li aria-current="page" class="current-page">Amministrazione</li>';
+        } else {
+            $navigation[] = '<li><a href="' . htmlspecialchars($baseUrl . '/admin/index.php', ENT_QUOTES, 'UTF-8') . '">Amministrazione</a></li>';
+        }
+    } else {
+        if (isset($currentPage) && $currentPage === 'dashboard') {
+            $navigation[] = '<li aria-current="page" class="current-page">Area utente</li>';
+        } else {
+            $navigation[] = '<li><a href="' . htmlspecialchars($baseUrl . '/dashboard.php', ENT_QUOTES, 'UTF-8') . '">Area utente</a></li>';
+        }
+    }
 
-<main id="main-content">
+    $navigation[] = '<li><a href="' . htmlspecialchars($baseUrl . '/logout.php', ENT_QUOTES, 'UTF-8') . '">Esci</a></li>';
+} else {
+    if (isset($currentPage) && $currentPage === 'login') {
+        $navigation[] = '<li aria-current="page" class="current-page">Accedi</li>';
+    } else {
+        $navigation[] = '<li><a href="' . htmlspecialchars($baseUrl . '/login.php', ENT_QUOTES, 'UTF-8') . '">Accedi</a></li>';
+    }
+
+    if (isset($currentPage) && $currentPage === 'register') {
+        $navigation[] = '<li aria-current="page" class="current-page">Registrati</li>';
+    } else {
+        $navigation[] = '<li><a href="' . htmlspecialchars($baseUrl . '/register.php', ENT_QUOTES, 'UTF-8') . '">Registrati</a></li>';
+    }
+}
+
+$breadcrumbHtml = '';
+if (!empty($breadcrumb) && is_array($breadcrumb)) {
+    $breadcrumbItems = array();
+    $lastIndex = count($breadcrumb) - 1;
+
+    foreach ($breadcrumb as $index => $crumb) {
+        $label = isset($crumb['label']) ? htmlspecialchars($crumb['label'], ENT_QUOTES, 'UTF-8') : '';
+        $href = isset($crumb['href']) ? trim($crumb['href']) : '';
+
+        if ($index === $lastIndex || $href === '') {
+            $breadcrumbItems[] = '<li><span aria-current="page">' . $label . '</span></li>';
+        } else {
+            $breadcrumbItems[] = '<li><a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '">' . $label . '</a></li>';
+        }
+    }
+
+    $breadcrumbHtml = '<nav class="breadcrumb" aria-label="Percorso nel sito"><ul>' . implode('', $breadcrumbItems) . '</ul></nav>';
+}
+
+$replacements = array(
+    '[PAGE_TITLE]' => htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'),
+    '[PAGE_DESCRIPTION]' => htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'),
+    '[PAGE_KEYWORDS]' => htmlspecialchars($pageKeywords, ENT_QUOTES, 'UTF-8'),
+    '[SITE_NAME]' => $siteName,
+    '[NAVIGATION]' => implode('', $navigation),
+    '[BREADCRUMB]' => $breadcrumbHtml,
+);
+
+echo strtr($template, $replacements);

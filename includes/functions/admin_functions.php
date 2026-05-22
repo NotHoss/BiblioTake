@@ -553,7 +553,7 @@ function handleEliminaLibro($conn, $libroId, array $post) {
 }
 
 function handlePrestitiActions($conn, array $post) {
-    $result = ['message' => '', 'prestitoInModifica' => null, 'utenteId' => 0];
+    $result = ['message' => '', 'prestitoInModifica' => null, 'utenteId' => isset($post['utente_id']) ? (int) $post['utente_id'] : 0];
 
     if (!isset($post['prestito_id'], $post['azione'])) return $result;
     $prestitoId = (int) $post['prestito_id'];

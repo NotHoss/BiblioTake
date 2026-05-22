@@ -1,0 +1,16 @@
+<h1>Elimina libro</h1>
+<p><a href="libri.php">Torna ai libri</a></p>
+
+[MESSAGES]
+
+[NOT_FOUND_MESSAGE]
+
+<div [FORM_DISPLAY]>
+    <p>Stai per eliminare: <strong>[TITOLO]</strong></p>
+    [WARNING_MESSAGE]
+    <form method="post">
+        <input type="hidden" name="id" value="[LIBRO_ID]">
+        
+        <p><button type="submit">Conferma eliminazione</button></p>
+    </form>
+</div>

@@ -1,0 +1,87 @@
+<h1>Prestiti utenti</h1>
+<p><a href="utenti.php">Torna agli utenti</a></p>
+
+[MESSAGES]
+
+<form method="get">
+    <p>
+        <label>Utente
+            <select name="utente_id">
+                <option value="0">Seleziona utente</option>
+                [UTENTI_OPTIONS]
+            </select>
+        </label>
+    </p>
+    <p><button type="submit">Visualizza prestiti</button></p>
+</form>
+
+<div [PRESTITI_CONTENT_DISPLAY]>
+    <div [MODIFICA_PRESTITO_DISPLAY]>
+        <h2>Modifica prestito #[PRESTITO_IN_MODIFICA_ID]</h2>
+        <form method="post">
+            <input type="hidden" name="azione" value="salva_modifica">
+            <input type="hidden" name="prestito_id" value="[PRESTITO_IN_MODIFICA_ID]">
+            <input type="hidden" name="utente_id" value="[UTENTE_ID]">
+
+            <p>
+                <label>Data inizio
+                    <input
+                        type="datetime-local"
+                        name="data_inizio"
+                        value="[DATA_INIZIO]"
+                        required
+                    >
+                </label>
+            </p>
+            <p>
+                <label>Data fine
+                    <input
+                        type="datetime-local"
+                        name="data_fine"
+                        value="[DATA_FINE]"
+                        required
+                    >
+                </label>
+            </p>
+            <p>
+                <label>Stato
+                    <select name="stato" required>
+                        [STATO_OPTIONS]
+                    </select>
+                </label>
+            </p>
+            <p>
+                <label>Libro ID
+                    <input type="number" name="libro_id" min="1" value="[LIBRO_ID]" required>
+                </label>
+            </p>
+            <p>
+                <label>Utente ID
+                    <input type="number" name="nuovo_utente_id" min="1" value="[NUOVO_UTENTE_ID]" required>
+                </label>
+            </p>
+            <p><button type="submit">Aggiorna prestito</button></p>
+        </form>
+        <hr>
+    </div>
+
+    [EMPTY_PRESTITI_MESSAGE]
+
+    <div [TABLE_DISPLAY]>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Libro</th>
+                    <th>Stato</th>
+                    <th>Inizio</th>
+                    <th>Fine</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                [TABLE_ROWS]
+            </tbody>
+        </table>
+    </div>
+</div>

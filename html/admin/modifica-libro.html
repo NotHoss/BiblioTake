@@ -1,0 +1,44 @@
+<h1>Modifica libro</h1>
+<p><a href="libri.php">Torna ai libri</a></p>
+
+[MESSAGES]
+
+[NOT_FOUND_MESSAGE]
+
+<div [FORM_DISPLAY]>
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="[LIBRO_ID]">
+        
+        <p><label>ISBN <input type="text" name="codice_isbn" value="[CODICE_ISBN]"></label></p>
+        <p><label>Titolo <input type="text" name="titolo" value="[TITOLO]"></label></p>
+        <p><label>Autore <input type="text" name="autore" value="[AUTORE]"></label></p>
+        <p><label>Casa editrice <input type="text" name="casa_editrice" value="[CASA_EDITRICE]"></label></p>
+        <p><label>Edizione <input type="number" name="edizione" value="[EDIZIONE]"></label></p>
+        <p><label>Anno <input type="number" name="anno" value="[ANNO]"></label></p>
+        <p><label>Lingua <input type="text" name="lingua" value="[LINGUA]"></label></p>
+        <p><label>Descrizione <textarea name="descrizione">[DESCRIZIONE]</textarea></label></p>
+        <p><label>Pagine <input type="number" name="pagine" value="[PAGINE]"></label></p>
+        <p>
+            <label>Copertina corrente: </label>
+            [COPERTINA_CORRENTE]
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="delete_copertina" value="1" [DELETE_COPERTINA_DISABLED] [DELETE_COPERTINA_TITLE]>
+                Elimina copertina corrente
+            </label>
+        </p>
+        <p><label>Carica nuova copertina (JPG, max 5MB) <input type="file" name="copertina_file" accept=".jpg,.jpeg,image/jpeg"></label></p>
+        <p>
+            <label>Categoria
+                <select name="categoria" id="categoria-select-edit">
+                    <option value="">-- Scegli una categoria --</option>
+                    [CATEGORIE_OPTIONS]
+                    <option value="__NEW__">+ Aggiungi nuova categoria</option>
+                </select>
+            </label>
+            <input type="text" name="categoria_nuova" id="categoria-nuova-edit" placeholder="Nome nuova categoria">
+        </p>
+        <p><button type="submit">Aggiorna libro</button></p>
+    </form>
+</div>

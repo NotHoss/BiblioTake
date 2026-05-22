@@ -1,171 +1,182 @@
-    <?php $adminViewMode = $adminViewMode ?? 'list'; ?>
+<?php
+$adminViewMode = $adminViewMode ?? 'list';
 
-    <?php if ($adminViewMode === 'create'): ?>
-        <h1>Aggiungi libro</h1>
-        <p><a href="libri.php">Torna ai libri</a></p>
+$errorMsg = '';
+if ($errorMessage !== '') {
+    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+}
+$successMsg = '';
+if (!empty($successMessage)) {
+    $successMsg = '<div>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+}
+$messages = $errorMsg . $successMsg;
 
-        <?php if ($errorMessage !== ''): ?>
-            <div><?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') ?></div>
-        <?php endif; ?>
+if ($adminViewMode === 'create') {
+    $template = file_get_contents(__DIR__ . '/../html/admin/aggiungi-libro.html');
+    
+    $categorieOptions = '';
+    foreach (($categorie ?? []) as $cat) {
+        $selected = ($dati['categoria'] === $cat ? 'selected' : '');
+        $catHtml = htmlspecialchars($cat, ENT_QUOTES, 'UTF-8');
+        $categorieOptions .= '<option value="' . $catHtml . '" ' . $selected . '>' . $catHtml . '</option>';
+    }
 
-        <?php if ($successMessage !== ''): ?>
-            <div><?= htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') ?></div>
-        <?php endif; ?>
-
-        <form method="post" enctype="multipart/form-data">
-            <p><label>ISBN <input type="text" name="codice_isbn" value="<?= htmlspecialchars($dati['codice_isbn'], ENT_QUOTES, 'UTF-8') ?>" required></label></p>
-            <p><label>Titolo <input type="text" name="titolo" value="<?= htmlspecialchars($dati['titolo'], ENT_QUOTES, 'UTF-8') ?>" required></label></p>
-            <p><label>Autore <input type="text" name="autore" value="<?= htmlspecialchars($dati['autore'], ENT_QUOTES, 'UTF-8') ?>" required></label></p>
-            <p><label>Casa editrice <input type="text" name="casa_editrice" value="<?= htmlspecialchars($dati['casa_editrice'], ENT_QUOTES, 'UTF-8') ?>" required></label></p>
-            <p><label>Edizione <input type="number" name="edizione" value="<?= htmlspecialchars($dati['edizione'], ENT_QUOTES, 'UTF-8') ?>"></label></p>
-            <p><label>Anno <input type="number" name="anno" value="<?= htmlspecialchars($dati['anno'], ENT_QUOTES, 'UTF-8') ?>" required></label></p>
-            <p><label>Lingua <input type="text" name="lingua" value="<?= htmlspecialchars($dati['lingua'], ENT_QUOTES, 'UTF-8') ?>" required></label></p>
-            <p><label>Descrizione <textarea name="descrizione" required><?= htmlspecialchars($dati['descrizione'], ENT_QUOTES, 'UTF-8') ?></textarea></label></p>
-            <p><label>Pagine <input type="number" name="pagine" value="<?= htmlspecialchars($dati['pagine'], ENT_QUOTES, 'UTF-8') ?>" required></label></p>
-            <p><label>Copertina (JPG, max 5MB, facoltativa) <input type="file" name="copertina_file" accept=".jpg,.jpeg,image/jpeg"></label></p>
-            <p>
-                <label>Categoria
-                    <select name="categoria" id="categoria-select" required>
-                        <option value="">-- Scegli una categoria --</option>
-                        <?php foreach (($categorie ?? []) as $cat): ?>
-                            <option value="<?= htmlspecialchars($cat, ENT_QUOTES, 'UTF-8') ?>" <?= ($dati['categoria'] === $cat ? 'selected' : '') ?>>
-                                <?= htmlspecialchars($cat, ENT_QUOTES, 'UTF-8') ?>
-                            </option>
-                        <?php endforeach; ?>
-                        <option value="__NEW__">+ Aggiungi nuova categoria</option>
-                    </select>
-                </label>
-                <input type="text" name="categoria_nuova" id="categoria-nuova" placeholder="Nome nuova categoria">
-            </p>
+    echo strtr($template, [
+        '[MESSAGES]' => $messages,
+        '[CODICE_ISBN]' => htmlspecialchars($dati['codice_isbn'], ENT_QUOTES, 'UTF-8'),
+        '[TITOLO]' => htmlspecialchars($dati['titolo'], ENT_QUOTES, 'UTF-8'),
+        '[AUTORE]' => htmlspecialchars($dati['autore'], ENT_QUOTES, 'UTF-8'),
+        '[CASA_EDITRICE]' => htmlspecialchars($dati['casa_editrice'], ENT_QUOTES, 'UTF-8'),
+        '[EDIZIONE]' => htmlspecialchars($dati['edizione'], ENT_QUOTES, 'UTF-8'),
+        '[ANNO]' => htmlspecialchars($dati['anno'], ENT_QUOTES, 'UTF-8'),
+        '[LINGUA]' => htmlspecialchars($dati['lingua'], ENT_QUOTES, 'UTF-8'),
+        '[DESCRIZIONE]' => htmlspecialchars($dati['descrizione'], ENT_QUOTES, 'UTF-8'),
+        '[PAGINE]' => htmlspecialchars($dati['pagine'], ENT_QUOTES, 'UTF-8'),
+        '[CATEGORIE_OPTIONS]' => $categorieOptions,
+    ]);
+} elseif ($adminViewMode === 'edit') {
+    $template = file_get_contents(__DIR__ . '/../html/admin/modifica-libro.html');
+    
+    if (!$libro) {
+        echo strtr($template, [
+            '[MESSAGES]' => $messages,
+            '[NOT_FOUND_MESSAGE]' => '<p>Libro non trovato.</p>',
+            '[FORM_DISPLAY]' => 'style="display:none;"',
+            '[LIBRO_ID]' => '',
             
-            <p><button type="submit">Salva libro</button></p>
-        </form>
+            '[CODICE_ISBN]' => '',
+            '[TITOLO]' => '',
+            '[AUTORE]' => '',
+            '[CASA_EDITRICE]' => '',
+            '[EDIZIONE]' => '',
+            '[ANNO]' => '',
+            '[LINGUA]' => '',
+            '[DESCRIZIONE]' => '',
+            '[PAGINE]' => '',
+            '[COPERTINA_CORRENTE]' => '',
+            '[DELETE_COPERTINA_DISABLED]' => '',
+            '[DELETE_COPERTINA_TITLE]' => '',
+            '[CATEGORIE_OPTIONS]' => '',
+        ]);
+        return;
+    }
 
-    <?php elseif ($adminViewMode === 'edit'): ?>
-        <h1>Modifica libro</h1>
-        <p><a href="libri.php">Torna ai libri</a></p>
+    $categorieOptions = '';
+    foreach (($categorie ?? []) as $cat) {
+        $selected = ($libro['categoria'] === $cat ? 'selected' : '');
+        $catHtml = htmlspecialchars($cat, ENT_QUOTES, 'UTF-8');
+        $categorieOptions .= '<option value="' . $catHtml . '" ' . $selected . '>' . $catHtml . '</option>';
+    }
 
-        <?php if ($errorMessage !== ''): ?>
-            <div><?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') ?></div>
-        <?php endif; ?>
+    $copertinaHtml = '';
+    if (!empty($libro['copertina'])) {
+        $copertinaHtml = '<span>' . htmlspecialchars((string) $libro['copertina'], ENT_QUOTES, 'UTF-8') . '</span>';
+    } else {
+        $copertinaHtml = '<span>---</span>';
+    }
 
-        <?php if (!$libro): ?>
-            <p>Libro non trovato.</p>
-        <?php else: ?>
-            <form method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<?= htmlspecialchars((string) $libroId, ENT_QUOTES, 'UTF-8') ?>">
-                <?= render_csrf_input() ?>
-                <p><label>ISBN <input type="text" name="codice_isbn" value="<?= htmlspecialchars((string) $libro['codice_isbn'], ENT_QUOTES, 'UTF-8') ?>"></label></p>
-                <p><label>Titolo <input type="text" name="titolo" value="<?= htmlspecialchars((string) $libro['titolo'], ENT_QUOTES, 'UTF-8') ?>"></label></p>
-                <p><label>Autore <input type="text" name="autore" value="<?= htmlspecialchars((string) $libro['autore'], ENT_QUOTES, 'UTF-8') ?>"></label></p>
-                <p><label>Casa editrice <input type="text" name="casa_editrice" value="<?= htmlspecialchars((string) ($libro['casa_editrice'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"></label></p>
-                <p><label>Edizione <input type="number" name="edizione" value="<?= htmlspecialchars((string) ($libro['edizione'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"></label></p>
-                <p><label>Anno <input type="number" name="anno" value="<?= htmlspecialchars((string) ($libro['anno'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"></label></p>
-                <p><label>Lingua <input type="text" name="lingua" value="<?= htmlspecialchars((string) ($libro['lingua'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"></label></p>
-                <p><label>Descrizione <textarea name="descrizione"><?= htmlspecialchars((string) ($libro['descrizione'] ?? ''), ENT_QUOTES, 'UTF-8') ?></textarea></label></p>
-                <p><label>Pagine <input type="number" name="pagine" value="<?= htmlspecialchars((string) ($libro['pagine'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"></label></p>
-                <p>
-                    <label>Copertina corrente: </label>
-                    <?php if (!empty($libro['copertina'])): ?>
-                        <span><?= htmlspecialchars((string) $libro['copertina'], ENT_QUOTES, 'UTF-8') ?></span>
-                    <?php else: ?>
-                        <span>---</span>
-                    <?php endif; ?>
-                </p>
-                <?php
-                    $canDeleteCover = true;
-                    if (!empty($libro['copertina'])) {
-                        $canDeleteCover = (basename($libro['copertina']) !== basename(DEFAULT_COVER));
-                    }
-                ?>
-                <p>
-                    <label>
-                        <input type="checkbox" name="delete_copertina" value="1" <?php if (!$canDeleteCover) echo 'disabled'; ?> <?php if (!$canDeleteCover) echo 'title="Non è possibile eliminare la copertina placeholder"'; ?>>
-                        Elimina copertina corrente
-                    </label>
-                </p>
-                <p><label>Carica nuova copertina (JPG, max 5MB) <input type="file" name="copertina_file" accept=".jpg,.jpeg,image/jpeg"></label></p>
-                <p>
-                    <label>Categoria
-                        <select name="categoria" id="categoria-select-edit">
-                            <option value="">-- Scegli una categoria --</option>
-                            <?php foreach (($categorie ?? []) as $cat): ?>
-                                <option value="<?= htmlspecialchars($cat, ENT_QUOTES, 'UTF-8') ?>" <?= ($libro['categoria'] === $cat ? 'selected' : '') ?>>
-                                    <?= htmlspecialchars($cat, ENT_QUOTES, 'UTF-8') ?>
-                                </option>
-                            <?php endforeach; ?>
-                            <option value="__NEW__">+ Aggiungi nuova categoria</option>
-                        </select>
-                    </label>
-                    <input type="text" name="categoria_nuova" id="categoria-nuova-edit" placeholder="Nome nuova categoria">
-                </p>
-                
-                <p><button type="submit">Aggiorna libro</button></p>
-            </form>
-        <?php endif; ?>
+    $canDeleteCover = false;
+    if (!empty($libro['copertina']) && basename($libro['copertina']) !== basename(DEFAULT_COVER)) {
+        $canDeleteCover = true;
+    }
+    
+    $disabledAttr = !$canDeleteCover ? 'disabled' : '';
+    $titleAttr = !$canDeleteCover ? 'title="Non è possibile eliminare la copertina placeholder"' : '';
 
-    <?php elseif ($adminViewMode === 'delete'): ?>
-        <h1>Elimina libro</h1>
-        <p><a href="libri.php">Torna ai libri</a></p>
+    echo strtr($template, [
+        '[MESSAGES]' => $messages,
+        '[NOT_FOUND_MESSAGE]' => '',
+        '[FORM_DISPLAY]' => '',
+        '[LIBRO_ID]' => htmlspecialchars((string) $libroId, ENT_QUOTES, 'UTF-8'),
+        
+        '[CODICE_ISBN]' => htmlspecialchars((string) $libro['codice_isbn'], ENT_QUOTES, 'UTF-8'),
+        '[TITOLO]' => htmlspecialchars((string) $libro['titolo'], ENT_QUOTES, 'UTF-8'),
+        '[AUTORE]' => htmlspecialchars((string) $libro['autore'], ENT_QUOTES, 'UTF-8'),
+        '[CASA_EDITRICE]' => htmlspecialchars((string) ($libro['casa_editrice'] ?? ''), ENT_QUOTES, 'UTF-8'),
+        '[EDIZIONE]' => htmlspecialchars((string) ($libro['edizione'] ?? ''), ENT_QUOTES, 'UTF-8'),
+        '[ANNO]' => htmlspecialchars((string) ($libro['anno'] ?? ''), ENT_QUOTES, 'UTF-8'),
+        '[LINGUA]' => htmlspecialchars((string) ($libro['lingua'] ?? ''), ENT_QUOTES, 'UTF-8'),
+        '[DESCRIZIONE]' => htmlspecialchars((string) ($libro['descrizione'] ?? ''), ENT_QUOTES, 'UTF-8'),
+        '[PAGINE]' => htmlspecialchars((string) ($libro['pagine'] ?? ''), ENT_QUOTES, 'UTF-8'),
+        '[COPERTINA_CORRENTE]' => $copertinaHtml,
+        '[DELETE_COPERTINA_DISABLED]' => $disabledAttr,
+        '[DELETE_COPERTINA_TITLE]' => $titleAttr,
+        '[CATEGORIE_OPTIONS]' => $categorieOptions,
+    ]);
+} elseif ($adminViewMode === 'delete') {
+    $template = file_get_contents(__DIR__ . '/../html/admin/elimina-libro.html');
 
-        <?php if ($errorMessage !== ''): ?>
-            <div><?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') ?></div>
-        <?php endif; ?>
+    if (!$libro) {
+        echo strtr($template, [
+            '[MESSAGES]' => $messages,
+            '[NOT_FOUND_MESSAGE]' => '<p>Libro non trovato.</p>',
+            '[FORM_DISPLAY]' => 'style="display:none;"',
+            '[TITOLO]' => '',
+            '[WARNING_MESSAGE]' => '',
+            '[LIBRO_ID]' => '',
+            
+        ]);
+        return;
+    }
 
-        <?php if (!$libro): ?>
-            <p>Libro non trovato.</p>
-        <?php else: ?>
-            <p>Stai per eliminare: <strong><?= htmlspecialchars((string) $libro['titolo'], ENT_QUOTES, 'UTF-8') ?></strong></p>
-            <?php if ($message !== ''): ?><p><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?></p><?php endif; ?>
-            <form method="post">
-                <input type="hidden" name="id" value="<?= htmlspecialchars((string) $libroId, ENT_QUOTES, 'UTF-8') ?>">
-                <?= render_csrf_input() ?>
-                <p><button type="submit">Conferma eliminazione</button></p>
-            </form>
-        <?php endif; ?>
+    $warningMsg = '';
+    if (!empty($message)) {
+        $warningMsg = '<p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>';
+    }
 
-    <?php else: ?>
-        <h1>Gestione libri</h1>
-        <p><a href="aggiungi-libro.php">Inserisci nuovo libro</a></p>
+    echo strtr($template, [
+        '[MESSAGES]' => $messages,
+        '[NOT_FOUND_MESSAGE]' => '',
+        '[FORM_DISPLAY]' => '',
+        '[TITOLO]' => htmlspecialchars((string) $libro['titolo'], ENT_QUOTES, 'UTF-8'),
+        '[WARNING_MESSAGE]' => $warningMsg,
+        '[LIBRO_ID]' => htmlspecialchars((string) $libroId, ENT_QUOTES, 'UTF-8'),
+        
+    ]);
+} else {
+    // List mode
+    $template = file_get_contents(__DIR__ . '/../html/admin/libri.html');
+    
+    if (empty($libri)) {
+        echo strtr($template, [
+            '[MESSAGES]' => $messages,
+            '[EMPTY_MESSAGE]' => '<p>Nessun libro trovato.</p>',
+            '[TABLE_DISPLAY]' => 'style="display:none;"',
+            '[TABLE_ROWS]' => '',
+        ]);
+        return;
+    }
 
-        <?php if ($errorMessage !== ''): ?>
-            <div><?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') ?></div>
-        <?php endif; ?>
+    $tableRows = '';
+    foreach ($libri as $libroRow) {
+        $id = htmlspecialchars((string) $libroRow['id'], ENT_QUOTES, 'UTF-8');
+        $titolo = htmlspecialchars((string) $libroRow['titolo'], ENT_QUOTES, 'UTF-8');
+        $autore = htmlspecialchars((string) $libroRow['autore'], ENT_QUOTES, 'UTF-8');
+        $anno = htmlspecialchars((string) $libroRow['anno'], ENT_QUOTES, 'UTF-8');
+        $categoria = htmlspecialchars((string) $libroRow['categoria'], ENT_QUOTES, 'UTF-8');
+        $prestiti = htmlspecialchars((string) $libroRow['prestiti_attivi'], ENT_QUOTES, 'UTF-8');
 
-        <?php if (empty($libri)): ?>
-            <p>Nessun libro trovato.</p>
-        <?php else: ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Titolo</th>
-                        <th>Autore</th>
-                        <th>Anno</th>
-                        <th>Categoria</th>
-                        <th>Prestiti attivi</th>
-                        <th>Azioni</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($libri as $libro): ?>
-                        <tr>
-                            <td><?= htmlspecialchars((string) $libro['id'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars((string) $libro['titolo'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars((string) $libro['autore'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars((string) $libro['anno'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars((string) $libro['categoria'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars((string) $libro['prestiti_attivi'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td>
-                                <a href="modifica-libro.php?id=<?= htmlspecialchars((string) $libro['id'], ENT_QUOTES, 'UTF-8') ?>">Modifica</a>
-                                |
-                                <a href="elimina-libro.php?id=<?= htmlspecialchars((string) $libro['id'], ENT_QUOTES, 'UTF-8') ?>">Elimina</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-    <?php endif; ?>
+        $tableRows .= "<tr>
+            <td>{$id}</td>
+            <td>{$titolo}</td>
+            <td>{$autore}</td>
+            <td>{$anno}</td>
+            <td>{$categoria}</td>
+            <td>{$prestiti}</td>
+            <td>
+                <a href=\"modifica-libro.php?id={$id}\">Modifica</a>
+                |
+                <a href=\"elimina-libro.php?id={$id}\">Elimina</a>
+            </td>
+        </tr>\n";
+    }
+    
+    echo strtr($template, [
+        '[MESSAGES]' => $messages,
+        '[EMPTY_MESSAGE]' => '',
+        '[TABLE_DISPLAY]' => '',
+        '[TABLE_ROWS]' => $tableRows,
+    ]);
+}
 
 
