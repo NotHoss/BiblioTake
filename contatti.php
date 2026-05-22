@@ -5,8 +5,13 @@ $pageTitle       = 'Contatti — BiblioTake';
 $pageDescription = 'Contatta la biblioteca BiblioTake per informazioni su prestiti, catalogo e servizi offerti.';
 $pageKeywords    = 'contatti, biblioteca, BiblioTake, informazioni, email, telefono';
 $currentPage     = 'contatti';
-$biblioteca      = null;
 
+$breadcrumb = array(
+    array('label' => 'Home',     'href' => 'index.php'),
+    array('label' => 'Contatti', 'href' => ''),
+);
+
+$biblioteca = null;
 if ($conn instanceof mysqli) {
     $biblioteca = getBibliotecaInfo($conn);
 }

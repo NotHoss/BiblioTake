@@ -24,6 +24,7 @@ if ($adminViewMode === 'create') {
     echo strtr($template, [
         '[MESSAGES]' => $messages,
         '[CODICE_ISBN]' => htmlspecialchars($dati['codice_isbn'], ENT_QUOTES, 'UTF-8'),
+        '[TAGS]' => htmlspecialchars((string) ($dati['tags'] ?? ''), ENT_QUOTES, 'UTF-8'),
         '[TITOLO]' => htmlspecialchars($dati['titolo'], ENT_QUOTES, 'UTF-8'),
         '[AUTORE]' => htmlspecialchars($dati['autore'], ENT_QUOTES, 'UTF-8'),
         '[CASA_EDITRICE]' => htmlspecialchars($dati['casa_editrice'], ENT_QUOTES, 'UTF-8'),
@@ -57,6 +58,7 @@ if ($adminViewMode === 'create') {
             '[DELETE_COPERTINA_DISABLED]' => '',
             '[DELETE_COPERTINA_TITLE]' => '',
             '[CATEGORIE_OPTIONS]' => '',
+            '[TAGS]' => '',
         ]);
         return;
     }
@@ -83,12 +85,18 @@ if ($adminViewMode === 'create') {
     $disabledAttr = !$canDeleteCover ? 'disabled' : '';
     $titleAttr = !$canDeleteCover ? 'title="Non è possibile eliminare la copertina placeholder"' : '';
 
+    $tagsArr = getTagsByLibroId($conn, $libroId);
+    $tagsCsv = '';
+    if (!empty($tagsArr)) {
+        $tagsCsv = implode(', ', array_column($tagsArr, 'nome'));
+    }
+
     echo strtr($template, [
         '[MESSAGES]' => $messages,
         '[NOT_FOUND_MESSAGE]' => '',
         '[FORM_DISPLAY]' => '',
         '[LIBRO_ID]' => htmlspecialchars((string) $libroId, ENT_QUOTES, 'UTF-8'),
-        
+        '[TAGS]' => htmlspecialchars($tagsCsv, ENT_QUOTES, 'UTF-8'),
         '[CODICE_ISBN]' => htmlspecialchars((string) $libro['codice_isbn'], ENT_QUOTES, 'UTF-8'),
         '[TITOLO]' => htmlspecialchars((string) $libro['titolo'], ENT_QUOTES, 'UTF-8'),
         '[AUTORE]' => htmlspecialchars((string) $libro['autore'], ENT_QUOTES, 'UTF-8'),
@@ -156,12 +164,18 @@ if ($adminViewMode === 'create') {
         $categoria = htmlspecialchars((string) $libroRow['categoria'], ENT_QUOTES, 'UTF-8');
         $prestiti = htmlspecialchars((string) $libroRow['prestiti_attivi'], ENT_QUOTES, 'UTF-8');
 
+        $tagsArr = getTagsByLibroId($conn, (int) $libroRow['id']);
+        $tagsList = [];
+        foreach ($tagsArr as $t) { $tagsList[] = htmlspecialchars((string) $t['nome'], ENT_QUOTES, 'UTF-8'); }
+        $tagsHtml = implode(', ', $tagsList);
+
         $tableRows .= "<tr>
             <td>{$id}</td>
             <td>{$titolo}</td>
             <td>{$autore}</td>
             <td>{$anno}</td>
             <td>{$categoria}</td>
+            <td>{$tagsHtml}</td>
             <td>{$prestiti}</td>
             <td>
                 <a href=\"modifica-libro.php?id={$id}\">Modifica</a>

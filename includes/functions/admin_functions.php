@@ -393,6 +393,7 @@ function handleAggiungiLibro($conn, array $post, array $files) {
         'pagine' => '',
         'copertina' => '',
         'categoria' => '',
+        'tags' => '',
     ];
 
     foreach ($dati as $chiave => $valore) {
@@ -478,6 +479,7 @@ function handleModificaLibro($conn, $libroId, array $post, array $files, array $
         'pagine' => (int) ($post['pagine'] ?? 0),
         'copertina' => trim((string) ($post['copertina'] ?? '')),
         'categoria' => trim((string) ($post['categoria'] ?? '')),
+        'tags' => trim((string) ($post['tags'] ?? '')),
     ];
 
     if (isset($post['categoria']) && $post['categoria'] === '__NEW__') {

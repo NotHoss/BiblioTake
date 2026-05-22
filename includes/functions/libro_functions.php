@@ -131,14 +131,18 @@ function countLibri($conn, $filtri) {
 
 function getLibroById($conn, $id) {
     $stmt = $conn->prepare(
-        'SELECT l.id, l.codice_isbn, l.titolo, l.autore, l.casa_editrice, l.edizione, l.anno, l.lingua, l.descrizione, l.pagine, l.copertina, l.categoria
-         FROM libro l
-         WHERE l.id = ?'
+        'SELECT l.*, (
+            SELECT ROUND(AVG(r.valutazione), 1)
+            FROM recensione r
+            WHERE r.libro_id = l.id
+        ) AS media_voti
+        FROM libro l
+        WHERE l.id = ?'
     );
     $stmt->bind_param('i', $id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $libro = $result->fetch_assoc();
+    $libro  = $result->fetch_assoc();
     $stmt->close();
 
     return $libro;
@@ -266,6 +270,14 @@ function createLibro($conn, array $dati) {
     $nuovoId = $stmt->insert_id;
     $stmt->close();
 
+    // Gestione tag associati (se forniti come stringa separata da virgole)
+    if (!empty($dati['tags'])) {
+        $tags = array_filter(array_map('trim', explode(',', (string) $dati['tags'])));
+        if (!empty($tags)) {
+            syncTagsForLibro($conn, $nuovoId, $tags);
+        }
+    }
+
     return $nuovoId;
 }
 
@@ -297,7 +309,84 @@ function updateLibro($conn, $id, array $dati) {
         $id
     );
 
-    return $stmt->execute();
+    $res = $stmt->execute();
+
+    if ($res) {
+        // Aggiorna i tag associati (se forniti come stringa separata da virgole)
+        if (isset($dati['tags'])) {
+            $tags = array_filter(array_map('trim', explode(',', (string) $dati['tags'])));
+            syncTagsForLibro($conn, $id, $tags);
+        }
+    }
+
+    return $res;
+}
+
+/**
+ * Sincronizza i tag di un libro: rimuove le associazioni esistenti e ne inserisce di nuove.
+ * Accetta un array di nomi di tag.
+ */
+function syncTagsForLibro($conn, $libroId, array $tags) {
+    // Rimuovi associazioni esistenti
+    $stmt = $conn->prepare('DELETE FROM libro_tag WHERE libro_id = ?');
+    if ($stmt) {
+        $stmt->bind_param('i', $libroId);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    if (empty($tags)) return;
+
+    // Per ogni tag: assicurati che esista nella tabella tag, poi inserisci in libro_tag
+    $stmtSelect = $conn->prepare('SELECT id FROM tag WHERE nome = ? LIMIT 1');
+    $stmtInsertTag = $conn->prepare('INSERT INTO tag (nome) VALUES (?)');
+    $stmtInsertLink = $conn->prepare('INSERT INTO libro_tag (libro_id, tag_id) VALUES (?, ?)');
+
+    foreach ($tags as $tagName) {
+        if ($tagName === '') continue;
+        $nome = trim((string) $tagName);
+        $tagId = null;
+
+        if ($stmtSelect) {
+            $stmtSelect->bind_param('s', $nome);
+            $stmtSelect->execute();
+            $res = $stmtSelect->get_result();
+            $row = $res ? $res->fetch_assoc() : null;
+            if ($row) {
+                $tagId = (int) $row['id'];
+            }
+            $stmtSelect->free_result();
+        }
+
+        if ($tagId === null && $stmtInsertTag) {
+            $stmtInsertTag->bind_param('s', $nome);
+            $stmtInsertTag->execute();
+            $tagId = $stmtInsertTag->insert_id;
+        }
+
+        if ($tagId !== null && $stmtInsertLink) {
+            $stmtInsertLink->bind_param('ii', $libroId, $tagId);
+            $stmtInsertLink->execute();
+        }
+    }
+
+    if ($stmtSelect) $stmtSelect->close();
+    if ($stmtInsertTag) $stmtInsertTag->close();
+    if ($stmtInsertLink) $stmtInsertLink->close();
+}
+
+function getAllTags($conn) {
+    $stmt = $conn->prepare('SELECT id, nome FROM tag ORDER BY nome ASC');
+    $tags = [];
+    if ($stmt) {
+        $stmt->execute();
+        $res = $stmt->get_result();
+        while ($row = $res->fetch_assoc()) {
+            $tags[] = $row;
+        }
+        $stmt->close();
+    }
+    return $tags;
 }
 
 function deleteLibroWithCascade($conn, $id) {
@@ -352,3 +441,5 @@ function deleteLibroWithCascade($conn, $id) {
         return false;
     }
 }
+
+?>

@@ -3,6 +3,14 @@ require_once '../includes/resources.php';
 requireRole('admin');
 
 $pageTitle = 'Elimina libro — Admin BiblioTake';
+$pageDescription = 'Rimuovi un libro dal catalogo (operazione irreversibile).';
+$pageKeywords = 'admin, elimina libro, catalogo, BiblioTake';
+$breadcrumb = array(
+    array('label' => 'Home', 'href' => '../index.php'),
+    array('label' => 'Admin', 'href' => 'index.php'),
+    array('label' => 'Libri', 'href' => 'libri.php'),
+    array('label' => 'Elimina', 'href' => ''),
+);
 $currentPage = 'admin';
 $message = '';
 $errorMessage = '';

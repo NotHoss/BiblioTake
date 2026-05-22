@@ -3,6 +3,14 @@ require_once '../includes/resources.php';
 requireRole('admin');
 
 $pageTitle = 'Prestiti utente — Admin BiblioTake';
+$pageDescription = 'Visualizza e gestisci i prestiti di uno specifico utente.';
+$pageKeywords = 'admin, prestiti, utente, gestione, BiblioTake';
+$breadcrumb = array(
+    array('label' => 'Home', 'href' => '../index.php'),
+    array('label' => 'Admin', 'href' => 'index.php'),
+    array('label' => 'Utenti', 'href' => 'utenti.php'),
+    array('label' => 'Prestiti', 'href' => ''),
+);
 $currentPage = 'admin';
 $message = '';
 $errorMessage = '';

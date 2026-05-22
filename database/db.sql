@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS recensione;
 DROP TABLE IF EXISTS prestito;
+DROP TABLE IF EXISTS libro_tag;
+DROP TABLE IF EXISTS tag;
 DROP TABLE IF EXISTS libro;
 DROP TABLE IF EXISTS utente;
 DROP TABLE IF EXISTS biblioteca;
@@ -39,6 +41,25 @@ CREATE TABLE libro (
 	categoria VARCHAR(100) NOT NULL,
 	CHECK (edizione > 0),
 	CHECK (pagine > 0)
+);
+
+CREATE TABLE tag (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE libro_tag (
+	libro_id INT NOT NULL,
+	tag_id   INT NOT NULL,
+	PRIMARY KEY (libro_id, tag_id),
+	CONSTRAINT libro_tag_libro_fk FOREIGN KEY (libro_id)
+		REFERENCES libro(id)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	CONSTRAINT libro_tag_tag_fk FOREIGN KEY (tag_id)
+		REFERENCES tag(id)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
 );
 
 CREATE TABLE prestito (
@@ -108,6 +129,22 @@ INSERT INTO libro (
 	(206, '9788806228889', 'L ordine del tempo', 'Carlo Rovelli', 'Adelphi', 5, 2021, 'Italiano', 'Saggio divulgativo sul tempo e sulla fisica contemporanea.', 256, 'images/default-cover.jpg', 'Saggistica scientifica'),
 	(207, '9781408855652', 'Harry Potter e la pietra filosofale', 'J.K. Rowling', 'Salani', 8, 2023, 'Italiano', 'Primo capitolo della saga del maghetto più famoso.', 336, 'images/default-cover.jpg', 'Fantasy'),
 	(208, '9788804685271', 'Se questo è un uomo', 'Primo Levi', 'Einaudi', 14, 2024, 'Italiano', 'Testimonianza fondamentale sulla deportazione nei lager.', 208, 'images/default-cover.jpg', 'Memoria');
+
+INSERT INTO tag (id, nome) VALUES
+	(1, 'Medioevo'),
+	(2, 'Giallo'),
+	(3, 'Storia'),
+	(4, 'Filosofia'),
+	(5, 'Giappone'),
+	(6, 'Formazione');
+
+INSERT INTO libro_tag (libro_id, tag_id) VALUES
+	(201, 1),
+	(201, 2),
+	(202, 3),
+	(202, 4),
+	(204, 5),
+	(204, 6);
 
 INSERT INTO prestito (
 	id, data_inizio, data_fine, stato, biblioteca_id, libro_id, utente_id

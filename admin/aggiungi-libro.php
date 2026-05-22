@@ -3,6 +3,14 @@ require_once '../includes/resources.php';
 requireRole('admin');
 
 $pageTitle = 'Aggiungi libro — Admin BiblioTake';
+$pageDescription = 'Aggiungi un nuovo libro al catalogo della biblioteca.';
+$pageKeywords = 'admin, aggiungi libro, catalogo, BiblioTake';
+$breadcrumb = array(
+    array('label' => 'Home', 'href' => '../index.php'),
+    array('label' => 'Admin', 'href' => 'index.php'),
+    array('label' => 'Libri', 'href' => 'libri.php'),
+    array('label' => 'Aggiungi', 'href' => ''),
+);
 $currentPage = 'admin';
 $errorMessage = '';
 $successMessage = '';
@@ -19,6 +27,7 @@ $dati = [
     'pagine' => '',
     'copertina' => '',
     'categoria' => '',
+    'tags' => '',
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '') {

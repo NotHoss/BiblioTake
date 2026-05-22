@@ -2,12 +2,12 @@
 http_response_code(403);
 require_once 'includes/resources.php';
 
-$pageTitle       = 'Accesso non autorizzato';
+$pageTitle       = 'Accesso negato — BiblioTake';
 $pageDescription = 'Non hai i permessi necessari per accedere a questa pagina.';
 $pageKeywords    = '403, accesso negato, errore, autorizzazione';
 $currentPage     = '';
 $breadcrumb      = array(
-    array('label' => 'Home',          'href' => 'index.php'),
+    array('label' => 'Home',           'href' => 'index.php'),
     array('label' => 'Accesso negato', 'href' => ''),
 );
 

@@ -3,6 +3,13 @@ require_once '../includes/resources.php';
 requireRole('admin');
 
 $pageTitle = 'Gestione Libri — Admin BiblioTake';
+$pageDescription = 'Elenco e gestione dei libri nel catalogo della biblioteca.';
+$pageKeywords = 'admin, libri, gestione, catalogo, BiblioTake';
+$breadcrumb = array(
+    array('label' => 'Home', 'href' => '../index.php'),
+    array('label' => 'Admin', 'href' => 'index.php'),
+    array('label' => 'Libri', 'href' => ''),
+);
 $currentPage = 'admin';
 
 $errorMessage = '';

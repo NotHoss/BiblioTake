@@ -3,6 +3,14 @@ require_once '../includes/resources.php';
 requireRole('admin');
 
 $pageTitle = 'Modifica libro — Admin BiblioTake';
+$pageDescription = 'Modifica i dettagli di un libro presente nel catalogo.';
+$pageKeywords = 'admin, modifica libro, catalogo, BiblioTake';
+$breadcrumb = array(
+    array('label' => 'Home', 'href' => '../index.php'),
+    array('label' => 'Admin', 'href' => 'index.php'),
+    array('label' => 'Libri', 'href' => 'libri.php'),
+    array('label' => 'Modifica', 'href' => ''),
+);
 $currentPage = 'admin';
 $errorMessage = '';
 $errorMessage = '';

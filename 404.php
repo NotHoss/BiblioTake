@@ -2,12 +2,12 @@
 http_response_code(404);
 require_once 'includes/resources.php';
 
-$pageTitle       = 'Pagina non trovata';
-$pageDescription = 'La pagina richiesta non esiste o e stata spostata.';
+$pageTitle       = 'Pagina non trovata — BiblioTake';
+$pageDescription = 'La pagina che stai cercando non esiste o è stata spostata.';
 $pageKeywords    = '404, pagina non trovata, errore';
 $currentPage     = '';
 $breadcrumb      = array(
-    array('label' => 'Home',     'href' => 'index.php'),
+    array('label' => 'Home',       'href' => 'index.php'),
     array('label' => 'Errore 404', 'href' => ''),
 );
 
