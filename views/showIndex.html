@@ -1,0 +1,22 @@
+<section id="hero">
+    <h2>Benvenuto in BiblioTake</h2>
+    <p>Cerca un libro, consulta il catalogo e richiedi un prestito direttamente online</p>
+
+    <form action="catalogo.php" method="get" id="ricerca-rapida">
+        <label for="cerca">Cerca per titolo</label>
+        <input type="search" id="cerca" name="cerca"
+               placeholder="Es. Il nome della rosa"
+               autocomplete="off">
+        <button type="submit">Cerca</button>
+    </form>
+</section>
+
+<section id="categorie">
+    <h3>Categorie</h3>
+    [LISTA_CATEGORIE]
+</section>
+
+<section id="ultimi-arrivi">
+    <h3>Ultimi arrivi</h3>
+    [LISTA_LIBRI_RECENTI]
+</section>

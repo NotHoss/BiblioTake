@@ -14,7 +14,7 @@ $filtri = [
     'cerca'       => isset($_GET['cerca'])       ? trim($_GET['cerca'])       : '',
     'categoria'   => isset($_GET['categoria'])   ? trim($_GET['categoria'])   : '',
     'autore'      => isset($_GET['autore'])       ? trim($_GET['autore'])      : '',
-    'anno'        => isset($_GET['anno'])         ? (int) $_GET['anno']        : '',
+    'anno'        => isset($_GET['anno']) && $_GET['anno'] !== '' ? (int) $_GET['anno'] : '',
     'disponibile' => isset($_GET['disponibile']) ? $_GET['disponibile']        : '',
     'ordine'      => isset($_GET['ordine'])       ? $_GET['ordine']            : '',
 ];

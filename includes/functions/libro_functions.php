@@ -33,11 +33,9 @@ function getLibri($conn, $filtri, $pagina) {
     }
 
     if (!empty($filtri['cerca'])) {
-        $where[]  = '(l.titolo LIKE ? OR l.autore LIKE ?)';
-        $cerca    = '%' . $filtri['cerca'] . '%';
-        $params[] = $cerca;
-        $params[] = $cerca;
-        $types   .= 'ss';
+        $where[]  = 'l.titolo LIKE ?';
+        $params[] = '%' . $filtri['cerca'] . '%';
+        $types   .= 's';
     }
 
     $sql = 'SELECT l.*, (
@@ -104,11 +102,9 @@ function countLibri($conn, $filtri) {
     }
 
     if (!empty($filtri['cerca'])) {
-        $where[]  = '(l.titolo LIKE ? OR l.autore LIKE ?)';
-        $cerca    = '%' . $filtri['cerca'] . '%';
-        $params[] = $cerca;
-        $params[] = $cerca;
-        $types   .= 'ss';
+        $where[]  = 'l.titolo LIKE ?';
+        $params[] = '%' . $filtri['cerca'] . '%';
+        $types   .= 's';
     }
 
     $sql = 'SELECT COUNT(*) AS totale FROM libro l';
