@@ -143,7 +143,7 @@ if ($adminViewMode === 'create') {
     ]);
 } else {
     // List mode
-    $template = file_get_contents(__DIR__ . '/../html/admin/libri.html');
+    $template = file_get_contents(__DIR__ . '/../html/admin/showLibri.html');
     
     if (empty($libri)) {
         echo strtr($template, [

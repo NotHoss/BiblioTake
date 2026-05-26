@@ -25,7 +25,7 @@ if (empty($libriRecenti)) {
     $listaLibriRecenti .= '</ul>';
 }
 
-$template = file_get_contents(__DIR__ . '/showIndex.html');
+$template = file_get_contents(__DIR__ . '/../html/showIndex.html');
 $template = str_replace('[LISTA_CATEGORIE]',     $listaCategorie,    $template);
 $template = str_replace('[LISTA_LIBRI_RECENTI]', $listaLibriRecenti, $template);
 echo $template;

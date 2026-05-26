@@ -83,7 +83,7 @@ if (empty($libri)) {
     $contenutoRisultati = $listaLibri . $paginazione;
 }
 
-$template = file_get_contents(__DIR__ . '/showCatalogo.html');
+$template = file_get_contents(__DIR__ . '/../html/showCatalogo.html');
 $template = str_replace('[FILTRO_CERCA_VALUE]',          $filtroCercaValue,          $template);
 $template = str_replace('[OPZIONI_CATEGORIA]',           $opzioniCategoria,          $template);
 $template = str_replace('[FILTRO_AUTORE_VALUE]',         $filtroAutoreValue,         $template);

@@ -82,7 +82,7 @@ if (empty($recensioni)) {
     $listaRecensioni .= '</ul>';
 }
 
-$template = file_get_contents(__DIR__ . '/showDettaglioLibro.html');
+$template = file_get_contents(__DIR__ . '/../html/showDettaglioLibro.html');
 $template = str_replace('[LIBRO_TITOLO]',           $libroTitolo,           $template);
 $template = str_replace('[COPERTINA_SRC]',          $copertinaSrc,          $template);
 $template = str_replace('[COPERTINA_ALT]',          $copertinAlt,           $template);

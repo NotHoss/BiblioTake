@@ -138,7 +138,7 @@ if ($adminViewMode === 'prestiti') {
         ]);
     }
 } elseif ($adminViewMode === 'reviews') {
-    $template = file_get_contents(__DIR__ . '/../html/admin/recensioni.html');
+    $template = file_get_contents(__DIR__ . '/../html/admin/showRecensioni.html');
     
     $utentiOptions = '';
     foreach ($utenti as $utente) {
@@ -200,7 +200,7 @@ if ($adminViewMode === 'prestiti') {
     ]);
 } else {
     // List mode
-    $template = file_get_contents(__DIR__ . '/../html/admin/utenti.html');
+    $template = file_get_contents(__DIR__ . '/../html/admin/showUtenti.html');
     
     if (empty($utenti)) {
         echo strtr($template, [

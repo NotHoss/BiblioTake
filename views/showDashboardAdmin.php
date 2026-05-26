@@ -75,8 +75,7 @@ if (!empty($successMessage)) {
     $successMsg = '<div>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
 }
 
-// Carica il template HTML e sostituisce i placeholder
-$template = file_get_contents(__DIR__ . '/../html/admin/index.html');
+$template = file_get_contents(__DIR__ . '/../html/admin/showDashboardAdmin.html');
 echo strtr($template, [
     '[ERROR_MESSAGE]' => $errorMsg,
     '[SUCCESS_MESSAGE]' => $successMsg,
