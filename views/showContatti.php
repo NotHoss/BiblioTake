@@ -7,7 +7,7 @@
     $orarioDomenica = (string) ($biblioteca['orario_domenica'] ?? 'Chiuso');
     $telefonoHref = 'tel:' . preg_replace('/[^\d\+]/', '', $telefono);
     
-    $template = file_get_contents(__DIR__ . '/../html/contatti.html');
+    $template = file_get_contents(__DIR__ . '/../html/showContatti.html');
     
     $placeholders = [
         '[INDIRIZZO]' => htmlspecialchars($indirizzo, ENT_QUOTES, 'UTF-8'),
