@@ -10,14 +10,14 @@
     $template = file_get_contents(__DIR__ . '/../html/showContatti.html');
     
     $placeholders = [
-        '[INDIRIZZO]' => htmlspecialchars($indirizzo, ENT_QUOTES, 'UTF-8'),
-        '[TELEFONO_HREF]' => htmlspecialchars($telefonoHref, ENT_QUOTES, 'UTF-8'),
-        '[TELEFONO]' => htmlspecialchars($telefono, ENT_QUOTES, 'UTF-8'),
-        '[EMAIL]' => htmlspecialchars($email, ENT_QUOTES, 'UTF-8'),
-        '[ORARIO_LUN_VEN]' => htmlspecialchars($orarioLunVen, ENT_QUOTES, 'UTF-8'),
-        '[ORARIO_SABATO]' => htmlspecialchars($orarioSabato, ENT_QUOTES, 'UTF-8'),
-        '[ORARIO_DOMENICA]' => htmlspecialchars($orarioDomenica, ENT_QUOTES, 'UTF-8')
+        '[INDIRIZZO]'       => htmlspecialchars($indirizzo, ENT_QUOTES, 'UTF-8'),
+        '[TELEFONO_HREF]'   => htmlspecialchars($telefonoHref, ENT_QUOTES, 'UTF-8'),
+        '[TELEFONO]'        => htmlspecialchars($telefono, ENT_QUOTES, 'UTF-8'),
+        '[EMAIL]'           => htmlspecialchars($email, ENT_QUOTES, 'UTF-8'),
+        '[ORARIO_LUN_VEN]'  => htmlspecialchars($orarioLunVen, ENT_QUOTES, 'UTF-8'),
+        '[ORARIO_SABATO]'   => htmlspecialchars($orarioSabato, ENT_QUOTES, 'UTF-8'),
+        '[ORARIO_DOMENICA]' => htmlspecialchars($orarioDomenica, ENT_QUOTES, 'UTF-8'),
     ];
-    
+
     echo strtr($template, $placeholders);
 ?>
