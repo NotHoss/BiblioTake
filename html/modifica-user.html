@@ -1,0 +1,74 @@
+<div id="error-message"></div>
+
+<noscript>
+    <div id="no-js-message">
+        <strong>JavaScript &egrave; disabilitato.</strong>
+    </div>
+</noscript>
+
+<div id="page-content">
+    [TO-LOGIN]
+    <h2>[USERNAME]</h2>
+
+    <div >
+        <h3>Modifica Profilo</h3>
+        <form method="POST" action="modifica-user.php" id="modifica-profilo">
+            <section>
+
+                <!-- <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" width="48" height="48"> 
+                    per ora tolgo la possibilità di cambiare l'immagine, perché dovremmo creare una lista di immagini 
+                    da cui scegliere, e trovare un modo per cui se clicchi sull'immagine, ti copia il percorso 
+                <input type="file" name="new_profile_image" enctype="multipart/form-data" accept="image/*" value="null"/>
+                -->
+
+                <p>Username:</p>
+                <input type="text" name="new_username" value="[USERNAME]" placeholder="Username">
+                <p>Email:</p>
+                <input type="email" name="new_email" value="[EMAIL]" placeholder="Email">
+                <div>
+                    <p>Password:</p>
+                    <input type="password" name="current_password" placeholder="Password attuale"/>
+                    <input type="password" name="new_password" placeholder="Nuova password"/>
+                    <input type="password" name="confirm_new_password" placeholder="Conferma nuova password"/>
+                </div>
+            </section>
+            <input type="submit" class="form-button" name="salva-modifiche" value="Salva Modifiche"/>
+        </form>
+    </div>
+    <!--<div>
+        <a href="user/modifica-utente.php">Conferma modifiche</a>
+    </div>-->
+        
+    <script src="scripts/back-to-top.js"></script>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('modifica-profilo');
+
+        form.addEventListener('submit', function(e) {
+            const inputs = form.querySelectorAll('input[name="new_username"], input[name="new_email"], input[name="current_password"], input[name="new_password"], input[name="confirm_new_password"]');
+
+            let hasChanges = false;
+
+            inputs.forEach(input => {
+                const originalValue = input.defaultValue;
+                if (input.value !== originalValue) {
+                    hasChanges = true;
+                    input.dataset.modified = 'true';
+                }
+            });
+
+            // Per l'immagine: controlla se è stato selezionato un file
+            const fileInput = form.querySelector('input[type="file"]');
+            if (fileInput && fileInput.files.length > 0) {
+                hasChanges = true;
+            }
+
+            if (!hasChanges) {
+                e.preventDefault();
+                alert('Nessuna modifica rilevata.');
+            }
+        });
+    });
+</script>

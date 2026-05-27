@@ -643,6 +643,7 @@ require_once __DIR__ . '/functions/libro_functions.php';
 require_once __DIR__ . '/functions/prestito_functions.php';
 require_once __DIR__ . '/functions/recensione_functions.php';
 require_once __DIR__ . '/functions/admin_functions.php';
+require_once __DIR__ . '/functions/user_functions.php';
 require_once __DIR__ . '/variables.php';
 
 $conn = getConnection();
