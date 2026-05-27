@@ -47,6 +47,8 @@ function getUserInfo($conn, $userId) {
     if (!$stmt->execute()) {throw new RuntimeException("Errore esecuzione query");}   //errore esecuzione query
     
     $result = $stmt->get_result();
+    //$result[foto_profilo] = '../../' . $result[foto_profilo] ?? null;
+    /*../images/default-avatar.jpg*/
     if (!$result) {throw new RuntimeException("Errore recupero risultati");}
     
     $userInfo = $result->fetch_assoc();
