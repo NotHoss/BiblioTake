@@ -98,6 +98,7 @@ $replacements = array(
     '[PAGE_KEYWORDS]' => htmlspecialchars($pageKeywords, ENT_QUOTES, 'UTF-8'),
     '[SITE_NAME]' => $siteName,
     '[NAVIGATION]' => implode('', $navigation),
+    '[WEB_ROOT]' => $baseUrl,
     '[BREADCRUMB]' => $breadcrumbHtml,
 );
 
