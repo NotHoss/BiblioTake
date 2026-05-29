@@ -3,7 +3,7 @@ session_start();
 require_once 'includes/resources.php';
 
 if (isLoggedIn()) {
-    header('Location: dashboard.php');
+    header('Location: ' . WEB_ROOT . 'user/dashboard.php');
     exit;
 }
 
@@ -40,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         if (registerUser($conn, $emailValore, $usernameValore, $password)) {
-            if (loginUser($conn, $emailValore, $password)) {
-                header('Location: dashboard.php?benvenuto=1');
+                if (loginUser($conn, $emailValore, $password)) {
+                header('Location: ' . WEB_ROOT . 'user/dashboard.php?benvenuto=1');
                 exit;
             }
             header('Location: login.php?registrato=1');

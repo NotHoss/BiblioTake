@@ -54,7 +54,7 @@ if (isset($_SESSION['user_id'])) {
         if (isset($currentPage) && $currentPage === 'dashboard') {
             $navigation[] = '<li aria-current="page" class="current-page">Area utente</li>';
         } else {
-            $navigation[] = '<li><a href="' . htmlspecialchars($baseUrl . '/dashboard.php', ENT_QUOTES, 'UTF-8') . '">Area utente</a></li>';
+            $navigation[] = '<li><a href="' . htmlspecialchars($baseUrl . '/user/dashboard.php', ENT_QUOTES, 'UTF-8') . '">Area utente</a></li>';
         }
     }
 
