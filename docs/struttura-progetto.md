@@ -60,18 +60,12 @@ BiblioTake/
 │   └── template/
 │       ├── footer.html
 │       └── header.html
-├── js/
+├── javascript/
 │   └── validation.js
-├── styles/
-│   ├── css/
-│   │   ├── general.css
-│   │   ├── layout.css
-│   │   └── print.css
-│   ├── min/
-│   │   ├── general.min.css
-│   │   ├── layout.min.css
-│   │   └── print.min.css
-│   └── resources.css
+├── css/
+│   ├── style.css
+│   ├── mini.css
+│   └── print.css
 ├── views/
 │   ├── template/
 │   │   ├── header.php
