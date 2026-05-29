@@ -19,7 +19,7 @@ else{
 }   
 
 // Carica la dashboard
-require_once __DIR__ . '/../dashboard.php';
+require_once __DIR__ . '/dashboard.php';
 
 if ($conn instanceof mysqli) {
     $conn->close();

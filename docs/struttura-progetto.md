@@ -97,14 +97,17 @@ BiblioTake/
 ├── login.php
 ├── register.php
 ├── logout.php
-├── dashboard.php
-├── prestiti.php
-├── richiedi-prestito.php
-├── restituisci.php
-├── recensioni.php
-├── aggiungi-recensione.php
-├── modifica-recensione.php
-├── elimina-recensione.php
+├── user/
+│   ├── aggiungi-recensione.php
+│   ├── dashboard.php
+│   ├── elimina-recensione.php
+│   ├── elimina-user.php
+│   ├── informazioni-utente.php
+│   ├── modifica-user.php
+│   ├── prestiti.php
+│   ├── richiedi-prestito.php
+│   ├── restituisci.php
+│   └── recensioni.php
 ├── about.php
 ├── contatti.php
 ├── 403.php
@@ -147,6 +150,8 @@ require_once 'views/template/footer.php';
 ```
 
 Questo schema si replica identico per ogni pagina. L'ordine dei quattro blocchi non cambia mai.
+
+Nota: alcune pagine legate all'area utente sono collocate nella directory `user/` (ad esempio `user/dashboard.php`, `user/modifica-user.php`). I file in `user/` seguono lo stesso schema dei modelli in root ma usano i percorsi relativi corretti per includere le view e le risorse.
 
 ---
 
