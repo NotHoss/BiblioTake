@@ -12,6 +12,7 @@ $__functionFiles = array(
     'prestito_functions.php',
     'recensione_functions.php',
     'admin_functions.php',
+    'user_functions.php',
 );
 foreach ($__functionFiles as $__file) {
     $__path = __DIR__ . '/functions/' . $__file;

@@ -29,34 +29,35 @@ BiblioTake/
 │       ├── recensione_functions.php
 │       └── admin_functions.php
 ├── html/
+│   ├── 403.html
+│   ├── 404.html
+│   ├── 500.html
+│   ├── about.html
 │   ├── aggiungi-recensione.html
+│   ├── catalogo.html
+│   ├── contatti.html
+│   ├── dashboard.html
+│   ├── dettaglio-libro.html
 │   ├── elimina-recensione.html
+│   ├── index.html
+│   ├── login.html
+│   ├── logout.html
 │   ├── modifica-recensione.html
+│   ├── modifica-user.html
+│   ├── prestiti.html
+│   ├── recensioni.html
+│   ├── register.html
 │   ├── restituisci.html
 │   ├── richiedi-prestito.html
-│   ├── show403.html
-│   ├── show404.html
-│   ├── show500.html
-│   ├── showAbout.html
-│   ├── showCatalogo.html
-│   ├── showContatti.html
-│   ├── showDashboard.html
-│   ├── showDettaglioLibro.html
-│   ├── showIndex.html
-│   ├── showLogin.html
-│   ├── showLogout.html
-│   ├── showPrestiti.html
-│   ├── showRecensioni.html
-│   ├── showRegister.html
 │   ├── admin/
 │   │   ├── aggiungi-libro.html
 │   │   ├── elimina-libro.html
+│   │   ├── index.html
+│   │   ├── libri.html
 │   │   ├── modifica-libro.html
 │   │   ├── prestiti-utente.html
-│   │   ├── showDashboardAdmin.html
-│   │   ├── showLibri.html
-│   │   ├── showRecensioni.html
-│   │   └── showUtenti.html
+│   │   ├── recensioni.html
+│   │   └── utenti.html
 │   └── template/
 │       ├── footer.html
 │       └── header.html
