@@ -453,7 +453,12 @@ function getLibriAdminFiltrati($conn, array $filtri, $pagina, $limit = 20) {
              FROM prestito p
              WHERE p.libro_id = l.id AND p.stato IN (\'attivo\', \'in_ritardo\')
              ORDER BY p.data_inizio DESC
-             LIMIT 1) AS prestito_utente_id
+             LIMIT 1) AS prestito_utente_id,
+            (SELECT p.id
+             FROM prestito p
+             WHERE p.libro_id = l.id AND p.stato IN (\'attivo\', \'in_ritardo\')
+             ORDER BY p.data_inizio DESC
+             LIMIT 1) AS prestito_id
          FROM libro l';
 
     if (!empty($where)) {

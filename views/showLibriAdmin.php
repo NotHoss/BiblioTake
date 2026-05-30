@@ -52,7 +52,7 @@ $searchForm = '
 <form method="get" action="libri.php" class="admin-search-form">
     <div>
         <label for="cerca">Cerca</label>
-        <input type="search" id="cerca" name="cerca" value="' . $filtroCercaValue . '" placeholder="ID, ISBN, titolo o autore">
+        <input type="search" id="cerca" name="cerca" value="' . $filtroCercaValue . '" placeholder="ID, ISBN o titolo del libro">
     </div>
     <div>
         <label for="autore">Autore</label>
@@ -138,11 +138,11 @@ foreach ($libri as $libroRow) {
         <a href="elimina-libro.php?id=' . $id . '">Elimina</a>';
     if ($prestitiAttivi > 0) {
         $prestiti = 'Prestato';
-        $prestitoUtenteId = (int) ($libroRow['prestito_utente_id'] ?? 0);
-        if ($prestitoUtenteId > 0) {
-            $prestitoUtenteIdSafe = htmlspecialchars((string) $prestitoUtenteId, ENT_QUOTES, 'UTF-8');
-            $azioni = '<a href="prestiti-utente.php?utente_id=' . $prestitoUtenteIdSafe . '">Vai al prestito</a>';
-        }
+            $prestitoId = (int) ($libroRow['prestito_id'] ?? 0);
+            if ($prestitoId > 0) {
+                $prestitoIdSafe = htmlspecialchars((string) $prestitoId, ENT_QUOTES, 'UTF-8');
+                $azioni = '<a href="prestiti-utente.php?prestito_id=' . $prestitoIdSafe . '">Vai al prestito</a>';
+            }
     }
 
     $tagsArr = getTagsByLibroId($conn, (int) $libroRow['id']);
