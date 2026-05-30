@@ -80,7 +80,12 @@ BiblioTake/
 │   ├── showRecensioni.php
 │   ├── showDashboardAdmin.php
 │   ├── showLibriAdmin.php
-│   └── showUtentiAdmin.php
+│   ├── showAggiungiLibroAdmin.php
+│   ├── showModificaLibroAdmin.php
+│   ├── showEliminaLibroAdmin.php
+│   ├── showUtentiAdmin.php
+│   ├── showPrestitiAdmin.php
+│   └── showRecensioniAdmin.php
 ├── admin/
 │   ├── index.php
 │   ├── libri.php

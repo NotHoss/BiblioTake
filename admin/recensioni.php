@@ -31,7 +31,7 @@ if ($conn instanceof mysqli && $errorMessage === '') {
 }
 $adminViewMode = 'reviews';
 require_once __DIR__ . '/../views/template/header.php';
-require_once __DIR__ . '/../views/showUtentiAdmin.php';
+require_once __DIR__ . '/../views/showRecensioniAdmin.php';
 require_once __DIR__ . '/../views/template/footer.php';
 
 if ($conn instanceof mysqli) {

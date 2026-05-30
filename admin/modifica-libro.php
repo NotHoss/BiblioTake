@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
 $adminViewMode = 'edit';
 $categorie = getCategorieLibri($conn);
 require_once __DIR__ . '/../views/template/header.php';
-require_once __DIR__ . '/../views/showLibriAdmin.php';
+require_once __DIR__ . '/../views/showModificaLibroAdmin.php';
 require_once __DIR__ . '/../views/template/footer.php';
 
 if ($conn instanceof mysqli) {
