@@ -11,6 +11,7 @@ CREATE TABLE biblioteca (
 	indirizzo VARCHAR(255) NOT NULL UNIQUE,
 	telefono VARCHAR(20) NOT NULL,
 	email VARCHAR(255) NOT NULL,
+	note TEXT NOT NULL,
 	orario_lun_ven VARCHAR(100) NOT NULL,
 	orario_sabato VARCHAR(100) NOT NULL,
 	orario_domenica VARCHAR(100) NOT NULL
@@ -107,8 +108,8 @@ CREATE TABLE recensione (
 CREATE INDEX idx_prestito_libro_stato ON prestito (libro_id, stato);
 CREATE INDEX idx_recensione_libro ON recensione (libro_id);
 
-INSERT INTO biblioteca (id, indirizzo, telefono, email, orario_lun_ven, orario_sabato, orario_domenica) VALUES
-	(1, 'Via Garibaldi 12, Padova', '+39 02 88997766', 'contatti@bibliotake-padova.it', '9:00 - 19:00', '9:00 - 13:00', 'Chiuso');
+INSERT INTO biblioteca (id, indirizzo, telefono, email, note, orario_lun_ven, orario_sabato, orario_domenica) VALUES
+	(1, 'Via Garibaldi 12, Padova', '+39 02 88997766', 'contatti@bibliotake-padova.it', 'Biblioteca principale del progetto BiblioTake.', '9:00 - 19:00', '9:00 - 13:00', 'Chiuso');
 
 INSERT INTO utente (id, email, username, password, foto_profilo, attivo, ruolo) VALUES
 	(101, 'luca.rossi@gmail.com', 'luca.rossi', '$2y$10$e0NRm7l8iA92f1bR6xL4fOd8kSMNw2w5sY4qC8x0Qh7oA3fXvYf4K', 'images/default-avatar.jpg', TRUE, 'utente'),

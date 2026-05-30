@@ -103,8 +103,16 @@ function getStatisticheGenerali($conn) {
 
 function getBibliotecaInfo($conn) {
     $hasOrari = bibliotecaHasOrariColumns($conn);
+    $hasNote = bibliotecaHasNoteColumn($conn);
 
-    if ($hasOrari) {
+    if ($hasOrari && $hasNote) {
+        $stmt = $conn->prepare(
+            'SELECT id, indirizzo, telefono, email, note, orario_lun_ven, orario_sabato, orario_domenica
+             FROM biblioteca
+             ORDER BY id ASC
+             LIMIT 1'
+        );
+    } elseif ($hasOrari) {
         $stmt = $conn->prepare(
             'SELECT id, indirizzo, telefono, email, orario_lun_ven, orario_sabato, orario_domenica
              FROM biblioteca
@@ -112,12 +120,21 @@ function getBibliotecaInfo($conn) {
              LIMIT 1'
         );
     } else {
-        $stmt = $conn->prepare(
-            'SELECT id, indirizzo, telefono, email
-             FROM biblioteca
-             ORDER BY id ASC
-             LIMIT 1'
-        );
+        if ($hasNote) {
+            $stmt = $conn->prepare(
+                'SELECT id, indirizzo, telefono, email, note
+                 FROM biblioteca
+                 ORDER BY id ASC
+                 LIMIT 1'
+            );
+        } else {
+            $stmt = $conn->prepare(
+                'SELECT id, indirizzo, telefono, email
+                 FROM biblioteca
+                 ORDER BY id ASC
+                 LIMIT 1'
+            );
+        }
     }
     $stmt->execute();
     $result = $stmt->get_result();
@@ -130,13 +147,35 @@ function getBibliotecaInfo($conn) {
         $biblioteca['orario_domenica'] = 'Chiuso';
     }
 
+    if ($biblioteca && !isset($biblioteca['note'])) {
+        $biblioteca['note'] = '';
+    }
+
     return $biblioteca ?: null;
 }
 
 function updateBibliotecaInfo($conn, $bibliotecaId, array $dati) {
     $hasOrari = bibliotecaHasOrariColumns($conn);
+    $hasNote = bibliotecaHasNoteColumn($conn);
 
-    if ($hasOrari) {
+    if ($hasOrari && $hasNote) {
+        $stmt = $conn->prepare(
+            'UPDATE biblioteca
+             SET indirizzo = ?, telefono = ?, email = ?, note = ?, orario_lun_ven = ?, orario_sabato = ?, orario_domenica = ?
+             WHERE id = ?'
+        );
+        $stmt->bind_param(
+            'sssssssi',
+            $dati['indirizzo'],
+            $dati['telefono'],
+            $dati['email'],
+            $dati['note'],
+            $dati['orario_lun_ven'],
+            $dati['orario_sabato'],
+            $dati['orario_domenica'],
+            $bibliotecaId
+        );
+    } elseif ($hasOrari) {
         $stmt = $conn->prepare(
             'UPDATE biblioteca
              SET indirizzo = ?, telefono = ?, email = ?, orario_lun_ven = ?, orario_sabato = ?, orario_domenica = ?
@@ -153,18 +192,34 @@ function updateBibliotecaInfo($conn, $bibliotecaId, array $dati) {
             $bibliotecaId
         );
     } else {
-        $stmt = $conn->prepare(
-            'UPDATE biblioteca
-             SET indirizzo = ?, telefono = ?, email = ?
-             WHERE id = ?'
-        );
-        $stmt->bind_param(
-            'sssi',
-            $dati['indirizzo'],
-            $dati['telefono'],
-            $dati['email'],
-            $bibliotecaId
-        );
+        if ($hasNote) {
+            $stmt = $conn->prepare(
+                'UPDATE biblioteca
+                 SET indirizzo = ?, telefono = ?, email = ?, note = ?
+                 WHERE id = ?'
+            );
+            $stmt->bind_param(
+                'ssssi',
+                $dati['indirizzo'],
+                $dati['telefono'],
+                $dati['email'],
+                $dati['note'],
+                $bibliotecaId
+            );
+        } else {
+            $stmt = $conn->prepare(
+                'UPDATE biblioteca
+                 SET indirizzo = ?, telefono = ?, email = ?
+                 WHERE id = ?'
+            );
+            $stmt->bind_param(
+                'sssi',
+                $dati['indirizzo'],
+                $dati['telefono'],
+                $dati['email'],
+                $bibliotecaId
+            );
+        }
     }
 
     return $stmt->execute();
@@ -191,6 +246,7 @@ function handleAggiornaGeneralita($conn, array $post) {
         'indirizzo' => trim((string) ($post['indirizzo'] ?? '')),
         'telefono' => trim((string) ($post['telefono'] ?? '')),
         'email' => trim((string) ($post['email'] ?? '')),
+        'note' => trim((string) ($post['note'] ?? '')),
         'orario_lun_ven' => trim((string) ($post['orario_lun_ven'] ?? '')),
         'orario_sabato' => trim((string) ($post['orario_sabato'] ?? '')),
         'orario_domenica' => trim((string) ($post['orario_domenica'] ?? '')),
@@ -214,7 +270,7 @@ function handleAggiornaGeneralita($conn, array $post) {
             $result['isEditGeneralita'] = true;
         }
     } else {
-        $result['errorMessage'] = 'Compila tutti i campi delle generalità e degli orari.';
+        $result['errorMessage'] = 'Compila tutti i campi obbligatori delle generalità e degli orari.';
         $result['isEditGeneralita'] = true;
     }
 
@@ -235,6 +291,22 @@ function bibliotecaHasOrariColumns($conn) {
     $stmt->close();
 
     return (int) ($row['totale'] ?? 0) === 3;
+}
+
+function bibliotecaHasNoteColumn($conn) {
+    $stmt = $conn->prepare(
+        "SELECT COUNT(*) AS totale
+         FROM information_schema.columns
+         WHERE table_schema = DATABASE()
+           AND table_name = 'biblioteca'
+           AND column_name = 'note'"
+    );
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+
+    return (int) ($row['totale'] ?? 0) > 0;
 }
 
 function getUtenteDateColumn($conn) {

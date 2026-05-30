@@ -12,6 +12,7 @@ Tabelle: `snake_case` singolare minuscolo. PK: `id INT`. FK: `{tabella}_id INT`.
     - indirizzo: *VARCHAR* `UNIQUE`
     - telefono: *VARCHAR*
     - email: *VARCHAR*
+    - note: *TEXT* *(opzionale)*
     - orario_lun_ven: *VARCHAR*
     - orario_sabato: *VARCHAR*
     - orario_domenica: *VARCHAR*
@@ -75,5 +76,6 @@ Tabelle: `snake_case` singolare minuscolo. PK: `id INT`. FK: `{tabella}_id INT`.
 - **Disponibilità** di `libro`: dato derivato — si calcola contando i `prestito` con `stato = 'attivo'` per quel libro.
 - **Disponibilità admin** di `libro`: nel pannello admin i libri prenotati includono sia `stato = 'attivo'` sia `stato = 'in_ritardo'`.
 - La PK di `biblioteca` è `id` numerico: cambiare l'indirizzo non rompe le FK in `prestito`.
-- I campi orari di `biblioteca` (`orario_lun_ven`, `orario_sabato`, `orario_domenica`) vengono usati sia nella dashboard admin (modifica generalità) sia nella pagina contatti.
+- I campi di `biblioteca` (`note`, `orario_lun_ven`, `orario_sabato`, `orario_domenica`) vengono usati sia nella dashboard admin (modifica generalità) sia nella pagina contatti.
+- `note` è facoltativo e viene mostrato solo se valorizzato.
 - I campi `edizione`, `anno`, `lingua`, `pagine`, `copertina` sono mantenuti in `libro` perché utili alla visualizzazione del catalogo e della gestione admin.

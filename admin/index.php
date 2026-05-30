@@ -13,27 +13,29 @@ $currentPage = 'admin';
 
 $errorMessage = '';
 $successMessage = '';
-$isEditGeneralita = isset($_GET['mode']) && $_GET['mode'] === 'edit';
+
+if (isset($_GET['generalita_success']) && $_GET['generalita_success'] === '1') {
+    $successMessage = 'Generalità della biblioteca aggiornate con successo.';
+}
 
 $biblioteca = null;
 if ($conn instanceof mysqli && $errorMessage === '') {
     $biblioteca = getBibliotecaInfo($conn);
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '') {
-    $res = handleAggiornaGeneralita($conn, $_POST);
-    $successMessage = $res['successMessage'] ?? '';
-    $errorMessage = $res['errorMessage'] ?? '';
-    $biblioteca = $res['biblioteca'] ?? $biblioteca;
-    $isEditGeneralita = $res['isEditGeneralita'] ?? $isEditGeneralita;
-}
-
 // Calcola statistiche usando la funzione
-$stats = ['libri' => 0, 'utenti' => 0];
+$stats = [
+    'libri_totali' => 0,
+    'libri_prenotati' => 0,
+    'libri_non_prenotati' => 0,
+    'utenti_totali' => 0,
+    'nuovi_iscritti' => null,
+    'prestiti_attivi' => 0,
+    'prestiti_ritardo' => 0,
+    'recensioni_totali' => 0,
+];
 if ($conn instanceof mysqli && $errorMessage === '') {
-    $allStats = getStatisticheGenerali($conn);
-    $stats['libri'] = $allStats['libri_totali'];
-    $stats['utenti'] = $allStats['utenti_totali'];
+    $stats = getStatisticheGenerali($conn);
 }
 
 require_once __DIR__ . '/../views/template/header.php';
