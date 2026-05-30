@@ -52,12 +52,9 @@ foreach ($recensioni as $recensione) {
         <td>{$data}</td>
         <td>{$censurata}</td>
         <td>
-            <form method=\"post\">
-                <input type=\"hidden\" name=\"recensione_id\" value=\"{$id}\">
-                <input type=\"hidden\" name=\"utente_id\" value=\"{$utenteIdSafe}\">
-                <button type=\"submit\" name=\"azione\" value=\"censura\">{$censuraLabel}</button>
-                <button type=\"submit\" name=\"azione\" value=\"elimina\">Elimina</button>
+            <form method=\"post\" style=\"display:inline\">\n                <input type=\"hidden\" name=\"recensione_id\" value=\"{$id}\">\n                <input type=\"hidden\" name=\"utente_id\" value=\"{$utenteIdSafe}\">\n                <button type=\"submit\" name=\"azione\" value=\"censura\">{$censuraLabel}</button>
             </form>
+            <a href=\"elimina-recensione.php?id={$id}&utente_id={$utenteIdSafe}\">Elimina</a>
         </td>
     </tr>\n";
 }

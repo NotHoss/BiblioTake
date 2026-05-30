@@ -2,7 +2,7 @@
 require_once '../includes/resources.php';
 requireRole('admin');
 
-$pageTitle = 'Prestiti utente — Admin BiblioTake';
+$pageTitle = 'Gestione prestiti utenti — Admin BiblioTake';
 $pageDescription = 'Visualizza e gestisci i prestiti di uno specifico utente.';
 $pageKeywords = 'admin, prestiti, utente, gestione, BiblioTake';
 $breadcrumb = array(

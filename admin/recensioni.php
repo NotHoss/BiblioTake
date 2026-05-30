@@ -2,7 +2,7 @@
 require_once '../includes/resources.php';
 requireRole('admin');
 
-$pageTitle = 'Recensioni utenti — Admin BiblioTake';
+$pageTitle = 'Gestione recensioni utenti — Admin BiblioTake';
 $pageDescription = 'Controlla e gestisci le recensioni inviate dagli utenti.';
 $pageKeywords = 'admin, recensioni, utenti, gestione, BiblioTake';
 $breadcrumb = array(

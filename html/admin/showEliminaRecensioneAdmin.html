@@ -1,0 +1,19 @@
+<h1>Elimina recensione</h1>
+<p><a href="recensioni.php">Torna alle recensioni</a></p>
+
+[MESSAGES]
+
+[NOT_FOUND_MESSAGE]
+
+<div [FORM_DISPLAY]>
+	<p>Stai per eliminare la recensione: <strong>[RECENSIONE_ID]</strong></p>
+	[WARNING_MESSAGE]
+	<form method="post">
+		<input type="hidden" name="id" value="[RECENSIONE_ID]">
+		<input type="hidden" name="utente_id" value="[UTENTE_ID]">
+
+		<p>
+			<button type="submit">Conferma eliminazione</button>
+		</p>
+	</form>
+</div>

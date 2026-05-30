@@ -62,7 +62,7 @@ BiblioTake/
 │   │   ├── showModificaBiblioAdmin.html
 │   │   ├── showModificaLibroAdmin.html
 │   │   ├── showModificaPrestitoAdmin.html
-│   │   ├── showPrestitiUtente.html
+│   │   ├── showPrestitiAdmin.html
 │   │   ├── showRecensioniAdmin.html
 │   │   └── showUtentiAdmin.html
 │   ├── template/
