@@ -11,7 +11,7 @@ if (!empty($message)) {
 }
 $messages = $errorMsg . $successMsg;
 
-$template = file_get_contents(__DIR__ . '/../html/admin/prestiti-utente.html');
+$template = file_get_contents(__DIR__ . '/../html/admin/showPrestitiUtente.html');
     
 // Build utenti select options; include option value 0 for 'Tutti gli utenti'
 $utentiOptions = '<option value="0"' . ($utenteId === 0 ? ' selected' : '') . '>Tutti gli utenti</option>';

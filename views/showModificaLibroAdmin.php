@@ -9,7 +9,7 @@ if (!empty($successMessage)) {
 }
 $messages = $errorMsg . $successMsg;
 
-$template = file_get_contents(__DIR__ . '/../html/admin/modifica-libro.html');
+$template = file_get_contents(__DIR__ . '/../html/admin/showModificaLibroAdmin.html');
 
 if (!$libro) {
     echo strtr($template, [

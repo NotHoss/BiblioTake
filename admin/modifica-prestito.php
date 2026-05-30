@@ -3,6 +3,15 @@ require_once '../includes/resources.php';
 requireRole('admin');
 
 $pageTitle = 'Modifica prestito — Admin BiblioTake';
+$pageDescription = 'Modifica i dettagli di un prestito.';
+$pageKeywords = 'admin, prestiti, modifica, BiblioTake';
+$breadcrumb = array(
+    array('label' => 'Home', 'href' => '../index.php'),
+    array('label' => 'Admin', 'href' => 'index.php'),
+    array('label' => 'Prestiti', 'href' => 'prestiti-utente.php?utente_id=0'),
+    array('label' => 'Modifica prestito', 'href' => ''),
+);
+$currentPage = 'admin';
 $message = '';
 $errorMessage = '';
 

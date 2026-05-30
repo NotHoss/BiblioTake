@@ -109,7 +109,7 @@ if ($totalPagine > 1) {
 }
 
 // List mode only — create/edit/delete moved to dedicated views
-$template = file_get_contents(__DIR__ . '/../html/admin/showLibri.html');
+$template = file_get_contents(__DIR__ . '/../html/admin/showLibriAdmin.html');
 
 if (empty($libri)) {
     echo strtr($template, [

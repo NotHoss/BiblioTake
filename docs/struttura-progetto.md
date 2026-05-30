@@ -8,110 +8,93 @@ Questo documento descrive la struttura di cartelle e file del progetto, spiega i
 
 ```
 BiblioTake/
+├── 403.php
+├── 404.php
+├── 500.php
+├── about.php
+├── admin/
+│   ├── aggiungi-libro.php
+│   ├── elimina-libro.php
+│   ├── index.php
+│   ├── libri.php
+│   ├── modifica-biblio-admin.php
+│   ├── modifica-libro.php
+│   ├── prestiti-utente.php
+│   ├── recensioni.php
+│   └── utenti.php
+├── catalogo.php
+├── contatti.php
+├── css/
+│   ├── mini.css
+│   ├── print.css
+│   └── style.css
 ├── database/
 │   └── db.sql
+├── dettaglio-libro.php
 ├── docs/
 │   ├── caratteristiche.md
 │   ├── convenzioni.md
 │   ├── db_pseudocodice.md
 │   ├── requisiti.md
 │   └── struttura-progetto.md
+├── html/
+│   ├── show403.html
+│   ├── show404.html
+│   ├── show500.html
+│   ├── showAbout.html
+│   ├── showCatalogo.html
+│   ├── showContatti.html
+│   ├── showDashboard.html
+│   ├── showDettaglioLibro.html
+│   ├── showIndex.html
+│   ├── showLogin.html
+│   ├── showLogout.html
+│   ├── showRegister.html
+│   ├── showPrestiti.html
+│   ├── showRecensioni.html
+│   ├── admin/
+│   │   ├── showAggiungiLibroAdmin.html
+│   │   ├── showDashboardAdmin.html
+│   │   ├── showEliminaLibroAdmin.html
+│   │   ├── showEliminaPrestitoAdmin.html
+│   │   ├── showEliminaRecensioneAdmin.html
+│   │   ├── showLibriAdmin.html
+│   │   ├── showModificaBiblioAdmin.html
+│   │   ├── showModificaLibroAdmin.html
+│   │   ├── showModificaPrestitoAdmin.html
+│   │   ├── showPrestitiUtente.html
+│   │   ├── showRecensioniAdmin.html
+│   │   └── showUtentiAdmin.html
+│   ├── template/
+│   │   ├── footer.html
+│   │   └── header.html
+│   └── user/
+│       ├── showAggiungiRecensione.html
+│       ├── showDashboard.html
+│       ├── showEliminaRecensione.html
+│       ├── showModificaRecensione.html
+│       ├── showModificaUser.html
+│       ├── showPrestiti.html
+│       ├── showRecensioni.html
+│       ├── showRestituisci.html
+│       └── showRichiediPrestito.html
 ├── images/
+├── index.php
 ├── includes/
 │   ├── config.php
-│   ├── variables.php
 │   ├── resources.php
+│   ├── variables.php
 │   └── functions/
-│       ├── db.php
+│       ├── admin_functions.php
 │       ├── auth.php
+│       ├── db.php
 │       ├── libro_functions.php
 │       ├── prestito_functions.php
 │       ├── recensione_functions.php
-│       └── admin_functions.php
-├── html/
-│   ├── 403.html
-│   ├── 404.html
-│   ├── 500.html
-│   ├── about.html
-│   ├── aggiungi-recensione.html
-│   ├── catalogo.html
-│   ├── contatti.html
-│   ├── dashboard.html
-│   ├── dettaglio-libro.html
-│   ├── elimina-recensione.html
-│   ├── index.html
-│   ├── login.html
-│   ├── logout.html
-│   ├── modifica-recensione.html
-│   ├── modifica-user.html
-│   ├── prestiti.html
-│   ├── recensioni.html
-│   ├── register.html
-│   ├── restituisci.html
-│   ├── richiedi-prestito.html
-│   ├── admin/
-│   │   ├── aggiungi-libro.html
-│   │   ├── elimina-libro.html
-│   │   ├── index.html
-│   │   ├── libri.html
-│   │   ├── modifica-libro.html
-│   │   ├── prestiti-utente.html
-│   │   ├── showDashboardAdmin.html
-│   │   ├── showModificaBiblioAdmin.html
-│   │   ├── showLibri.html
-│   │   ├── showRecensioni.html
-│   │   └── showUtenti.html
-│   └── template/
-│       ├── footer.html
-│       └── header.html
-├── javascript/
-├── javascript/
-│   └── validation.js
-├── css/
-│   ├── style.css
-│   ├── mini.css
-│   └── print.css
-├── css/
-│   ├── style.css
-│   ├── mini.css
-│   └── print.css
-├── views/
-│   ├── template/
-│   │   ├── header.php
-│   │   └── footer.php
-│   ├── showIndex.php
-│   ├── showCatalogo.php
-│   ├── showDettaglioLibro.php
-│   ├── showLogin.php
-│   ├── showRegister.php
-│   ├── showDashboard.php
-│   ├── showPrestiti.php
-│   ├── showRecensioni.php
-│   ├── showDashboardAdmin.php
-│   ├── showModificaBiblioAdmin.php
-│   ├── showLibriAdmin.php
-│   ├── showAggiungiLibroAdmin.php
-│   ├── showModificaLibroAdmin.php
-│   ├── showEliminaLibroAdmin.php
-│   ├── showUtentiAdmin.php
-│   ├── showPrestitiAdmin.php
-│   └── showRecensioniAdmin.php
-├── admin/
-│   ├── index.php
-│   ├── modifica-biblio-admin.php
-│   ├── libri.php
-│   ├── aggiungi-libro.php
-│   ├── modifica-libro.php
-│   ├── elimina-libro.php
-│   ├── utenti.php
-│   ├── prestiti-utente.php
-│   └── recensioni.php
-├── index.php
-├── catalogo.php
-├── dettaglio-libro.php
+│       └── user_functions.php
 ├── login.php
-├── register.php
 ├── logout.php
+├── register.php
 ├── user/
 │   ├── aggiungi-recensione.php
 │   ├── dashboard.php
@@ -120,25 +103,36 @@ BiblioTake/
 │   ├── informazioni-utente.php
 │   ├── modifica-user.php
 │   ├── prestiti.php
+│   ├── recensioni.php
 │   ├── richiedi-prestito.php
-│   ├── restituisci.php
-│   └── recensioni.php
-├── user/
-│   ├── aggiungi-recensione.php
-│   ├── dashboard.php
-│   ├── elimina-recensione.php
-│   ├── elimina-user.php
-│   ├── informazioni-utente.php
-│   ├── modifica-user.php
-│   ├── prestiti.php
-│   ├── richiedi-prestito.php
-│   ├── restituisci.php
-│   └── recensioni.php
-├── about.php
-├── contatti.php
-├── 403.php
-├── 404.php
-└── 500.php
+│   └── restituisci.php
+└── views/
+    ├── template/
+    │   ├── footer.php
+    │   └── header.php
+    ├── show403.php
+    ├── show404.php
+    ├── show500.php
+    ├── showAbout.php
+    ├── showAggiungiLibroAdmin.php
+    ├── showCatalogo.php
+    ├── showContatti.php
+    ├── showDashboard.php
+    ├── showDashboardAdmin.php
+    ├── showDettaglioLibro.php
+    ├── showEliminaLibroAdmin.php
+    ├── showEliminaPrestitoAdmin.php
+    ├── showIndex.php
+    ├── showLibriAdmin.php
+    ├── showLogin.php
+    ├── showModificaBiblioAdmin.php
+    ├── showModificaLibroAdmin.php
+    ├── showModificaPrestitoAdmin.php
+    ├── showModificaUser.php
+    ├── showPrestitiAdmin.php
+    ├── showRecensioniAdmin.php
+    ├── showRegister.php
+    └── showUtentiAdmin.php
 ```
 
 ---

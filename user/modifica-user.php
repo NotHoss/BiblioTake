@@ -6,6 +6,11 @@ requireRole('utente');
 
 $pageTitle = 'Profilo | BiblioTake';
 $currentPage = 'dashboard';
+$breadcrumb = array(
+    array('label' => 'Home', 'href' => '../index.php'),
+    array('label' => 'Area utente', 'href' => 'dashboard.php'),
+    array('label' => 'Modifica profilo', 'href' => ''),
+);
 $errorMessage = '';
 $successMessage = '';
 

@@ -9,7 +9,7 @@ if (!empty($successMessage)) {
 }
 $messages = $errorMsg . $successMsg;
 
-$template = file_get_contents(__DIR__ . '/../html/admin/aggiungi-libro.html');
+$template = file_get_contents(__DIR__ . '/../html/admin/showAggiungiLibroAdmin.html');
 
 $categorieOptions = '';
 foreach (($categorie ?? []) as $cat) {

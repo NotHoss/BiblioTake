@@ -12,7 +12,7 @@ if (!empty($message)) {
 $messages = $errorMsg . $successMsg;
 
 // The admin users page currently renders only the list view.
-$template = file_get_contents(__DIR__ . '/../html/admin/showUtenti.html');
+$template = file_get_contents(__DIR__ . '/../html/admin/showUtentiAdmin.html');
 
 if (empty($utenti)) {
     echo strtr($template, [

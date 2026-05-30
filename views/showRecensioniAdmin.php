@@ -9,7 +9,7 @@ if (!empty($message)) {
 }
 $messages = $errorMsg . $successMsg;
 
-$template = file_get_contents(__DIR__ . '/../html/admin/showRecensioni.html');
+$template = file_get_contents(__DIR__ . '/../html/admin/showRecensioniAdmin.html');
     
 $utentiOptions = '';
 foreach ($utenti as $utente) {

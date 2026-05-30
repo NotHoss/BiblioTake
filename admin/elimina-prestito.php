@@ -3,6 +3,15 @@ require_once '../includes/resources.php';
 requireRole('admin');
 
 $pageTitle = 'Elimina prestito — Admin BiblioTake';
+$pageDescription = 'Elimina un prestito dal pannello amministrativo.';
+$pageKeywords = 'admin, prestiti, eliminazione, BiblioTake';
+$breadcrumb = array(
+    array('label' => 'Home', 'href' => '../index.php'),
+    array('label' => 'Admin', 'href' => 'index.php'),
+    array('label' => 'Prestiti', 'href' => 'prestiti-utente.php?utente_id=0'),
+    array('label' => 'Elimina prestito', 'href' => ''),
+);
+$currentPage = 'admin';
 $message = '';
 $errorMessage = '';
 
