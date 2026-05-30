@@ -29,28 +29,31 @@ BiblioTake/
 │       ├── recensione_functions.php
 │       └── admin_functions.php
 ├── html/
+│   ├── 403.html
+│   ├── 404.html
+│   ├── 500.html
+│   ├── about.html
 │   ├── aggiungi-recensione.html
+│   ├── catalogo.html
+│   ├── contatti.html
+│   ├── dashboard.html
+│   ├── dettaglio-libro.html
 │   ├── elimina-recensione.html
+│   ├── index.html
+│   ├── login.html
+│   ├── logout.html
 │   ├── modifica-recensione.html
+│   ├── modifica-user.html
+│   ├── prestiti.html
+│   ├── recensioni.html
+│   ├── register.html
 │   ├── restituisci.html
 │   ├── richiedi-prestito.html
-│   ├── show403.html
-│   ├── show404.html
-│   ├── show500.html
-│   ├── showAbout.html
-│   ├── showCatalogo.html
-│   ├── showContatti.html
-│   ├── showDashboard.html
-│   ├── showDettaglioLibro.html
-│   ├── showIndex.html
-│   ├── showLogin.html
-│   ├── showLogout.html
-│   ├── showPrestiti.html
-│   ├── showRecensioni.html
-│   ├── showRegister.html
 │   ├── admin/
 │   │   ├── aggiungi-libro.html
 │   │   ├── elimina-libro.html
+│   │   ├── index.html
+│   │   ├── libri.html
 │   │   ├── modifica-libro.html
 │   │   ├── prestiti-utente.html
 │   │   ├── showDashboardAdmin.html
@@ -62,7 +65,12 @@ BiblioTake/
 │       ├── footer.html
 │       └── header.html
 ├── javascript/
+├── javascript/
 │   └── validation.js
+├── css/
+│   ├── style.css
+│   ├── mini.css
+│   └── print.css
 ├── css/
 │   ├── style.css
 │   ├── mini.css
@@ -104,6 +112,17 @@ BiblioTake/
 ├── login.php
 ├── register.php
 ├── logout.php
+├── user/
+│   ├── aggiungi-recensione.php
+│   ├── dashboard.php
+│   ├── elimina-recensione.php
+│   ├── elimina-user.php
+│   ├── informazioni-utente.php
+│   ├── modifica-user.php
+│   ├── prestiti.php
+│   ├── richiedi-prestito.php
+│   ├── restituisci.php
+│   └── recensioni.php
 ├── user/
 │   ├── aggiungi-recensione.php
 │   ├── dashboard.php
@@ -157,6 +176,8 @@ require_once 'views/template/footer.php';
 ```
 
 Questo schema si replica identico per ogni pagina. L'ordine dei quattro blocchi non cambia mai.
+
+Nota: alcune pagine legate all'area utente sono collocate nella directory `user/` (ad esempio `user/dashboard.php`, `user/modifica-user.php`). I file in `user/` seguono lo stesso schema dei modelli in root ma usano i percorsi relativi corretti per includere le view e le risorse.
 
 Nota: alcune pagine legate all'area utente sono collocate nella directory `user/` (ad esempio `user/dashboard.php`, `user/modifica-user.php`). I file in `user/` seguono lo stesso schema dei modelli in root ma usano i percorsi relativi corretti per includere le view e le risorse.
 
