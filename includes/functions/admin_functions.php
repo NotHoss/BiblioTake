@@ -302,6 +302,133 @@ function getUtenteById($conn, $utenteId) {
     return $utente;
 }
 
+function buildAdminLibroFilterParts(array $filtri) {
+    $where  = [];
+    $params = [];
+    $types  = '';
+
+    $statoLibri = isset($filtri['stato_libri']) ? (string) $filtri['stato_libri'] : 'tutti';
+
+    if (!empty($filtri['categoria'])) {
+        $where[]  = 'l.categoria = ?';
+        $params[] = $filtri['categoria'];
+        $types   .= 's';
+    }
+
+    if (!empty($filtri['autore'])) {
+        $where[]  = 'l.autore LIKE ?';
+        $params[] = '%' . $filtri['autore'] . '%';
+        $types   .= 's';
+    }
+
+    if (!empty($filtri['anno'])) {
+        $where[]  = 'l.anno = ?';
+        $params[] = (int) $filtri['anno'];
+        $types   .= 'i';
+    }
+
+    if ($statoLibri === 'disponibili') {
+        $where[] = 'l.id NOT IN (
+            SELECT libro_id FROM prestito WHERE stato IN (\'attivo\', \'in_ritardo\')
+        )';
+    } elseif ($statoLibri === 'prestati') {
+        $where[] = 'l.id IN (
+            SELECT libro_id FROM prestito WHERE stato IN (\'attivo\', \'in_ritardo\')
+        )';
+    }
+
+    if (!empty($filtri['cerca'])) {
+        $searchValue = trim((string) $filtri['cerca']);
+        $where[] = '(l.id = ? OR l.codice_isbn LIKE ? OR l.titolo LIKE ? OR l.autore LIKE ?)';
+        $params[] = (int) $searchValue;
+        $like = '%' . $searchValue . '%';
+        $params[] = $like;
+        $params[] = $like;
+        $params[] = $like;
+        $types   .= 'isss';
+    }
+
+    if (!empty($filtri['tag'])) {
+        $where[] = 'EXISTS (
+            SELECT 1
+            FROM libro_tag lt
+            INNER JOIN tag t ON t.id = lt.tag_id
+            WHERE lt.libro_id = l.id AND t.nome = ?
+        )';
+        $params[] = $filtri['tag'];
+        $types   .= 's';
+    }
+
+    return [
+        'where' => $where,
+        'params' => $params,
+        'types' => $types,
+    ];
+}
+
+function getLibriAdminFiltrati($conn, array $filtri, $pagina, $limit = 20) {
+    $offset = ($pagina - 1) * $limit;
+    $parts = buildAdminLibroFilterParts($filtri);
+    $where  = $parts['where'];
+    $params = $parts['params'];
+    $types  = $parts['types'];
+
+    $sql = 'SELECT l.id, l.codice_isbn, l.titolo, l.autore, l.casa_editrice, l.edizione, l.anno, l.lingua, l.descrizione, l.pagine, l.copertina, l.categoria,
+            (SELECT COUNT(*)
+             FROM prestito p
+             WHERE p.libro_id = l.id AND p.stato IN (\'attivo\', \'in_ritardo\')) AS prestiti_attivi,
+            (SELECT p.utente_id
+             FROM prestito p
+             WHERE p.libro_id = l.id AND p.stato IN (\'attivo\', \'in_ritardo\')
+             ORDER BY p.data_inizio DESC
+             LIMIT 1) AS prestito_utente_id
+         FROM libro l';
+
+    if (!empty($where)) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
+    }
+
+    $sql .= ' ORDER BY l.id DESC LIMIT ? OFFSET ?';
+    $params[] = $limit;
+    $params[] = $offset;
+    $types   .= 'ii';
+
+    $stmt = $conn->prepare($sql);
+    if ($types) {
+        $stmt->bind_param($types, ...$params);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $libri = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+
+    return $libri;
+}
+
+function countLibriAdminFiltrati($conn, array $filtri) {
+    $parts = buildAdminLibroFilterParts($filtri);
+    $where  = $parts['where'];
+    $params = $parts['params'];
+    $types  = $parts['types'];
+
+    $sql = 'SELECT COUNT(*) AS totale FROM libro l';
+
+    if (!empty($where)) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
+    }
+
+    $stmt = $conn->prepare($sql);
+    if ($types) {
+        $stmt->bind_param($types, ...$params);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+
+    return (int) ($row['totale'] ?? 0);
+}
+
 // =====================================================================
 // FUNZIONI ADMIN - Gestione Libri (CRUD)
 // =====================================================================
