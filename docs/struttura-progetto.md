@@ -54,6 +54,7 @@ BiblioTake/
 │   │   ├── modifica-libro.html
 │   │   ├── prestiti-utente.html
 │   │   ├── showDashboardAdmin.html
+│   │   ├── showModificaBiblioAdmin.html
 │   │   ├── showLibri.html
 │   │   ├── showRecensioni.html
 │   │   └── showUtenti.html
@@ -79,6 +80,7 @@ BiblioTake/
 │   ├── showPrestiti.php
 │   ├── showRecensioni.php
 │   ├── showDashboardAdmin.php
+│   ├── showModificaBiblioAdmin.php
 │   ├── showLibriAdmin.php
 │   ├── showAggiungiLibroAdmin.php
 │   ├── showModificaLibroAdmin.php
@@ -88,6 +90,7 @@ BiblioTake/
 │   └── showRecensioniAdmin.php
 ├── admin/
 │   ├── index.php
+│   ├── modifica-biblio-admin.php
 │   ├── libri.php
 │   ├── aggiungi-libro.php
 │   ├── modifica-libro.php
@@ -413,6 +416,8 @@ $currentPage = 'admin';
 // ...
 require_once '../views/template/header.php';
 require_once '../views/showDashboardAdmin.php';
+// La modifica delle generalità della biblioteca usa la pagina dedicata:
+// require_once '../views/showModificaBiblioAdmin.php';
 require_once '../views/template/footer.php';
 ?>
 ```
