@@ -109,7 +109,7 @@ CREATE INDEX idx_prestito_libro_stato ON prestito (libro_id, stato);
 CREATE INDEX idx_recensione_libro ON recensione (libro_id);
 
 INSERT INTO biblioteca (id, indirizzo, telefono, email, note, orario_lun_ven, orario_sabato, orario_domenica) VALUES
-	(1, 'Via Garibaldi 12, Padova', '+39 02 88997766', 'contatti@bibliotake-padova.it', 'Abbiamo l&#39;aria condizionata rotta, abbiamo avvisato i tecnici che arriveranno il prima possibile.', '9:00 - 19:00', '9:00 - 13:00', 'Chiuso');
+	(1, 'Via Garibaldi 12, Padova', '+39 02 88997766', 'contatti@bibliotake-padova.it', 'Abbiamo l''aria condizionata rotta, abbiamo avvisato i tecnici che arriveranno il prima possibile.', '9:00 - 19:00', '9:00 - 13:00', 'Chiuso');
 
 INSERT INTO utente (id, email, username, password, foto_profilo, attivo, ruolo) VALUES
 	(101, 'luca.rossi@gmail.com', 'luca.rossi', '$2y$10$e0NRm7l8iA92f1bR6xL4fOd8kSMNw2w5sY4qC8x0Qh7oA3fXvYf4K', 'images/default-avatar.jpg', TRUE, 'utente'),
@@ -147,11 +147,11 @@ INSERT INTO libro (
 	id, codice_isbn, titolo, autore, casa_editrice, edizione, anno, lingua, descrizione, pagine, copertina, categoria
 ) VALUES
 	(201, '9788804668236', 'Il nome della rosa', 'Umberto Eco', 'Bompiani', 15, 2021, 'Italiano', 'Romanzo storico investigativo ambientato in un monastero medievale.', 624, 'images/default-cover.jpg', 'Romanzo storico'),
-	(202, '9788806223129', 'Sapiens', 'Yuval Noah Harari', 'Bompiani', 9, 2020, 'Italiano', 'Saggio sulla storia dell&#39;umanità dalle origini all&#39;età contemporanea.', 538, 'images/default-cover.jpg', 'Saggistica'),
+	(202, '9788806223129', 'Sapiens', 'Yuval Noah Harari', 'Bompiani', 9, 2020, 'Italiano', 'Saggio sulla storia dell''umanità dalle origini all''età contemporanea.', 538, 'images/default-cover.jpg', 'Saggistica'),
 	(203, '9780140449136', 'The Odyssey', 'Homer', 'Penguin Classics', 3, 2018, 'Inglese', 'Traduzione annotata del poema epico greco.', 560, 'images/default-cover.jpg', 'Classici'),
 	(204, '9788817168358', 'Norwegian Wood', 'Haruki Murakami', 'Einaudi', 12, 2019, 'Italiano', 'Romanzo di formazione ambientato nel Giappone degli anni Sessanta.', 336, 'images/default-cover.jpg', 'Narrativa contemporanea'),
 	(205, '9788807891234', 'Il barone rampante', 'Italo Calvino', 'Mondadori', 11, 2022, 'Italiano', 'Romanzo di formazione e avventura ambientato sugli alberi.', 320, 'images/default-cover.jpg', 'Classici italiani'),
-	(206, '9788806228889', 'L&#39;ordine del tempo', 'Carlo Rovelli', 'Adelphi', 5, 2021, 'Italiano', 'Saggio divulgativo sul tempo e sulla fisica contemporanea.', 256, 'images/default-cover.jpg', 'Saggistica scientifica'),
+	(206, '9788806228889', 'L''ordine del tempo', 'Carlo Rovelli', 'Adelphi', 5, 2021, 'Italiano', 'Saggio divulgativo sul tempo e sulla fisica contemporanea.', 256, 'images/default-cover.jpg', 'Saggistica scientifica'),
 	(207, '9781408855652', 'Harry Potter e la pietra filosofale', 'J.K. Rowling', 'Salani', 8, 2023, 'Italiano', 'Primo capitolo della saga del maghetto più famoso.', 336, 'images/default-cover.jpg', 'Fantasy'),
 	(208, '9788804685271', 'Se questo è un uomo', 'Primo Levi', 'Einaudi', 14, 2024, 'Italiano', 'Testimonianza fondamentale sulla deportazione nei lager.', 208, 'images/default-cover.jpg', 'Memoria'),
 	(209, '9788807000001', 'Orizzonti di vetro', 'Alba Ferri', 'Lumen', 1, 2016, 'Italiano', 'Storia di una ricerca personale tra città e ricordi.', 240, 'images/default-cover.jpg', 'Narrativa'),
@@ -161,11 +161,11 @@ INSERT INTO libro (
 	(213, '9788807000005', 'Il ponte delle maree', 'Sara De Santis', 'Arca', 2, 2020, 'Italiano', 'Una famiglia divisa tra partenze e ritorni.', 320, 'images/default-cover.jpg', 'Narrativa contemporanea'),
 	(214, '9788807000006', 'Cronache di un inverno lento', 'Marco Bellini', 'Orione', 1, 2021, 'Italiano', 'Una piccola comunità attraversa un tempo sospeso.', 352, 'images/default-cover.jpg', 'Romanzo'),
 	(215, '9788807000007', 'Atlante delle rotte perdute', 'Elisa Moretti', 'Lumen', 4, 2022, 'Italiano', 'Percorsi geografici e umani verso luoghi remoti.', 368, 'images/default-cover.jpg', 'Avventura'),
-	(216, '9788807000008', 'La misura del vento', 'Luca Ferraro', 'Arca', 2, 2023, 'Italiano', 'Una riflessione sul cambiamento e sull&#39;attesa.', 224, 'images/default-cover.jpg', 'Poesia'),
+	(216, '9788807000008', 'La misura del vento', 'Luca Ferraro', 'Arca', 2, 2023, 'Italiano', 'Una riflessione sul cambiamento e sull''attesa.', 224, 'images/default-cover.jpg', 'Poesia'),
 	(217, '9788807000009', 'Racconti del quartiere nord', 'Giada Neri', 'Orione', 1, 2024, 'Italiano', 'Scene brevi e precise da un quartiere in trasformazione.', 192, 'images/default-cover.jpg', 'Racconti'),
 	(218, '9788807000010', 'Quaderno di stelle', 'Matteo Riva', 'Lumen', 5, 2025, 'Italiano', 'Un quaderno di osservazioni tra scienza e meraviglia.', 280, 'images/default-cover.jpg', 'Saggistica scientifica'),
 	(219, '9788807000011', 'Luce dopo la pioggia', 'Irene Costa', 'Arca', 1, 2016, 'Italiano', 'Un gruppo di amici ritrova il proprio equilibrio.', 264, 'images/default-cover.jpg', 'Formazione'),
-	(220, '9788807000012', 'Geometrie dell&#39;alba', 'Paolo Marin', 'Orione', 3, 2017, 'Italiano', 'Linee, forme e relazioni in una città che si sveglia.', 312, 'images/default-cover.jpg', 'Narrativa sperimentale'),
+	(220, '9788807000012', 'Geometrie dell''alba', 'Paolo Marin', 'Orione', 3, 2017, 'Italiano', 'Linee, forme e relazioni in una città che si sveglia.', 312, 'images/default-cover.jpg', 'Narrativa sperimentale'),
 	(221, '9788807000013', 'Il custode delle chiavi', 'Claudia Gatti', 'Lumen', 2, 2018, 'Italiano', 'Segreti di famiglia e archivi nascosti.', 336, 'images/default-cover.jpg', 'Giallo'),
 	(222, '9788807000014', 'Sotto il cielo di rame', 'Andrea Fonti', 'Arca', 1, 2019, 'Italiano', 'Una storia di frontiera e coraggio.', 248, 'images/default-cover.jpg', 'Avventura'),
 	(223, '9788807000015', 'Inventario delle memorie', 'Silvia Romano', 'Orione', 2, 2020, 'Italiano', 'Un catalogo di ricordi che cambia il presente.', 360, 'images/default-cover.jpg', 'Narrativa'),
@@ -287,7 +287,7 @@ INSERT INTO recensione (id, valutazione, testo, censura, data, libro_id, utente_
 	(509, 3, 'Interessante ma alcuni passaggi risultano lenti.', FALSE, '2026-05-07 17:45:00', 211, 109),
 	(510, 5, 'Atmosfera intensa e personaggi credibili.', FALSE, '2026-05-09 20:30:00', 212, 110),
 	(511, 4, 'Ottima struttura e stile molto scorrevole.', FALSE, '2026-05-11 16:25:00', 213, 111),
-	(512, 5, 'Mi ha coinvolto dall&#39;inizio alla fine.', FALSE, '2026-05-13 21:05:00', 214, 112),
+	(512, 5, 'Mi ha coinvolto dall''inizio alla fine.', FALSE, '2026-05-13 21:05:00', 214, 112),
 	(513, 4, 'Buon equilibrio tra tema e sviluppo narrativo.', FALSE, '2026-05-15 15:15:00', 215, 113),
 	(514, 2, 'Idea valida, ma la resa finale convince poco.', FALSE, '2026-05-17 14:40:00', 216, 114),
 	(515, 5, 'Molto curato e con una voce originale.', FALSE, '2026-05-19 18:35:00', 217, 115),
