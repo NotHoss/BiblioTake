@@ -10,22 +10,39 @@ if (!empty($message)) {
 $messages = $errorMsg . $successMsg;
 
 $template = file_get_contents(__DIR__ . '/../html/admin/showRecensioniAdmin.html');
-    
-$utentiOptions = '';
-foreach ($utenti as $utente) {
-    $selected = ($utenteId === (int) $utente['id']) ? 'selected' : '';
-    $val = htmlspecialchars((string) $utente['id'], ENT_QUOTES, 'UTF-8');
-    $label = htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8');
-    $utentiOptions .= "<option value=\"{$val}\" {$selected}>{$label}</option>";
-}
+
+$searchForm = renderSearchForm([
+    'action' => 'recensioni.php',
+    'class' => 'admin-search-form',
+    'submitLabel' => 'Filtra recensioni',
+    'resetHref' => 'recensioni.php',
+    'fields' => [
+        [
+            'type' => 'search',
+            'name' => 'cerca',
+            'label' => 'Cerca',
+            'value' => (string) ($filtri['cerca'] ?? ''),
+            'placeholder' => 'Username, libro o testo',
+        ],
+    ],
+]);
+
+$start = $totalRecensioni > 0 ? (($pagina - 1) * $resultsPerPage) + 1 : 0;
+$end = $totalRecensioni > 0 ? min($start + count($recensioni) - 1, $totalRecensioni) : 0;
+$resultsInfo = renderResultsInfo($totalRecensioni, $start, $end, 'recensione', 'recensioni', 'Nessuna recensione trovata.');
+$pagination = renderPagination('recensioni.php', [
+    'cerca' => (string) ($filtri['cerca'] ?? ''),
+], $pagina, $totalPagine, 'Paginazione recensioni');
     
 if (empty($recensioni)) {
     echo strtr($template, [
+        '[SEARCH_FORM]' => $searchForm,
+        '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
-        '[UTENTI_OPTIONS]' => $utentiOptions,
         '[EMPTY_MESSAGE]' => '<p>Nessuna recensione trovata.</p>',
         '[TABLE_DISPLAY]' => 'style="display:none;"',
         '[TABLE_ROWS]' => '',
+        '[PAGINATION]' => $pagination,
     ]);
     return;
 }
@@ -60,9 +77,11 @@ foreach ($recensioni as $recensione) {
 }
 
 echo strtr($template, [
+    '[SEARCH_FORM]' => $searchForm,
+    '[RESULTS_INFO]' => $resultsInfo,
     '[MESSAGES]' => $messages,
-    '[UTENTI_OPTIONS]' => $utentiOptions,
     '[EMPTY_MESSAGE]' => '',
     '[TABLE_DISPLAY]' => '',
     '[TABLE_ROWS]' => $tableRows,
+    '[PAGINATION]' => $pagination,
 ]);

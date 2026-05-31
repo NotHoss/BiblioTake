@@ -16,6 +16,20 @@ $message = '';
 $errorMessage = '';
 
 $utenteId = isset($_GET['utente_id']) ? (int) $_GET['utente_id'] : (isset($_POST['utente_id']) ? (int) $_POST['utente_id'] : 0);
+$filtri = [
+    'cerca' => isset($_GET['cerca']) ? trim((string) $_GET['cerca']) : '',
+];
+$utenteFiltro = null;
+if ($filtri['cerca'] === '' && $utenteId > 0 && $conn instanceof mysqli) {
+    $utenteFiltro = getUserInfo($conn, $utenteId);
+    if (!empty($utenteFiltro['username'])) {
+        $filtri['cerca'] = (string) $utenteFiltro['username'];
+    }
+}
+$resultsPerPage = 10;
+$totalRecensioni = 0;
+$totalPagine = 1;
+$pagina = max(1, (int) $page);
 
 $res = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '') {
@@ -26,8 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
 $utenti = [];
 $recensioni = [];
 if ($conn instanceof mysqli && $errorMessage === '') {
-    $utenti = getAllUtenti($conn, 200);
-    $recensioni = getRecensioniAdmin($conn, $utenteId);
+    $totalRecensioni = countRecensioniAdminFiltrate($conn, $filtri);
+    $totalPagine = max(1, (int) ceil($totalRecensioni / $resultsPerPage));
+    $pagina = max(1, min($pagina, $totalPagine));
+    $recensioni = getRecensioniAdminFiltrate($conn, $filtri, $pagina, $resultsPerPage);
 }
 $adminViewMode = 'reviews';
 require_once __DIR__ . '/../views/template/header.php';

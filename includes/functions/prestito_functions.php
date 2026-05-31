@@ -85,21 +85,88 @@ function getPrestitiByUtente($conn, $utenteId) {
     return $prestiti;
 }
 
-function getPrestitiAdmin($conn, $utenteId = 0) {
+function countPrestitiAdminFiltrati($conn, array $filtri) {
+    $where = [];
+    $params = [];
+    $types = '';
+
+    if (!empty($filtri['utente_id'])) {
+        $where[] = 'p.utente_id = ?';
+        $params[] = (int) $filtri['utente_id'];
+        $types .= 'i';
+    }
+
+    if (!empty($filtri['cerca'])) {
+        $searchValue = trim((string) $filtri['cerca']);
+        $where[] = '(p.id = ? OR l.titolo LIKE ? OR l.autore LIKE ? OR u.username LIKE ?)';
+        $params[] = (int) $searchValue;
+        $like = '%' . $searchValue . '%';
+        $params[] = $like;
+        $params[] = $like;
+        $params[] = $like;
+        $types .= 'isss';
+    }
+
+    $sql = 'SELECT COUNT(*) AS totale FROM prestito p INNER JOIN utente u ON u.id = p.utente_id INNER JOIN libro l ON l.id = p.libro_id';
+    if (!empty($where)) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
+    }
+
+    $stmt = $conn->prepare($sql);
+    if ($types) {
+        $stmt->bind_param($types, ...$params);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+
+    return (int) ($row['totale'] ?? 0);
+}
+
+function getPrestitiAdminFiltrati($conn, array $filtri, $pagina, $limit = 10) {
+    $pagina = max(1, (int) $pagina);
+    $limit = max(1, (int) $limit);
+    $offset = ($pagina - 1) * $limit;
+
+    $where = [];
+    $params = [];
+    $types = '';
+
+    if (!empty($filtri['utente_id'])) {
+        $where[] = 'p.utente_id = ?';
+        $params[] = (int) $filtri['utente_id'];
+        $types .= 'i';
+    }
+
+    if (!empty($filtri['cerca'])) {
+        $searchValue = trim((string) $filtri['cerca']);
+        $where[] = '(p.id = ? OR l.titolo LIKE ? OR l.autore LIKE ? OR u.username LIKE ?)';
+        $params[] = (int) $searchValue;
+        $like = '%' . $searchValue . '%';
+        $params[] = $like;
+        $params[] = $like;
+        $params[] = $like;
+        $types .= 'isss';
+    }
+
     $sql = 'SELECT p.id, p.data_inizio, p.data_fine, p.stato, u.username, u.email, l.titolo AS libro_titolo
             FROM prestito p
             INNER JOIN utente u ON u.id = p.utente_id
             INNER JOIN libro l ON l.id = p.libro_id';
 
-    if ($utenteId > 0) {
-        $sql .= ' WHERE p.utente_id = ?';
+    if (!empty($where)) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
     }
 
-    $sql .= ' ORDER BY p.data_inizio DESC';
+    $sql .= ' ORDER BY p.data_inizio DESC LIMIT ? OFFSET ?';
+    $params[] = $limit;
+    $params[] = $offset;
+    $types .= 'ii';
 
     $stmt = $conn->prepare($sql);
-    if ($utenteId > 0) {
-        $stmt->bind_param('i', $utenteId);
+    if ($types) {
+        $stmt->bind_param($types, ...$params);
     }
     $stmt->execute();
     $result = $stmt->get_result();

@@ -12,15 +12,30 @@ if (!empty($message)) {
 $messages = $errorMsg . $successMsg;
 
 $template = file_get_contents(__DIR__ . '/../html/admin/showPrestitiAdmin.html');
-    
-// Build utenti select options; include option value 0 for 'Tutti gli utenti'
-$utentiOptions = '<option value="0"' . ($utenteId === 0 ? ' selected' : '') . '>Tutti gli utenti</option>';
-foreach ($utenti as $utente) {
-    $selected = ($utenteId === (int) $utente['id']) ? 'selected' : '';
-    $val = htmlspecialchars((string) $utente['id'], ENT_QUOTES, 'UTF-8');
-    $label = htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8');
-    $utentiOptions .= "<option value=\"{$val}\" {$selected}>{$label}</option>";
-}
+
+$searchForm = renderSearchForm([
+    'action' => 'prestiti-utente.php',
+    'class' => 'admin-search-form',
+    'submitLabel' => 'Gestione prestiti',
+    'resetHref' => 'prestiti-utente.php',
+    'fields' => [
+        [
+            'type' => 'search',
+            'name' => 'cerca',
+            'label' => 'Cerca',
+            'value' => (string) ($filtri['cerca'] ?? ''),
+            'placeholder' => 'ID, Username, titolo o autore',
+        ],
+    ],
+]);
+
+$start = $totalPrestiti > 0 ? (($pagina - 1) * $resultsPerPage) + 1 : 0;
+$end = $totalPrestiti > 0 ? min($start + count($prestiti) - 1, $totalPrestiti) : 0;
+$resultsInfo = renderResultsInfo($totalPrestiti, $start, $end, 'prestito', 'prestiti', 'Nessun prestito trovato.');
+$pagination = renderPagination('prestiti-utente.php', [
+    'cerca' => (string) ($filtri['cerca'] ?? ''),
+], $pagina, $totalPagine, 'Paginazione prestiti');
+$cercaSafe = htmlspecialchars((string) ($filtri['cerca'] ?? ''), ENT_QUOTES, 'UTF-8');
 
 if ($utenteId >= 0) {
     $modificaPrestitoDisplay = 'style="display:none;"';
@@ -46,6 +61,8 @@ if ($utenteId >= 0) {
     } else {
         foreach ($prestiti as $prestito) {
             $id = htmlspecialchars((string) $prestito['id'], ENT_QUOTES, 'UTF-8');
+            $username = htmlspecialchars((string) ($prestito['username'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $usernameLink = '<a href="utenti.php?cerca=' . rawurlencode((string) ($prestito['username'] ?? '')) . '">' . $username . '</a>';
             $titolo = htmlspecialchars((string) $prestito['libro_titolo'], ENT_QUOTES, 'UTF-8');
             $stato = htmlspecialchars((string) $prestito['stato'], ENT_QUOTES, 'UTF-8');
             $inizio = htmlspecialchars((string) $prestito['data_inizio'], ENT_QUOTES, 'UTF-8');
@@ -68,32 +85,36 @@ if ($utenteId >= 0) {
 
             $tableRows .= "<tr>
                 <td>{$id}</td>
+                <td>{$usernameLink}</td>
                 <td>{$titolo}</td>
                 <td>{$stato}</td>
                 <td>{$inizio}</td>
                 <td>{$fine}</td>
                 <td>
                     {$modificaLink} | {$eliminaLink}
-                    <form method=\"post\" style=\"display:inline; margin-left:0.5rem;\">\n                        <input type=\"hidden\" name=\"prestito_id\" value=\"{$id}\">\n                        <input type=\"hidden\" name=\"utente_id\" value=\"{$utenteIdSafe}\">\n                        {$postActions}\n                    </form>
+                    <form method=\"post\" style=\"display:inline; margin-left:0.5rem;\">\n                        <input type=\"hidden\" name=\"prestito_id\" value=\"{$id}\">\n                        <input type=\"hidden\" name=\"utente_id\" value=\"{$utenteIdSafe}\">\n                        <input type=\"hidden\" name=\"cerca\" value=\"{$cercaSafe}\">\n                        {$postActions}\n                    </form>
                 </td>
             </tr>\n";
         }
     }
 
     echo strtr($template, array_merge([
+        '[SEARCH_FORM]' => $searchForm,
+        '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
-        '[UTENTI_OPTIONS]' => $utentiOptions,
         '[PRESTITI_CONTENT_DISPLAY]' => '',
         '[MODIFICA_PRESTITO_DISPLAY]' => $modificaPrestitoDisplay,
         '[EMPTY_PRESTITI_MESSAGE]' => $emptyPrestitiMessage,
         '[TABLE_DISPLAY]' => $tableDisplay,
         '[TABLE_ROWS]' => $tableRows,
+        '[PAGINATION]' => $pagination,
     ], $prestitoEn));
 
 } else {
     echo strtr($template, [
+        '[SEARCH_FORM]' => $searchForm,
+        '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
-        '[UTENTI_OPTIONS]' => $utentiOptions,
         '[PRESTITI_CONTENT_DISPLAY]' => 'style="display:none;"',
         '[MODIFICA_PRESTITO_DISPLAY]' => 'style="display:none;"',
         '[PRESTITO_IN_MODIFICA_ID]' => '',
@@ -106,5 +127,6 @@ if ($utenteId >= 0) {
         '[EMPTY_PRESTITI_MESSAGE]' => '',
         '[TABLE_DISPLAY]' => 'style="display:none;"',
         '[TABLE_ROWS]' => '',
+        '[PAGINATION]' => $pagination,
     ]);
 }

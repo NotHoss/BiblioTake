@@ -333,28 +333,86 @@ function getUtenteDateColumn($conn) {
     return '';
 }
 
-function getAllUtenti($conn, $limit = 200) {
-    $stmt = $conn->prepare("SELECT id, username, email, ruolo, attivo, foto_profilo FROM utente WHERE ruolo <> 'admin' ORDER BY id DESC LIMIT ?");
-    $stmt->bind_param('i', $limit);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $rows = $result->fetch_all(MYSQLI_ASSOC);
-    $stmt->close();
+function buildAdminUtentiFilterParts(array $filtri) {
+    $where  = ["u.ruolo <> 'admin'"];
+    $params = [];
+    $types  = '';
 
-    return $rows;
+    $statoUtenti = isset($filtri['stato_utenti']) ? (string) $filtri['stato_utenti'] : 'tutti';
+
+    if ($statoUtenti === 'attivi') {
+        $where[] = 'u.attivo = 1';
+    } elseif ($statoUtenti === 'non_attivi') {
+        $where[] = 'u.attivo = 0';
+    }
+
+    if (!empty($filtri['cerca'])) {
+        $searchValue = trim((string) $filtri['cerca']);
+        $where[] = '(u.id = ? OR u.username LIKE ? OR u.email LIKE ?)';
+        $params[] = (int) $searchValue;
+        $like = '%' . $searchValue . '%';
+        $params[] = $like;
+        $params[] = $like;
+        $types   .= 'iss';
+    }
+
+    return [
+        'where' => $where,
+        'params' => $params,
+        'types' => $types,
+    ];
 }
 
-function getUtentiConPrestiti($conn, $limit = 200) {
-    $stmt = $conn->prepare(
-    "SELECT u.id, u.username, u.email, u.ruolo, u.attivo, u.foto_profilo,
+function countUtentiConPrestitiFiltrati($conn, array $filtri) {
+    $parts = buildAdminUtentiFilterParts($filtri);
+    $where  = $parts['where'];
+    $params = $parts['params'];
+    $types  = $parts['types'];
+
+    $sql = 'SELECT COUNT(*) AS totale FROM utente u';
+
+    if (!empty($where)) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
+    }
+
+    $stmt = $conn->prepare($sql);
+    if ($types) {
+        $stmt->bind_param($types, ...$params);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+
+    return (int) ($row['totale'] ?? 0);
+}
+
+function getUtentiConPrestitiFiltrati($conn, array $filtri, $pagina, $limit = 10) {
+    $offset = ($pagina - 1) * $limit;
+    $parts = buildAdminUtentiFilterParts($filtri);
+    $where  = $parts['where'];
+    $params = $parts['params'];
+    $types  = $parts['types'];
+
+    $sql = "SELECT u.id, u.username, u.email, u.attivo, u.foto_profilo,
         (SELECT COUNT(*) FROM prestito p WHERE p.utente_id = u.id) AS prestiti_totali,
-        (SELECT COUNT(*) FROM prestito p WHERE p.utente_id = u.id AND p.stato = 'attivo') AS prestiti_attivi
-     FROM utente u
-     WHERE u.ruolo <> 'admin'
-         ORDER BY u.id DESC
-         LIMIT ?"
-    );
-    $stmt->bind_param('i', $limit);
+        (SELECT COUNT(*) FROM prestito p WHERE p.utente_id = u.id AND p.stato = 'attivo') AS prestiti_attivi,
+        (SELECT COUNT(*) FROM recensione r WHERE r.utente_id = u.id) AS recensioni_totali
+     FROM utente u";
+
+    if (!empty($where)) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
+    }
+
+    $sql .= ' ORDER BY u.id DESC LIMIT ? OFFSET ?';
+    $params[] = $limit;
+    $params[] = $offset;
+    $types   .= 'ii';
+
+    $stmt = $conn->prepare($sql);
+    if ($types) {
+        $stmt->bind_param($types, ...$params);
+    }
     $stmt->execute();
     $result = $stmt->get_result();
     $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -759,7 +817,7 @@ function handleEliminaLibro($conn, $libroId, array $post) {
 }
 
 function handlePrestitiActions($conn, array $post) {
-    $result = ['message' => '', 'prestitoInModifica' => null, 'utenteId' => isset($post['utente_id']) ? (int) $post['utente_id'] : 0];
+    $result = ['message' => '', 'prestitoInModifica' => null, 'utenteId' => isset($post['utente_id']) ? (int) $post['utente_id'] : 0, 'cerca' => trim((string) ($post['cerca'] ?? ''))];
 
     if (!isset($post['prestito_id'], $post['azione'])) return $result;
     $prestitoId = (int) $post['prestito_id'];

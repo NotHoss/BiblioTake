@@ -17,68 +17,76 @@ $totalLibri = isset($totalLibri) ? (int) $totalLibri : 0;
 $totalPagine = isset($totalPagine) ? (int) $totalPagine : 1;
 $resultsPerPage = isset($resultsPerPage) ? (int) $resultsPerPage : 20;
 
-$filtroCercaValue = htmlspecialchars((string) ($filtri['cerca'] ?? ''), ENT_QUOTES, 'UTF-8');
-$filtroAutoreValue = htmlspecialchars((string) ($filtri['autore'] ?? ''), ENT_QUOTES, 'UTF-8');
 $filtroAnnoValue = ($filtri['anno'] ?? '') !== '' ? (int) $filtri['anno'] : '';
-$statoLibriValue = (string) ($filtri['stato_libri'] ?? 'tutti');
-$opzioniStatoLibri = '';
-foreach ([
-    'tutti' => 'Tutti',
-    'disponibili' => 'Disponibile',
-    'prestati' => 'Prestato',
-] as $value => $label) {
-    $selected = ($statoLibriValue === $value) ? ' selected' : '';
-    $opzioniStatoLibri .= '<option value="' . $value . '"' . $selected . '>' . $label . '</option>';
-}
 
-$opzioniCategoria = '<option value="">Tutte</option>';
+$opzioniCategoria = ['' => 'Tutte'];
 foreach (($categorie ?? []) as $cat) {
-    $catValue = htmlspecialchars((string) $cat, ENT_QUOTES, 'UTF-8');
-    $selected = (($filtri['categoria'] ?? '') === $cat) ? ' selected' : '';
-    $opzioniCategoria .= '<option value="' . $catValue . '"' . $selected . '>' . $catValue . '</option>';
+    $opzioniCategoria[(string) $cat] = (string) $cat;
 }
 
-$opzioniTag = '<option value="">Tutti</option>';
+$opzioniTag = ['' => 'Tutti'];
 foreach (($tagsDisponibili ?? []) as $tag) {
-    $tagValue = htmlspecialchars((string) ($tag['nome'] ?? ''), ENT_QUOTES, 'UTF-8');
-    if ($tagValue === '') {
+    $nome = (string) ($tag['nome'] ?? '');
+    if ($nome === '') {
         continue;
     }
-    $selected = (($filtri['tag'] ?? '') === (string) $tag['nome']) ? ' selected' : '';
-    $opzioniTag .= '<option value="' . $tagValue . '"' . $selected . '>' . $tagValue . '</option>';
+    $opzioniTag[$nome] = $nome;
 }
 
-$searchForm = '
-<form method="get" action="libri.php" class="admin-search-form">
-    <div>
-        <label for="cerca">Cerca</label>
-        <input type="search" id="cerca" name="cerca" value="' . $filtroCercaValue . '" placeholder="ID, ISBN o titolo del libro">
-    </div>
-    <div>
-        <label for="autore">Autore</label>
-        <input type="text" id="autore" name="autore" value="' . $filtroAutoreValue . '">
-    </div>
-    <div>
-        <label for="categoria">Categoria</label>
-        <select id="categoria" name="categoria">' . $opzioniCategoria . '</select>
-    </div>
-    <div>
-        <label for="tag">Tag</label>
-        <select id="tag" name="tag">' . $opzioniTag . '</select>
-    </div>
-    <div>
-        <label for="anno">Anno</label>
-        <input type="number" id="anno" name="anno" min="0" max="' . date('Y') . '" value="' . htmlspecialchars((string) $filtroAnnoValue, ENT_QUOTES, 'UTF-8') . '">
-    </div>
-    <div>
-        <label for="stato_libri">Stato libro</label>
-        <select id="stato_libri" name="stato_libri">' . $opzioniStatoLibri . '</select>
-    </div>
-    <div>
-        <button type="submit">Filtra</button>
-        <a href="libri.php">Reset</a>
-    </div>
-</form>';
+$searchForm = renderSearchForm([
+    'action' => 'libri.php',
+    'class' => 'admin-search-form',
+    'submitLabel' => 'Filtra',
+    'resetHref' => 'libri.php',
+    'fields' => [
+        [
+            'type' => 'search',
+            'name' => 'cerca',
+            'label' => 'Cerca',
+            'value' => (string) ($filtri['cerca'] ?? ''),
+            'placeholder' => 'ID, ISBN o titolo del libro',
+        ],
+        [
+            'type' => 'text',
+            'name' => 'autore',
+            'label' => 'Autore',
+            'value' => (string) ($filtri['autore'] ?? ''),
+        ],
+        [
+            'type' => 'select',
+            'name' => 'categoria',
+            'label' => 'Categoria',
+            'selected' => (string) ($filtri['categoria'] ?? ''),
+            'options' => $opzioniCategoria,
+        ],
+        [
+            'type' => 'select',
+            'name' => 'tag',
+            'label' => 'Tag',
+            'selected' => (string) ($filtri['tag'] ?? ''),
+            'options' => $opzioniTag,
+        ],
+        [
+            'type' => 'number',
+            'name' => 'anno',
+            'label' => 'Anno',
+            'value' => ($filtroAnnoValue !== '') ? (string) $filtroAnnoValue : '',
+            'min' => 0,
+            'max' => date('Y'),
+        ],
+        [
+            'type' => 'select',
+            'name' => 'stato_libri',
+            'label' => 'Stato libro',
+            'selected' => (string) ($filtri['stato_libri'] ?? 'tutti'),
+            'options' => [
+                'tutti' => 'Tutti',
+                'disponibili' => 'Disponibile',
+                'prestati' => 'Prestato',
+            ],
+        ],
+    ],
+]);
 
 $start = $totalLibri > 0 ? (($pagina - 1) * $resultsPerPage) + 1 : 0;
 $end = $totalLibri > 0 ? min($start + count($libri) - 1, $totalLibri) : 0;
@@ -89,24 +97,7 @@ if ($totalLibri === 0) {
     $resultsInfo = '<p>Mostrati ' . $start . '-' . $end . ' di ' . $totalLibri . ' libri.</p>';
 }
 
-$pagination = '';
-if ($totalPagine > 1) {
-    $pagination .= '<nav aria-label="Paginazione libri"><ul>';
-    if ($pagina > 1) {
-        $pagination .= '<li><a href="libri.php?' . http_build_query(array_merge($filtri, ['page' => $pagina - 1])) . '">Precedente</a></li>';
-    }
-    for ($i = 1; $i <= $totalPagine; $i++) {
-        if ($i === $pagina) {
-            $pagination .= '<li aria-current="page">' . $i . '</li>';
-        } else {
-            $pagination .= '<li><a href="libri.php?' . http_build_query(array_merge($filtri, ['page' => $i])) . '">' . $i . '</a></li>';
-        }
-    }
-    if ($pagina < $totalPagine) {
-        $pagination .= '<li><a href="libri.php?' . http_build_query(array_merge($filtri, ['page' => $pagina + 1])) . '">Successiva</a></li>';
-    }
-    $pagination .= '</ul></nav>';
-}
+$pagination = renderPagination('libri.php', $filtri, $pagina, $totalPagine, 'Paginazione libri');
 
 // List mode only — create/edit/delete moved to dedicated views
 $template = file_get_contents(__DIR__ . '/../html/admin/showLibriAdmin.html');

@@ -17,6 +17,20 @@ $errorMessage = '';
 
 $prestitoId = isset($_GET['prestito_id']) ? (int) $_GET['prestito_id'] : 0;
 $utenteId = isset($_GET['utente_id']) ? (int) $_GET['utente_id'] : (isset($_POST['utente_id']) ? (int) $_POST['utente_id'] : 0);
+$filtri = [
+    'cerca' => isset($_GET['cerca']) ? trim((string) $_GET['cerca']) : '',
+];
+$utenteFiltro = null;
+if ($filtri['cerca'] === '' && $utenteId > 0 && $conn instanceof mysqli) {
+    $utenteFiltro = getUserInfo($conn, $utenteId);
+    if (!empty($utenteFiltro['username'])) {
+        $filtri['cerca'] = (string) $utenteFiltro['username'];
+    }
+}
+$resultsPerPage = 10;
+$totalPrestiti = 0;
+$totalPagine = 1;
+$pagina = max(1, (int) $page);
 $prestitoInRequest = null;
 $prestitoInModifica = null;
 
@@ -31,24 +45,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
 $utenti = [];
 $prestiti = [];
 if ($conn instanceof mysqli && $errorMessage === '') {
-    $utenti = getAllUtenti($conn, 200);
-
     // If a specific prestito is requested, load its owner and later filter results
     if ($prestitoId > 0) {
         $prestitoInRequest = getPrestitoById($conn, $prestitoId);
         if (!empty($prestitoInRequest) && !empty($prestitoInRequest['utente_id'])) {
             $utenteId = (int) $prestitoInRequest['utente_id'];
         }
+        // If a specific prestito was requested, prefill the search box with its ID
+        if (empty($filtri['cerca'])) {
+            $filtri['cerca'] = (string) $prestitoId;
+        }
     }
 
-    // Use admin helper which accepts $utenteId = 0 to mean "all users"
-    $prestiti = getPrestitiAdmin($conn, $utenteId);
+    $totalPrestiti = countPrestitiAdminFiltrati($conn, $filtri);
+    $totalPagine = max(1, (int) ceil($totalPrestiti / $resultsPerPage));
+    $pagina = max(1, min($pagina, $totalPagine));
+    $prestiti = getPrestitiAdminFiltrati($conn, $filtri, $pagina, $resultsPerPage);
 
     // If a specific prestito was requested, filter the list to only that prestito
     if ($prestitoId > 0) {
         $prestiti = array_values(array_filter($prestiti, function ($p) use ($prestitoId) {
             return (int) ($p['id'] ?? 0) === $prestitoId;
         }));
+        $totalPrestiti = count($prestiti);
+        $totalPagine = 1;
         // Also set the prestitoInModifica to the requested one so the form can populate
         if (!empty($prestiti)) {
             // Prefer the full record fetched by ID (contains libro_id, utente_id)

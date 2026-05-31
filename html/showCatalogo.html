@@ -1,59 +1,13 @@
 <h2>Catalogo libri</h2>
 
-<aside id="filtri-catalogo">
-    <h3>Filtra i risultati</h3>
-    <form action="catalogo.php" method="get" id="filtri-form">
+<div id="catalogo-layout">
+    <aside id="filtri-catalogo">
+        <h3>Filtra i risultati</h3>
+        [SEARCH_FORM]
+    </aside>
 
-        <div>
-            <label for="cerca">Titolo</label>
-            <input type="search" id="cerca" name="cerca"
-                   value="[FILTRO_CERCA_VALUE]"
-                   autocomplete="off">
-        </div>
-
-        <div>
-            <label for="categoria">Categoria</label>
-            <select id="categoria" name="categoria">
-                <option value="">Tutte le categorie</option>
-                [OPZIONI_CATEGORIA]
-            </select>
-        </div>
-
-        <div>
-            <label for="autore">Autore</label>
-            <input type="text" id="autore" name="autore"
-                   value="[FILTRO_AUTORE_VALUE]">
-        </div>
-
-        <div>
-            <label for="anno">Anno</label>
-            <input type="number" id="anno" name="anno"
-                   min="1900" max="[ANNO_CORRENTE]"
-                   value="[FILTRO_ANNO_VALUE]">
-        </div>
-
-        <div>
-            <label for="disponibile">
-                <input type="checkbox" id="disponibile" name="disponibile" value="1" [DISPONIBILE_CHECKED]>
-                Solo disponibili
-            </label>
-        </div>
-
-        <div>
-            <label for="ordine">Ordina per</label>
-            <select id="ordine" name="ordine">
-                <option value="">Più recenti</option>
-                <option value="valutazione" [ORDINE_VALUTAZIONE_SELECTED]>Valutazione</option>
-            </select>
-        </div>
-
-        <button type="submit">Applica filtri</button>
-        <a href="catalogo.php">Azzera filtri</a>
-
-    </form>
-</aside>
-
-<section id="risultati-catalogo">
-    <h3>[RISULTATI_HEADER]</h3>
-    [CONTENUTO_RISULTATI]
-</section>
+    <section id="risultati-catalogo">
+        <h3>[RISULTATI_HEADER]</h3>
+        [CONTENUTO_RISULTATI]
+    </section>
+</div>

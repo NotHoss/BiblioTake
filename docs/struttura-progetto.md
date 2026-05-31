@@ -67,7 +67,8 @@ BiblioTake/
 │   │   └── showUtentiAdmin.html
 │   ├── template/
 │   │   ├── footer.html
-│   │   └── header.html
+│   │   ├── header.html
+│   │   └── search-form.html
 │   └── user/
 │       ├── showAggiungiRecensione.html
 │       ├── showDashboard.html
@@ -91,6 +92,7 @@ BiblioTake/
 │       ├── libro_functions.php
 │       ├── prestito_functions.php
 │       ├── recensione_functions.php
+│       ├── search-functions.php
 │       └── user_functions.php
 ├── login.php
 ├── logout.php

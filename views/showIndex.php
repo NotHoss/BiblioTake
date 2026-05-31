@@ -26,6 +26,26 @@ if (empty($libriRecenti)) {
 }
 
 $template = file_get_contents(__DIR__ . '/../html/showIndex.html');
+
+$searchForm = renderSearchForm([
+    'action' => 'catalogo.php',
+    'method' => 'get',
+    'id' => 'ricerca-rapida',
+    'class' => 'search-hero',
+    'submitLabel' => 'Cerca',
+    // No reset link on the homepage quick search
+    'fields' => [
+        [
+            'type' => 'search',
+            'name' => 'cerca',
+            'label' => 'Cerca per titolo',
+            'value' => '',
+            'placeholder' => 'Es. Il nome della rosa',
+        ],
+    ],
+]);
+
 $template = str_replace('[LISTA_CATEGORIE]',     $listaCategorie,    $template);
 $template = str_replace('[LISTA_LIBRI_RECENTI]', $listaLibriRecenti, $template);
+$template = str_replace('[SEARCH_FORM]', $searchForm, $template);
 echo $template;

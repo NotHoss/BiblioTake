@@ -1,26 +1,37 @@
 <h1>Gestione utenti</h1>
 
-[MESSAGES]
+<div id="catalogo-layout">
+    <aside id="filtri-catalogo">
+        <h3>Filtra i risultati</h3>
+        [SEARCH_FORM]
+    </aside>
 
-[EMPTY_MESSAGE]
+    <section id="risultati-catalogo">
+        [RESULTS_INFO]
 
-<div [TABLE_DISPLAY]>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Foto</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Ruolo</th>
-                <th>Attivo</th>
-                <th>Prestiti totali</th>
-                <th>Prestiti attivi</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody>
-            [TABLE_ROWS]
-        </tbody>
-    </table>
+        [MESSAGES]
+
+        [EMPTY_MESSAGE]
+
+        <div [TABLE_DISPLAY]>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Prestiti totali</th>
+                        <th>Prestiti attivi</th>
+                        <th>Recensioni totali</th>
+                        <th>Stato</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    [TABLE_ROWS]
+                </tbody>
+            </table>
+        </div>
+
+        [PAGINATION]
+    </section>
 </div>

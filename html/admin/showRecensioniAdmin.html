@@ -1,38 +1,39 @@
 <h1>Gestione recensioni utenti</h1>
 <p><a href="utenti.php">Torna agli utenti</a></p>
 
-[MESSAGES]
+<div id="catalogo-layout">
+    <aside id="filtri-catalogo">
+        <h3>Filtra i risultati</h3>
+        [SEARCH_FORM]
+    </aside>
 
-<form method="get">
-    <p>
-        <label>Utente
-            <select name="utente_id">
-                <option value="0">Tutti gli utenti</option>
-                [UTENTI_OPTIONS]
-            </select>
-        </label>
-    </p>
-    <p><button type="submit">Filtra recensioni</button></p>
-</form>
+    <section id="risultati-catalogo">
+        [RESULTS_INFO]
 
-[EMPTY_MESSAGE]
+        [MESSAGES]
 
-<div [TABLE_DISPLAY]>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Utente</th>
-                <th>Libro</th>
-                <th>Voto</th>
-                <th>Testo</th>
-                <th>Data</th>
-                <th>Censurata</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody>
-            [TABLE_ROWS]
-        </tbody>
-    </table>
+        [EMPTY_MESSAGE]
+
+        <div [TABLE_DISPLAY]>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Utente</th>
+                        <th>Libro</th>
+                        <th>Voto</th>
+                        <th>Testo</th>
+                        <th>Data</th>
+                        <th>Censurata</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    [TABLE_ROWS]
+                </tbody>
+            </table>
+        </div>
+
+        [PAGINATION]
+    </section>
 </div>

@@ -11,6 +11,7 @@ $__functionFiles = array(
     'libro_functions.php',
     'prestito_functions.php',
     'recensione_functions.php',
+    'search_functions.php',
     'admin_functions.php',
     'user_functions.php',
 );

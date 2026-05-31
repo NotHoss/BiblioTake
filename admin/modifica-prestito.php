@@ -26,9 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $prestitoId > 0 && $conn instanceof
     $message = $res['message'] ?? $message;
     // If handler returned a prestitoInModifica (validation error), use it for rendering
     $prestitoInModifica = $res['prestitoInModifica'] ?? null;
-    // If save succeeded (no prestitoInModifica) and we have a target utenteId, redirect
-    if (empty($prestitoInModifica) && !empty($res['utenteId'])) {
-        header('Location: ../admin/prestiti-utente.php?utente_id=' . (int) $res['utenteId']);
+    // If save succeeded, redirect preserving the current search context when available
+    if (empty($prestitoInModifica)) {
+        $redirectQuery = !empty($res['cerca'])
+            ? 'cerca=' . rawurlencode((string) $res['cerca'])
+            : 'utente_id=' . (int) ($res['utenteId'] ?? 0);
+        header('Location: ../admin/prestiti-utente.php?' . $redirectQuery);
         exit;
     }
 }

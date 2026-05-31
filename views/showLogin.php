@@ -10,8 +10,9 @@
 
 <?php
 $actionUrl = 'login.php';
-if (isset($_GET['intended'])) {
-    $actionUrl .= '?intended=' . urlencode($_GET['intended']);
+// The controller may provide an $intended variable; views should not read superglobals.
+if (!empty($intended)) {
+    $actionUrl .= '?intended=' . urlencode($intended);
 }
 ?>
 

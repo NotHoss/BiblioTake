@@ -25,8 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $prestitoId > 0 && $conn instanceof
     // forward to handler
     $res = handlePrestitiActions($conn, $_POST);
     $message = $res['message'] ?? $message;
-    // after deletion redirect to prestiti list for the user
-    header('Location: ../admin/prestiti-utente.php?utente_id=' . (int) ($res['utenteId'] ?? 0));
+    // after deletion redirect preserving the current search context when available
+    $redirectQuery = !empty($res['cerca'])
+        ? 'cerca=' . rawurlencode((string) $res['cerca'])
+        : 'utente_id=' . (int) ($res['utenteId'] ?? 0);
+    header('Location: ../admin/prestiti-utente.php?' . $redirectQuery);
     exit;
 }
 
