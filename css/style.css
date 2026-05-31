@@ -211,9 +211,10 @@ SKIP LINK
 
 /*
 ==========================
-ACCESSIBILITA' - FOCUS
+ACCESSIBILITA' - FOCUS    (permette navigazione con tab)
 ==========================
 */
+
 
 a:focus,
 button:focus,
@@ -820,6 +821,12 @@ DETTAGLIO LIBRO
     border-radius: 0.5em;
     box-shadow: 0 6px 20px rgba(62, 62, 107, 0.18);
     border: 1px solid #e5e0ee;
+}
+
+#info-libro caption,
+#contatti caption{
+    position: absolute;
+    left: -9999em;
 }
 
 #info-libro{
