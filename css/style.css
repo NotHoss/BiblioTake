@@ -1,16 +1,17 @@
 *{
     padding: 0em;
-    margin: 0em
+    margin: 0em;
+    box-sizing: border-box;
 }
 
 :root{
-    --bgcolor:#6E6FA8; /*Colore background sito*/
-    --txtcolor:#FFFAF5; /*Colore testo sopra background sito*/
-    --breadcolor:#A836F4; /*Colore background breadcrum*/
-    --linkcolor:#FFFAF5; /*Colore link sopra background sito/breadcrum */
-    --visitedcolor:#000; /*Colore link visitato sopra background sito/breadcrum*/
-    --contentbgcolor:#FFFAF5; /*Colore background contenuto*/
-    --contenttxtcolor:#000; /*Colore testo sopra background contenuto*/
+    --bgcolor:#5B4B9E; /*colore background sito*/
+    --txtcolor:#FFFAF5; /*colore testo sopra background sito*/
+    --breadcolor:#A836F4; /*colore accento (bottoni, focus, hover, tag)*/
+    --breadbgcolor:#4E4090; /*colore background breadcrumb*/
+    --linkcolor:#FFFAF5; /*colore link sopra background sito/breadcrumb*/
+    --contentbgcolor:#FFFAF5; /*colore background contenuto*/
+    --contenttxtcolor:#000; /*colore testo sopra background contenuto*/
 }
 
 html, body{ 
@@ -21,10 +22,12 @@ html, body{
 
 
 body{
-    background-color: var(--bgcolor);
-    color:var(--txtcolor);
-    max-width: 1200px;
-    margin: auto;
+    background-color: var(--contentbgcolor);
+    color:var(--contenttxtcolor);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /*
@@ -34,58 +37,24 @@ SEZIONE HEADER
 */
 
 header{
-    padding: 0em 1em; /*padding verticale 0em, orizzontale 1em*/
+    background-color: var(--bgcolor);
+    color: var(--txtcolor);
+    padding: 1em 1em 0.5em;
     text-align: center;
-    margin: 1em;
 }
 
 header h1{
-    background-image: url("images/logo.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    text-indent: -9999em;
-    font-size: 6em;
-    line-height: 1.5em;
+    font-size: 2.2em;
+    line-height: 1.4em;
     margin-top: 0.3em;
+    letter-spacing: 0.02em;
 }
 
 /*
 ==========================
-SEZIONE MENU´
+SEZIONE MENU´ (non usato - nav e' dentro header)
 ==========================
 */
-
-#menu{
-    float: left;
-    width: 18%;
-
-}
-
-#menu a:link{
-    color: var(--linkcolor);
-}
-
-#menu a:visited{
-    color: var(--visitedcolor);
-}
-
-#menu ul{
-    list-style-type: none;
-}
-
-#menu ul li{
-    margin-top: 1.5em;
-}
-
-/*#currentLink{
-    Se si vuole mettere il link corrente spostato e con un'immagine al posto del "puntino"
-    background-image: url("materiale/images/palla.png");
-    background-position: left center;
-    background-size: 1.2em;
-    background-repeat: no-repeat;
-    padding-left: 1.5em;
-}*/
 
 /*
 ==========================
@@ -94,14 +63,13 @@ SEZIONE MAIN
 */
 
 main{
-    margin-left: 20%;
     background-color: var(--contentbgcolor);
     color: var(--contenttxtcolor);
-    padding-top: 2.0em;
-    padding-left: 3.5em;
-    padding-right: 2em;
-    padding-bottom: 2.0em;
-    border-left: 1px solid #000;
+    padding: 2em 4%;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    flex-grow: 1;
 }
 
 main h1{
@@ -122,14 +90,8 @@ SEZIONE BREADCRUMB
 ==========================
 */
 
-#breadcrumb{
-    background-color: var(--breadcolor);
-    color: var(--txtcolor);
-    font-size: 1.1em;
-    border: 1px solid #000;
-    padding: 0.5em 0em 0.5em 1.0em;
+/*#breadcrumb non usato - la breadcrumb reale usa classe .breadcrumb*/
 
-}
 
 /*
 ==========================
@@ -196,12 +158,11 @@ SEZIONE FOOTER
 */
 
 footer{
-    background-color: var(--breadcolor);
+    background-color: var(--bgcolor);
     color: var(--txtcolor);
     text-align: center;
     font-size: 0.8em;
-    border-top: 1px solid #000;
-    padding: 0.5em;
+    padding: 1.2em;
 }
 
 footer img{
@@ -214,4 +175,850 @@ footer img{
 footer p{
     font-style: italic;
     display: inline;
+}
+
+footer ul{
+    list-style-type: none;
+    padding: 0.5em 0;
+}
+
+footer ul li{
+    display: inline;
+    margin: 0 0.3em;
+}
+
+/*
+==========================
+SKIP LINK
+==========================
+*/
+
+.skip-link{
+    position: absolute;
+    left: -9999em;
+    top: 0;
+    background: var(--breadcolor);
+    color: var(--txtcolor);
+    padding: 0.5em 1.2em;
+    z-index: 100;
+    font-weight: bold;
+    border-radius: 0 0 0.3em 0;
+}
+
+.skip-link:focus{
+    left: 0;
+}
+
+/*
+==========================
+ACCESSIBILITA' - FOCUS
+==========================
+*/
+
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus{
+    outline: 3px solid var(--breadcolor);
+    outline-offset: 2px;
+}
+
+/*
+==========================
+NAVIGAZIONE HEADER
+==========================
+*/
+
+header nav{
+    margin-top: 0.5em;
+}
+
+header nav ul{
+    list-style-type: none;
+    text-align: center;
+    padding: 0.5em 0;
+}
+
+header nav ul li{
+    display: inline;
+    margin: 0 0.3em;
+}
+
+header nav a{
+    color: var(--linkcolor);
+    text-decoration: none;
+    padding: 0.4em 0.7em;
+    border-radius: 0.3em;
+    transition: background 0.2s;
+}
+
+header nav a:visited{
+    color: var(--linkcolor);
+}
+
+header nav a:hover,
+header nav a:focus{
+    background: rgba(255, 255, 255, 0.18);
+    text-decoration: underline;
+}
+
+.current-page{
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 0.4em 0.7em;
+    border-radius: 0.3em;
+    border-bottom: 2px solid var(--txtcolor);
+}
+
+/*
+==========================
+BREADCRUMB (classe .breadcrumb)
+==========================
+*/
+
+.breadcrumb{
+    background-color: var(--breadbgcolor);
+    color: var(--txtcolor);
+    font-size: 0.95em;
+    padding: 0.5em 4%;
+}
+
+.breadcrumb ul{
+    list-style-type: none;
+}
+
+.breadcrumb li{
+    display: inline;
+}
+
+.breadcrumb li + li::before{
+    content: " \203A ";
+    margin: 0 0.4em;
+    font-weight: bold;
+}
+
+.breadcrumb a{
+    color: var(--linkcolor);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover,
+.breadcrumb a:focus{
+    text-decoration: underline;
+}
+
+.breadcrumb span[aria-current="page"]{
+    font-weight: bold;
+}
+
+/*
+==========================
+LINK NEL CONTENUTO
+==========================
+*/
+
+main a:link{
+    color: #5B3E96;
+    text-decoration: underline;
+}
+
+main a:visited{
+    color: #4A2D78;
+}
+
+main a:hover,
+main a:focus{
+    color: #A836F4;
+}
+
+/*
+==========================
+FORM (solo pagine parte B)
+==========================
+*/
+
+#filtri-form label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.25em;
+    font-size: 0.95em;
+}
+
+#ricerca-rapida input[type="search"],
+#filtri-form input[type="search"],
+#filtri-form input[type="text"],
+#filtri-form input[type="number"],
+#filtri-form select{
+    width: 100%;
+    padding: 0.55em 0.8em;
+    border: 2px solid #c5c5c5;
+    border-radius: 0.35em;
+    font-size: 1em;
+    font-family: inherit;
+    background: #fff;
+    color: #333;
+    line-height: 1.5;
+    min-height: 2.5em;
+    transition: border-color 0.2s;
+}
+
+#ricerca-rapida input:focus,
+#filtri-form input:focus,
+#filtri-form select:focus{
+    border-color: var(--breadcolor);
+}
+
+#filtri-form input[type="checkbox"]{
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    margin-right: 0.4em;
+    accent-color: var(--breadcolor);
+}
+
+#ricerca-rapida button,
+#filtri-form button{
+    display: inline-block;
+    padding: 0.55em 1.5em;
+    background: var(--breadcolor);
+    color: var(--txtcolor);
+    border: 2px solid transparent;
+    border-radius: 0.35em;
+    font-size: 1em;
+    font-family: inherit;
+    cursor: pointer;
+    min-height: 2.5em;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    transition: background 0.2s;
+}
+
+#ricerca-rapida button:hover,
+#filtri-form button:hover{
+    background: #9025D9;
+}
+
+/*
+==========================
+TABELLE (solo pagine parte B)
+==========================
+*/
+
+#info-libro table,
+#contatti table{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+#info-libro th,
+#info-libro td,
+#contatti th,
+#contatti td{
+    padding: 0.65em 1em;
+    text-align: left;
+    border-bottom: 1px solid #e8e3f0;
+}
+
+#info-libro th,
+#contatti th{
+    background: #f7f2fc;
+    font-weight: bold;
+    color: #3D3E6B;
+}
+
+#info-libro tbody tr:hover,
+#contatti tbody tr:hover{
+    background: #faf7fe;
+}
+
+/*
+==========================
+SEZIONE HERO (Homepage)
+==========================
+*/
+
+#hero{
+    text-align: center;
+    padding: 4em 2em;
+    margin-bottom: 2em;
+    background: linear-gradient(rgba(30, 20, 60, 0.65), rgba(30, 20, 60, 0.65)), url("../images/sfondo-biblio.webp");
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.6em;
+}
+
+#hero h2{
+    font-size: 2em;
+    color: #fff;
+    margin-bottom: 0.4em;
+    letter-spacing: -0.02em;
+}
+
+#hero p{
+    font-size: 1.05em;
+    color: #e0dce8;
+    margin-bottom: 1.8em;
+    max-width: 28em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#ricerca-rapida{
+    max-width: 28em;
+    margin: 0 auto;
+    position: relative;
+}
+
+#ricerca-rapida label{
+    position: absolute;
+    left: -9999em;
+}
+
+#ricerca-rapida input[type="search"]{
+    width: 72%;
+    float: left;
+    border-radius: 0.35em 0 0 0.35em;
+    border-right: none;
+    min-height: 2.8em;
+}
+
+#ricerca-rapida button{
+    width: 28%;
+    float: left;
+    border-radius: 0 0.35em 0.35em 0;
+    min-height: 2.8em;
+    padding: 0.55em 0.5em;
+}
+
+#ricerca-rapida::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/*
+==========================
+TITOLI SEZIONE (h3 nelle pagine pubbliche)
+==========================
+*/
+
+main > section > h3,
+main > article > section > h3{
+    font-size: 1.25em;
+    color: #3D3E6B;
+    margin-bottom: 0.8em;
+    padding-bottom: 0.35em;
+    border-bottom: 2px solid var(--breadcolor);
+}
+
+/*
+==========================
+SEZIONE CATEGORIE (Homepage)
+==========================
+*/
+
+#categorie{
+    margin-bottom: 2.5em;
+}
+
+#categorie ul{
+    list-style-type: none;
+}
+
+#categorie ul li{
+    float: left;
+    margin: 0 0.5em 0.6em 0;
+}
+
+#categorie ul::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#categorie a{
+    display: block;
+    padding: 0.4em 1.1em;
+    background: #f0e8f8;
+    color: #5B3E96;
+    text-decoration: none;
+    border-radius: 1.5em;
+    border: 1px solid #d8cceb;
+    font-size: 0.9em;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+#categorie a:hover,
+#categorie a:focus{
+    background: var(--breadcolor);
+    color: var(--txtcolor);
+    border-color: var(--breadcolor);
+    box-shadow: 0 2px 8px rgba(168, 54, 244, 0.25);
+}
+
+/*
+==========================
+SEZIONE ULTIMI ARRIVI (Homepage)
+==========================
+*/
+
+#ultimi-arrivi{
+    margin-bottom: 2em;
+}
+
+#ultimi-arrivi > ul{
+    list-style-type: none;
+}
+
+#ultimi-arrivi > ul > li{
+    float: left;
+    width: 33.33%;
+    padding: 0.5em;
+}
+
+#ultimi-arrivi > ul::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#ultimi-arrivi article{
+    background: #fff;
+    border: 1px solid #e5e0ee;
+    border-radius: 0.5em;
+    padding: 1.3em;
+    box-shadow: 0 2px 8px rgba(62, 62, 107, 0.07);
+    transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
+}
+
+#ultimi-arrivi article:hover{
+    box-shadow: 0 6px 20px rgba(62, 62, 107, 0.14);
+    border-color: var(--breadcolor);
+    transform: translateY(-2px);
+}
+
+#ultimi-arrivi h4{
+    margin-bottom: 0.35em;
+    line-height: 1.4;
+}
+
+#ultimi-arrivi h4 a{
+    text-decoration: none;
+    color: #3D3E6B;
+    font-size: 1.05em;
+}
+
+#ultimi-arrivi h4 a:hover{
+    color: var(--breadcolor);
+    text-decoration: underline;
+}
+
+#ultimi-arrivi article p{
+    font-size: 0.88em;
+    color: #666;
+    margin-bottom: 0.15em;
+}
+
+/*
+==========================
+CATALOGO - FILTRI (aside)
+==========================
+*/
+
+#filtri-catalogo{
+    float: left;
+    width: 24%;
+    padding-right: 1.5em;
+    border-right: 2px solid #ece0f8;
+}
+
+#filtri-form > div{
+    margin-bottom: 1.2em;
+}
+
+#filtri-form button{
+    width: 100%;
+    margin-top: 0.3em;
+}
+
+#filtri-form > a{
+    display: block;
+    text-align: center;
+    margin-top: 0.8em;
+    font-size: 0.9em;
+}
+
+/*
+==========================
+CATALOGO - RISULTATI
+==========================
+*/
+
+#risultati-catalogo{
+    margin-left: 26%;
+}
+
+#risultati-catalogo > h3{
+    border-bottom: none;
+    color: #555;
+    font-size: 1em;
+    font-weight: normal;
+    margin-bottom: 1em;
+}
+
+#lista-libri{
+    list-style-type: none;
+}
+
+#lista-libri::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#lista-libri > li{
+    float: left;
+    width: 50%;
+    padding: 0.5em;
+}
+
+/*
+==========================
+CARD LIBRO (catalogo + homepage)
+==========================
+*/
+
+.libro-card{
+    background: #fff;
+    border: 1px solid #e5e0ee;
+    border-radius: 0.5em;
+    padding: 1em;
+    box-shadow: 0 2px 8px rgba(62, 62, 107, 0.07);
+    overflow: hidden;
+    transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
+}
+
+.libro-card:hover{
+    box-shadow: 0 6px 20px rgba(62, 62, 107, 0.14);
+    border-color: var(--breadcolor);
+    transform: translateY(-2px);
+}
+
+.libro-card img{
+    float: left;
+    width: 35%;
+    max-width: 7em;
+    margin-right: 1em;
+    margin-bottom: 0.5em;
+    border-radius: 0.35em;
+    border: 1px solid #e5e0ee;
+}
+
+.libro-card h4{
+    margin-bottom: 0.25em;
+    line-height: 1.4;
+}
+
+.libro-card h4 a{
+    text-decoration: none;
+    color: #3D3E6B;
+}
+
+.libro-card h4 a:hover{
+    color: var(--breadcolor);
+    text-decoration: underline;
+}
+
+.libro-card p{
+    font-size: 0.85em;
+    color: #555;
+    margin-bottom: 0.15em;
+    line-height: 1.5;
+}
+
+/*
+==========================
+PAGINAZIONE
+==========================
+*/
+
+nav[aria-label="Navigazione pagine risultati"]{
+    clear: both;
+    text-align: center;
+    margin: 1.5em 0 0.5em;
+    padding-top: 1.2em;
+    border-top: 1px solid #e8e3f0;
+}
+
+nav[aria-label="Navigazione pagine risultati"] ul{
+    list-style-type: none;
+}
+
+nav[aria-label="Navigazione pagine risultati"] li{
+    display: inline;
+    margin: 0 0.15em;
+}
+
+nav[aria-label="Navigazione pagine risultati"] a{
+    display: inline-block;
+    padding: 0.4em 0.85em;
+    min-width: 2.5em;
+    min-height: 2.5em;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid #d8cceb;
+    border-radius: 0.35em;
+    color: #5B3E96;
+    background: #fff;
+    line-height: 1.5;
+    transition: background 0.2s, color 0.2s;
+}
+
+nav[aria-label="Navigazione pagine risultati"] a:hover,
+nav[aria-label="Navigazione pagine risultati"] a:focus{
+    background: var(--breadcolor);
+    color: var(--txtcolor);
+    border-color: var(--breadcolor);
+}
+
+nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"]{
+    display: inline-block;
+    padding: 0.4em 0.85em;
+    min-width: 2.5em;
+    background: var(--breadcolor);
+    color: var(--txtcolor);
+    border-radius: 0.35em;
+    font-weight: bold;
+    border: 1px solid var(--breadcolor);
+}
+
+/*
+==========================
+DETTAGLIO LIBRO
+==========================
+*/
+
+#dettaglio-libro{
+    margin-bottom: 2em;
+}
+
+#dettaglio-libro > h2{
+    color: #3D3E6B;
+    margin-bottom: 1em;
+    font-size: 1.6em;
+    letter-spacing: -0.01em;
+}
+
+#dettaglio-libro > img{
+    float: left;
+    width: 28%;
+    max-width: 14em;
+    margin-right: 2em;
+    margin-bottom: 1em;
+    border-radius: 0.5em;
+    box-shadow: 0 6px 20px rgba(62, 62, 107, 0.18);
+    border: 1px solid #e5e0ee;
+}
+
+#info-libro{
+    overflow: hidden;
+}
+
+#info-libro h3{
+    border-bottom: none;
+    margin-bottom: 0.3em;
+}
+
+#info-libro th{
+    width: 38%;
+}
+
+/*
+==========================
+DESCRIZIONE, TAG, AZIONI
+==========================
+*/
+
+#descrizione-libro,
+#tag-libro,
+#azioni-libro{
+    clear: both;
+    margin-top: 1.5em;
+    padding-top: 1em;
+}
+
+#descrizione-libro p{
+    line-height: 1.75;
+    color: #444;
+}
+
+#tag-libro ul{
+    list-style-type: none;
+}
+
+#tag-libro li{
+    float: left;
+    margin: 0 0.5em 0.5em 0;
+}
+
+#tag-libro ul::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#tag-libro a{
+    display: block;
+    padding: 0.3em 0.9em;
+    background: #f0e8f8;
+    color: #5B3E96;
+    text-decoration: none;
+    border-radius: 1.5em;
+    border: 1px solid #d8cceb;
+    font-size: 0.85em;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+#tag-libro a:hover,
+#tag-libro a:focus{
+    background: var(--breadcolor);
+    color: var(--txtcolor);
+    box-shadow: 0 2px 8px rgba(168, 54, 244, 0.25);
+}
+
+#azioni-libro p{
+    margin-bottom: 0.8em;
+    color: #444;
+}
+
+#azioni-libro a{
+    display: inline-block;
+    padding: 0.6em 1.5em;
+    background: var(--breadcolor);
+    color: var(--txtcolor);
+    text-decoration: none;
+    border-radius: 0.35em;
+    font-weight: bold;
+    min-height: 2.5em;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+#azioni-libro a:hover,
+#azioni-libro a:focus{
+    background: #9025D9;
+    box-shadow: 0 3px 10px rgba(168, 54, 244, 0.3);
+}
+
+/*
+==========================
+RECENSIONI LIBRO
+==========================
+*/
+
+#recensioni-libro{
+    margin-top: 2.5em;
+    padding-top: 1.5em;
+    border-top: 2px solid #ece0f8;
+}
+
+#recensioni-libro > ul{
+    list-style-type: none;
+}
+
+#recensioni-libro > ul > li{
+    margin-bottom: 1em;
+}
+
+.recensione-card{
+    background: #fff;
+    border: 1px solid #e5e0ee;
+    border-radius: 0.5em;
+    padding: 1.2em 1.4em;
+    box-shadow: 0 1px 5px rgba(62, 62, 107, 0.06);
+}
+
+.recensione-card header{
+    background: none;
+    color: var(--contenttxtcolor);
+    margin: 0;
+    padding: 0 0 0.6em 0;
+    text-align: left;
+    border-bottom: 1px solid #f0e8f8;
+    margin-bottom: 0.7em;
+}
+
+.recensione-card header p{
+    display: inline;
+    margin-right: 1.2em;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.recensione-card header p:first-child{
+    color: #3D3E6B;
+}
+
+.recensione-card > p{
+    color: #444;
+    line-height: 1.65;
+}
+
+/*
+==========================
+CHI SIAMO
+==========================
+*/
+
+#chi-siamo section{
+    margin-bottom: 1.8em;
+}
+
+#chi-siamo p{
+    line-height: 1.75;
+    color: #444;
+    margin-bottom: 0.8em;
+}
+
+#servizi ul{
+    list-style-type: none;
+}
+
+#servizi li{
+    padding: 0.55em 0 0.55em 1.8em;
+    position: relative;
+    line-height: 1.6;
+    color: #444;
+}
+
+#servizi li::before{
+    content: "\2713";
+    position: absolute;
+    left: 0;
+    color: var(--breadcolor);
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/*
+==========================
+CONTATTI
+==========================
+*/
+
+#contatti section{
+    margin-bottom: 1.8em;
+}
+
+#contatti table{
+    max-width: 35em;
+}
+
+#contatti a{
+    color: #5B3E96;
+}
+
+#contatti a:hover{
+    color: var(--breadcolor);
 }
