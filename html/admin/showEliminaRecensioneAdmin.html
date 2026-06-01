@@ -1,0 +1,22 @@
+<h1>Elimina recensione</h1>
+
+[MESSAGES]
+
+[NOT_FOUND_MESSAGE]
+
+<div [FORM_DISPLAY]>
+	<p>Stai per eliminare la recensione:</p>
+	<ul>
+		<li><strong>ID</strong>: [RECENSIONE_ID]</li>
+		<li><strong>Username</strong>: [USERNAME]</li>
+	</ul>
+	[WARNING_MESSAGE]
+	<form method="post">
+		<input type="hidden" name="id" value="[RECENSIONE_ID]">
+		<input type="hidden" name="utente_id" value="[UTENTE_ID]">
+
+		<p>
+			<button type="submit">Conferma eliminazione</button> <a href="[ANNULLA_HREF]">Annulla</a>
+		</p>
+	</form>
+</div>

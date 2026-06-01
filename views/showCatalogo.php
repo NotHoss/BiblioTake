@@ -1,19 +1,71 @@
 <?php
-//valori semplici per il form
-$filtroCercaValue            = htmlspecialchars($filtri['cerca'], ENT_QUOTES, 'UTF-8');
-$filtroAutoreValue           = htmlspecialchars($filtri['autore'], ENT_QUOTES, 'UTF-8');
-$annoCorrente                = date('Y');
-$filtroAnnoValue             = $filtri['anno'] !== '' ? (int) $filtri['anno'] : '';
-$disponibileChecked          = ($filtri['disponibile'] === '1') ? 'checked' : '';
-$ordineValutazioneSelected   = ($filtri['ordine'] === 'valutazione') ? 'selected' : '';
+$annoCorrente = date('Y');
 
-//opzioni select categoria
-$opzioniCategoria = '';
+$opzioniCategoria = ['' => 'Tutte le categorie'];
 foreach ($categorie as $cat) {
-    $catValue = htmlspecialchars($cat['categoria'], ENT_QUOTES, 'UTF-8');
-    $selected = ($filtri['categoria'] === $cat['categoria']) ? ' selected' : '';
-    $opzioniCategoria .= '<option value="' . $catValue . '"' . $selected . '>' . $catValue . '</option>';
+    $opzioniCategoria[(string) $cat['categoria']] = (string) $cat['categoria'];
 }
+
+$searchForm = renderSearchForm([
+    'action' => 'catalogo.php',
+    'class' => 'search-form',
+    'id' => 'filtri-form',
+    'submitLabel' => 'Applica filtri',
+    'resetHref' => 'catalogo.php',
+    'resetLabel' => 'Azzera filtri',
+    'fields' => [
+        [
+            'type' => 'search',
+            'name' => 'cerca',
+            'id' => 'cerca',
+            'label' => 'Titolo',
+            'value' => (string) ($filtri['cerca'] ?? ''),
+            'placeholder' => 'Titolo, ISBN o ID',
+        ],
+        [
+            'type' => 'select',
+            'name' => 'categoria',
+            'id' => 'categoria',
+            'label' => 'Categoria',
+            'selected' => (string) ($filtri['categoria'] ?? ''),
+            'options' => $opzioniCategoria,
+        ],
+        [
+            'type' => 'text',
+            'name' => 'autore',
+            'id' => 'autore',
+            'label' => 'Autore',
+            'value' => (string) ($filtri['autore'] ?? ''),
+        ],
+        [
+            'type' => 'number',
+            'name' => 'anno',
+            'id' => 'anno',
+            'label' => 'Anno',
+            'value' => ($filtri['anno'] !== '') ? (string) $filtri['anno'] : '',
+            'min' => 1900,
+            'max' => $annoCorrente,
+        ],
+        [
+            'type' => 'checkbox',
+            'name' => 'disponibile',
+            'id' => 'disponibile',
+            'label' => 'Solo disponibili',
+            'checked' => ($filtri['disponibile'] === '1'),
+        ],
+        [
+            'type' => 'select',
+            'name' => 'ordine',
+            'id' => 'ordine',
+            'label' => 'Ordina per',
+            'selected' => (string) ($filtri['ordine'] ?? ''),
+            'options' => [
+                '' => 'Più recenti',
+                'valutazione' => 'Valutazione',
+            ],
+        ],
+    ],
+]);
 
 //header conteggio risultati
 if ($totalLibri === 0) {
@@ -57,40 +109,14 @@ if (empty($libri)) {
     }
     $listaLibri .= '</ul>';
 
-    $paginazione = '';
-    if ($totalPagine > 1) {
-        $paginazione .= '<nav aria-label="Navigazione pagine risultati"><ul>';
-
-        if ($pagina > 1) {
-            $paginazione .= '<li><a href="catalogo.php?' . http_build_query(array_merge($filtri, ['page' => $pagina - 1])) . '">Pagina precedente</a></li>';
-        }
-
-        for ($i = 1; $i <= $totalPagine; $i++) {
-            if ($i === $pagina) {
-                $paginazione .= '<li aria-current="page">' . $i . '</li>';
-            } else {
-                $paginazione .= '<li><a href="catalogo.php?' . http_build_query(array_merge($filtri, ['page' => $i])) . '">' . $i . '</a></li>';
-            }
-        }
-
-        if ($pagina < $totalPagine) {
-            $paginazione .= '<li><a href="catalogo.php?' . http_build_query(array_merge($filtri, ['page' => $pagina + 1])) . '">Pagina successiva</a></li>';
-        }
-
-        $paginazione .= '</ul></nav>';
-    }
+    $paginazione = renderPagination('catalogo.php', $filtri, $pagina, $totalPagine, 'Navigazione pagine risultati', 'Pagina precedente', 'Pagina successiva');
 
     $contenutoRisultati = $listaLibri . $paginazione;
 }
 
 $template = file_get_contents(__DIR__ . '/../html/showCatalogo.html');
-$template = str_replace('[FILTRO_CERCA_VALUE]',          $filtroCercaValue,          $template);
-$template = str_replace('[OPZIONI_CATEGORIA]',           $opzioniCategoria,          $template);
-$template = str_replace('[FILTRO_AUTORE_VALUE]',         $filtroAutoreValue,         $template);
+$template = str_replace('[SEARCH_FORM]',                 $searchForm,                $template);
 $template = str_replace('[ANNO_CORRENTE]',               $annoCorrente,              $template);
-$template = str_replace('[FILTRO_ANNO_VALUE]',           $filtroAnnoValue,           $template);
-$template = str_replace('[DISPONIBILE_CHECKED]',         $disponibileChecked,        $template);
-$template = str_replace('[ORDINE_VALUTAZIONE_SELECTED]', $ordineValutazioneSelected, $template);
 $template = str_replace('[RISULTATI_HEADER]',            $risultatiHeader,           $template);
 $template = str_replace('[CONTENUTO_RISULTATI]',         $contenutoRisultati,        $template);
 echo $template;

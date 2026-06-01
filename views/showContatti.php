@@ -2,6 +2,7 @@
     $indirizzo = (string) ($biblioteca['indirizzo'] ?? 'Via Garibaldi 12, Padova');
     $telefono = (string) ($biblioteca['telefono'] ?? '+39 02 88997766');
     $email = (string) ($biblioteca['email'] ?? 'contatti@bibliotake-padova.it');
+    $note = (string) ($biblioteca['note'] ?? '');
     $orarioLunVen = (string) ($biblioteca['orario_lun_ven'] ?? '9:00 - 19:00');
     $orarioSabato = (string) ($biblioteca['orario_sabato'] ?? '9:00 - 13:00');
     $orarioDomenica = (string) ($biblioteca['orario_domenica'] ?? 'Chiuso');
@@ -17,6 +18,9 @@
         '[ORARIO_LUN_VEN]'  => htmlspecialchars($orarioLunVen, ENT_QUOTES, 'UTF-8'),
         '[ORARIO_SABATO]'   => htmlspecialchars($orarioSabato, ENT_QUOTES, 'UTF-8'),
         '[ORARIO_DOMENICA]' => htmlspecialchars($orarioDomenica, ENT_QUOTES, 'UTF-8'),
+        '[NOTE_BLOCK]'      => $note !== ''
+            ? '<p><strong>Note:</strong> ' . htmlspecialchars($note, ENT_QUOTES, 'UTF-8') . '</p>'
+            : '',
     ];
 
     echo strtr($template, $placeholders);

@@ -8,8 +8,8 @@ $pageKeywords = 'admin, aggiungi libro, catalogo, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php'),
     array('label' => 'Admin', 'href' => 'index.php'),
-    array('label' => 'Libri', 'href' => 'libri.php'),
-    array('label' => 'Aggiungi', 'href' => ''),
+    array('label' => 'Gestione libri', 'href' => 'libri.php'),
+    array('label' => 'Aggiungi libro', 'href' => ''),
 );
 $currentPage = 'admin';
 $errorMessage = '';
@@ -31,7 +31,67 @@ $dati = [
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '') {
-    $res = handleAggiungiLibro($conn, $_POST, $_FILES);
+    $res = ['successMessage' => '', 'errorMessage' => '', 'dati' => []];
+
+    foreach ($dati as $chiave => $valore) {
+        $dati[$chiave] = isset($_POST[$chiave]) ? trim((string) $_POST[$chiave]) : '';
+    }
+
+    if ($dati['categoria'] === '__NEW__') {
+        $dati['categoria'] = isset($_POST['categoria_nuova']) ? trim((string) $_POST['categoria_nuova']) : '';
+    }
+
+    $campiObbligatori = ['codice_isbn', 'titolo', 'autore', 'casa_editrice', 'anno', 'lingua', 'descrizione', 'pagine', 'categoria'];
+    $campiMancanti = [];
+    foreach ($campiObbligatori as $campo) {
+        if ($dati[$campo] === '') $campiMancanti[] = $campo;
+    }
+
+    if (!empty($campiMancanti)) {
+        $res['errorMessage'] = 'Compila tutti i campi obbligatori: ' . implode(', ', $campiMancanti);
+        $res['dati'] = $dati;
+    } else {
+        try {
+            $fileCopertina = null;
+            if (isset($_FILES['copertina_file']) && $_FILES['copertina_file']['error'] === UPLOAD_ERR_OK) {
+                $fileCopertina = validateAndProcessCopertina($_FILES['copertina_file']);
+                if (!$fileCopertina) {
+                    $res['errorMessage'] = 'Il file della copertina deve essere un file JPG valido (max 5MB).';
+                    $res['dati'] = $dati;
+                }
+            }
+
+            if ($res['errorMessage'] === '') {
+                $nuovoId = createLibro($conn, $dati);
+                if ($nuovoId > 0) {
+                    if ($fileCopertina !== null) {
+                        $nomeFile = 'cover-' . $nuovoId . '.jpg';
+                        $percorsoDestinazione = __DIR__ . '/../images/' . $nomeFile;
+                        if (move_uploaded_file($fileCopertina['tmp_name'], $percorsoDestinazione)) {
+                            $percorsoDb = 'images/' . $nomeFile;
+                            $stmt = $conn->prepare('UPDATE libro SET copertina = ? WHERE id = ?');
+                            $stmt->bind_param('si', $percorsoDb, $nuovoId);
+                            $stmt->execute();
+                            $stmt->close();
+                            $res['successMessage'] = 'Libro inserito con successo e copertina salvata.';
+                        } else {
+                            $res['successMessage'] = 'Libro inserito con successo, ma la copertina non è stata salvata.';
+                        }
+                    } else {
+                        $res['successMessage'] = 'Libro inserito con successo.';
+                    }
+                    $res['dati'] = array_fill_keys(array_keys($dati), '');
+                } else {
+                    $res['errorMessage'] = 'Impossibile inserire il libro.';
+                    $res['dati'] = $dati;
+                }
+            }
+        } catch (Throwable $e) {
+            $res['errorMessage'] = 'Impossibile inserire il libro: ' . $e->getMessage();
+            $res['dati'] = $dati;
+        }
+    }
+
     $errorMessage = $res['errorMessage'] ?? '';
     $successMessage = $res['successMessage'] ?? '';
     $dati = $res['dati'] ?? $dati;
@@ -39,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
 $adminViewMode = 'create';
 $categorie = getCategorieLibri($conn);
 require_once __DIR__ . '/../views/template/header.php';
-require_once __DIR__ . '/../views/showLibriAdmin.php';
+require_once __DIR__ . '/../views/showAggiungiLibroAdmin.php';
 require_once __DIR__ . '/../views/template/footer.php';
 
 if ($conn instanceof mysqli) {

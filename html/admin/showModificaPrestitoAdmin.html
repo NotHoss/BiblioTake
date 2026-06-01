@@ -1,0 +1,31 @@
+<h1>Modifica prestito</h1>
+
+[MESSAGES]
+
+<form method="post">
+    <input type="hidden" name="prestito_id" value="[PRESTITO_IN_MODIFICA_ID]">
+    <p>[TESTO_MODIFICA]</p>
+    <p>
+        [TESTO_DETTAGLI]
+    </p>
+    <p>
+        <label>Data inizio
+            <input type="datetime-local" name="data_inizio" value="[DATA_INIZIO]" required>
+        </label>
+    </p>
+    <p>
+        <label>Stato
+            <select name="stato" required>
+                [STATO_OPTIONS]
+            </select>
+        </label>
+    </p>
+    <p>
+        [LIBRO_HIDDEN]
+        [UTENTE_HIDDEN]
+    </p>
+    <p>
+        <button type="submit" name="azione" value="salva_modifica">Salva modifiche</button>
+        <a href="prestiti-utente.php?utente_id=[UTENTE_ID]">Annulla</a>
+    </p>
+</form>

@@ -218,25 +218,6 @@ function getRecensioniByLibroId($conn, $libroId) {
     return $recensioni;
 }
 
-function getLibriAdmin($conn, $limit = 200) {
-    $stmt = $conn->prepare(
-        'SELECT l.id, l.codice_isbn, l.titolo, l.autore, l.casa_editrice, l.edizione, l.anno, l.lingua, l.descrizione, l.pagine, l.copertina, l.categoria,
-            (SELECT COUNT(*)
-             FROM prestito p
-             WHERE p.libro_id = l.id AND p.stato IN (\'attivo\', \'in_ritardo\')) AS prestiti_attivi
-         FROM libro l
-         ORDER BY l.id DESC
-         LIMIT ?'
-    );
-    $stmt->bind_param('i', $limit);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $libri = $result->fetch_all(MYSQLI_ASSOC);
-    $stmt->close();
-
-    return $libri;
-}
-
 function createLibro($conn, array $dati) {
     $stmt = $conn->prepare(
         'INSERT INTO libro (codice_isbn, titolo, autore, casa_editrice, edizione, anno, lingua, descrizione, pagine, copertina, categoria)

@@ -4,6 +4,11 @@ require_once __DIR__ . '/../includes/resources.php';
 
 $pageTitle = 'Profilo | BiblioTake';
 $currentPage = 'dashboard';
+$breadcrumb = array(
+    array('label' => 'Home', 'href' => '../index.php'),
+    array('label' => 'Area utente', 'href' => 'dashboard.php'),
+    array('label' => 'Profilo', 'href' => ''),
+);
 $errorMessage = '';
 $successMessage = '';
 
