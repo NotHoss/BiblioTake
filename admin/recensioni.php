@@ -2,14 +2,14 @@
 require_once '../includes/resources.php';
 requireRole('admin');
 
-$pageTitle = 'Gestione recensioni utenti — Admin BiblioTake';
+$pageTitle = 'Gestione recensioni — Admin BiblioTake';
 $pageDescription = 'Controlla e gestisci le recensioni inviate dagli utenti.';
 $pageKeywords = 'admin, recensioni, utenti, gestione, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php'),
     array('label' => 'Admin', 'href' => 'index.php'),
-    array('label' => 'Utenti', 'href' => 'utenti.php'),
-    array('label' => 'Recensioni', 'href' => ''),
+    array('label' => 'Gestione utenti', 'href' => 'utenti.php'),
+    array('label' => 'Gestione recensioni', 'href' => ''),
 );
 $currentPage = 'admin';
 $message = '';

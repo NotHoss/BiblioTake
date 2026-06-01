@@ -8,7 +8,7 @@ $pageKeywords = 'admin, biblioteca, modifica, generalità, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php'),
     array('label' => 'Admin', 'href' => 'index.php'),
-    array('label' => 'Modifica generalità', 'href' => ''),
+    array('label' => 'Modifica generalità biblioteca', 'href' => ''),
 );
 $currentPage = 'admin';
 

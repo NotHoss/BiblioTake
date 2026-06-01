@@ -8,7 +8,7 @@ $pageKeywords = 'admin, utenti, gestione, prestiti, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php'),
     array('label' => 'Admin', 'href' => 'index.php'),
-    array('label' => 'Utenti', 'href' => ''),
+    array('label' => 'Gestione utenti', 'href' => ''),
 );
 $currentPage = 'admin';
 

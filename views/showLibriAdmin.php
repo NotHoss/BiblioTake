@@ -125,8 +125,8 @@ foreach ($libri as $libroRow) {
     $categoria = htmlspecialchars((string) $libroRow['categoria'], ENT_QUOTES, 'UTF-8');
     $prestitiAttivi = (int) ($libroRow['prestiti_attivi'] ?? 0);
     $prestiti = 'Disponibile';
-    $azioni = '<a href="modifica-libro.php?id=' . $id . '">Modifica</a> |
-        <a href="elimina-libro.php?id=' . $id . '">Elimina</a>';
+    $azioni = '<a href="modifica-libro.php?id=' . $id . '">Modifica libro</a> |
+        <a href="elimina-libro.php?id=' . $id . '">Elimina libro</a>';
     if ($prestitiAttivi > 0) {
         $prestiti = 'Prestato';
             $prestitoId = (int) ($libroRow['prestito_id'] ?? 0);

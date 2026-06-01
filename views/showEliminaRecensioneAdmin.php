@@ -20,6 +20,7 @@ if (empty($recensione)) {
 		'[WARNING_MESSAGE]' => '',
 		'[RECENSIONE_ID]' => '',
 		'[UTENTE_ID]' => htmlspecialchars((string) ($utenteId ?? 0), ENT_QUOTES, 'UTF-8'),
+		'[ANNULLA_HREF]' => 'recensioni.php',
 	]);
 	return;
 }
@@ -33,4 +34,5 @@ echo strtr($template, [
 	'[WARNING_MESSAGE]' => $warningMessage,
 	'[RECENSIONE_ID]' => htmlspecialchars((string) ($recensione['id'] ?? ''), ENT_QUOTES, 'UTF-8'),
 	'[UTENTE_ID]' => htmlspecialchars((string) ($utenteId ?? 0), ENT_QUOTES, 'UTF-8'),
+	'[ANNULLA_HREF]' => $utenteId > 0 ? 'recensioni.php?utente_id=' . (int) $utenteId : 'recensioni.php',
 ]);

@@ -8,8 +8,8 @@ $pageKeywords = 'admin, elimina libro, catalogo, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php'),
     array('label' => 'Admin', 'href' => 'index.php'),
-    array('label' => 'Libri', 'href' => 'libri.php'),
-    array('label' => 'Elimina', 'href' => ''),
+    array('label' => 'Gestione libri', 'href' => 'libri.php'),
+    array('label' => 'Elimina libro', 'href' => ''),
 );
 $currentPage = 'admin';
 $message = '';

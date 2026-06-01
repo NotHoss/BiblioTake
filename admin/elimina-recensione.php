@@ -8,7 +8,7 @@ $pageKeywords = 'admin, recensioni, eliminazione, BiblioTake';
 $breadcrumb = array(
 	array('label' => 'Home', 'href' => '../index.php'),
 	array('label' => 'Admin', 'href' => 'index.php'),
-	array('label' => 'Recensioni', 'href' => 'recensioni.php'),
+	array('label' => 'Gestione recensioni', 'href' => 'recensioni.php'),
 	array('label' => 'Elimina recensione', 'href' => ''),
 );
 $currentPage = 'admin';
