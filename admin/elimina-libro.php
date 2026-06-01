@@ -24,7 +24,22 @@ if ($conn instanceof mysqli && $errorMessage === '' && $libroId > 0) {
 
 $res = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '' && $libroId > 0) {
-    $res = handleEliminaLibro($conn, $libroId, $_POST);
+    $res = ['message' => '', 'errorMessage' => '', 'redirect' => null];
+
+    if ((int) $libroId <= 0) {
+        $res['message'] = 'ID libro non valido.';
+    } else {
+        try {
+            if (deleteLibroWithCascade($conn, $libroId)) {
+                $res['redirect'] = 'libri.php?deleted=1';
+            } else {
+                $res['message'] = 'Eliminazione non eseguita.';
+            }
+        } catch (Throwable $e) {
+            $res['message'] = 'Impossibile eliminare il libro: ' . $e->getMessage();
+        }
+    }
+
     if (!empty($res['redirect'])) {
         header('Location: ' . $res['redirect']);
         exit;

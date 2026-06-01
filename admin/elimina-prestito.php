@@ -22,10 +22,29 @@ if ($prestitoId <= 0) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $prestitoId > 0 && $conn instanceof mysqli) {
-    // forward to handler
-    $res = handlePrestitiActions($conn, $_POST);
+    $res = ['message' => '', 'utenteId' => isset($_POST['utente_id']) ? (int) $_POST['utente_id'] : 0, 'cerca' => trim((string) ($_POST['cerca'] ?? ''))];
+    $azione = (string) ($_POST['azione'] ?? '');
+
+    try {
+        if ($azione === 'elimina') {
+            $res['message'] = deletePrestitoWithReferences($conn, $prestitoId) ? 'Prestito eliminato con successo.' : 'Operazione non riuscita.';
+        } elseif ($azione === 'concludi') {
+            $res['message'] = concludePrestito($conn, $prestitoId) ? 'Prestito concluso con successo.' : 'Operazione non riuscita.';
+        } elseif ($azione === 'proroga') {
+            $tmp = prorogaPrestito($conn, $prestitoId);
+            if (is_array($tmp)) {
+                $res['message'] = $tmp['message'] ?? 'Operazione non riuscita.';
+            } elseif ($tmp === true) {
+                $res['message'] = 'Prestito prorogato di 30 giorni.';
+            } else {
+                $res['message'] = 'Operazione non riuscita.';
+            }
+        }
+    } catch (Throwable $e) {
+        $res['message'] = 'Operazione non riuscita: ' . $e->getMessage();
+    }
+
     $message = $res['message'] ?? $message;
-    // after deletion redirect preserving the current search context when available
     $redirectQuery = !empty($res['cerca'])
         ? 'cerca=' . rawurlencode((string) $res['cerca'])
         : 'utente_id=' . (int) ($res['utenteId'] ?? 0);

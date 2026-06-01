@@ -33,7 +33,22 @@ $pagina = max(1, (int) $page);
 
 $res = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '') {
-    $res = handleRecensioniActions($conn, $_POST);
+    $res = ['message' => ''];
+    if (!isset($_POST['recensione_id'], $_POST['azione'])) {
+        $res['message'] = '';
+    } else {
+        $recensioneId = (int) $_POST['recensione_id'];
+        $azione = (string) $_POST['azione'];
+        try {
+            if ($azione === 'elimina') {
+                $res['message'] = deleteRecensione($conn, $recensioneId) ? 'Operazione completata con successo.' : 'Operazione non riuscita.';
+            } elseif ($azione === 'censura') {
+                $res['message'] = censuraRecensione($conn, $recensioneId) ? 'Operazione completata con successo.' : 'Operazione non riuscita.';
+            }
+        } catch (Throwable $e) {
+            $res['message'] = 'Operazione non riuscita: ' . $e->getMessage();
+        }
+    }
     $message = $res['message'] ?? $message;
 }
 
