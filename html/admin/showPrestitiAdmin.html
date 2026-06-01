@@ -64,23 +64,25 @@
 
             [EMPTY_PRESTITI_MESSAGE]
 
+            <p id="prestiti-table-summary" class="skip-link">Questa tabella elenca i prestiti con identificativo, nome utente, libro, stato, data di inizio, data di fine e azioni disponibili.</p>
             <div [TABLE_DISPLAY]>
-                <table>
+                <table aria-describedby="prestiti-table-summary">
+                    <caption>Elenco prestiti</caption>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Libro</th>
-                            <th>Stato</th>
-                            <th>Inizio</th>
-                            <th>Fine</th>
-                            <th>Azioni</th>
+                            <th scope="col" abbr="id">ID</th>
+                            <th scope="col">Utente</th>
+                            <th scope="col">Libro</th>
+                            <th scope="col">Stato</th>
+                            <th scope="col">Inizio</th>
+                            <th scope="col">Fine</th>
+                            <th scope="col">Azioni</th>
                         </tr>
                     </thead>
                     <tbody>
     <!-- ROW_TEMPLATE_START -->
                         <tr>
-                            <td>[ID]</td>
+                            <th scope="row">[ID]</th>
                             <td>[USERNAME]</td>
                             <td>[LIBRO]</td>
                             <td>[STATO]</td>

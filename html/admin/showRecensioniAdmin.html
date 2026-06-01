@@ -14,24 +14,26 @@
 
         [EMPTY_MESSAGE]
 
+        <p id="recensioni-table-summary" class="skip-link">Questa tabella elenca le recensioni con identificativo, utente, libro, voto, testo, data, stato e azioni disponibili.</p>
         <div [TABLE_DISPLAY]>
-            <table>
+            <table aria-describedby="recensioni-table-summary">
+                <caption>Elenco recensioni</caption>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Utente</th>
-                        <th>Libro</th>
-                        <th>Voto</th>
-                        <th>Testo</th>
-                        <th>Data</th>
-                        <th>Stato</th>
-                        <th>Azioni</th>
+                        <th scope="col" abbr="id">ID</th>
+                        <th scope="col">Utente</th>
+                        <th scope="col">Libro</th>
+                        <th scope="col">Voto</th>
+                        <th scope="col">Testo</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">Stato</th>
+                        <th scope="col">Azioni</th>
                     </tr>
                 </thead>
                 <tbody>
 <!-- ROW_TEMPLATE_START -->
                     <tr>
-                        <td>[ID]</td>
+                        <th scope="row">[ID]</th>
                         <td>[UTENTE]</td>
                         <td>[LIBRO]</td>
                         <td>[VOTO]</td>

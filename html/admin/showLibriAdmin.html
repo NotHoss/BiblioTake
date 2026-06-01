@@ -14,25 +14,27 @@
 
         [EMPTY_MESSAGE]
 
+        <p id="libri-table-summary" class="skip-link">Questa tabella elenca i libri gestiti dall'amministrazione con identificativo, ISBN, titolo, autore, anno, categoria, tag, stato del libro e azioni disponibili.</p>
         <div [TABLE_DISPLAY]>
-            <table>
+            <table aria-describedby="libri-table-summary">
+                <caption>Elenco libri</caption>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>ISBN</th>
-                        <th>Titolo</th>
-                        <th>Autore</th>
-                        <th>Anno</th>
-                        <th>Categoria</th>
-                        <th>Tags</th>
-                        <th>Stato Libro</th>
-                        <th>Azioni</th>
+                        <th scope="col" abbr="identificativo">ID</th>
+                        <th scope="col" abbr="">ISBN</th>
+                        <th scope="col">Titolo</th>
+                        <th scope="col">Autore</th>
+                        <th scope="col">Anno</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Tags</th>
+                        <th scope="col">Stato libro</th>
+                        <th scope="col">Azioni</th>
                     </tr>
                 </thead>
                 <tbody>
 <!-- ROW_TEMPLATE_START -->
                     <tr>
-                        <td>[ID]</td>
+                        <th scope="row">[ID]</th>
                         <td>[ISBN]</td>
                         <td>[TITOLO]</td>
                         <td>[AUTORE]</td>

@@ -13,23 +13,25 @@
 
         [EMPTY_MESSAGE]
 
+        <p id="utenti-table-summary" class="skip-link">Questa tabella elenca gli utenti con nome utente, email, prestiti totali, prestiti attivi, recensioni totali, stato e azioni disponibili.</p>
         <div [TABLE_DISPLAY]>
-            <table>
+            <table aria-describedby="utenti-table-summary">
+                <caption>Elenco utenti</caption>
                 <thead>
                     <tr>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Prestiti totali</th>
-                        <th>Prestiti attivi</th>
-                        <th>Recensioni totali</th>
-                        <th>Stato</th>
-                        <th>Azioni</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Prestiti totali</th>
+                        <th scope="col">Prestiti attivi</th>
+                        <th scope="col">Recensioni totali</th>
+                        <th scope="col">Stato</th>
+                        <th scope="col">Azioni</th>
                     </tr>
                 </thead>
                 <tbody>
 <!-- ROW_TEMPLATE_START -->
                     <tr>
-                        <td>[USERNAME]</td>
+                        <th scope="row">[USERNAME]</th>
                         <td>[EMAIL]</td>
                         <td>[PRESTITI_TOTALI]</td>
                         <td>[PRESTITI_ATTIVI]</td>
