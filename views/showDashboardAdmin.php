@@ -4,18 +4,35 @@
     if (empty($biblioteca)) {
         $bibliotecaContent = '<p>Non ci sono generalità da mostrare.</p>';
     } else {
-        $bibliotecaContent = '<p>' .
-            '<strong>Indirizzo:</strong> ' . htmlspecialchars($biblioteca['indirizzo'], ENT_QUOTES, 'UTF-8') . ' | ' .
-            '<strong>Telefono:</strong> ' . htmlspecialchars($biblioteca['telefono'], ENT_QUOTES, 'UTF-8') . ' | ' .
-            '<strong>Email:</strong> ' . htmlspecialchars($biblioteca['email'], ENT_QUOTES, 'UTF-8') . ' | ' .
-            '<strong>Lun-Ven:</strong> ' . htmlspecialchars($biblioteca['orario_lun_ven'] ?? '', ENT_QUOTES, 'UTF-8') . ' | ' .
-            '<strong>Sabato:</strong> ' . htmlspecialchars($biblioteca['orario_sabato'] ?? '', ENT_QUOTES, 'UTF-8') . ' | ' .
-            '<strong>Domenica:</strong> ' . htmlspecialchars($biblioteca['orario_domenica'] ?? '', ENT_QUOTES, 'UTF-8') .
-            '</p>' .
-            (!empty($biblioteca['note'])
-                ? '<p><strong>Note:</strong> ' . htmlspecialchars($biblioteca['note'], ENT_QUOTES, 'UTF-8') . '</p>'
-                : '') .
-            '<p><a href="modifica-biblio-admin.php">Modifica</a></p>';
+        $items = [];
+        if (!empty($biblioteca['indirizzo'])) {
+            $items[] = '<li><strong>Indirizzo:</strong> ' . htmlspecialchars($biblioteca['indirizzo'], ENT_QUOTES, 'UTF-8') . '</li>';
+        }
+        if (!empty($biblioteca['telefono'])) {
+            $items[] = '<li><strong>Telefono:</strong> ' . htmlspecialchars($biblioteca['telefono'], ENT_QUOTES, 'UTF-8') . '</li>';
+        }
+        if (!empty($biblioteca['email'])) {
+            $items[] = '<li><strong>Email:</strong> ' . htmlspecialchars($biblioteca['email'], ENT_QUOTES, 'UTF-8') . '</li>';
+        }
+        $orari = [];
+        if (!empty($biblioteca['orario_lun_ven'])) {
+            $orari[] = 'Lun-Ven: ' . htmlspecialchars($biblioteca['orario_lun_ven'], ENT_QUOTES, 'UTF-8');
+        }
+        if (!empty($biblioteca['orario_sabato'])) {
+            $orari[] = 'Sabato: ' . htmlspecialchars($biblioteca['orario_sabato'], ENT_QUOTES, 'UTF-8');
+        }
+        if (!empty($biblioteca['orario_domenica'])) {
+            $orari[] = 'Domenica: ' . htmlspecialchars($biblioteca['orario_domenica'], ENT_QUOTES, 'UTF-8');
+        }
+        if (!empty($orari)) {
+            $items[] = '<li><strong>Orari:</strong> ' . implode(' — ', $orari) . '</li>';
+        }
+        if (!empty($biblioteca['note'])) {
+            $items[] = '<li><strong>Note:</strong> ' . htmlspecialchars($biblioteca['note'], ENT_QUOTES, 'UTF-8') . '</li>';
+        }
+        $items[] = '<li class="actions"><a href="modifica-biblio-admin.php">Modifica</a></li>';
+
+        $bibliotecaContent = '<ul class="generalita-list">' . implode("\n", $items) . '</ul>';
     }
 
     $errorMsg = '';
