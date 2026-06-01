@@ -19,6 +19,7 @@ $prestitoId = isset($_GET['prestito_id']) ? (int) $_GET['prestito_id'] : 0;
 $utenteId = isset($_GET['utente_id']) ? (int) $_GET['utente_id'] : (isset($_POST['utente_id']) ? (int) $_POST['utente_id'] : 0);
 $filtri = [
     'cerca' => isset($_GET['cerca']) ? trim((string) $_GET['cerca']) : '',
+    'stato' => isset($_GET['stato']) ? trim((string) $_GET['stato']) : 'tutti',
 ];
 $utenteFiltro = null;
 if ($filtri['cerca'] === '' && $utenteId > 0 && $conn instanceof mysqli) {

@@ -10,6 +10,9 @@ if (!empty($message)) {
 $messages = $errorMsg . $successMsg;
 
 $template = file_get_contents(__DIR__ . '/../html/admin/showRecensioniAdmin.html');
+preg_match('/<!-- ROW_TEMPLATE_START -->(.*?)<!-- ROW_TEMPLATE_END -->/s', $template, $rowTemplateMatch);
+$rowTemplate = trim((string) ($rowTemplateMatch[1] ?? ''));
+$template = preg_replace('/<!-- ROW_TEMPLATE_START -->.*?<!-- ROW_TEMPLATE_END -->/s', '', $template, 1);
 
 $searchForm = renderSearchForm([
     'action' => 'recensioni.php',
@@ -24,6 +27,26 @@ $searchForm = renderSearchForm([
             'value' => (string) ($filtri['cerca'] ?? ''),
             'placeholder' => 'Username, libro o testo',
         ],
+        [
+            'type' => 'number',
+            'name' => 'voto',
+            'label' => 'Voto',
+            'value' => (string) ($filtri['voto'] ?? ''),
+            'min' => 0,
+            'max' => 5,
+            'step' => 1,
+        ],
+        [
+            'type' => 'select',
+            'name' => 'stato_recensione',
+            'label' => 'Stato recensione',
+            'selected' => (string) ($filtri['stato_recensione'] ?? 'tutte'),
+            'options' => [
+                'tutte' => 'Tutte',
+                'visibile' => 'Visibile',
+                'censurata' => 'Censurata',
+            ],
+        ],
     ],
 ]);
 
@@ -32,6 +55,8 @@ $end = $totalRecensioni > 0 ? min($start + count($recensioni) - 1, $totalRecensi
 $resultsInfo = renderResultsInfo($totalRecensioni, $start, $end, 'recensione', 'recensioni', 'Nessuna recensione trovata.');
 $pagination = renderPagination('recensioni.php', [
     'cerca' => (string) ($filtri['cerca'] ?? ''),
+    'voto' => (string) ($filtri['voto'] ?? ''),
+    'stato_recensione' => (string) ($filtri['stato_recensione'] ?? 'tutte'),
 ], $pagina, $totalPagine, 'Paginazione recensioni');
     
 if (empty($recensioni)) {
@@ -39,7 +64,7 @@ if (empty($recensioni)) {
         '[SEARCH_FORM]' => $searchForm,
         '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
-        '[EMPTY_MESSAGE]' => '<p>Nessuna recensione trovata.</p>',
+        '[EMPTY_MESSAGE]' => '',
         '[TABLE_DISPLAY]' => 'style="display:none;"',
         '[TABLE_ROWS]' => '',
         '[PAGINATION]' => $pagination,
@@ -48,32 +73,21 @@ if (empty($recensioni)) {
 }
 
 $tableRows = '';
-$utenteIdSafe = htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8');
 foreach ($recensioni as $recensione) {
     $id = htmlspecialchars((string) $recensione['id'], ENT_QUOTES, 'UTF-8');
-    $username = htmlspecialchars((string) $recensione['username'], ENT_QUOTES, 'UTF-8');
-    $titolo = htmlspecialchars((string) $recensione['libro_titolo'], ENT_QUOTES, 'UTF-8');
-    $voto = htmlspecialchars((string) $recensione['valutazione'], ENT_QUOTES, 'UTF-8');
-    $testo = htmlspecialchars((string) mb_substr($recensione['testo'], 0, 80), ENT_QUOTES, 'UTF-8') . '...';
-    $data = htmlspecialchars((string) $recensione['data'], ENT_QUOTES, 'UTF-8');
-    $censurata = $recensione['censura'] ? 'Sì' : 'No';
-    
+    $libroIdRow = htmlspecialchars((string) ($recensione['libro_id'] ?? 0), ENT_QUOTES, 'UTF-8');
     $censuraLabel = $recensione['censura'] ? 'Mostra' : 'Censura';
 
-    $tableRows .= "<tr>
-        <td>{$id}</td>
-        <td>{$username}</td>
-        <td>{$titolo}</td>
-        <td>{$voto}</td>
-        <td>{$testo}</td>
-        <td>{$data}</td>
-        <td>{$censurata}</td>
-        <td>
-            <form method=\"post\" style=\"display:inline\">\n                <input type=\"hidden\" name=\"recensione_id\" value=\"{$id}\">\n                <input type=\"hidden\" name=\"utente_id\" value=\"{$utenteIdSafe}\">\n                <button type=\"submit\" name=\"azione\" value=\"censura\">{$censuraLabel}</button>
-            </form>
-            <a href=\"elimina-recensione.php?id={$id}&utente_id={$utenteIdSafe}\">Elimina</a>
-        </td>
-    </tr>\n";
+    $tableRows .= strtr($rowTemplate, [
+        '[ID]' => $id,
+        '[UTENTE]' => '<a href="utenti.php?cerca=' . rawurlencode((string) $recensione['username']) . '">' . htmlspecialchars((string) $recensione['username'], ENT_QUOTES, 'UTF-8') . '</a>',
+        '[LIBRO]' => '<a href="../dettaglio-libro.php?id=' . $libroIdRow . '">' . htmlspecialchars((string) $recensione['libro_titolo'], ENT_QUOTES, 'UTF-8') . '</a>',
+        '[VOTO]' => htmlspecialchars((string) $recensione['valutazione'], ENT_QUOTES, 'UTF-8'),
+        '[TESTO]' => htmlspecialchars((string) mb_substr($recensione['testo'], 0, 80), ENT_QUOTES, 'UTF-8') . '...',
+        '[DATA]' => htmlspecialchars((string) $recensione['data'], ENT_QUOTES, 'UTF-8'),
+        '[STATO]' => $recensione['censura'] ? 'Censurata' : 'Visibile',
+        '[AZIONI]' => '<form method="post" style="display:inline"><input type="hidden" name="recensione_id" value="' . $id . '"><button type="submit" name="azione" value="censura">' . $censuraLabel . '</button></form> <a href="elimina-recensione.php?id=' . $id . '">Elimina</a>',
+    ]) . "\n";
 }
 
 echo strtr($template, [

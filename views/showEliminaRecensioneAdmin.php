@@ -19,13 +19,16 @@ if (empty($recensione)) {
 		'[FORM_DISPLAY]' => 'style="display:none;"',
 		'[WARNING_MESSAGE]' => '',
 		'[RECENSIONE_ID]' => '',
-		'[UTENTE_ID]' => htmlspecialchars((string) ($utenteId ?? 0), ENT_QUOTES, 'UTF-8'),
+		'[USERNAME]' => '',
+		'[UTENTE_ID]' => '',
 		'[ANNULLA_HREF]' => 'recensioni.php',
 	]);
 	return;
 }
 
 $warningMessage = '';
+$username = htmlspecialchars((string) ($recensione['username'] ?? ''), ENT_QUOTES, 'UTF-8');
+$utenteId = (int) ($recensione['utente_id'] ?? 0);
 
 echo strtr($template, [
 	'[MESSAGES]' => $messages,
@@ -33,6 +36,7 @@ echo strtr($template, [
 	'[FORM_DISPLAY]' => '',
 	'[WARNING_MESSAGE]' => $warningMessage,
 	'[RECENSIONE_ID]' => htmlspecialchars((string) ($recensione['id'] ?? ''), ENT_QUOTES, 'UTF-8'),
-	'[UTENTE_ID]' => htmlspecialchars((string) ($utenteId ?? 0), ENT_QUOTES, 'UTF-8'),
-	'[ANNULLA_HREF]' => $utenteId > 0 ? 'recensioni.php?utente_id=' . (int) $utenteId : 'recensioni.php',
+	'[USERNAME]' => $username,
+	'[UTENTE_ID]' => htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8'),
+	'[ANNULLA_HREF]' => $utenteId > 0 ? 'recensioni.php?cerca=' . rawurlencode((string) $recensione['username']) : 'recensioni.php',
 ]);

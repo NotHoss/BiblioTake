@@ -57,13 +57,16 @@ $pagination = renderPagination('utenti.php', $filtri, $pagina, $totalPagine, 'Pa
 
 // The admin users page currently renders only the list view.
 $template = file_get_contents(__DIR__ . '/../html/admin/showUtentiAdmin.html');
+preg_match('/<!-- ROW_TEMPLATE_START -->(.*?)<!-- ROW_TEMPLATE_END -->/s', $template, $rowTemplateMatch);
+$rowTemplate = trim((string) ($rowTemplateMatch[1] ?? ''));
+$template = preg_replace('/<!-- ROW_TEMPLATE_START -->.*?<!-- ROW_TEMPLATE_END -->/s', '', $template, 1);
 
 if (empty($utenti)) {
     echo strtr($template, [
         '[SEARCH_FORM]' => $searchForm,
         '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
-        '[EMPTY_MESSAGE]' => '<p>Nessun utente trovato.</p>',
+        '[EMPTY_MESSAGE]' => '',
         '[TABLE_DISPLAY]' => 'style="display:none;"',
         '[TABLE_ROWS]' => '',
         '[PAGINATION]' => $pagination,
@@ -73,13 +76,6 @@ if (empty($utenti)) {
 
 $tableRows = '';
 foreach ($utenti as $utente) {
-    $username = htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8');
-    $email = htmlspecialchars((string) $utente['email'], ENT_QUOTES, 'UTF-8');
-    $prestitiT = htmlspecialchars((string) ($utente['prestiti_totali'] ?? 0), ENT_QUOTES, 'UTF-8');
-    $prestitiA = htmlspecialchars((string) ($utente['prestiti_attivi'] ?? 0), ENT_QUOTES, 'UTF-8');
-    $recensioniT = htmlspecialchars((string) ($utente['recensioni_totali'] ?? 0), ENT_QUOTES, 'UTF-8');
-    $attivo = ((int) ($utente['attivo'] ?? 0) === 1) ? 'Attivo' : 'Non attivo';
-
     $azioni = [];
     if ((int) ($utente['prestiti_totali'] ?? 0) > 0) {
         $azioni[] = '<a href="prestiti-utente.php?cerca=' . rawurlencode((string) $utente['username']) . '">Prestiti</a>';
@@ -87,19 +83,15 @@ foreach ($utenti as $utente) {
     if ((int) ($utente['recensioni_totali'] ?? 0) > 0) {
         $azioni[] = '<a href="recensioni.php?cerca=' . rawurlencode((string) $utente['username']) . '">Recensioni</a>';
     }
-    $azioniHtml = empty($azioni) ? 'Nessuna azione disponibile' : implode(' | ', $azioni);
-
-    $tableRows .= "<tr>
-        <td>{$username}</td>
-        <td>{$email}</td>
-        <td>{$prestitiT}</td>
-        <td>{$prestitiA}</td>
-        <td>{$recensioniT}</td>
-        <td>{$attivo}</td>
-        <td>
-            {$azioniHtml}
-        </td>
-    </tr>\n";
+    $tableRows .= strtr($rowTemplate, [
+        '[USERNAME]' => htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8'),
+        '[EMAIL]' => htmlspecialchars((string) $utente['email'], ENT_QUOTES, 'UTF-8'),
+        '[PRESTITI_TOTALI]' => htmlspecialchars((string) ($utente['prestiti_totali'] ?? 0), ENT_QUOTES, 'UTF-8'),
+        '[PRESTITI_ATTIVI]' => htmlspecialchars((string) ($utente['prestiti_attivi'] ?? 0), ENT_QUOTES, 'UTF-8'),
+        '[RECENSIONI_TOTALI]' => htmlspecialchars((string) ($utente['recensioni_totali'] ?? 0), ENT_QUOTES, 'UTF-8'),
+        '[STATO]' => ((int) ($utente['attivo'] ?? 0) === 1) ? 'Attivo' : 'Non attivo',
+        '[AZIONI]' => empty($azioni) ? 'Nessuna azione disponibile' : implode(' | ', $azioni),
+    ]) . "\n";
 }
 
 echo strtr($template, [

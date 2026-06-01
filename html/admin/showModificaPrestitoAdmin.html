@@ -1,17 +1,16 @@
-<h1>Modifica prestito #[PRESTITO_IN_MODIFICA_ID]</h1>
+<h1>Modifica prestito</h1>
 
 [MESSAGES]
 
 <form method="post">
     <input type="hidden" name="prestito_id" value="[PRESTITO_IN_MODIFICA_ID]">
+    <p>[TESTO_MODIFICA]</p>
+    <p>
+        [TESTO_DETTAGLI]
+    </p>
     <p>
         <label>Data inizio
             <input type="datetime-local" name="data_inizio" value="[DATA_INIZIO]" required>
-        </label>
-    </p>
-    <p>
-        <label>Data fine
-            <input type="datetime-local" name="data_fine" value="[DATA_FINE]" required>
         </label>
     </p>
     <p>
@@ -22,14 +21,8 @@
         </label>
     </p>
     <p>
-        <label>Libro ID
-            <input type="number" name="libro_id" min="1" value="[LIBRO_ID]" required>
-        </label>
-    </p>
-    <p>
-        <label>Utente ID
-            <input type="number" name="nuovo_utente_id" min="1" value="[NUOVO_UTENTE_ID]" required>
-        </label>
+        [LIBRO_HIDDEN]
+        [UTENTE_HIDDEN]
     </p>
     <p>
         <button type="submit" name="azione" value="salva_modifica">Salva modifiche</button>

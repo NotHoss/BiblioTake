@@ -22,6 +22,9 @@ if (empty($prestitoInModifica)) {
         '[STATO_OPTIONS]' => '',
         '[LIBRO_ID]' => '',
         '[NUOVO_UTENTE_ID]' => '',
+        '[PRESTITO_SUMMARY]' => '',
+        '[LIBRO_HIDDEN]' => '',
+        '[UTENTE_HIDDEN]' => '',
     ]);
     return;
 }
@@ -30,8 +33,20 @@ $statiPrestito = ['attivo', 'in_ritardo', 'concluso'];
 $statiOptions = '';
 foreach ($statiPrestito as $stato) {
     $sel = ($prestitoInModifica['stato'] === $stato) ? ' selected' : '';
-    $statiOptions .= '<option value="' . htmlspecialchars($stato, ENT_QUOTES, 'UTF-8') . '"' . $sel . '>' . htmlspecialchars($stato, ENT_QUOTES, 'UTF-8') . '</option>';
+    $label = [
+        'attivo' => 'Attivo',
+        'in_ritardo' => 'In ritardo',
+        'concluso' => 'Concluso',
+    ][$stato] ?? $stato;
+    $statiOptions .= '<option value="' . htmlspecialchars($stato, ENT_QUOTES, 'UTF-8') . '"' . $sel . '>' . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . '</option>';
 }
+
+$prestitoSummary = '<ul>'
+    . '<li><strong>ID</strong>: ' . htmlspecialchars((string) $prestitoInModifica['id'], ENT_QUOTES, 'UTF-8') . '</li>'
+    . '<li><strong>Stato</strong>: ' . htmlspecialchars(["attivo" => 'Attivo', "in_ritardo" => 'In ritardo', "concluso" => 'Concluso'][$prestitoInModifica['stato']] ?? (string) $prestitoInModifica['stato'], ENT_QUOTES, 'UTF-8') . '</li>'
+    . '<li><strong>Libro</strong>: ' . htmlspecialchars((string) ($prestitoInModifica['libro_titolo'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
+    . '<li><strong>Utente</strong>: ' . htmlspecialchars((string) ($prestitoInModifica['username'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
+    . '</ul>';
 
 echo strtr($template, [
     '[MESSAGES]' => $messages,
@@ -42,4 +57,9 @@ echo strtr($template, [
     '[STATO_OPTIONS]' => $statiOptions,
     '[LIBRO_ID]' => htmlspecialchars((string) $prestitoInModifica['libro_id'], ENT_QUOTES, 'UTF-8'),
     '[NUOVO_UTENTE_ID]' => htmlspecialchars((string) $prestitoInModifica['utente_id'], ENT_QUOTES, 'UTF-8'),
+    '[TESTO_MODIFICA]' => 'Stai modificando il prestito:',
+    '[TESTO_DETTAGLI]' => $prestitoSummary,
+    '[PRESTITO_SUMMARY]' => $prestitoSummary,
+    '[LIBRO_HIDDEN]' => '<input type="hidden" name="libro_id" value="' . htmlspecialchars((string) $prestitoInModifica['libro_id'], ENT_QUOTES, 'UTF-8') . '">',
+    '[UTENTE_HIDDEN]' => '<input type="hidden" name="nuovo_utente_id" value="' . htmlspecialchars((string) $prestitoInModifica['utente_id'], ENT_QUOTES, 'UTF-8') . '">',
 ]);

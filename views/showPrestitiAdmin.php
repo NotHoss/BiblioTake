@@ -12,6 +12,9 @@ if (!empty($message)) {
 $messages = $errorMsg . $successMsg;
 
 $template = file_get_contents(__DIR__ . '/../html/admin/showPrestitiAdmin.html');
+preg_match('/<!-- ROW_TEMPLATE_START -->(.*?)<!-- ROW_TEMPLATE_END -->/s', $template, $rowTemplateMatch);
+$rowTemplate = trim((string) ($rowTemplateMatch[1] ?? ''));
+$template = preg_replace('/<!-- ROW_TEMPLATE_START -->.*?<!-- ROW_TEMPLATE_END -->/s', '', $template, 1);
 
 $searchForm = renderSearchForm([
     'action' => 'prestiti-utente.php',
@@ -26,6 +29,18 @@ $searchForm = renderSearchForm([
             'value' => (string) ($filtri['cerca'] ?? ''),
             'placeholder' => 'ID, Username, titolo o autore',
         ],
+        [
+            'type' => 'select',
+            'name' => 'stato',
+            'label' => 'Stato',
+            'selected' => (string) ($filtri['stato'] ?? 'tutti'),
+            'options' => [
+                'tutti' => 'Tutti',
+                'attivo' => 'Attivo',
+                'in_ritardo' => 'In ritardo',
+                'concluso' => 'Concluso',
+            ],
+        ],
     ],
 ]);
 
@@ -34,6 +49,7 @@ $end = $totalPrestiti > 0 ? min($start + count($prestiti) - 1, $totalPrestiti) :
 $resultsInfo = renderResultsInfo($totalPrestiti, $start, $end, 'prestito', 'prestiti', 'Nessun prestito trovato.');
 $pagination = renderPagination('prestiti-utente.php', [
     'cerca' => (string) ($filtri['cerca'] ?? ''),
+    'stato' => (string) ($filtri['stato'] ?? 'tutti'),
 ], $pagina, $totalPagine, 'Paginazione prestiti');
 $cercaSafe = htmlspecialchars((string) ($filtri['cerca'] ?? ''), ENT_QUOTES, 'UTF-8');
 
@@ -56,7 +72,7 @@ if ($utenteId >= 0) {
     $tableRows = '';
     
     if (empty($prestiti)) {
-        $emptyPrestitiMessage = '<p>Nessun prestito trovato.</p>';
+        $emptyPrestitiMessage = '';
         $tableDisplay = 'style="display:none;"';
     } else {
         foreach ($prestiti as $prestito) {
@@ -64,12 +80,18 @@ if ($utenteId >= 0) {
             $username = htmlspecialchars((string) ($prestito['username'] ?? ''), ENT_QUOTES, 'UTF-8');
             $usernameLink = '<a href="utenti.php?cerca=' . rawurlencode((string) ($prestito['username'] ?? '')) . '">' . $username . '</a>';
             $titolo = htmlspecialchars((string) $prestito['libro_titolo'], ENT_QUOTES, 'UTF-8');
-            $stato = htmlspecialchars((string) $prestito['stato'], ENT_QUOTES, 'UTF-8');
+            $libroLink = '<a href="../dettaglio-libro.php?id=' . htmlspecialchars((string) ($prestito['libro_id'] ?? 0), ENT_QUOTES, 'UTF-8') . '">' . $titolo . '</a>';
+            $statoRaw = (string) $prestito['stato'];
+            $stato = [
+                'attivo' => 'Attivo',
+                'in_ritardo' => 'In ritardo',
+                'concluso' => 'Concluso',
+            ][$statoRaw] ?? htmlspecialchars($statoRaw, ENT_QUOTES, 'UTF-8');
             $inizio = htmlspecialchars((string) $prestito['data_inizio'], ENT_QUOTES, 'UTF-8');
             $fine = htmlspecialchars((string) $prestito['data_fine'], ENT_QUOTES, 'UTF-8');
             $utenteIdSafe = htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8');
             
-            $statoPrestito = (string) $prestito['stato'];
+            $statoPrestito = $statoRaw;
 
             // Link-based actions for modify/delete (dedicated pages)
             $modificaLink = '<a href="modifica-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '">Modifica</a>';
@@ -83,18 +105,15 @@ if ($utenteId >= 0) {
                 $postActions = '<button type="submit" name="azione" value="concludi">Concludi</button>';
             }
 
-            $tableRows .= "<tr>
-                <td>{$id}</td>
-                <td>{$usernameLink}</td>
-                <td>{$titolo}</td>
-                <td>{$stato}</td>
-                <td>{$inizio}</td>
-                <td>{$fine}</td>
-                <td>
-                    {$modificaLink} | {$eliminaLink}
-                    <form method=\"post\" style=\"display:inline; margin-left:0.5rem;\">\n                        <input type=\"hidden\" name=\"prestito_id\" value=\"{$id}\">\n                        <input type=\"hidden\" name=\"utente_id\" value=\"{$utenteIdSafe}\">\n                        <input type=\"hidden\" name=\"cerca\" value=\"{$cercaSafe}\">\n                        {$postActions}\n                    </form>
-                </td>
-            </tr>\n";
+            $tableRows .= strtr($rowTemplate, [
+                '[ID]' => $id,
+                '[USERNAME]' => $usernameLink,
+                '[LIBRO]' => $libroLink,
+                '[STATO]' => $stato,
+                '[INIZIO]' => $inizio,
+                '[FINE]' => $fine,
+                '[AZIONI]' => $modificaLink . ' | ' . $eliminaLink . '<form method="post" style="display:inline; margin-left:0.5rem;"><input type="hidden" name="prestito_id" value="' . $id . '"><input type="hidden" name="utente_id" value="' . $utenteIdSafe . '"><input type="hidden" name="cerca" value="' . $cercaSafe . '">' . $postActions . '</form>',
+            ]) . "\n";
         }
     }
 

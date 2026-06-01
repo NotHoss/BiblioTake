@@ -14,7 +14,6 @@ $breadcrumb = array(
 $currentPage = 'admin';
 
 $recensione = null;
-$utenteId = isset($_GET['utente_id']) ? (int) $_GET['utente_id'] : 0;
 if ($conn instanceof mysqli && isset($_GET['id'])) {
 	$recensione = getRecensioneById($conn, (int) $_GET['id']);
 }

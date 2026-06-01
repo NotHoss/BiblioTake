@@ -107,6 +107,12 @@ function countPrestitiAdminFiltrati($conn, array $filtri) {
         $types .= 'isss';
     }
 
+    if (!empty($filtri['stato']) && $filtri['stato'] !== 'tutti') {
+        $where[] = 'p.stato = ?';
+        $params[] = (string) $filtri['stato'];
+        $types .= 's';
+    }
+
     $sql = 'SELECT COUNT(*) AS totale FROM prestito p INNER JOIN utente u ON u.id = p.utente_id INNER JOIN libro l ON l.id = p.libro_id';
     if (!empty($where)) {
         $sql .= ' WHERE ' . implode(' AND ', $where);
@@ -150,7 +156,13 @@ function getPrestitiAdminFiltrati($conn, array $filtri, $pagina, $limit = 10) {
         $types .= 'isss';
     }
 
-    $sql = 'SELECT p.id, p.data_inizio, p.data_fine, p.stato, u.username, u.email, l.titolo AS libro_titolo
+    if (!empty($filtri['stato']) && $filtri['stato'] !== 'tutti') {
+        $where[] = 'p.stato = ?';
+        $params[] = (string) $filtri['stato'];
+        $types .= 's';
+    }
+
+    $sql = 'SELECT p.id, p.data_inizio, p.data_fine, p.stato, p.libro_id, u.username, u.email, l.titolo AS libro_titolo
             FROM prestito p
             INNER JOIN utente u ON u.id = p.utente_id
             INNER JOIN libro l ON l.id = p.libro_id';
@@ -178,8 +190,10 @@ function getPrestitiAdminFiltrati($conn, array $filtri, $pagina, $limit = 10) {
 
 function getPrestitoById($conn, $prestitoId) {
     $stmt = $conn->prepare(
-        'SELECT p.id, p.data_inizio, p.data_fine, p.stato, p.libro_id, p.utente_id
+        'SELECT p.id, p.data_inizio, p.data_fine, p.stato, p.libro_id, p.utente_id, u.username, l.titolo AS libro_titolo
          FROM prestito p
+         INNER JOIN utente u ON u.id = p.utente_id
+         INNER JOIN libro l ON l.id = p.libro_id
          WHERE p.id = ?'
     );
     $stmt->bind_param('i', $prestitoId);

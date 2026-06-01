@@ -18,6 +18,8 @@ $errorMessage = '';
 $utenteId = isset($_GET['utente_id']) ? (int) $_GET['utente_id'] : (isset($_POST['utente_id']) ? (int) $_POST['utente_id'] : 0);
 $filtri = [
     'cerca' => isset($_GET['cerca']) ? trim((string) $_GET['cerca']) : '',
+    'voto' => isset($_GET['voto']) ? (int) $_GET['voto'] : 0,
+    'stato_recensione' => isset($_GET['stato_recensione']) ? trim((string) $_GET['stato_recensione']) : 'tutte',
 ];
 $utenteFiltro = null;
 if ($filtri['cerca'] === '' && $utenteId > 0 && $conn instanceof mysqli) {

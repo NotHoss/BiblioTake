@@ -101,6 +101,9 @@ $pagination = renderPagination('libri.php', $filtri, $pagina, $totalPagine, 'Pag
 
 // List mode only — create/edit/delete moved to dedicated views
 $template = file_get_contents(__DIR__ . '/../html/admin/showLibriAdmin.html');
+preg_match('/<!-- ROW_TEMPLATE_START -->(.*?)<!-- ROW_TEMPLATE_END -->/s', $template, $rowTemplateMatch);
+$rowTemplate = trim((string) ($rowTemplateMatch[1] ?? ''));
+$template = preg_replace('/<!-- ROW_TEMPLATE_START -->.*?<!-- ROW_TEMPLATE_END -->/s', '', $template, 1);
 
 if (empty($libri)) {
     echo strtr($template, [
@@ -118,11 +121,6 @@ if (empty($libri)) {
 $tableRows = '';
 foreach ($libri as $libroRow) {
     $id = htmlspecialchars((string) $libroRow['id'], ENT_QUOTES, 'UTF-8');
-    $isbn = htmlspecialchars((string) $libroRow['codice_isbn'], ENT_QUOTES, 'UTF-8');
-    $titolo = htmlspecialchars((string) $libroRow['titolo'], ENT_QUOTES, 'UTF-8');
-    $autore = htmlspecialchars((string) $libroRow['autore'], ENT_QUOTES, 'UTF-8');
-    $anno = htmlspecialchars((string) $libroRow['anno'], ENT_QUOTES, 'UTF-8');
-    $categoria = htmlspecialchars((string) $libroRow['categoria'], ENT_QUOTES, 'UTF-8');
     $prestitiAttivi = (int) ($libroRow['prestiti_attivi'] ?? 0);
     $prestiti = 'Disponibile';
     $azioni = '<a href="modifica-libro.php?id=' . $id . '">Modifica libro</a> |
@@ -141,17 +139,17 @@ foreach ($libri as $libroRow) {
     foreach ($tagsArr as $t) { $tagsList[] = htmlspecialchars((string) $t['nome'], ENT_QUOTES, 'UTF-8'); }
     $tagsHtml = implode(', ', $tagsList);
 
-    $tableRows .= "<tr>
-        <td>{$id}</td>
-        <td>{$isbn}</td>
-        <td>{$titolo}</td>
-        <td>{$autore}</td>
-        <td>{$anno}</td>
-        <td>{$categoria}</td>
-        <td>{$tagsHtml}</td>
-        <td>{$prestiti}</td>
-        <td>{$azioni}</td>
-    </tr>\n";
+    $tableRows .= strtr($rowTemplate, [
+        '[ID]' => $id,
+        '[ISBN]' => htmlspecialchars((string) $libroRow['codice_isbn'], ENT_QUOTES, 'UTF-8'),
+        '[TITOLO]' => htmlspecialchars((string) $libroRow['titolo'], ENT_QUOTES, 'UTF-8'),
+        '[AUTORE]' => htmlspecialchars((string) $libroRow['autore'], ENT_QUOTES, 'UTF-8'),
+        '[ANNO]' => htmlspecialchars((string) $libroRow['anno'], ENT_QUOTES, 'UTF-8'),
+        '[CATEGORIA]' => htmlspecialchars((string) $libroRow['categoria'], ENT_QUOTES, 'UTF-8'),
+        '[TAGS]' => $tagsHtml,
+        '[STATO_LIBRO]' => $prestiti,
+        '[AZIONI]' => $azioni,
+    ]) . "\n";
 }
 
 echo strtr($template, [

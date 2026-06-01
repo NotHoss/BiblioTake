@@ -16,6 +16,7 @@ $message = '';
 $errorMessage = '';
 
 $prestitoId = isset($_GET['prestito_id']) ? (int) $_GET['prestito_id'] : (isset($_POST['prestito_id']) ? (int) $_POST['prestito_id'] : 0);
+$utenteId = isset($_GET['utente_id']) ? (int) $_GET['utente_id'] : 0;
 
 if ($prestitoId <= 0) {
     $errorMessage = 'ID prestito non valido.';
@@ -55,6 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $prestitoId > 0 && $conn instanceof
 $prestito = null;
 if ($conn instanceof mysqli && $prestitoId > 0) {
     $prestito = getPrestitoById($conn, $prestitoId);
+    if (!empty($prestito['utente_id'])) {
+        $utenteId = (int) $prestito['utente_id'];
+    }
 }
 
 require_once __DIR__ . '/../views/template/header.php';

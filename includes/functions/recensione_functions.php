@@ -10,6 +10,20 @@ function countRecensioniAdminFiltrate($conn, array $filtri) {
         $types .= 'i';
     }
 
+    if (!empty($filtri['voto']) && (int) $filtri['voto'] >= 1 && (int) $filtri['voto'] <= 5) {
+        $where[] = 'r.valutazione = ?';
+        $params[] = (int) $filtri['voto'];
+        $types .= 'i';
+    }
+
+    if (!empty($filtri['stato_recensione']) && $filtri['stato_recensione'] !== 'tutte') {
+        if ($filtri['stato_recensione'] === 'visibile') {
+            $where[] = 'r.censura = 0';
+        } elseif ($filtri['stato_recensione'] === 'censurata') {
+            $where[] = 'r.censura = 1';
+        }
+    }
+
     if (!empty($filtri['cerca'])) {
         $searchValue = trim((string) $filtri['cerca']);
         $where[] = '(r.id = ? OR u.username LIKE ? OR u.email LIKE ? OR l.titolo LIKE ? OR r.testo LIKE ?)';
@@ -54,6 +68,20 @@ function getRecensioniAdminFiltrate($conn, array $filtri, $pagina, $limit = 10) 
         $types .= 'i';
     }
 
+    if (!empty($filtri['voto']) && (int) $filtri['voto'] >= 1 && (int) $filtri['voto'] <= 5) {
+        $where[] = 'r.valutazione = ?';
+        $params[] = (int) $filtri['voto'];
+        $types .= 'i';
+    }
+
+    if (!empty($filtri['stato_recensione']) && $filtri['stato_recensione'] !== 'tutte') {
+        if ($filtri['stato_recensione'] === 'visibile') {
+            $where[] = 'r.censura = 0';
+        } elseif ($filtri['stato_recensione'] === 'censurata') {
+            $where[] = 'r.censura = 1';
+        }
+    }
+
     if (!empty($filtri['cerca'])) {
         $searchValue = trim((string) $filtri['cerca']);
         $where[] = '(r.id = ? OR u.username LIKE ? OR u.email LIKE ? OR l.titolo LIKE ? OR r.testo LIKE ?)';
@@ -66,7 +94,7 @@ function getRecensioniAdminFiltrate($conn, array $filtri, $pagina, $limit = 10) 
         $types .= 'issss';
     }
 
-    $sql = 'SELECT r.id, r.valutazione, r.testo, r.censura, r.data, u.username, l.titolo AS libro_titolo
+    $sql = 'SELECT r.id, r.valutazione, r.testo, r.censura, r.data, r.utente_id, r.libro_id, u.username, l.titolo AS libro_titolo
             FROM recensione r
             INNER JOIN utente u ON u.id = r.utente_id
             INNER JOIN libro l ON l.id = r.libro_id';
@@ -94,9 +122,11 @@ function getRecensioniAdminFiltrate($conn, array $filtri, $pagina, $limit = 10) 
 
 function getRecensioneById($conn, $recensioneId) {
     $stmt = $conn->prepare(
-        'SELECT id, valutazione, testo, censura, data, libro_id, utente_id
-         FROM recensione
-         WHERE id = ?'
+        'SELECT r.id, r.valutazione, r.testo, r.censura, r.data, r.libro_id, r.utente_id, u.username, l.titolo AS libro_titolo
+         FROM recensione r
+         INNER JOIN utente u ON u.id = r.utente_id
+         INNER JOIN libro l ON l.id = r.libro_id
+         WHERE r.id = ?'
     );
     $stmt->bind_param('i', $recensioneId);
     $stmt->execute();

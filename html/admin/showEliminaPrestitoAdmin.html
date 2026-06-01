@@ -1,13 +1,19 @@
-<h1>Elimina prestito #[PRESTITO_ID]</h1>
+<h1>Elimina prestito</h1>
 
 [MESSAGES]
 
-<p>Sei sicuro di voler eliminare questo prestito?</p>
+<p>Stai per eliminare il prestito:</p>
+
+<ul>
+    <li><strong>ID</strong>: [PRESTITO_ID]</li>
+    <li><strong>Username</strong>: [USERNAME]</li>
+    <li><strong>Libro</strong>: [LIBRO]</li>
+</ul>
 
 <form method="post">
     <input type="hidden" name="prestito_id" value="[PRESTITO_ID]">
     <p>
         <button type="submit" name="azione" value="elimina">Conferma eliminazione</button>
-        <a href="prestiti-utente.php?utente_id=[UTENTE_ID]">Annulla</a>
+        <a href="[ANNULLA_HREF]">Annulla</a>
     </p>
 </form>
