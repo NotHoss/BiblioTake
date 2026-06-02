@@ -16,7 +16,7 @@ if (empty($recensione)) {
 	echo strtr($template, [
 		'[MESSAGES]' => $messages,
 		'[NOT_FOUND_MESSAGE]' => '<p>Recensione non trovata.</p>',
-		'[FORM_DISPLAY]' => 'style="display:none;"',
+		'[FORM_DISPLAY]' => 'class="none"',
 		'[WARNING_MESSAGE]' => '',
 		'[RECENSIONE_ID]' => '',
 		'[USERNAME]' => '',

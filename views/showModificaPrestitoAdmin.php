@@ -2,7 +2,7 @@
 // Expects: $prestitoInModifica (array), $message, $errorMessage
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = '<span>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</span>';
 }
 $successMsg = '';
 if (!empty($message)) {
@@ -41,7 +41,7 @@ foreach ($statiPrestito as $stato) {
     $statiOptions .= '<option value="' . htmlspecialchars($stato, ENT_QUOTES, 'UTF-8') . '"' . $sel . '>' . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . '</option>';
 }
 
-$prestitoSummary = '<ul>'
+$prestitoSummary = '<ul >'
     . '<li><strong>ID</strong>: ' . htmlspecialchars((string) $prestitoInModifica['id'], ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Stato</strong>: ' . htmlspecialchars(["attivo" => 'Attivo', "in_ritardo" => 'In ritardo', "concluso" => 'Concluso'][$prestitoInModifica['stato']] ?? (string) $prestitoInModifica['stato'], ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Libro</strong>: ' . htmlspecialchars((string) ($prestitoInModifica['libro_titolo'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'

@@ -8,8 +8,7 @@ foreach ($categorie as $cat) {
 
 $searchForm = renderSearchForm([
     'action' => 'catalogo.php',
-    'class' => 'search-form',
-    'id' => 'filtri-form',
+    'class' => 'form search-form',
     'submitLabel' => 'Applica filtri',
     'resetHref' => 'catalogo.php',
     'resetLabel' => 'Azzera filtri',
@@ -20,7 +19,7 @@ $searchForm = renderSearchForm([
             'id' => 'cerca',
             'label' => 'Titolo',
             'value' => (string) ($filtri['cerca'] ?? ''),
-            'placeholder' => 'Titolo, ISBN o ID',
+            'placeholder' => 'Titolo o ISBN',
         ],
         [
             'type' => 'select',

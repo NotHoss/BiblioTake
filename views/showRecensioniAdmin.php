@@ -1,7 +1,7 @@
 <?php
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = '<span>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</span>';
 }
 $successMsg = '';
 if (!empty($message)) {
@@ -16,8 +16,8 @@ $template = preg_replace('/<!-- ROW_TEMPLATE_START -->.*?<!-- ROW_TEMPLATE_END -
 
 $searchForm = renderSearchForm([
     'action' => 'recensioni.php',
-    'class' => 'admin-search-form',
-    'submitLabel' => 'Filtra recensioni',
+    'class' => 'form admin-search-form',
+    'submitLabel' => 'Applica filtri',
     'resetHref' => 'recensioni.php',
     'fields' => [
         [
@@ -57,7 +57,7 @@ $pagination = renderPagination('recensioni.php', [
     'cerca' => (string) ($filtri['cerca'] ?? ''),
     'voto' => (string) ($filtri['voto'] ?? ''),
     'stato_recensione' => (string) ($filtri['stato_recensione'] ?? 'tutte'),
-], $pagina, $totalPagine, 'Paginazione recensioni');
+], $pagina, $totalPagine, 'Navigazione pagine risultati', 'Pagina precedente', 'Pagina successiva');
     
 if (empty($recensioni)) {
     echo strtr($template, [
@@ -65,7 +65,7 @@ if (empty($recensioni)) {
         '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
         '[EMPTY_MESSAGE]' => '',
-        '[TABLE_DISPLAY]' => 'style="display:none;"',
+        '[TABLE_DISPLAY]' => 'class="none"',
         '[TABLE_ROWS]' => '',
         '[PAGINATION]' => $pagination,
     ]);
@@ -86,7 +86,7 @@ foreach ($recensioni as $recensione) {
         '[TESTO]' => htmlspecialchars((string) mb_substr($recensione['testo'], 0, 80), ENT_QUOTES, 'UTF-8') . '...',
         '[DATA]' => htmlspecialchars((string) $recensione['data'], ENT_QUOTES, 'UTF-8'),
         '[STATO]' => $recensione['censura'] ? 'Censurata' : 'Visibile',
-        '[AZIONI]' => '<form method="post" style="display:inline"><input type="hidden" name="recensione_id" value="' . $id . '"><button type="submit" name="azione" value="censura">' . $censuraLabel . '</button></form> <a href="elimina-recensione.php?id=' . $id . '">Elimina</a>',
+        '[AZIONI]' => '<form method="post" style="display:inline"><input type="hidden" name="recensione_id" value="' . $id . '"><button class="table-action" type="submit" name="azione" value="censura">' . $censuraLabel . '</button></form> <a class="table-action" href="elimina-recensione.php?id=' . $id . '">Elimina</a>',
     ]) . "\n";
 }
 

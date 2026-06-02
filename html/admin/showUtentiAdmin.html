@@ -1,20 +1,20 @@
 <h1>Gestione utenti</h1>
 
 <div id="catalogo-layout">
-    <aside id="filtri-catalogo">
+    <aside>
         <h3>Filtra i risultati</h3>
         [SEARCH_FORM]
     </aside>
 
-    <section id="risultati-catalogo">
+    <section>
         [RESULTS_INFO]
 
         [MESSAGES]
 
         [EMPTY_MESSAGE]
 
-        <p id="utenti-table-summary" class="skip-link">Questa tabella elenca gli utenti con nome utente, email, prestiti totali, prestiti attivi, recensioni totali, stato e azioni disponibili.</p>
-        <div [TABLE_DISPLAY]>
+        <p id="utenti-table-summary" class="hidden">Questa tabella elenca gli utenti con nome utente, email, prestiti totali, prestiti attivi, recensioni totali, stato e azioni disponibili.</p>
+        <section id="gestione" [TABLE_DISPLAY]>
             <table aria-describedby="utenti-table-summary">
                 <caption>Elenco utenti</caption>
                 <thead>
@@ -43,7 +43,7 @@
                     [TABLE_ROWS]
                 </tbody>
             </table>
-        </div>
+        </section>
 
         [PAGINATION]
     </section>

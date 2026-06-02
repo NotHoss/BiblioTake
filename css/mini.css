@@ -1,1 +1,12 @@
 /*Una volta fatto lo style.css si copia e incolla qui e si modifica ogni sezione per fare il design mobile*/
+.admin-search-form > div{
+    flex-basis: 100%;
+}
+
+.admin-search-form .compact-row > div{
+    flex: 1 1 100%;
+}
+
+.admin-form{
+    grid-template-columns: 1fr;
+}

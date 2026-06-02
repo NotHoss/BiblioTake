@@ -1,12 +1,12 @@
 <?php
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = '<span>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</span>';
 }
 
 $successMsg = '';
 if (!empty($successMessage)) {
-    $successMsg = '<div>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $successMsg = '<span>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</span>';
 }
 
 $template = file_get_contents(__DIR__ . '/../html/admin/showModificaBiblioAdmin.html');

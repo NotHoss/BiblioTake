@@ -9,6 +9,8 @@ function renderSearchForm(array $config) {
     $templatePath = __DIR__ . '/../../html/template/search-form.html';
     $fieldsHtml = '';
 
+    $groupOpen = false;
+    $groupClass = '';
     foreach (($config['fields'] ?? []) as $field) {
         $type = strtolower((string) ($field['type'] ?? 'text'));
         $name = htmlspecialchars((string) ($field['name'] ?? ''), ENT_QUOTES, 'UTF-8');
@@ -21,6 +23,13 @@ function renderSearchForm(array $config) {
         $step = array_key_exists('step', $field) ? ' step="' . htmlspecialchars((string) $field['step'], ENT_QUOTES, 'UTF-8') . '"' : '';
         $checked = !empty($field['checked']) ? ' checked' : '';
         $selected = (string) ($field['selected'] ?? $value);
+
+        // handle optional group wrappers
+        if (!empty($field['group_start'])) {
+            $groupClass = isset($field['group_class']) ? htmlspecialchars((string) $field['group_class'], ENT_QUOTES, 'UTF-8') : 'compact-row';
+            $fieldsHtml .= '<div class="' . $groupClass . '">';
+            $groupOpen = true;
+        }
 
         $fieldsHtml .= '<div>';
         if ($label !== '') {
@@ -43,6 +52,12 @@ function renderSearchForm(array $config) {
         }
 
         $fieldsHtml .= '</div>';
+
+        if (!empty($field['group_end']) && $groupOpen) {
+            $fieldsHtml .= '</div>';
+            $groupOpen = false;
+            $groupClass = '';
+        }
     }
 
     $resetHref = (string) ($config['resetHref'] ?? '');

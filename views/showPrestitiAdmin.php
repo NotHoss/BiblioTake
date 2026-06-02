@@ -3,7 +3,7 @@ $adminViewMode = $adminViewMode ?? 'prestiti';
 
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = '<span>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</span>';
 }
 $successMsg = '';
 if (!empty($message)) {
@@ -18,8 +18,8 @@ $template = preg_replace('/<!-- ROW_TEMPLATE_START -->.*?<!-- ROW_TEMPLATE_END -
 
 $searchForm = renderSearchForm([
     'action' => 'prestiti-utente.php',
-    'class' => 'admin-search-form',
-    'submitLabel' => 'Gestione prestiti',
+    'class' => 'form admin-search-form',
+    'submitLabel' => 'Applica filtri',
     'resetHref' => 'prestiti-utente.php',
     'fields' => [
         [
@@ -50,11 +50,11 @@ $resultsInfo = renderResultsInfo($totalPrestiti, $start, $end, 'prestito', 'pres
 $pagination = renderPagination('prestiti-utente.php', [
     'cerca' => (string) ($filtri['cerca'] ?? ''),
     'stato' => (string) ($filtri['stato'] ?? 'tutti'),
-], $pagina, $totalPagine, 'Paginazione prestiti');
+], $pagina, $totalPagine, 'Navigazione pagine risultati', 'Pagina precedente', 'Pagina successiva');
 $cercaSafe = htmlspecialchars((string) ($filtri['cerca'] ?? ''), ENT_QUOTES, 'UTF-8');
 
 if ($utenteId >= 0) {
-    $modificaPrestitoDisplay = 'style="display:none;"';
+    $modificaPrestitoDisplay = 'class="none"';
     $prestitoEn = [
         '[PRESTITO_IN_MODIFICA_ID]' => '',
         '[UTENTE_ID]' => htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8'),
@@ -73,7 +73,7 @@ if ($utenteId >= 0) {
     
     if (empty($prestiti)) {
         $emptyPrestitiMessage = '';
-        $tableDisplay = 'style="display:none;"';
+        $tableDisplay = 'class="none"';
     } else {
         foreach ($prestiti as $prestito) {
             $id = htmlspecialchars((string) $prestito['id'], ENT_QUOTES, 'UTF-8');
@@ -94,15 +94,15 @@ if ($utenteId >= 0) {
             $statoPrestito = $statoRaw;
 
             // Link-based actions for modify/delete (dedicated pages)
-            $modificaLink = '<a href="modifica-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '">Modifica</a>';
-            $eliminaLink = '<a href="elimina-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '">Elimina</a>';
+            $modificaLink = '<a class="table-action" href="modifica-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '">Modifica</a>';
+            $eliminaLink = '<a class="table-action" href="elimina-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '">Elimina</a>';
 
             // Actions that require POST remain as inline form (concludi/proroga)
             $postActions = '';
             if ($statoPrestito === 'attivo') {
-                $postActions = '<button type="submit" name="azione" value="concludi">Concludi</button> <button type="submit" name="azione" value="proroga">Proroga</button>';
+                $postActions = '<button class="table-action" type="submit" name="azione" value="concludi">Concludi</button> <button class="table-action" type="submit" name="azione" value="proroga">Proroga</button>';
             } elseif ($statoPrestito === 'in_ritardo') {
-                $postActions = '<button type="submit" name="azione" value="concludi">Concludi</button>';
+                $postActions = '<button class="table-action" type="submit" name="azione" value="concludi">Concludi</button>';
             }
 
             $tableRows .= strtr($rowTemplate, [
@@ -112,7 +112,7 @@ if ($utenteId >= 0) {
                 '[STATO]' => $stato,
                 '[INIZIO]' => $inizio,
                 '[FINE]' => $fine,
-                '[AZIONI]' => $modificaLink . ' | ' . $eliminaLink . '<form method="post" style="display:inline; margin-left:0.5rem;"><input type="hidden" name="prestito_id" value="' . $id . '"><input type="hidden" name="utente_id" value="' . $utenteIdSafe . '"><input type="hidden" name="cerca" value="' . $cercaSafe . '">' . $postActions . '</form>',
+                '[AZIONI]' => $modificaLink . '  ' . $eliminaLink . '<form method="post" style="display:inline; margin-left:0.5rem;"><input type="hidden" name="prestito_id" value="' . $id . '"><input type="hidden" name="utente_id" value="' . $utenteIdSafe . '"><input type="hidden" name="cerca" value="' . $cercaSafe . '">' . $postActions . '</form>',
             ]) . "\n";
         }
     }
@@ -134,8 +134,8 @@ if ($utenteId >= 0) {
         '[SEARCH_FORM]' => $searchForm,
         '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
-        '[PRESTITI_CONTENT_DISPLAY]' => 'style="display:none;"',
-        '[MODIFICA_PRESTITO_DISPLAY]' => 'style="display:none;"',
+        '[PRESTITI_CONTENT_DISPLAY]' => 'class="none"',
+        '[MODIFICA_PRESTITO_DISPLAY]' => 'class="none"',
         '[PRESTITO_IN_MODIFICA_ID]' => '',
         '[UTENTE_ID]' => '',
         '[DATA_INIZIO]' => '',
@@ -144,7 +144,7 @@ if ($utenteId >= 0) {
         '[LIBRO_ID]' => '',
         '[NUOVO_UTENTE_ID]' => '',
         '[EMPTY_PRESTITI_MESSAGE]' => '',
-        '[TABLE_DISPLAY]' => 'style="display:none;"',
+        '[TABLE_DISPLAY]' => 'class="none"',
         '[TABLE_ROWS]' => '',
         '[PAGINATION]' => $pagination,
     ]);

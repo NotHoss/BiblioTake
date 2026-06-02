@@ -5,13 +5,20 @@
 }
 
 :root{
-    --bgcolor:#5B4B9E; /*colore background sito*/
+    --bgcolor:#6E6FA8; /*colore background sito*/
     --txtcolor:#FFFAF5; /*colore testo sopra background sito*/
-    --breadcolor:#A836F4; /*colore accento (bottoni, focus, hover, tag)*/
-    --breadbgcolor:#4E4090; /*colore background breadcrumb*/
+    --focuscolor:#000; /*colore accento (bottoni, focus, hover, tag)*/
+    --breadbgcolor:#A836F4; /*colore background breadcrumb*/
+    --txtlinkcolor:#000; /*colore link sopra background sito/breadcrumb*/
+    --txtlinkvisited:#A836F4;
     --linkcolor:#FFFAF5; /*colore link sopra background sito/breadcrumb*/
+    --linkvisited:#000;
+    --hovercolor:#616294;
+    --bordercolor:#000;
+    --eventablecolor:#EBFFFE;
     --contentbgcolor:#FFFAF5; /*colore background contenuto*/
     --contenttxtcolor:#000; /*colore testo sopra background contenuto*/
+    --shadowcolor:rgba(62, 62, 107, 0.18);
 }
 
 html, body{ 
@@ -30,9 +37,79 @@ body{
     min-height: 100vh;
 }
 
+.none,
+table caption {
+  display: none;
+}
+
+.hidden{
+    position: absolute;
+    left: -9999rem;
+    font-size: 1px;
+}
+
 /*
 ==========================
-SEZIONE HEADER
+SEZIONE LINK
+==========================
+*/
+.skip-link{
+    position: absolute;
+    left: -9999em;
+    top: 0;
+    background: var(--bgcolor);
+    color: var(--txtcolor);
+    padding: 0.5em 1.2em;
+    z-index: 100;
+    font-weight: bold;
+    border-radius: 0 0 0.3em 0;
+}
+
+.skip-link:focus{
+    left: 0;
+}
+
+a {
+  color: var(--linkcolor);
+  text-decoration: underline;
+}
+
+a:visited {
+  color: var(--linkvisited);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/*Accessibilità - FOCUS    (permette navigazione con tab)*/
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus{
+    outline: 3px solid var(--focuscolor);
+    outline-offset: 2px;
+}
+
+/*Link nel contenuto*/
+main a:link{
+    color: var(--txtlinkcolor);
+    /*text-decoration: underline;*/
+}
+
+main a:visited{
+    color: var(--txtlinkvisited);
+}
+
+main a:hover,
+main a:focus{
+    color: var(--focuscolor);
+}
+
+/*
+==========================
+HEADER
 ==========================
 */
 
@@ -48,181 +125,6 @@ header h1{
     line-height: 1.4em;
     margin-top: 0.3em;
     letter-spacing: 0.02em;
-}
-
-/*
-==========================
-SEZIONE MENU´ (non usato - nav e' dentro header)
-==========================
-*/
-
-/*
-==========================
-SEZIONE MAIN
-==========================
-*/
-
-main{
-    background-color: var(--contentbgcolor);
-    color: var(--contenttxtcolor);
-    padding: 2em 4%;
-    max-width: 1400px;
-    margin: 0 auto;
-    width: 100%;
-    flex-grow: 1;
-}
-
-main h1{
-    text-align: center;
-    line-height: 1.5em;
-}
-
-main h2{
-    text-align: center;
-    line-height: 1.5em;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-}
-
-/*
-==========================
-SEZIONE BREADCRUMB
-==========================
-*/
-
-/*#breadcrumb non usato - la breadcrumb reale usa classe .breadcrumb*/
-
-
-/*
-==========================
-ESEMPIO SEZIONE ATLETI laboratorio: per capire come organizzare le sezioni come catalogo, prestiti, recensioni ecc.
-==========================
-
-.atleti>dl{
-    border: 1px solid #000;
-    margin-bottom: 1em;
-    padding-top: 1em;
-    padding-bottom: 1em;
-}
-
-.atleti>dt{
-    background-color: var(--breadcolor);
-    color: var(--txtcolor);
-    padding: 0.5em;
-    font-size: 1.1em;
-}
-
-.atleti>dd img{
-    width: 20%;
-    float: left;
-    padding-right: 1.5em;
-    padding-left: 0.5em;
-    padding-top: 0.5em;
-    display: block;
-
-}
-
-.atleta dt{
-    font-weight: bold;
-    float: left;
-    padding-right: 0.5em;
-}
-
-.atleta dt::after{
-    content: ":";
-}
-
-.atleta dd{
-    margin-left: 25%;
-}
-
-dt.riconoscimenti{
-    float: none;
-    margin-left: 25%;
-}
-
-.atleta li{
-    list-style-type: none;
-    background-image: url("materiale/images/palla.png");
-    background-position: left center;
-    background-size: 1.2em;
-    background-repeat: no-repeat;
-    padding-left: 1.5em;
-}
-*/
-
-/*
-==========================
-SEZIONE FOOTER
-==========================
-*/
-
-footer{
-    background-color: var(--bgcolor);
-    color: var(--txtcolor);
-    text-align: center;
-    font-size: 0.8em;
-    padding: 1.2em;
-}
-
-footer img{
-    margin-right: 1em;
-    margin-left: 1em;
-    margin-bottom: 0.7em;
-    vertical-align: middle;
-}
-
-footer p{
-    font-style: italic;
-    display: inline;
-}
-
-footer ul{
-    list-style-type: none;
-    padding: 0.5em 0;
-}
-
-footer ul li{
-    display: inline;
-    margin: 0 0.3em;
-}
-
-/*
-==========================
-SKIP LINK
-==========================
-*/
-
-.skip-link{
-    position: absolute;
-    left: -9999em;
-    top: 0;
-    background: var(--breadcolor);
-    color: var(--txtcolor);
-    padding: 0.5em 1.2em;
-    z-index: 100;
-    font-weight: bold;
-    border-radius: 0 0 0.3em 0;
-}
-
-.skip-link:focus{
-    left: 0;
-}
-
-/*
-==========================
-ACCESSIBILITA' - FOCUS    (permette navigazione con tab)
-==========================
-*/
-
-
-a:focus,
-button:focus,
-input:focus,
-select:focus,
-textarea:focus{
-    outline: 3px solid var(--breadcolor);
-    outline-offset: 2px;
 }
 
 /*
@@ -260,13 +162,13 @@ header nav a:visited{
 
 header nav a:hover,
 header nav a:focus{
-    background: rgba(255, 255, 255, 0.18);
+    background:var(--hovercolor);
     text-decoration: underline;
 }
 
 .current-page{
     font-weight: bold;
-    background: rgba(255, 255, 255, 0.12);
+    background: var(--hovercolor);
     padding: 0.4em 0.7em;
     border-radius: 0.3em;
     border-bottom: 2px solid var(--txtcolor);
@@ -274,10 +176,9 @@ header nav a:focus{
 
 /*
 ==========================
-BREADCRUMB (classe .breadcrumb)
+BREADCRUMB
 ==========================
 */
-
 .breadcrumb{
     background-color: var(--breadbgcolor);
     color: var(--txtcolor);
@@ -300,8 +201,12 @@ BREADCRUMB (classe .breadcrumb)
 }
 
 .breadcrumb a{
-    color: var(--linkcolor);
+    color: var(--txtcolor);
     text-decoration: none;
+}
+
+.breadcrumb a:visited {
+  color: var(--linkcolor);
 }
 
 .breadcrumb a:hover,
@@ -315,124 +220,137 @@ BREADCRUMB (classe .breadcrumb)
 
 /*
 ==========================
-LINK NEL CONTENUTO
+MAIN
 ==========================
 */
 
-main a:link{
-    color: #5B3E96;
-    text-decoration: underline;
-}
-
-main a:visited{
-    color: #4A2D78;
-}
-
-main a:hover,
-main a:focus{
-    color: #A836F4;
-}
-
-/*
-==========================
-FORM (solo pagine parte B)
-==========================
-*/
-
-#filtri-form label{
-    display: block;
-    font-weight: bold;
-    margin-bottom: 0.25em;
-    font-size: 0.95em;
-}
-
-#ricerca-rapida input[type="search"],
-#filtri-form input[type="search"],
-#filtri-form input[type="text"],
-#filtri-form input[type="number"],
-#filtri-form select{
+main{
+    background-color: var(--contentbgcolor);
+    color: var(--contenttxtcolor);
+    padding: 2em 4%;
+    max-width: 1400px;
+    margin: 0 auto;
     width: 100%;
-    padding: 0.55em 0.8em;
-    border: 2px solid #c5c5c5;
-    border-radius: 0.35em;
-    font-size: 1em;
-    font-family: inherit;
-    background: #fff;
-    color: #333;
-    line-height: 1.5;
-    min-height: 2.5em;
-    transition: border-color 0.2s;
+    flex-grow: 1;
 }
 
-#ricerca-rapida input:focus,
-#filtri-form input:focus,
-#filtri-form select:focus{
-    border-color: var(--breadcolor);
+main h1{
+    text-align: center;
+    line-height: 1.5em;
 }
 
-#filtri-form input[type="checkbox"]{
-    width: 1.5em;
-    height: 1.5em;
-    vertical-align: middle;
-    margin-right: 0.4em;
-    accent-color: var(--breadcolor);
-}
-
-#ricerca-rapida button,
-#filtri-form button{
-    display: inline-block;
-    padding: 0.55em 1.5em;
-    background: var(--breadcolor);
-    color: var(--txtcolor);
-    border: 2px solid transparent;
-    border-radius: 0.35em;
-    font-size: 1em;
-    font-family: inherit;
-    cursor: pointer;
-    min-height: 2.5em;
-    font-weight: bold;
-    letter-spacing: 0.02em;
-    transition: background 0.2s;
-}
-
-#ricerca-rapida button:hover,
-#filtri-form button:hover{
-    background: #9025D9;
+main h2{
+    text-align: center;
+    line-height: 1.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 /*
 ==========================
-TABELLE (solo pagine parte B)
+TABELLA
 ==========================
 */
-
-#info-libro table,
-#contatti table{
+table{
     width: 100%;
     border-collapse: collapse;
     margin: 1em 0;
 }
 
-#info-libro th,
-#info-libro td,
-#contatti th,
-#contatti td{
+th, td{
     padding: 0.65em 1em;
     text-align: left;
-    border-bottom: 1px solid #e8e3f0;
+    border-bottom: 1px solid var(--bgcolor);
 }
+
+table caption {
+  margin-bottom: 0.5rem;
+}
+
+table a:visited {
+  color: var(--txtlinkvisited);
+}
+
+/*Info libro - Contatti*/
 
 #info-libro th,
 #contatti th{
-    background: #f7f2fc;
+    background: var(--bgcolor);
     font-weight: bold;
-    color: #3D3E6B;
+    color: var(--contentbgcolor);
+    border-bottom: 1px solid var(--txtcolor);
+
 }
 
 #info-libro tbody tr:hover,
 #contatti tbody tr:hover{
-    background: #faf7fe;
+    background: var(--eventablecolor);
 }
+
+/*Gestione*/
+
+#gestione table thead th{
+  background-color: var(--bgcolor);
+  color: var(--txtcolor);
+}
+
+
+#gestione table th,
+#gestione table td {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border: 1px solid var(--bordercolor);
+  text-align: center;
+}
+
+#gestione table {
+  min-width: fit-content;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: var(--contentbgcolor);
+}
+
+#gestione table tr:nth-child(even){
+  background-color: var(--eventablecolor);
+}
+
+#gestione table tr:nth-child(odd) {
+  background-color: var(--contentbgcolor);
+}
+
+.table-action{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45em 0.9em;
+    margin: 0 0.5em 0.5em 0;
+    min-height: 2.5em;
+    border: 1px solid var(--breadbgcolor);
+    border-radius: 0.35em;
+    background: var(--contentbgcolor);
+    color: var(--txtlinkcolor);
+    text-decoration: none;
+    font-size: 0.9em;
+    line-height: 1.2;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.table-action:visited{
+    color: var(--txtlinkcolor);
+}
+
+.table-action:hover,
+.table-action:focus{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
+}
+
+button.table-action{
+    cursor: pointer;
+    font-family: inherit;
+}
+
 
 /*
 ==========================
@@ -469,6 +387,9 @@ SEZIONE HERO (Homepage)
 #ricerca-rapida{
     max-width: 28em;
     margin: 0 auto;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
     position: relative;
 }
 
@@ -477,26 +398,37 @@ SEZIONE HERO (Homepage)
     left: -9999em;
 }
 
+#ricerca-rapida > div:first-of-type{
+    flex: 1 1 auto;
+    margin-bottom: 0;
+}
+
 #ricerca-rapida input[type="search"]{
-    width: 72%;
-    float: left;
+    width: 100%;
+    float: none;
     border-radius: 0.35em 0 0 0.35em;
     border-right: none;
     min-height: 2.8em;
 }
 
+#ricerca-rapida .search-form-actions{
+    flex: 0 0 auto;
+    margin-top: 0;
+    display: flex;
+    align-items: stretch;
+}
+
 #ricerca-rapida button{
-    width: 28%;
-    float: left;
+    width: auto;
+    float: none;
     border-radius: 0 0.35em 0.35em 0;
     min-height: 2.8em;
     padding: 0.55em 0.5em;
+    margin-top: 0;
 }
 
 #ricerca-rapida::after{
-    content: "";
-    display: table;
-    clear: both;
+    content: none;
 }
 
 /*
@@ -511,7 +443,7 @@ main > article > section > h3{
     color: #3D3E6B;
     margin-bottom: 0.8em;
     padding-bottom: 0.35em;
-    border-bottom: 2px solid var(--breadcolor);
+    border-bottom: 2px solid var(--breadbgcolor);
 }
 
 /*
@@ -542,21 +474,21 @@ SEZIONE CATEGORIE (Homepage)
 #categorie a{
     display: block;
     padding: 0.4em 1.1em;
-    background: #f0e8f8;
-    color: #5B3E96;
+    background: var(--contentbgcolor);
+    color: var(--txtlinkcolor);
     text-decoration: none;
     border-radius: 1.5em;
-    border: 1px solid #d8cceb;
+    border: 1px solid var(--breadbgcolor) ;
     font-size: 0.9em;
     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 #categorie a:hover,
 #categorie a:focus{
-    background: var(--breadcolor);
+    background: var(--breadbgcolor);
     color: var(--txtcolor);
-    border-color: var(--breadcolor);
-    box-shadow: 0 2px 8px rgba(168, 54, 244, 0.25);
+    border-color: var(--breadbgcolor);
+    box-shadow: 0 2px 8px var(--shadowcolor);
 }
 
 /*
@@ -596,7 +528,7 @@ SEZIONE ULTIMI ARRIVI (Homepage)
 
 #ultimi-arrivi article:hover{
     box-shadow: 0 6px 20px rgba(62, 62, 107, 0.14);
-    border-color: var(--breadcolor);
+    border-color: var(--breadbgcolor);
     transform: translateY(-2px);
 }
 
@@ -607,26 +539,153 @@ SEZIONE ULTIMI ARRIVI (Homepage)
 
 #ultimi-arrivi h4 a{
     text-decoration: none;
-    color: #3D3E6B;
+    color: var(--contenttxtcolor);
     font-size: 1.05em;
 }
 
 #ultimi-arrivi h4 a:hover{
-    color: var(--breadcolor);
+    color: var(--breadbgcolor);
     text-decoration: underline;
 }
 
 #ultimi-arrivi article p{
     font-size: 0.88em;
-    color: #666;
+    color: var(--bordercolor);
     margin-bottom: 0.15em;
 }
 
 /*
 ==========================
-CATALOGO - FILTRI (aside)
+FORM
 ==========================
 */
+
+.form label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.25em;
+    font-size: 0.95em;
+}
+
+#ricerca-rapida input[type="search"],
+.form input[type="search"],
+.form input[type="text"],
+.form input[type="number"],
+.form input[type="email"],
+.form input[type="file"],
+.form input[type="datetime-local"],
+.form textarea,
+.form select{
+    width: 100%;
+    padding: 0.55em 0.8em;
+    border: 2px solid #c5c5c5;
+    border-radius: 0.35em;
+    font-size: 1em;
+    font-family: inherit;
+    background: #fff;
+    color: var(--contenttxtcolor);
+    line-height: 1.5;
+    min-height: 2.5em;
+    transition: border-color 0.2s;
+}
+
+#ricerca-rapida input:focus,
+#ricerca-rapida button:focus,
+.form input:focus,
+.form textarea:focus,
+.form select:focus{
+    border-color: var(--breadbgcolor);
+}
+
+.form input[type="checkbox"]{
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    margin-right: 0.4em;
+    accent-color: var(--breadbgcolor);
+}
+
+#ricerca-rapida button,
+.form button{
+    display: inline-block;
+    padding: 0.55em 1.5em;
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border: 2px solid transparent;
+    border-radius: 0.35em;
+    font-size: 1em;
+    font-family: inherit;
+    cursor: pointer;
+    min-height: 2.5em;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    transition: background 0.2s;
+}
+
+#ricerca-rapida button:hover,
+.form button:hover{
+    background: var(--breadbgcolor);
+}
+
+/*Admin*/
+
+.admin-form{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.25rem;
+}
+
+.admin-form > p{
+    margin: 0;
+}
+
+.admin-form > p:last-child{
+    grid-column: 1 / -1;
+}
+
+.admin-form > p:has(button),
+.admin-form > p:has(.button),
+.admin-form > p:has(a){
+    grid-column: 1 / -1;
+}
+
+.admin-form textarea{
+    min-height: 8rem;
+    resize: vertical;
+}
+
+.admin-form input[type="file"]{
+    padding: 0.35em 0;
+}
+
+/*
+==========================
+FILTRI (aside)
+==========================
+*/
+
+/*Catalogo*/
+
+.search-form > div{
+    margin-bottom: 1.2em;
+}
+
+.search-form button{
+    width: 100%;
+    margin-top: 0.3em;
+}
+
+.search-form-actions{
+    display: block;
+    text-align: center;
+    margin-top: 0.8em;
+    font-size: 0.9em;
+}
+
+.search-form-actions a{
+    display: inline-block;
+    margin-top: 0.6em;
+}
 
 #filtri-catalogo{
     float: left;
@@ -635,20 +694,45 @@ CATALOGO - FILTRI (aside)
     border-right: 2px solid #ece0f8;
 }
 
-#filtri-form > div{
-    margin-bottom: 1.2em;
+/*Admin*/
+
+.admin-search-form{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
-#filtri-form button{
-    width: 100%;
-    margin-top: 0.3em;
+.admin-search-form > div{
+    flex: 1 1 calc(50% - 0.5rem);
+    margin-bottom: 0;
 }
 
-#filtri-form > a{
-    display: block;
-    text-align: center;
-    margin-top: 0.8em;
-    font-size: 0.9em;
+.admin-search-form .search-form-actions{
+    flex: 1 1 100%;
+    margin-top: 0.3rem;
+}
+
+.admin-search-form .search-form-actions button,
+.admin-search-form .search-form-actions a{
+    width: auto;
+}
+
+.admin-search-form input[type="checkbox"]{
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.admin-search-form .compact-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    flex: 1 1 100%;
+    align-items: center;
+}
+
+.admin-search-form .compact-row > div{
+    flex: 1 1 calc(25% - 0.75rem);
+    min-width: 8rem;
 }
 
 /*
@@ -696,14 +780,14 @@ CARD LIBRO (catalogo + homepage)
     border: 1px solid #e5e0ee;
     border-radius: 0.5em;
     padding: 1em;
-    box-shadow: 0 2px 8px rgba(62, 62, 107, 0.07);
+    box-shadow: 0 2px 8px var(--shadowcolor);
     overflow: hidden;
     transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
 }
 
 .libro-card:hover{
-    box-shadow: 0 6px 20px rgba(62, 62, 107, 0.14);
-    border-color: var(--breadcolor);
+    box-shadow: 0 6px 20px var(--shadowcolor);
+    border-color: var(--breadbgcolor);
     transform: translateY(-2px);
 }
 
@@ -724,17 +808,17 @@ CARD LIBRO (catalogo + homepage)
 
 .libro-card h4 a{
     text-decoration: none;
-    color: #3D3E6B;
+    color: var(--bgcolor)
 }
 
 .libro-card h4 a:hover{
-    color: var(--breadcolor);
+    color: var(--breadbgcolor);
     text-decoration: underline;
 }
 
 .libro-card p{
     font-size: 0.85em;
-    color: #555;
+    color: var(--contenttxtcolor);
     margin-bottom: 0.15em;
     line-height: 1.5;
 }
@@ -769,9 +853,9 @@ nav[aria-label="Navigazione pagine risultati"] a{
     min-height: 2.5em;
     text-align: center;
     text-decoration: none;
-    border: 1px solid #d8cceb;
+    border: 1px solid var(--breadbgcolor);
     border-radius: 0.35em;
-    color: #5B3E96;
+    color: var(--bgcolor);
     background: #fff;
     line-height: 1.5;
     transition: background 0.2s, color 0.2s;
@@ -779,20 +863,20 @@ nav[aria-label="Navigazione pagine risultati"] a{
 
 nav[aria-label="Navigazione pagine risultati"] a:hover,
 nav[aria-label="Navigazione pagine risultati"] a:focus{
-    background: var(--breadcolor);
+    background: var(--breadbgcolor);
     color: var(--txtcolor);
-    border-color: var(--breadcolor);
+    border-color: var(--breadbgcolor);
 }
 
 nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"]{
     display: inline-block;
     padding: 0.4em 0.85em;
     min-width: 2.5em;
-    background: var(--breadcolor);
+    background: var(--breadbgcolor);
     color: var(--txtcolor);
     border-radius: 0.35em;
     font-weight: bold;
-    border: 1px solid var(--breadcolor);
+    border: 1px solid var(--breadbgcolor);
 }
 
 /*
@@ -806,7 +890,7 @@ DETTAGLIO LIBRO
 }
 
 #dettaglio-libro > h2{
-    color: #3D3E6B;
+    color: var(--contenttxtcolor);
     margin-bottom: 1em;
     font-size: 1.6em;
     letter-spacing: -0.01em;
@@ -819,14 +903,8 @@ DETTAGLIO LIBRO
     margin-right: 2em;
     margin-bottom: 1em;
     border-radius: 0.5em;
-    box-shadow: 0 6px 20px rgba(62, 62, 107, 0.18);
+    box-shadow: 0 6px 20px var(--shadowcolor);
     border: 1px solid #e5e0ee;
-}
-
-#info-libro caption,
-#contatti caption{
-    position: absolute;
-    left: -9999em;
 }
 
 #info-libro{
@@ -879,20 +957,20 @@ DESCRIZIONE, TAG, AZIONI
 #tag-libro a{
     display: block;
     padding: 0.3em 0.9em;
-    background: #f0e8f8;
-    color: #5B3E96;
+    background: var(--contentbgcolor);
+    color: var(--contenttxtcolor);
     text-decoration: none;
     border-radius: 1.5em;
-    border: 1px solid #d8cceb;
+    border: 1px solid var(--breadbgcolor) ;
     font-size: 0.85em;
     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 #tag-libro a:hover,
 #tag-libro a:focus{
-    background: var(--breadcolor);
+    background: var(--breadbgcolor);
     color: var(--txtcolor);
-    box-shadow: 0 2px 8px rgba(168, 54, 244, 0.25);
+    box-shadow: 0 2px 8px var(--shadowcolor);
 }
 
 #azioni-libro p{
@@ -903,7 +981,7 @@ DESCRIZIONE, TAG, AZIONI
 #azioni-libro a{
     display: inline-block;
     padding: 0.6em 1.5em;
-    background: var(--breadcolor);
+    background: var(--breadbgcolor);
     color: var(--txtcolor);
     text-decoration: none;
     border-radius: 0.35em;
@@ -914,8 +992,8 @@ DESCRIZIONE, TAG, AZIONI
 
 #azioni-libro a:hover,
 #azioni-libro a:focus{
-    background: #9025D9;
-    box-shadow: 0 3px 10px rgba(168, 54, 244, 0.3);
+    background: var(--breadbgcolor);
+    box-shadow: 0 3px 10px var(--shadowcolor);;
 }
 
 /*
@@ -943,7 +1021,7 @@ RECENSIONI LIBRO
     border: 1px solid #e5e0ee;
     border-radius: 0.5em;
     padding: 1.2em 1.4em;
-    box-shadow: 0 1px 5px rgba(62, 62, 107, 0.06);
+    box-shadow: 0 1px 5px var(--shadowcolor);;
 }
 
 .recensione-card header{
@@ -964,7 +1042,7 @@ RECENSIONI LIBRO
 }
 
 .recensione-card header p:first-child{
-    color: #3D3E6B;
+    color: var(--contenttxtcolor);
 }
 
 .recensione-card > p{
@@ -1003,7 +1081,7 @@ CHI SIAMO
     content: "\2713";
     position: absolute;
     left: 0;
-    color: var(--breadcolor);
+    color: var(--breadbgcolor);
     font-weight: bold;
     font-size: 1.1em;
 }
@@ -1022,10 +1100,46 @@ CONTATTI
     max-width: 35em;
 }
 
-#contatti a{
-    color: #5B3E96;
+#contatti a:hover{
+    color: var(--breadbgcolor);
 }
 
-#contatti a:hover{
-    color: var(--breadcolor);
+/*
+==========================
+SEZIONE FOOTER
+==========================
+*/
+
+footer{
+    background-color: var(--bgcolor);
+    color: var(--txtcolor);
+    text-align: center;
+    font-size: 0.8em;
+    padding: 1.2em;
+}
+
+footer a{
+    color: var(--bgcolor);
+}
+
+footer img{
+    margin-right: 1em;
+    margin-left: 1em;
+    margin-bottom: 0.7em;
+    vertical-align: middle;
+}
+
+footer p{
+    font-style: italic;
+    display: inline;
+}
+
+footer ul{
+    list-style-type: none;
+    padding: 0.5em 0;
+}
+
+footer ul li{
+    display: inline;
+    margin: 0 0.3em;
 }

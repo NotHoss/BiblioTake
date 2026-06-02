@@ -1,55 +1,50 @@
 <h1>Gestione libri</h1>
 <p><a href="aggiungi-libro.php">Aggiungi nuovo libro</a></p>
 
-<div id="catalogo-layout">
-    <aside id="filtri-catalogo">
-        <h3>Filtra i risultati</h3>
-        [SEARCH_FORM]
-    </aside>
+<aside>
+    <h3>Filtra i risultati</h3>
+    [SEARCH_FORM]
+</aside>
 
-    <section id="risultati-catalogo">
-        [RESULTS_INFO]
+<section>
+    [RESULTS_INFO]
 
-        [MESSAGES]
+    [MESSAGES]
 
-        [EMPTY_MESSAGE]
+    [EMPTY_MESSAGE]
 
-        <p id="libri-table-summary" class="skip-link">Questa tabella elenca i libri gestiti dall'amministrazione con identificativo, ISBN, titolo, autore, anno, categoria, tag, stato del libro e azioni disponibili.</p>
-        <div [TABLE_DISPLAY]>
+<p id="libri-table-summary" class="hidden">Questa tabella elenca i libri gestiti dall'amministrazione con ISBN, titolo, autore, anno, categoria, stato del libro e azioni disponibili.</p>
+<section id="gestione" [TABLE_DISPLAY]>
             <table aria-describedby="libri-table-summary">
                 <caption>Elenco libri</caption>
                 <thead>
                     <tr>
-                        <th scope="col" abbr="identificativo">ID</th>
-                        <th scope="col" abbr="">ISBN</th>
+                        <th scope="col">ISBN</th>
                         <th scope="col">Titolo</th>
                         <th scope="col">Autore</th>
                         <th scope="col">Anno</th>
                         <th scope="col">Categoria</th>
-                        <th scope="col">Tags</th>
                         <th scope="col">Stato libro</th>
                         <th scope="col">Azioni</th>
                     </tr>
                 </thead>
                 <tbody>
-<!-- ROW_TEMPLATE_START -->
+    <!-- ROW_TEMPLATE_START -->
                     <tr>
-                        <th scope="row">[ID]</th>
                         <td>[ISBN]</td>
                         <td>[TITOLO]</td>
                         <td>[AUTORE]</td>
                         <td>[ANNO]</td>
                         <td>[CATEGORIA]</td>
-                        <td>[TAGS]</td>
                         <td>[STATO_LIBRO]</td>
                         <td>[AZIONI]</td>
                     </tr>
-<!-- ROW_TEMPLATE_END -->
+    <!-- ROW_TEMPLATE_END -->
                     [TABLE_ROWS]
                 </tbody>
             </table>
-        </div>
+        </section>
 
-        [PAGINATION]
-    </section>
-</div>
+    [PAGINATION]
+</section>
+

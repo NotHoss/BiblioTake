@@ -1,72 +1,71 @@
-<h1>Gestione prestiti</h1>
-<p><a href="utenti.php">Torna agli utenti</a></p>
+<h1 class="section-heading">Gestione prestiti</h1>
+<p><a class="button button-link" href="utenti.php">Torna agli utenti</a></p>
 
-<div id="catalogo-layout">
-    <aside id="filtri-catalogo">
-        <h3>Filtra i risultati</h3>
-        [SEARCH_FORM]
-    </aside>
+<aside>
+    <h3>Filtra i risultati</h3>
+    [SEARCH_FORM]
+</aside>
 
-    <section id="risultati-catalogo">
-        [RESULTS_INFO]
+<section>
+    [RESULTS_INFO]
+ 
+    [MESSAGES]
 
-        [MESSAGES]
+    <section [PRESTITI_CONTENT_DISPLAY]>
+        <article [MODIFICA_PRESTITO_DISPLAY]>
+            <h2>Modifica prestito #[PRESTITO_IN_MODIFICA_ID]</h2>
+            <form method="post" class="content-form">
+                <input type="hidden" name="azione" value="salva_modifica">
+                <input type="hidden" name="prestito_id" value="[PRESTITO_IN_MODIFICA_ID]">
+                <input type="hidden" name="utente_id" value="[UTENTE_ID]">
 
-        <div [PRESTITI_CONTENT_DISPLAY]>
-            <div [MODIFICA_PRESTITO_DISPLAY]>
-                <h2>Modifica prestito #[PRESTITO_IN_MODIFICA_ID]</h2>
-                <form method="post">
-                    <input type="hidden" name="azione" value="salva_modifica">
-                    <input type="hidden" name="prestito_id" value="[PRESTITO_IN_MODIFICA_ID]">
-                    <input type="hidden" name="utente_id" value="[UTENTE_ID]">
-
-                    <p>
-                        <label>Data inizio
-                            <input
-                                type="datetime-local"
-                                name="data_inizio"
-                                value="[DATA_INIZIO]"
-                                required
-                            >
-                        </label>
-                    </p>
-                    <p>
-                        <label>Data fine
-                            <input
-                                type="datetime-local"
-                                name="data_fine"
-                                value="[DATA_FINE]"
-                                required
-                            >
-                        </label>
-                    </p>
-                    <p>
-                        <label>Stato
-                            <select name="stato" required>
-                                [STATO_OPTIONS]
-                            </select>
-                        </label>
-                    </p>
-                    <p>
-                        <label>Libro ID
-                            <input type="number" name="libro_id" min="1" value="[LIBRO_ID]" required>
-                        </label>
-                    </p>
-                    <p>
-                        <label>Utente ID
-                            <input type="number" name="nuovo_utente_id" min="1" value="[NUOVO_UTENTE_ID]" required>
-                        </label>
-                    </p>
-                    <p><button type="submit">Aggiorna prestito</button></p>
-                </form>
-                <hr>
-            </div>
+                <p>
+                    <label>Data inizio
+                        <input
+                            type="datetime-local"
+                            name="data_inizio"
+                            value="[DATA_INIZIO]"
+                            required
+                        >
+                    </label>
+                </p>
+                <p>
+                    <label>Data fine
+                        <input
+                             type="datetime-local"
+                             name="data_fine"
+                             value="[DATA_FINE]"
+                             required
+                        >
+                    </label>
+                </p>
+                <p>
+                    <label>Stato
+                        <select name="stato" required>
+                            [STATO_OPTIONS]
+                        </select>
+                    </label>
+                </p>
+                <p>
+                    <label>Libro ID
+                        <input type="number" name="libro_id" min="1" value="[LIBRO_ID]" required>
+                    </label>
+                </p>
+                <p>
+                    <label>Utente ID
+                        <input type="number" name="nuovo_utente_id" min="1" value="[NUOVO_UTENTE_ID]" required>
+                    </label>
+                </p>
+                <p class="form-actions"><button type="submit" class="button">Aggiorna prestito</button></p>
+            </form>
+            
+            </article>
 
             [EMPTY_PRESTITI_MESSAGE]
 
-            <p id="prestiti-table-summary" class="skip-link">Questa tabella elenca i prestiti con identificativo, nome utente, libro, stato, data di inizio, data di fine e azioni disponibili.</p>
-            <div [TABLE_DISPLAY]>
-                <table aria-describedby="prestiti-table-summary">
+            <p id="prestiti-table-summary" class="hidden">Questa tabella elenca i prestiti con identificativo, nome utente, libro, stato, data di inizio, data di fine e azioni disponibili.</p>
+            <section id="gestione" [TABLE_DISPLAY]>
+                <table class="content-table" aria-describedby="prestiti-table-summary">
                     <caption>Elenco prestiti</caption>
                     <thead>
                         <tr>
@@ -94,9 +93,9 @@
                             [TABLE_ROWS]
                     </tbody>
                 </table>
-            </div>
-        </div>
+            </section>
+        </section>
 
-        [PAGINATION]
-    </section>
-</div>
+    [PAGINATION]
+</section>
+

@@ -15,7 +15,7 @@ if (!$libro) {
     echo strtr($template, [
         '[MESSAGES]' => $messages,
         '[NOT_FOUND_MESSAGE]' => '<p>Libro non trovato.</p>',
-        '[FORM_DISPLAY]' => 'style="display:none;"',
+        '[FORM_DISPLAY]' => 'class="none"',
         '[TITOLO]' => '',
         '[WARNING_MESSAGE]' => '',
         '[LIBRO_ID]' => '',

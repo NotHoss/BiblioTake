@@ -35,8 +35,8 @@ foreach (($tagsDisponibili ?? []) as $tag) {
 
 $searchForm = renderSearchForm([
     'action' => 'libri.php',
-    'class' => 'admin-search-form',
-    'submitLabel' => 'Filtra',
+    'class' => 'form admin-search-form',
+    'submitLabel' => 'Applica filtri',
     'resetHref' => 'libri.php',
     'fields' => [
         [
@@ -44,7 +44,7 @@ $searchForm = renderSearchForm([
             'name' => 'cerca',
             'label' => 'Cerca',
             'value' => (string) ($filtri['cerca'] ?? ''),
-            'placeholder' => 'ID, ISBN o titolo del libro',
+            'placeholder' => 'ISBN o titolo del libro',
         ],
         [
             'type' => 'text',
@@ -56,6 +56,7 @@ $searchForm = renderSearchForm([
             'type' => 'select',
             'name' => 'categoria',
             'label' => 'Categoria',
+            'group_start' => true,
             'selected' => (string) ($filtri['categoria'] ?? ''),
             'options' => $opzioniCategoria,
         ],
@@ -78,6 +79,7 @@ $searchForm = renderSearchForm([
             'type' => 'select',
             'name' => 'stato_libri',
             'label' => 'Stato libro',
+            'group_end' => true,
             'selected' => (string) ($filtri['stato_libri'] ?? 'tutti'),
             'options' => [
                 'tutti' => 'Tutti',
@@ -97,7 +99,7 @@ if ($totalLibri === 0) {
     $resultsInfo = '<p>Mostrati ' . $start . '-' . $end . ' di ' . $totalLibri . ' libri.</p>';
 }
 
-$pagination = renderPagination('libri.php', $filtri, $pagina, $totalPagine, 'Paginazione libri');
+$pagination = renderPagination('libri.php', $filtri, $pagina, $totalPagine, 'Navigazione pagine risultati', 'Pagina precedente', 'Pagina successiva');
 
 // List mode only — create/edit/delete moved to dedicated views
 $template = file_get_contents(__DIR__ . '/../html/admin/showLibriAdmin.html');
@@ -111,7 +113,7 @@ if (empty($libri)) {
         '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
         '[EMPTY_MESSAGE]' => '',
-        '[TABLE_DISPLAY]' => 'style="display:none;"',
+        '[TABLE_DISPLAY]' => 'class="none"',
         '[TABLE_ROWS]' => '',
         '[PAGINATION]' => $pagination,
     ]);
@@ -123,30 +125,25 @@ foreach ($libri as $libroRow) {
     $id = htmlspecialchars((string) $libroRow['id'], ENT_QUOTES, 'UTF-8');
     $prestitiAttivi = (int) ($libroRow['prestiti_attivi'] ?? 0);
     $prestiti = 'Disponibile';
-    $azioni = '<a href="modifica-libro.php?id=' . $id . '">Modifica libro</a> |
-        <a href="elimina-libro.php?id=' . $id . '">Elimina libro</a>';
+    $azioni = '<a class="table-action" href="modifica-libro.php?id=' . $id . '">Modifica</a> 
+        <a class="table-action" href="elimina-libro.php?id=' . $id . '">Elimina</a>';
     if ($prestitiAttivi > 0) {
         $prestiti = 'Prestato';
             $prestitoId = (int) ($libroRow['prestito_id'] ?? 0);
             if ($prestitoId > 0) {
                 $prestitoIdSafe = htmlspecialchars((string) $prestitoId, ENT_QUOTES, 'UTF-8');
-                $azioni = '<a href="prestiti-utente.php?prestito_id=' . $prestitoIdSafe . '">Vai al prestito</a>';
+                $azioni = '<a class="table-action" href="prestiti-utente.php?prestito_id=' . $prestitoIdSafe . '">Vai al prestito</a>';
             }
     }
 
-    $tagsArr = getTagsByLibroId($conn, (int) $libroRow['id']);
-    $tagsList = [];
-    foreach ($tagsArr as $t) { $tagsList[] = htmlspecialchars((string) $t['nome'], ENT_QUOTES, 'UTF-8'); }
-    $tagsHtml = implode(', ', $tagsList);
+    $isbn = htmlspecialchars((string) $libroRow['codice_isbn'], ENT_QUOTES, 'UTF-8');
 
     $tableRows .= strtr($rowTemplate, [
-        '[ID]' => $id,
-        '[ISBN]' => htmlspecialchars((string) $libroRow['codice_isbn'], ENT_QUOTES, 'UTF-8'),
+        '[ISBN]' => $isbn,
         '[TITOLO]' => htmlspecialchars((string) $libroRow['titolo'], ENT_QUOTES, 'UTF-8'),
         '[AUTORE]' => htmlspecialchars((string) $libroRow['autore'], ENT_QUOTES, 'UTF-8'),
         '[ANNO]' => htmlspecialchars((string) $libroRow['anno'], ENT_QUOTES, 'UTF-8'),
         '[CATEGORIA]' => htmlspecialchars((string) $libroRow['categoria'], ENT_QUOTES, 'UTF-8'),
-        '[TAGS]' => $tagsHtml,
         '[STATO_LIBRO]' => $prestiti,
         '[AZIONI]' => $azioni,
     ]) . "\n";

@@ -3,7 +3,7 @@ $adminViewMode = $adminViewMode ?? 'list';
 
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = '<span>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</span>';
 }
 $successMsg = '';
 if (!empty($message)) {
@@ -19,7 +19,7 @@ $resultsPerPage = isset($resultsPerPage) ? (int) $resultsPerPage : 10;
 
 $searchForm = renderSearchForm([
     'action' => 'utenti.php',
-    'class' => 'admin-search-form',
+    'class' => 'form admin-search-form',
     'submitLabel' => 'Filtra',
     'resetHref' => 'utenti.php',
     'fields' => [
@@ -53,7 +53,7 @@ if ($totalUtenti === 0) {
     $resultsInfo = '<p>Mostrati ' . $start . '-' . $end . ' di ' . $totalUtenti . ' utenti.</p>';
 }
 
-$pagination = renderPagination('utenti.php', $filtri, $pagina, $totalPagine, 'Paginazione utenti');
+$pagination = renderPagination('utenti.php', $filtri, $pagina, $totalPagine, 'Navigazione pagine risultati', 'Pagina precedente', 'Pagina successiva');
 
 // The admin users page currently renders only the list view.
 $template = file_get_contents(__DIR__ . '/../html/admin/showUtentiAdmin.html');
@@ -67,7 +67,7 @@ if (empty($utenti)) {
         '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
         '[EMPTY_MESSAGE]' => '',
-        '[TABLE_DISPLAY]' => 'style="display:none;"',
+        '[TABLE_DISPLAY]' => 'class="none"',
         '[TABLE_ROWS]' => '',
         '[PAGINATION]' => $pagination,
     ]);
@@ -78,10 +78,10 @@ $tableRows = '';
 foreach ($utenti as $utente) {
     $azioni = [];
     if ((int) ($utente['prestiti_totali'] ?? 0) > 0) {
-        $azioni[] = '<a href="prestiti-utente.php?cerca=' . rawurlencode((string) $utente['username']) . '">Prestiti</a>';
+        $azioni[] = '<a class="table-action" href="prestiti-utente.php?cerca=' . rawurlencode((string) $utente['username']) . '">Prestiti</a>';
     }
     if ((int) ($utente['recensioni_totali'] ?? 0) > 0) {
-        $azioni[] = '<a href="recensioni.php?cerca=' . rawurlencode((string) $utente['username']) . '">Recensioni</a>';
+        $azioni[] = '<a class="table-action" href="recensioni.php?cerca=' . rawurlencode((string) $utente['username']) . '">Recensioni</a>';
     }
     $tableRows .= strtr($rowTemplate, [
         '[USERNAME]' => htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8'),
@@ -90,7 +90,7 @@ foreach ($utenti as $utente) {
         '[PRESTITI_ATTIVI]' => htmlspecialchars((string) ($utente['prestiti_attivi'] ?? 0), ENT_QUOTES, 'UTF-8'),
         '[RECENSIONI_TOTALI]' => htmlspecialchars((string) ($utente['recensioni_totali'] ?? 0), ENT_QUOTES, 'UTF-8'),
         '[STATO]' => ((int) ($utente['attivo'] ?? 0) === 1) ? 'Attivo' : 'Non attivo',
-        '[AZIONI]' => empty($azioni) ? 'Nessuna azione disponibile' : implode(' | ', $azioni),
+        '[AZIONI]' => empty($azioni) ? 'Nessuna azione disponibile' : implode('  ', $azioni),
     ]) . "\n";
 }
 

@@ -2,7 +2,7 @@
 
 [MESSAGES]
 
-<form method="post">
+<form class="form admin-form" method="post">
     <input type="hidden" name="prestito_id" value="[PRESTITO_IN_MODIFICA_ID]">
     <p>[TESTO_MODIFICA]</p>
     <p>
@@ -13,6 +13,12 @@
             <input type="datetime-local" name="data_inizio" value="[DATA_INIZIO]" required>
         </label>
     </p>
+    <p>
+        <label>Data fine
+            <input type="datetime-local" name="data_fine" value="[DATA_FINE]" required>
+        </label>
+    </p>
+
     <p>
         <label>Stato
             <select name="stato" required>

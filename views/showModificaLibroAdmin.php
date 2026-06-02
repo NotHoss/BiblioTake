@@ -1,11 +1,11 @@
 <?php
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = '<span>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</span>';
 }
 $successMsg = '';
 if (!empty($successMessage)) {
-    $successMsg = '<div>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $successMsg = '<span>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</span>';
 }
 $messages = $errorMsg . $successMsg;
 
@@ -15,7 +15,7 @@ if (!$libro) {
     echo strtr($template, [
         '[MESSAGES]' => $messages,
         '[NOT_FOUND_MESSAGE]' => '<p>Libro non trovato.</p>',
-        '[FORM_DISPLAY]' => 'style="display:none;"',
+        '[FORM_DISPLAY]' => 'class="none"',
         '[LIBRO_ID]' => '',
         
         '[CODICE_ISBN]' => '',
