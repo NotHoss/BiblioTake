@@ -808,7 +808,7 @@ CARD LIBRO (catalogo + homepage)
 
 .libro-card h4 a{
     text-decoration: none;
-    color: var(--bgcolor)
+    color: var(--contenttxtcolor)
 }
 
 .libro-card h4 a:hover{
