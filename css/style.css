@@ -366,6 +366,54 @@ button.table-action{
     font-family: inherit;
 }
 
+.admin-page-actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 0 1rem;
+    flex-wrap: wrap;
+}
+
+.admin-page-actions-single{
+    justify-content: flex-start;
+}
+
+.admin-page-actions .button-link,
+.admin-page-actions .admin-return-link,
+.admin-page-actions .admin-primary-link{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.45rem;
+    border: 2px solid var(--breadbgcolor);
+    background: var(--contentbgcolor);
+    color: var(--txtlinkcolor);
+    text-decoration: none;
+    font-weight: 700;
+    line-height: 1.2;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.admin-page-actions .admin-primary-link{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+}
+
+.admin-page-actions .button-link:hover,
+.admin-page-actions .button-link:focus,
+.admin-page-actions .admin-return-link:hover,
+.admin-page-actions .admin-return-link:focus,
+.admin-page-actions .admin-primary-link:hover,
+.admin-page-actions .admin-primary-link:focus{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
+    transform: translateY(-1px);
+}
+
 /* Container wrapper when `.table-action` is used as a wrapper div */
 div.table-action{
     display: flex;
@@ -458,7 +506,7 @@ SEZIONE HERO (Homepage)
 #ricerca-rapida button{
     width: auto;
     float: none;
-    border-radius: 0 0.35em 0.35em 0;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
     min-height: 2.8em;
     padding: 0.55em 0.5em;
     margin-top: 0;
@@ -468,6 +516,14 @@ SEZIONE HERO (Homepage)
     content: none;
 }
 
+#ricerca-rapida button:hover,
+#ricerca-rapida button:focus,
+.form button:hover,
+.form button:focus,
+.form a:hover,
+.form a:focus{
+    transform: translateY(-1px);
+}
 /*
 ==========================
 TITOLI SEZIONE (h3 nelle pagine pubbliche)
@@ -752,6 +808,24 @@ FILTRI (aside)
 .search-form-actions a{
     display: inline-block;
     margin-top: 0.6em;
+}
+
+.search-form-actions button,
+.search-form-actions a,
+.admin-search-form .search-form-actions button,
+.admin-search-form .search-form-actions a{
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.search-form-actions button:hover,
+.search-form-actions button:focus,
+.search-form-actions a:hover,
+.search-form-actions a:focus,
+.admin-search-form .search-form-actions button:hover,
+.admin-search-form .search-form-actions button:focus,
+.admin-search-form .search-form-actions a:hover,
+.admin-search-form .search-form-actions a:focus{
+    transform: translateY(-1px);
 }
 
 #filtri-catalogo{
