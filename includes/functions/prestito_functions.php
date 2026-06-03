@@ -68,6 +68,47 @@ function formatDateTimeForInput($dbDatetime) {
     return $dt->format('Y-m-d\\TH:i');
 }
 
+function formatDateForAdminDisplay($dbDatetime) {
+    if (empty($dbDatetime)) {
+        return '';
+    }
+
+    $dt = DateTime::createFromFormat('Y-m-d H:i:s', $dbDatetime);
+    if ($dt === false) {
+        $ts = strtotime($dbDatetime);
+        if ($ts === false) {
+            return htmlspecialchars((string) $dbDatetime, ENT_QUOTES, 'UTF-8');
+        }
+        $dt = new DateTime('@' . $ts);
+        $dt->setTimezone(new DateTimeZone(date_default_timezone_get()));
+    }
+
+    $months = [
+        1 => ['Gen', 'Gennaio'],
+        2 => ['Feb', 'Febbraio'],
+        3 => ['Mar', 'Marzo'],
+        4 => ['Apr', 'Aprile'],
+        5 => ['Mag', 'Maggio'],
+        6 => ['Giu', 'Giugno'],
+        7 => ['Lug', 'Luglio'],
+        8 => ['Ago', 'Agosto'],
+        9 => ['Set', 'Settembre'],
+        10 => ['Ott', 'Ottobre'],
+        11 => ['Nov', 'Novembre'],
+        12 => ['Dic', 'Dicembre'],
+    ];
+
+    $monthIndex = (int) $dt->format('n');
+    $monthShort = $months[$monthIndex][0] ?? $dt->format('M');
+    $monthFull = $months[$monthIndex][1] ?? $dt->format('F');
+
+    return '<time datetime="' . htmlspecialchars($dt->format('Y-m-d H:i:s'), ENT_QUOTES, 'UTF-8') . '">' .
+        htmlspecialchars($dt->format('j'), ENT_QUOTES, 'UTF-8') . ' ' .
+        '<abbr title="' . htmlspecialchars($monthFull, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($monthShort, ENT_QUOTES, 'UTF-8') . '</abbr> ' .
+        htmlspecialchars($dt->format('Y'), ENT_QUOTES, 'UTF-8') .
+        '</time>';
+}
+
 function getPrestitiByUtente($conn, $utenteId) {
     $stmt = $conn->prepare(
         'SELECT p.id, p.data_inizio, p.data_fine, p.stato, l.titolo AS libro_titolo, l.autore

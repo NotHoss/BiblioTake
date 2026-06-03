@@ -87,8 +87,8 @@ if ($utenteId >= 0) {
                 'in_ritardo' => 'In ritardo',
                 'concluso' => 'Concluso',
             ][$statoRaw] ?? htmlspecialchars($statoRaw, ENT_QUOTES, 'UTF-8');
-            $inizio = htmlspecialchars((string) $prestito['data_inizio'], ENT_QUOTES, 'UTF-8');
-            $fine = htmlspecialchars((string) $prestito['data_fine'], ENT_QUOTES, 'UTF-8');
+            $inizio = formatDateForAdminDisplay($prestito['data_inizio']);
+            $fine = formatDateForAdminDisplay($prestito['data_fine']);
             $utenteIdSafe = htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8');
             
             $statoPrestito = $statoRaw;
@@ -100,19 +100,24 @@ if ($utenteId >= 0) {
             // Actions that require POST remain as inline form (concludi/proroga)
             $postActions = '';
             if ($statoPrestito === 'attivo') {
-                $postActions = '<button class="table-action" type="submit" name="azione" value="concludi">Concludi</button> <button class="table-action" type="submit" name="azione" value="proroga">Proroga</button>';
+                $postActions = '<div class="table-action-row"><button class="table-action" type="submit" name="azione" value="concludi">Concludi</button><button class="table-action" type="submit" name="azione" value="proroga">Proroga</button></div>';
             } elseif ($statoPrestito === 'in_ritardo') {
-                $postActions = '<button class="table-action" type="submit" name="azione" value="concludi">Concludi</button>';
+                $postActions = '<div class="table-action-row"><button class="table-action" type="submit" name="azione" value="concludi">Concludi</button></div>';
             }
+
+            $tableActions = '<div class="table-action">'
+                . '<div class="table-action-row">' . $modificaLink . $eliminaLink . '</div>'
+                . '<form class="table-action-form" method="post"><input type="hidden" name="prestito_id" value="' . $id . '"><input type="hidden" name="utente_id" value="' . $utenteIdSafe . '"><input type="hidden" name="cerca" value="' . $cercaSafe . '">' . $postActions . '</form>'
+                . '</div>';
 
             $tableRows .= strtr($rowTemplate, [
                 '[ID]' => $id,
-                '[USERNAME]' => $usernameLink,
+                '[UTENTE]' => $usernameLink,
                 '[LIBRO]' => $libroLink,
                 '[STATO]' => $stato,
                 '[INIZIO]' => $inizio,
                 '[FINE]' => $fine,
-                '[AZIONI]' => $modificaLink . '  ' . $eliminaLink . '<form method="post" style="display:inline; margin-left:0.5rem;"><input type="hidden" name="prestito_id" value="' . $id . '"><input type="hidden" name="utente_id" value="' . $utenteIdSafe . '"><input type="hidden" name="cerca" value="' . $cercaSafe . '">' . $postActions . '</form>',
+                '[AZIONI]' => $tableActions,
             ]) . "\n";
         }
     }

@@ -5,11 +5,17 @@
 [NOT_FOUND_MESSAGE]
 
 <div [FORM_DISPLAY]>
-    <p>Stai per eliminare: <strong>[TITOLO]</strong></p>
-    [WARNING_MESSAGE]
-    <form method="post">
+    <form class="form admin-form" method="post">
         <input type="hidden" name="id" value="[LIBRO_ID]">
-        
-        <p><button type="submit">Conferma eliminazione</button> <a href="libri.php">Annulla</a></p>
+        <fieldset>
+            <legend>Conferma eliminazione</legend>
+            <p>Stai per eliminare il libro seguente.</p>
+            [SUMMARY]
+            [WARNING_MESSAGE]
+        </fieldset>
+        <fieldset>
+            <legend>Azioni</legend>
+            <p><button type="submit">Conferma eliminazione</button> <a href="libri.php">Annulla</a></p>
+        </fieldset>
     </form>
 </div>

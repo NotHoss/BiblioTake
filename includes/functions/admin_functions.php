@@ -311,6 +311,132 @@ function buildAdminUtentiFilterParts(array $filtri) {
     ];
 }
 
+function validateBibliotecaAdminData(array $input) {
+    $data = [
+        'indirizzo' => '',
+        'telefono' => '',
+        'email' => '',
+        'note' => '',
+        'orario_lun_ven' => '',
+        'orario_sabato' => '',
+        'orario_domenica' => '',
+    ];
+    $errors = [];
+
+    $capitalizeFirst = static function ($value) {
+        $value = trim(preg_replace('/\s+/u', ' ', (string) $value));
+        if ($value === '') {
+            return '';
+        }
+
+        $firstChar = mb_substr($value, 0, 1, 'UTF-8');
+        $rest = mb_substr($value, 1, null, 'UTF-8');
+
+        return mb_strtoupper($firstChar, 'UTF-8') . $rest;
+    };
+
+    $indirizzo = $capitalizeFirst($input['indirizzo'] ?? '');
+    if ($indirizzo === '') {
+        $errors[] = 'Indirizzo obbligatorio.';
+    } elseif (mb_strlen($indirizzo, 'UTF-8') > 100) {
+        $errors[] = 'Indirizzo troppo lungo (max 100 caratteri).';
+    } else {
+        $data['indirizzo'] = $indirizzo;
+    }
+
+    $telefono = trim((string) ($input['telefono'] ?? ''));
+    if ($telefono === '') {
+        $errors[] = 'Telefono obbligatorio.';
+    } elseif (mb_strlen($telefono, 'UTF-8') > 20 || !preg_match('/^[0-9 +()\-\/]{6,20}$/', $telefono)) {
+        $errors[] = 'Telefono non valido.';
+    } else {
+        $data['telefono'] = $telefono;
+    }
+
+    $email = strtolower(trim((string) ($input['email'] ?? '')));
+    if ($email === '') {
+        $errors[] = 'Email obbligatoria.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email, 'UTF-8') > 255) {
+        $errors[] = 'Email non valida.';
+    } else {
+        $data['email'] = $email;
+    }
+
+    $note = trim((string) ($input['note'] ?? ''));
+    if ($note !== '') {
+        if (mb_strlen($note, 'UTF-8') > 500) {
+            $errors[] = 'Note troppo lunghe (max 500 caratteri).';
+        } else {
+            $data['note'] = $capitalizeFirst($note);
+        }
+    }
+
+    foreach (['orario_lun_ven', 'orario_sabato', 'orario_domenica'] as $campoOrario) {
+        $valore = trim((string) ($input[$campoOrario] ?? ''));
+        if ($valore === '') {
+            $errors[] = ucfirst(str_replace('_', ' ', $campoOrario)) . ' obbligatorio.';
+        } elseif (mb_strlen($valore, 'UTF-8') > 100) {
+            $errors[] = ucfirst(str_replace('_', ' ', $campoOrario)) . ' troppo lungo (max 100 caratteri).';
+        } else {
+            $data[$campoOrario] = $valore;
+        }
+    }
+
+    return [
+        'ok' => empty($errors),
+        'errorMessage' => implode(' ', $errors),
+        'dati' => $data,
+    ];
+}
+
+function validatePrestitoAdminData($conn, array $input) {
+    $dataInizioNorm = normalizeDateTimeForDb(trim((string) ($input['data_inizio'] ?? '')));
+    $dataFineNorm = normalizeDateTimeForDb(trim((string) ($input['data_fine'] ?? '')));
+    $stato = trim((string) ($input['stato'] ?? ''));
+    $libroId = (int) ($input['libro_id'] ?? 0);
+    $utenteId = (int) ($input['utente_id'] ?? ($input['nuovo_utente_id'] ?? 0));
+    $bibliotecaId = (int) ($input['biblioteca_id'] ?? 1);
+    $errors = [];
+
+    if ($dataInizioNorm === null || $dataInizioNorm === '') {
+        $errors[] = 'Data inizio non valida.';
+    }
+    if ($dataFineNorm === null || $dataFineNorm === '') {
+        $errors[] = 'Data fine non valida.';
+    }
+    if ($dataInizioNorm !== null && $dataFineNorm !== null && strtotime($dataFineNorm) < strtotime($dataInizioNorm)) {
+        $errors[] = 'La data fine deve essere uguale o successiva alla data inizio.';
+    }
+
+    $statiValidi = ['attivo', 'concluso', 'in_ritardo'];
+    if (!in_array($stato, $statiValidi, true)) {
+        $errors[] = 'Stato prestito non valido.';
+    }
+
+    if ($bibliotecaId <= 0) {
+        $errors[] = 'Biblioteca non valida.';
+    }
+    if ($libroId <= 0 || !isLibroExists($conn, $libroId)) {
+        $errors[] = 'Libro non valido.';
+    }
+    if ($utenteId <= 0 || !isUtenteExists($conn, $utenteId)) {
+        $errors[] = 'Utente non valido.';
+    }
+
+    return [
+        'ok' => empty($errors),
+        'errorMessage' => implode(' ', $errors),
+        'dati' => [
+            'data_inizio' => $dataInizioNorm ?? '',
+            'data_fine' => $dataFineNorm ?? '',
+            'stato' => $stato,
+            'biblioteca_id' => $bibliotecaId,
+            'libro_id' => $libroId,
+            'utente_id' => $utenteId,
+        ],
+    ];
+}
+
 function countUtentiConPrestitiFiltrati($conn, array $filtri) {
     $parts = buildAdminUtentiFilterParts($filtri);
     $where  = $parts['where'];

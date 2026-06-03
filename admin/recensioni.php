@@ -24,8 +24,8 @@ $filtri = [
 $utenteFiltro = null;
 if ($filtri['cerca'] === '' && $utenteId > 0 && $conn instanceof mysqli) {
     $utenteFiltro = getUserInfo($conn, $utenteId);
-    if (!empty($utenteFiltro['username'])) {
-        $filtri['cerca'] = (string) $utenteFiltro['username'];
+    if (!empty($utenteFiltro['Nome Utente'])) {
+        $filtri['cerca'] = (string) $utenteFiltro['Nome Utente'];
     }
 }
 $resultsPerPage = 10;

@@ -1,12 +1,138 @@
-/*Una volta fatto lo style.css si copia e incolla qui e si modifica ogni sezione per fare il design mobile*/
-.admin-search-form > div{
-    flex-basis: 100%;
+.admin-search-form{
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.admin-search-form .compact-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: stretch;
+}
+
+.admin-search-form > div,
+.admin-search-form .compact-row > div{
+    flex: 1 1 100%;
+    min-width: 0;
 }
 
 .admin-search-form .compact-row > div{
-    flex: 1 1 100%;
+    flex: 1 1 calc(50% - 0.25rem);
+    min-width: 8rem;
+}
+
+.admin-search-form .search-form-actions,
+.admin-search-form .search-form-actions button,
+.admin-search-form .search-form-actions a{
+    width: 100%;
 }
 
 .admin-form{
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.admin-form fieldset{
+    display: block !important;
+    gap: 0.75rem;
+    padding: 0.85rem;
+}
+
+.admin-form fieldset > p{
+    display: block;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+}
+
+.admin-form fieldset > p:last-child{
+    margin-bottom: 0;
+}
+
+.admin-form fieldset > p,
+.admin-form fieldset > p:last-child,
+.admin-form fieldset > p:has(button),
+.admin-form fieldset > p:has(.button),
+.admin-form fieldset > p:has(a){
+    width: 100%;
+}
+
+.admin-form label,
+.admin-form input,
+.admin-form select,
+.admin-form textarea{
+    width: 100%;
+}
+
+.admin-form fieldset > p:has(button),
+.admin-form fieldset > p:has(.button),
+.admin-form fieldset > p:has(a){
+    gap: 0.5rem;
+}
+
+.admin-form fieldset > p:has(button) > button,
+.admin-form fieldset > p:has(.button) > .button,
+.admin-form fieldset > p:has(a) > a{
+    width: 100%;
+}
+
+.admin-form input[type="checkbox"]{
+    width: 1.25em;
+}
+
+.admin-form input[type="file"]{
+    width: 100%;
+}
+
+.admin-form input[type="file"]::file-selector-button,
+.admin-form input[type="file"]::-webkit-file-upload-button{
+    margin-left: 0;
+    margin-right: 0.6em;
+}
+
+.table-action-stack{
+    align-items: stretch;
+}
+
+.table-action-row{
+    flex-wrap: wrap;
+}
+
+.table-action-row > .table-action,
+.table-action-row > button.table-action{
+    flex: 1 1 calc(50% - 0.175rem);
+    min-width: 0;
+    margin: 0;
+}
+
+.table-action-form{
+    width: 100%;
+}
+
+.table-action-form .table-action-row + .table-action-row{
+    margin-top: 0.35rem;
+}
+
+#gestione{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#gestione table{
+    min-width: 44rem;
+}
+
+#gestione table th,
+#gestione table td{
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+}
+
+#gestione table th:last-child,
+#gestione table td:last-child{
+    white-space: normal;
+    width: auto;
+    min-width: 13rem;
 }

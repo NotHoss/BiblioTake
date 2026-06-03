@@ -303,6 +303,14 @@ table a:visited {
   text-align: center;
 }
 
+#gestione table th:last-child,
+#gestione table td:last-child {
+    width: 1%;
+    white-space: nowrap;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 #gestione table {
   min-width: fit-content;
   border-collapse: collapse;
@@ -318,11 +326,14 @@ table a:visited {
   background-color: var(--contentbgcolor);
 }
 
-.table-action{
+
+/* Action items (links/buttons) */
+a.table-action,
+button.table-action{
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.45em 0.9em;
+    padding: 0.45em 0.45em;
     margin: 0 0.5em 0.5em 0;
     min-height: 2.5em;
     border: 1px solid var(--breadbgcolor);
@@ -333,14 +344,18 @@ table a:visited {
     font-size: 0.9em;
     line-height: 1.2;
     transition: background 0.2s, color 0.2s, border-color 0.2s;
+    min-width: 5.2rem;
+    box-sizing: border-box;
 }
 
-.table-action:visited{
+a.table-action:visited{
     color: var(--txtlinkcolor);
 }
 
-.table-action:hover,
-.table-action:focus{
+a.table-action:hover,
+a.table-action:focus,
+button.table-action:hover,
+button.table-action:focus{
     background: var(--breadbgcolor);
     color: var(--txtcolor);
     border-color: var(--breadbgcolor);
@@ -349,6 +364,28 @@ table a:visited {
 button.table-action{
     cursor: pointer;
     font-family: inherit;
+}
+
+/* Container wrapper when `.table-action` is used as a wrapper div */
+div.table-action{
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    align-items: flex-start;
+}
+
+.table-action-form{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    vertical-align: middle;
+}
+
+.table-action-row{
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 
@@ -630,22 +667,37 @@ FORM
 /*Admin*/
 
 .admin-form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.admin-form fieldset{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem 1.25rem;
+    margin: 0;
+    padding: 1rem;
+    border: 0;
+    border-top: 1px solid #e4d9f5;
 }
 
-.admin-form > p{
+.admin-form legend{
+    padding: 0 0.5rem;
+    font-weight: 700;
+}
+
+.admin-form fieldset > p{
     margin: 0;
 }
 
-.admin-form > p:last-child{
+.admin-form fieldset > p:last-child{
     grid-column: 1 / -1;
 }
 
-.admin-form > p:has(button),
-.admin-form > p:has(.button),
-.admin-form > p:has(a){
+.admin-form fieldset > p:has(button),
+.admin-form fieldset > p:has(.button),
+.admin-form fieldset > p:has(a){
     grid-column: 1 / -1;
 }
 
@@ -656,6 +708,21 @@ FORM
 
 .admin-form input[type="file"]{
     padding: 0.35em 0;
+}
+
+.admin-form input[type="file"]::file-selector-button,
+.admin-form input[type="file"]::-webkit-file-upload-button{
+    border: 0;
+    border-right: 1px solid var(--breadbgcolor);
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    padding: 0.45em 0.9em;
+    margin-right: 0.8em;
+    margin-left: 0.8em;
+    border-radius: 0.25em;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
 }
 
 /*
