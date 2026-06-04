@@ -100,15 +100,24 @@ if ($utenteId >= 0) {
             // Actions that require POST remain as inline form (concludi/proroga)
             $postActions = '';
             if ($statoPrestito === 'attivo') {
-                $postActions = '<div class="table-action-row"><button class="table-action" type="submit" name="azione" value="concludi">Concludi</button><button class="table-action" type="submit" name="azione" value="proroga">Proroga</button></div>';
+                $postActions = '<button class="table-action" type="submit" name="azione" value="concludi">Concludi</button><button class="table-action" type="submit" name="azione" value="proroga">Proroga</button>';
             } elseif ($statoPrestito === 'in_ritardo') {
-                $postActions = '<div class="table-action-row"><button class="table-action" type="submit" name="azione" value="concludi">Concludi</button></div>';
+                $postActions = '<button class="table-action" type="submit" name="azione" value="concludi">Concludi</button>';
             }
 
-            $tableActions = '<div class="table-action">'
-                . '<div class="table-action-row">' . $modificaLink . $eliminaLink . '</div>'
-                . '<form class="table-action-form" action="prestiti-utente.php" method="post"><input type="hidden" name="prestito_id" value="' . $id . '"><input type="hidden" name="utente_id" value="' . $utenteIdSafe . '"><input type="hidden" name="cerca" value="' . $cercaSafe . '">' . $postActions . '</form>'
-                . '</div>';
+            $tableActions = '<div class="table-actions-grid">'
+                . '<div class="table-actions-row">' . $modificaLink . $eliminaLink . '</div>';
+
+            if ($postActions !== '') {
+                $tableActions .= '<form class="table-action-form table-actions-row" action="prestiti-utente.php" method="post">'
+                    . '<input type="hidden" name="prestito_id" value="' . $id . '">'
+                    . '<input type="hidden" name="utente_id" value="' . $utenteIdSafe . '">'
+                    . '<input type="hidden" name="cerca" value="' . $cercaSafe . '">'
+                    . $postActions
+                    . '</form>';
+            }
+
+            $tableActions .= '</div>';
 
             $tableRows .= strtr($rowTemplate, [
                 '[ID]' => $id,

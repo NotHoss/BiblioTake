@@ -125,14 +125,14 @@ foreach ($libri as $libroRow) {
     $id = htmlspecialchars((string) $libroRow['id'], ENT_QUOTES, 'UTF-8');
     $prestitiAttivi = (int) ($libroRow['prestiti_attivi'] ?? 0);
     $prestiti = 'Disponibile';
-    $azioni = '<a class="table-action" href="modifica-libro.php?id=' . $id . '">Modifica</a> 
-        <a class="table-action" href="elimina-libro.php?id=' . $id . '">Elimina</a>';
+    $azioni = '<div class="table-actions-list"><a class="table-action" href="modifica-libro.php?id=' . $id . '">Modifica</a>'
+        . '<a class="table-action" href="elimina-libro.php?id=' . $id . '">Elimina</a></div>';
     if ($prestitiAttivi > 0) {
         $prestiti = 'Prestato';
             $prestitoId = (int) ($libroRow['prestito_id'] ?? 0);
             if ($prestitoId > 0) {
                 $prestitoIdSafe = htmlspecialchars((string) $prestitoId, ENT_QUOTES, 'UTF-8');
-                $azioni = '<a class="table-action" href="prestiti-utente.php?prestito_id=' . $prestitoIdSafe . '">Vai al prestito</a>';
+                $azioni = '<div class="table-actions-list"><a class="table-action" href="prestiti-utente.php?prestito_id=' . $prestitoIdSafe . '">Vai al prestito</a></div>';
             }
     }
 

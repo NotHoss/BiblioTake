@@ -90,7 +90,7 @@ foreach ($utenti as $utente) {
         '[PRESTITI_ATTIVI]' => htmlspecialchars((string) ($utente['prestiti_attivi'] ?? 0), ENT_QUOTES, 'UTF-8'),
         '[RECENSIONI_TOTALI]' => htmlspecialchars((string) ($utente['recensioni_totali'] ?? 0), ENT_QUOTES, 'UTF-8'),
         '[STATO]' => ((int) ($utente['attivo'] ?? 0) === 1) ? 'Attivo' : 'Non attivo',
-        '[AZIONI]' => empty($azioni) ? 'Nessuna azione disponibile' : implode('  ', $azioni),
+        '[AZIONI]' => empty($azioni) ? 'Nessuna azione disponibile' : '<div class="table-actions-list">' . implode('', $azioni) . '</div>',
     ]) . "\n";
 }
 

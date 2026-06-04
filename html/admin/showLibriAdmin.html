@@ -22,7 +22,7 @@
                 <caption>Elenco libri</caption>
                 <thead>
                     <tr>
-                        <th scope="col">ISBN</th>
+                        <th scope="col"><abbr title="International Standard Book Number">ISBN</abbr></th>
                         <th scope="col">Titolo</th>
                         <th scope="col">Autore</th>
                         <th scope="col">Anno</th>
@@ -34,13 +34,13 @@
                 <tbody>
     <!-- ROW_TEMPLATE_START -->
                     <tr>
-                        <td>[ISBN]</td>
-                        <td>[TITOLO]</td>
-                        <td>[AUTORE]</td>
-                        <td>[ANNO]</td>
-                        <td>[CATEGORIA]</td>
-                        <td>[STATO_LIBRO]</td>
-                        <td>[AZIONI]</td>
+                        <th scope="row"><span class="mobile-table-label" aria-hidden="true">ISBN</span><span class="mobile-table-value">[ISBN]</span></th>
+                        <td><span class="mobile-table-label" aria-hidden="true">Titolo</span><span class="mobile-table-value">[TITOLO]</span></td>
+                        <td><span class="mobile-table-label" aria-hidden="true">Autore</span><span class="mobile-table-value">[AUTORE]</span></td>
+                        <td><span class="mobile-table-label" aria-hidden="true">Anno</span><span class="mobile-table-value">[ANNO]</span></td>
+                        <td><span class="mobile-table-label" aria-hidden="true">Categoria</span><span class="mobile-table-value">[CATEGORIA]</span></td>
+                        <td><span class="mobile-table-label" aria-hidden="true">Stato libro</span><span class="mobile-table-value">[STATO_LIBRO]</span></td>
+                        <td><span class="mobile-table-label" aria-hidden="true">Azioni</span><div class="mobile-table-value table-actions">[AZIONI]</div></td>
                     </tr>
     <!-- ROW_TEMPLATE_END -->
                     [TABLE_ROWS]

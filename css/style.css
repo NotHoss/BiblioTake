@@ -39,6 +39,19 @@ body{
   display: none;
 }
 
+#gestione .mobile-table-label {
+    display: none;
+}
+
+#gestione span.mobile-table-value {
+    display: inline;
+}
+
+#gestione div.mobile-table-value {
+    display: block;
+    padding: 0;
+}
+
 .sr-only,
 table caption{
     position: absolute;
@@ -417,6 +430,51 @@ button.table-action{
 /* Container wrapper when `.table-action` is used as a wrapper div */
 div.table-action{
     display: block;
+}
+
+#gestione .table-actions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+#gestione .table-actions-list{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+#gestione .table-actions-grid{
+    display: grid;
+    gap: 0.35rem;
+    justify-items: center;
+}
+
+#gestione .table-actions-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0;
+}
+
+#gestione .table-actions .table-action-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0;
+}
+
+#gestione .table-actions a.table-action,
+#gestione .table-actions button.table-action{
+    margin: 0;
 }
 
 .table-action-form{
