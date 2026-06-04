@@ -2,7 +2,7 @@
     <a class="button button-link admin-return-link" href="index.php">Vai alla dashboard</a>
     <a class="button button-link admin-primary-link" href="utenti.php">Vai agli utenti</a>
 </div>
-<h1 class="section-heading">Gestione prestiti</h1>
+<h2 class="section-heading">Gestione prestiti</h2>
 
 <aside>
     <h3>Filtra i risultati</h3>
@@ -17,7 +17,12 @@
     <section [PRESTITI_CONTENT_DISPLAY]>
         <article [MODIFICA_PRESTITO_DISPLAY]>
             <h2>Modifica prestito #[PRESTITO_IN_MODIFICA_ID]</h2>
-            <form method="post" class="content-form">
+            <noscript>
+                <p class="warning">
+                    JavaScript è disattivato. La validazione dei dati avverrà solo lato server.
+                </p>
+            </noscript>
+            <form action="prestiti-utente.php" method="post" class="content-form">
                 <input type="hidden" name="azione" value="salva_modifica">
                 <input type="hidden" name="prestito_id" value="[PRESTITO_IN_MODIFICA_ID]">
                 <input type="hidden" name="utente_id" value="[UTENTE_ID]">
@@ -28,7 +33,7 @@
                             type="datetime-local"
                             name="data_inizio"
                             value="[DATA_INIZIO]"
-                            required
+                            required aria-required="true"
                         >
                     </label>
                 </p>
@@ -38,25 +43,25 @@
                              type="datetime-local"
                              name="data_fine"
                              value="[DATA_FINE]"
-                             required
+                             required aria-required="true"
                         >
                     </label>
                 </p>
                 <p>
                     <label>Stato
-                        <select name="stato" required>
+                        <select name="stato" required aria-required="true">
                             [STATO_OPTIONS]
                         </select>
                     </label>
                 </p>
                 <p>
                     <label>Libro ID
-                        <input type="number" name="libro_id" min="1" value="[LIBRO_ID]" required>
+                        <input type="number" name="libro_id" min="1" value="[LIBRO_ID]" required aria-required="true">
                     </label>
                 </p>
                 <p>
                     <label>Utente ID
-                        <input type="number" name="nuovo_utente_id" min="1" value="[NUOVO_UTENTE_ID]" required>
+                        <input type="number" name="nuovo_utente_id" min="1" value="[NUOVO_UTENTE_ID]" required aria-required="true">
                     </label>
                 </p>
                 <p class="form-actions"><button type="submit" class="button">Aggiorna prestito</button></p>
@@ -66,7 +71,7 @@
 
             [EMPTY_PRESTITI_MESSAGE]
 
-            <p id="prestiti-table-summary" class="hidden">Questa tabella elenca i prestiti con identificativo, nome utente, libro, stato, data di inizio, data di fine e azioni disponibili.</p>
+            <p id="prestiti-table-summary" class="sr-only">Questa tabella elenca i prestiti con identificativo, nome utente, libro, stato, data di inizio, data di fine e azioni disponibili.</p>
             <section id="gestione" [TABLE_DISPLAY]>
                 <table class="content-table" aria-describedby="prestiti-table-summary">
                     <caption>Elenco prestiti</caption>

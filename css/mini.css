@@ -1,180 +1,105 @@
-.admin-search-form{
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
+@media screen and (max-width: 880px) {
+    body {
+        font-size: 0.95em;
+    }
 
-.admin-search-form .compact-row{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: stretch;
-}
+    header nav ul li,
+    footer ul li {
+        display: block;
+        margin: 0.4em 0;
+    }
 
-.admin-search-form > div,
-.admin-search-form .compact-row > div{
-    flex: 1 1 100%;
-    min-width: 0;
-}
+    main {
+        padding: 1.2em 4%;
+    }
 
-.admin-search-form .compact-row > div{
-    flex: 1 1 calc(50% - 0.25rem);
-    min-width: 8rem;
-}
+    #filtri-catalogo,
+    #risultati-catalogo {
+        float: none;
+        width: 100%;
+        margin-left: 0;
+        padding-right: 0;
+        border-right: 0;
+    }
 
-.admin-search-form .search-form-actions,
-.admin-search-form .search-form-actions button,
-.admin-search-form .search-form-actions a{
-    width: 100%;
-}
+    #lista-libri > li,
+    #ultimi-arrivi > ul > li {
+        float: none;
+        width: 100%;
+    }
 
-.admin-search-form .search-form-actions{
-    text-align: center;
-}
+    .libro-card img,
+    #dettaglio-libro > img {
+        float: none;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto 1em;
+        display: block;
+    }
 
-.admin-form{
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
+    #ricerca-rapida > div:first-of-type,
+    #ricerca-rapida .search-form-actions {
+        float: none;
+        width: 100%;
+    }
 
-.admin-form fieldset{
-    display: block !important;
-    gap: 0.75rem;
-    padding: 0.85rem;
-}
+    #ricerca-rapida input[type="search"] {
+        border-radius: 0.35em;
+        border-right: 2px solid #c5c5c5;
+    }
 
-.admin-form fieldset > p{
-    display: block;
-    gap: 0.35rem;
-    margin-bottom: 0.75rem;
-}
+    #ricerca-rapida button {
+        border-radius: 0.35em;
+        margin-top: 0.5em;
+    }
 
-.admin-form fieldset > p:last-child{
-    margin-bottom: 0;
-}
+    .admin-page-actions .button-link,
+    .admin-page-actions .admin-return-link,
+    .admin-page-actions .admin-primary-link {
+        float: none;
+        display: block;
+        width: 100%;
+        margin: 0 0 0.5rem;
+        text-align: center;
+    }
 
-.admin-form fieldset > p,
-.admin-form fieldset > p:last-child,
-.admin-form fieldset > p:has(button),
-.admin-form fieldset > p:has(.button),
-.admin-form fieldset > p:has(a){
-    width: 100%;
-}
+    .admin-form fieldset > p,
+    .admin-search-form > div,
+    .admin-search-form .compact-row > div {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+    }
 
-.admin-form label,
-.admin-form input,
-.admin-form select,
-.admin-form textarea{
-    width: 100%;
-}
+    .admin-search-form .search-form-actions button,
+    .admin-search-form .search-form-actions a,
+    .form-actions button,
+    .form-actions a {
+        display: block;
+        width: 100%;
+        margin: 0.5rem 0;
+        text-align: center;
+    }
 
-.admin-form fieldset > p:has(button),
-.admin-form fieldset > p:has(.button),
-.admin-form fieldset > p:has(a){
-    gap: 0.5rem;
-}
+    .table-action-row,
+    .table-action-form {
+        display: block;
+        width: 100%;
+    }
 
-.admin-form fieldset > p:has(a){
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-}
+    a.table-action,
+    button.table-action {
+        display: block;
+        width: 100%;
+        margin: 0 0 0.35rem;
+    }
 
-.admin-form fieldset > p:has(button) > button,
-.admin-form fieldset > p:has(.button) > .button,
-.admin-form fieldset > p:has(a) > a{
-    width: 100%;
-    text-align: center;
-}
+    #gestione {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 
-.admin-form fieldset > p:has(a) > a{
-    max-width: 14rem;
-    align-self: center;
-}
-
-.admin-page-actions{
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.35rem;
-    align-items: stretch;
-}
-
-.admin-page-actions .button-link,
-.admin-page-actions .admin-return-link,
-.admin-page-actions .admin-primary-link{
-    width: 100%;
-    min-width: 0;
-    text-align: center;
-    padding: 0.4rem 0.55rem;
-    font-size: clamp(0.78rem, 2.5vw, 0.9rem);
-    white-space: nowrap;
-}
-
-.admin-page-actions-single .admin-return-link{
-    grid-column: 1 / -1;
-}
-
-.admin-page-actions-dual{
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.admin-form input[type="checkbox"]{
-    width: 1.25em;
-}
-
-.admin-form input[type="file"]{
-    width: 100%;
-}
-
-.admin-form input[type="file"]::file-selector-button,
-.admin-form input[type="file"]::-webkit-file-upload-button{
-    margin-left: 0;
-    margin-right: 0.6em;
-}
-
-.table-action-stack{
-    align-items: stretch;
-}
-
-.table-action-row{
-    flex-wrap: wrap;
-}
-
-.table-action-row > .table-action,
-.table-action-row > button.table-action{
-    flex: 1 1 calc(50% - 0.175rem);
-    min-width: 0;
-    margin: 0;
-}
-
-.table-action-form{
-    width: 100%;
-}
-
-.table-action-form .table-action-row + .table-action-row{
-    margin-top: 0.35rem;
-}
-
-#gestione{
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-#gestione table{
-    min-width: 44rem;
-}
-
-#gestione table th,
-#gestione table td{
-    padding-left: 0.85rem;
-    padding-right: 0.85rem;
-}
-
-#gestione table th:last-child,
-#gestione table td:last-child{
-    white-space: normal;
-    width: auto;
-    min-width: 13rem;
+    #gestione table {
+        min-width: 44rem;
+    }
 }

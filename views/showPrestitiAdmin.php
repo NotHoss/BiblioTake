@@ -107,7 +107,7 @@ if ($utenteId >= 0) {
 
             $tableActions = '<div class="table-action">'
                 . '<div class="table-action-row">' . $modificaLink . $eliminaLink . '</div>'
-                . '<form class="table-action-form" method="post"><input type="hidden" name="prestito_id" value="' . $id . '"><input type="hidden" name="utente_id" value="' . $utenteIdSafe . '"><input type="hidden" name="cerca" value="' . $cercaSafe . '">' . $postActions . '</form>'
+                . '<form class="table-action-form" action="prestiti-utente.php" method="post"><input type="hidden" name="prestito_id" value="' . $id . '"><input type="hidden" name="utente_id" value="' . $utenteIdSafe . '"><input type="hidden" name="cerca" value="' . $cercaSafe . '">' . $postActions . '</form>'
                 . '</div>';
 
             $tableRows .= strtr($rowTemplate, [

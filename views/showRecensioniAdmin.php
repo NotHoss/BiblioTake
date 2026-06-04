@@ -86,7 +86,7 @@ foreach ($recensioni as $recensione) {
         '[TESTO]' => htmlspecialchars((string) mb_substr($recensione['testo'], 0, 80), ENT_QUOTES, 'UTF-8') . '...',
         '[DATA]' => htmlspecialchars((string) $recensione['data'], ENT_QUOTES, 'UTF-8'),
         '[STATO]' => $recensione['censura'] ? 'Censurata' : 'Visibile',
-        '[AZIONI]' => '<form method="post" style="display:inline"><input type="hidden" name="recensione_id" value="' . $id . '"><button class="table-action" type="submit" name="azione" value="censura">' . $censuraLabel . '</button></form> <a class="table-action" href="elimina-recensione.php?id=' . $id . '">Elimina</a>',
+        '[AZIONI]' => '<form class="table-action-form" action="recensioni.php" method="post"><input type="hidden" name="recensione_id" value="' . $id . '"><button class="table-action" type="submit" name="azione" value="censura">' . $censuraLabel . '</button></form> <a class="table-action" href="elimina-recensione.php?id=' . $id . '">Elimina</a>',
     ]) . "\n";
 }
 

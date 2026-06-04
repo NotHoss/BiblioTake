@@ -1,85 +1,65 @@
-*{
-    padding: 0;
-    margin: 0;
-}
+@media print {
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
 
-html, body{ 
-    font-size: 12pt;
-    font-family: "Times New Roman", Times, sans-serif; /*font accessibili, font con grazie migliorano la lettura su carta*/
-    margin: auto;
-}
+    body {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 12pt;
+        line-height: 1.5;
+        color: #000;
+        background: #fff;
+    }
 
-header{
-    padding: 0em 1em; /*padding verticale 0em, orizzontale 1em*/
-    text-align: center;
-    margin: 1em;
-}
+    nav,
+    footer,
+    .skip-link,
+    .breadcrumb,
+    button,
+    form,
+    noscript {
+        display: none;
+    }
 
-header h1{
-    content: url("images/logo.png");
-    margin: auto;
-    height: 3cm;
-}
+    header {
+        padding: 0 1em;
+        text-align: center;
+        margin: 1em;
+        color: #000;
+        background: #fff;
+    }
 
-#menu{
-    display: none;
-}
+    main {
+        padding: 2em 2em 2em 3.5em;
+        border-left: 1px solid #000;
+        color: #000;
+        background: #fff;
+    }
 
+    a {
+        color: #000;
+    }
 
-main{
-    padding-top: 2.0em;
-    padding-left: 3.5em;
-    padding-right: 2em;
-    padding-bottom: 2.0em;
-    border-left: 1px solid #000;
-}
+    a::after {
+        content: " (" attr(href) ")";
+        font-size: 10pt;
+    }
 
-main h1{
-    text-align: center;
-    line-height: 1.5em;
-}
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-main h2{
-    text-align: center;
-    line-height: 1.5em;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-}
+    th,
+    td {
+        border: 1px solid #000;
+        padding: 0.4em;
+    }
 
-
-/*
-==========================
-SEZIONE BREADCRUMB
-==========================
-*/
-
-#breadcrumb{
-    font-size: 1.1em;
-    border: 1px solid #000;
-    padding: 0.5em 0em 0.5em 1.0em;
-
-}
-
-/*
-==========================
-SEZIONE FOOTER
-==========================
-*/
-
-footer{
-    background-color: var(--breadcolor);
-    color: var(--txtcolor);
-    text-align: center;
-    font-size: 0.8em;
-    border-top: 1px solid #000;
-    padding: 0.5em;
-}
-
-footer>img{
-    display: none;
-}
-
-footer p{
-    font-style: italic;
-    display: inline;
+    img {
+        max-width: 100%;
+        height: auto;
+    }
 }

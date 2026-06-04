@@ -1,8 +1,14 @@
-<h1>Elimina prestito</h1>
+<h2>Elimina prestito</h2>
 
 [MESSAGES]
 
-<form class="form admin-form" method="post">
+<noscript>
+    <p class="warning">
+        JavaScript è disattivato. La validazione dei dati avverrà solo lato server.
+    </p>
+</noscript>
+
+<form class="form admin-form" action="elimina-prestito.php" method="post">
     <input type="hidden" name="prestito_id" value="[PRESTITO_ID]">
     <fieldset>
         <legend>Conferma eliminazione</legend>

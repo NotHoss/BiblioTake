@@ -1,11 +1,17 @@
-<h1>Elimina recensione</h1>
+<h2>Elimina recensione</h2>
 
 [MESSAGES]
 
 [NOT_FOUND_MESSAGE]
 
 <div [FORM_DISPLAY]>
-	<form class="form admin-form" method="post">
+    <noscript>
+        <p class="warning">
+            JavaScript è disattivato. La validazione dei dati avverrà solo lato server.
+        </p>
+    </noscript>
+
+	<form class="form admin-form" action="elimina-recensione.php" method="post">
 		<input type="hidden" name="id" value="[RECENSIONE_ID]">
 		<input type="hidden" name="utente_id" value="[UTENTE_ID]">
 		<fieldset>

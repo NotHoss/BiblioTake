@@ -1,11 +1,17 @@
-<h1>Elimina libro</h1>
+<h2>Elimina libro</h2>
 
 [MESSAGES]
 
 [NOT_FOUND_MESSAGE]
 
 <div [FORM_DISPLAY]>
-    <form class="form admin-form" method="post">
+    <noscript>
+        <p class="warning">
+            JavaScript è disattivato. La validazione dei dati avverrà solo lato server.
+        </p>
+    </noscript>
+
+    <form class="form admin-form" action="elimina-libro.php" method="post">
         <input type="hidden" name="id" value="[LIBRO_ID]">
         <fieldset>
             <legend>Conferma eliminazione</legend>
