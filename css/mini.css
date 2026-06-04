@@ -13,45 +13,11 @@
         padding: 1.2em 4%;
     }
 
-    #filtri-catalogo,
-    #risultati-catalogo {
-        float: none;
-        width: 100%;
-        margin-left: 0;
-        padding-right: 0;
-        border-right: 0;
-    }
-
-    #lista-libri > li,
-    #ultimi-arrivi > ul > li {
-        float: none;
-        width: 100%;
-    }
-
-    .libro-card img,
-    #dettaglio-libro > img {
-        float: none;
-        width: auto;
-        max-width: 100%;
-        margin: 0 auto 1em;
-        display: block;
-    }
-
-    #ricerca-rapida > div:first-of-type,
-    #ricerca-rapida .search-form-actions {
-        float: none;
-        width: 100%;
-    }
-
-    #ricerca-rapida input[type="search"] {
-        border-radius: 0.35em;
-        border-right: 2px solid #c5c5c5;
-    }
-
-    #ricerca-rapida button {
-        border-radius: 0.35em;
-        margin-top: 0.5em;
-    }
+    /*
+    ==========================
+    ADMIN 
+    ==========================
+    */
 
     .admin-page-actions .button-link,
     .admin-page-actions .admin-return-link,
