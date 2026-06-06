@@ -65,8 +65,8 @@ SEZIONE MAIN
 main{
     background-color: var(--contentbgcolor);
     color: var(--contenttxtcolor);
-    padding: 2em 4%;
-    max-width: 1400px;
+    padding: 2em 3%;
+    max-width: 1800px;
     margin: 0 auto;
     width: 100%;
     flex-grow: 1;
@@ -251,6 +251,7 @@ header nav a{
     text-decoration: none;
     padding: 0.4em 0.7em;
     border-radius: 0.3em;
+    font-size: 1.1em;
     transition: background 0.2s;
 }
 
@@ -281,7 +282,7 @@ BREADCRUMB (classe .breadcrumb)
 .breadcrumb{
     background-color: var(--breadbgcolor);
     color: var(--txtcolor);
-    font-size: 0.95em;
+    font-size: 1.05em;
     padding: 0.5em 4%;
 }
 
@@ -295,7 +296,7 @@ BREADCRUMB (classe .breadcrumb)
 
 .breadcrumb li + li::before{
     content: " \203A ";
-    margin: 0 0.4em;
+    margin: 0 1.5em;
     font-weight: bold;
 }
 
@@ -343,7 +344,7 @@ FORM (solo pagine parte B)
     display: block;
     font-weight: bold;
     margin-bottom: 0.25em;
-    font-size: 0.95em;
+    font-size: 1.1em;
 }
 
 #ricerca-rapida input[type="search"],
@@ -355,7 +356,7 @@ FORM (solo pagine parte B)
     padding: 0.55em 0.8em;
     border: 2px solid #c5c5c5;
     border-radius: 0.35em;
-    font-size: 1em;
+    font-size: 1.05em;
     font-family: inherit;
     background: #fff;
     color: #333;
@@ -386,7 +387,7 @@ FORM (solo pagine parte B)
     color: var(--txtcolor);
     border: 2px solid transparent;
     border-radius: 0.35em;
-    font-size: 1em;
+    font-size: 1.05em;
     font-family: inherit;
     cursor: pointer;
     min-height: 2.5em;
@@ -631,8 +632,10 @@ CATALOGO - FILTRI (aside)
 #filtri-catalogo{
     float: left;
     width: 24%;
+    margin-left: -12%;
     padding-right: 1.5em;
     border-right: 2px solid #ece0f8;
+    font-size: 1.05em;
 }
 
 #filtri-form > div{

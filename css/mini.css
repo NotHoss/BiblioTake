@@ -1,1 +1,219 @@
-/*Una volta fatto lo style.css si copia e incolla qui e si modifica ogni sezione per fare il design mobile*/
+/*
+==========================
+CSS MOBILE - PARTE B (pagine pubbliche)
+==========================
+*/
+
+@media screen and (max-width: 880px){
+
+/*
+==========================
+SEZIONE HERO (Homepage)
+==========================
+*/
+
+#hero{
+    padding: 2.5em 1.2em;
+    margin-bottom: 1.5em;
+}
+
+#hero h2{
+    font-size: 1.4em;
+}
+
+#hero p{
+    font-size: 0.95em;
+    margin-bottom: 1.2em;
+}
+
+#ricerca-rapida{
+    max-width: 100%;
+}
+
+#ricerca-rapida input[type="search"]{
+    width: 68%;
+}
+
+#ricerca-rapida button{
+    width: 32%;
+}
+
+/*
+==========================
+SEZIONE CATEGORIE (Homepage)
+==========================
+*/
+
+#categorie a{
+    padding: 0.5em 1em;
+    min-height: 1.875em;
+    min-width: 2.75em;
+    line-height: 1.75em;
+}
+
+/*
+==========================
+SEZIONE ULTIMI ARRIVI (Homepage)
+==========================
+*/
+
+#ultimi-arrivi > ul > li{
+    float: none;
+    width: 100%;
+    padding: 0.4em 0;
+}
+
+/*
+==========================
+CATALOGO - FILTRI (aside)
+==========================
+*/
+
+#filtri-catalogo{
+    float: none;
+    width: 100%;
+    margin-left: 0;
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 2px solid #ece0f8;
+    padding-bottom: 1.2em;
+    margin-bottom: 1.5em;
+}
+
+/*
+==========================
+CATALOGO - RISULTATI
+==========================
+*/
+
+#risultati-catalogo{
+    margin-left: 0;
+}
+
+#lista-libri > li{
+    float: none;
+    width: 100%;
+    padding: 0.4em 0;
+}
+
+/*
+==========================
+CARD LIBRO (catalogo + homepage)
+==========================
+*/
+
+.libro-card img{
+    float: none;
+    width: 40%;
+    max-width: 8em;
+    display: block;
+    margin: 0 auto 0.8em;
+}
+
+/*
+==========================
+PAGINAZIONE
+==========================
+*/
+
+nav[aria-label="Navigazione pagine risultati"] a{
+    min-width: 2.75em;
+    min-height: 2.75em;
+    padding: 0.5em 0.9em;
+}
+
+nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"]{
+    min-width: 2.75em;
+    padding: 0.5em 0.9em;
+}
+
+/*
+==========================
+DETTAGLIO LIBRO
+==========================
+*/
+
+#dettaglio-libro > h2{
+    font-size: 1.3em;
+    text-align: center;
+}
+
+#dettaglio-libro > img{
+    float: none;
+    width: 55%;
+    max-width: 12em;
+    display: block;
+    margin: 0 auto 1.2em;
+}
+
+#info-libro th{
+    width: 40%;
+}
+
+/*
+==========================
+TAG
+==========================
+*/
+
+#tag-libro a{
+    padding: 0.45em 0.9em;
+    min-height: 1.875em;
+    min-width: 2.75em;
+}
+
+/*
+==========================
+AZIONI LIBRO
+==========================
+*/
+
+#azioni-libro a{
+    display: block;
+    text-align: center;
+    min-height: 2.75em;
+}
+
+/*
+==========================
+RECENSIONI LIBRO
+==========================
+*/
+
+.recensione-card{
+    padding: 1em;
+}
+
+.recensione-card header p{
+    display: block;
+    margin-right: 0;
+    margin-bottom: 0.2em;
+}
+
+/*
+==========================
+CONTATTI
+==========================
+*/
+
+#contatti table{
+    max-width: 100%;
+}
+
+/*
+==========================
+FORM - tap target mobile (44x30px minimo)
+=========================
+*/
+
+#filtri-form button,
+#ricerca-rapida button{
+    min-height: 2.75em;
+}
+
+#filtri-form input[type="checkbox"]{
+    width: 1.75em;
+    height: 1.75em;
+}
+
+}
