@@ -351,6 +351,30 @@ button.table-action{
     font-family: inherit;
 }
 
+#prestiti-table-header{
+    background-color: var(--bgcolor);
+    color: var(--txtcolor);
+}
+
+#prestiti-table{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#prestiti-table th{
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border: 1px solid var(--bordercolor);
+    text-align: center;
+}
+
+#prestiti-table tbody tr:nth-child(even) {
+    background-color: var(--eventablecolor);
+}
+
+#prestiti-table tbody tr:nth-child(odd) {
+    background-color: var(--contentbgcolor);
+}
 
 /*
 ==========================
@@ -658,6 +682,9 @@ FORM
     padding: 0.35em 0;
 }
 
+/*User*/
+
+
 /*
 ==========================
 FILTRI (aside)
@@ -733,6 +760,62 @@ FILTRI (aside)
 .admin-search-form .compact-row > div{
     flex: 1 1 calc(25% - 0.75rem);
     min-width: 8rem;
+}
+
+/*User*/
+
+.sidebar-user{
+    float: left;
+    width: 24%;
+    padding-right: 1.5em;
+    border-right: 2px solid #ece0f8;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    text-decoration: none;
+}
+
+.sidebar-current-page{
+    font-weight: bold;
+    background: var(--bgcolor);
+    padding: 0.5em 0 0.5em 0.7em;
+    border-bottom: 2px solid #ece0f8;
+    color: var(--txtcolor);
+}
+
+.sidebar-user ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-user li{
+    /*padding: 0.5em 0 0.5em 0.7em;*/
+    border-bottom: 2px solid #ece0f8;
+}
+
+.sidebar-user .sidebar-link a {
+    display: block;
+    padding: 0.5em 0 0.5em 0.7em;
+    color: var(--txtlinkcolor);
+    text-decoration: none;
+}
+
+.sidebar-user li a:visited{
+    color: var(--txtlinkvisited);
+    /*padding: 0.4em 0.7em;*/
+    text-decoration: none;
+}
+
+.sidebar-user li:not(.sidebar-current-page):hover{
+    background-color: var(--hovercolor);
+    border-bottom: 2px solid var(--txtcolor);
+    color: var(--txtcolor);
+    text-decoration: underline;
+}
+
+.sidebar-user .sidebar-link:hover a{
+    color: var(--txtcolor);
+    text-decoration: underline;
 }
 
 /*
@@ -877,6 +960,10 @@ nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"]{
     border-radius: 0.35em;
     font-weight: bold;
     border: 1px solid var(--breadbgcolor);
+}
+
+#page-content-user ~ nav[aria-label="Navigazione pagine risultati"] {
+    margin-left: 26%;
 }
 
 /*
@@ -1050,6 +1137,12 @@ RECENSIONI LIBRO
     line-height: 1.65;
 }
 
+.form-recensione{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;    
+}
+
 /*
 ==========================
 CHI SIAMO
@@ -1102,6 +1195,112 @@ CONTATTI
 
 #contatti a:hover{
     color: var(--breadbgcolor);
+}
+
+/*
+==========================
+DASHBOARD
+==========================
+*/
+
+/*Admin*/
+
+/*User*/
+
+.empty-result{
+    margin-left: 26%;
+}
+
+.empty-result p{
+    margin-bottom: 1em;
+}
+
+.empty-result a{
+    padding: 0.5em;
+    border-radius: 0.35em;
+    background: var(--contentbgcolor);
+    border: 1px solid var(--bgcolor);
+    color: var(--txtlinkcolor);
+    text-decoration: none;
+}
+
+.empty-result a:hover{
+    background: var(--breadbgcolor);
+    border: 1px solid var(--bgcolor);
+    color: var(--txtcolor);
+}
+
+#page-content-user{
+    margin-left: 26%;
+}
+
+#username{
+    text-align: left;
+    padding: 0.5em 0;
+}
+
+.profile-image{
+    float: right;
+    width: 50px;
+    height: 50px;
+    margin-right: 10em;
+}
+
+.credentials{
+    padding: 0.75em 0;
+}
+.credentials p + p{
+    padding: 0.25em 0;
+}
+
+#modifica-account{
+    margin-top: 1.5em;
+}
+
+#elimina-account{
+    margin-top: 1.5em;
+}
+
+#modifica-account a{
+    padding: 0.5em;
+    border-radius: 0.35em;
+    background: var(--contentbgcolor);
+    border: 1px solid var(--bgcolor);
+    color: var(--txtlinkcolor);
+    margin-top: 1em;
+    text-decoration: none;
+}
+
+#elimina-account a{
+    padding: 0.5em;
+    border-radius: 0.35em;
+    background: var(--bgcolor);
+    color: var(--txtcolor);
+    text-decoration: none;
+}
+
+#modifica-account a:hover{
+    background: var(--breadbgcolor);
+    border: 1px solid var(--bgcolor);
+    color: var(--txtcolor);
+}
+#elimina-account a:hover{
+    background: var(--breadbgcolor);
+    border: 1px solid var(--bgcolor);
+}
+
+.lista-recensioni{
+    list-style-type: none;
+}
+
+.lista-recensioni > li {
+    margin-bottom: 1em;
+}
+
+.recensione-titolo a{
+    font-weight: bold;
+    color: var(--txtlinkcolor);
+    text-decoration: none;
 }
 
 /*

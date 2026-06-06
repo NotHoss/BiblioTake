@@ -1,0 +1,28 @@
+<h1>Aggiungi recensione</h1>
+
+[MESSAGES]
+
+<div id="page-content-user">
+    <form method="POST" action="../user/aggiungi-recensione.php" class="form form-recensione" id="form-recensione">
+        <input type="hidden" name="libro_id" value="[LIBRO_ID]">
+
+        <p>Stai recensendo: <strong>[LIBRO_TITOLO]</strong></p>
+
+        <label for="valutazione">Valutazione</label>
+        <select name="valutazione" id="valutazione" required>
+            <option value="">-- Seleziona --</option>
+            <option value="1">1 - Pessimo</option>
+            <option value="2">2 - Scarso</option>
+            <option value="3">3 - Discreto</option>
+            <option value="4">4 - Buono</option>
+            <option value="5">5 - Eccellente</option>
+        </select>
+
+        <label for="testo">La tua recensione</label>
+        <textarea name="testo" id="testo" rows="6" placeholder="Scrivi qui la tua recensione..." required></textarea>
+
+        <p>
+            <button type="submit" name="invia-recensione">Invia recensione</button>
+        </p>
+    </form>
+</div>

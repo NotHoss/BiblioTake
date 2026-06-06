@@ -1,12 +1,12 @@
-<div id="error-message"></div>
+<div id="page-content-user">
+    <div id="error-message"></div>
 
-<noscript>
-    <div id="no-js-message">
-        <strong>JavaScript &egrave; disabilitato.</strong>
-    </div>
-</noscript>
+    <noscript>
+        <div id="no-js-message">
+            <strong>JavaScript &egrave; disabilitato.</strong>
+        </div>
+    </noscript>
 
-<div id="page-content">
     [TO-LOGIN]
     <h2>[USERNAME]</h2>
 
@@ -15,11 +15,48 @@
         <form method="POST" action="modifica-user.php" id="modifica-profilo">
             <section>
 
-                <!-- <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" width="48" height="48"> 
-                    per ora tolgo la possibilità di cambiare l'immagine, perché dovremmo creare una lista di immagini 
-                    da cui scegliere, e trovare un modo per cui se clicchi sull'immagine, ti copia il percorso 
-                <input type="file" name="new_profile_image" enctype="multipart/form-data" accept="image/*" value="null"/>
-                -->
+                <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]"> 
+                <!-- lista di immagini tra cui può scegliere -->
+                 <label class="avatar-option">
+                    <input type="radio" name="selected_avatar" value="images/avatar1.jpg" hidden>
+                    <img src="../images/avatar1.jpg" alt="Avatar 1">
+                </label>
+                <label class="avatar-option">
+                    <input type="radio" name="selected_avatar" value="images/avatar2.jpg" hidden>
+                    <img src="../images/avatar2.jpg" alt="Avatar 2">
+                </label>
+                <label class="avatar-option">
+                    <input type="radio" name="selected_avatar" value="images/avatar3.jpg" hidden>
+                    <img src="../images/avatar3.jpg" alt="Avatar 3">
+                </label>
+                <label class="avatar-option">
+                    <input type="radio" name="selected_avatar" value="images/avatar4.jpg" hidden>
+                    <img src="../images/avatar4.jpg" alt="Avatar 4">
+                </label>
+                <label class="avatar-option">
+                    <input type="radio" name="selected_avatar" value="images/avatar5.jpg" hidden>
+                    <img src="../images/avatar5.jpg" alt="Avatar 5">
+                </label>
+                <label class="avatar-option">
+                    <input type="radio" name="selected_avatar" value="images/avatar6.jpg" hidden>
+                    <img src="../images/avatar6.jpg" alt="Avatar 6">
+                </label>
+                <label class="avatar-option">
+                    <input type="radio" name="selected_avatar" value="images/avatar7.jpg" hidden>
+                    <img src="../images/avatar7.jpg" alt="Avatar 7">
+                </label>
+                <label class="avatar-option">
+                    <input type="radio" name="selected_avatar" value="images/avatar8.jpg" hidden>
+                    <img src="../images/avatar8.jpg" alt="Avatar 8">
+                </label>
+                <label class="avatar-option">
+                    <input type="radio" name="selected_avatar" value="images/avatar9.jpg" hidden>
+                    <img src="../images/avatar9.jpg" alt="Avatar 9">
+                </label>
+                <label class="avatar-option">
+                    <input type="radio" name="selected_avatar" value="images/avatar10.jpg" hidden>
+                    <img src="../images/avatar10.jpg" alt="Avatar 10">
+                </label>
 
                 <p>Username:</p>
                 <input type="text" name="new_username" value="[USERNAME]" placeholder="Username">
@@ -32,10 +69,7 @@
                     <input type="password" name="confirm_new_password" placeholder="Conferma nuova password"/>
                 </div>
             </section>
-            <p>
-                <input type="submit" class="form-button" name="salva-modifiche" value="Salva Modifiche"/>
-                <a href="dashboard.php">Annulla</a>
-            </p>
+            <input type="submit" class="form-button" name="salva-modifiche" value="Salva Modifiche"/>
         </form>
     </div>
     <!--<div>
@@ -48,6 +82,27 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('modifica-profilo');
+        const avatarOptions = document.querySelectorAll('.avatar-option');
+        const profileImage = form.querySelector('section > img'); // Immagine corrente
+
+        changedAvatar = false;
+        // Quando fai click su un avatar, segna il radio come selezionato e aggiorna l'anteprima
+        avatarOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+
+                // Rimuove selected da tutti, e lo aggiunge solo a quello cliccato
+                avatarOptions.forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+
+                // Aggiorna l'anteprima con l'immagine selezionata
+                const selectedImg = this.querySelector('img');
+                profileImage.src = selectedImg.src;
+                profileImage.alt = selectedImg.alt;
+                changedAvatar = true;
+            });
+        });
 
         form.addEventListener('submit', function(e) {
             const inputs = form.querySelectorAll('input[name="new_username"], input[name="new_email"], input[name="current_password"], input[name="new_password"], input[name="confirm_new_password"]');
@@ -62,13 +117,7 @@
                 }
             });
 
-            // Per l'immagine: controlla se è stato selezionato un file
-            const fileInput = form.querySelector('input[type="file"]');
-            if (fileInput && fileInput.files.length > 0) {
-                hasChanges = true;
-            }
-
-            if (!hasChanges) {
+            if (!hasChanges && changedAvatar === false) {
                 e.preventDefault();
                 alert('Nessuna modifica rilevata.');
             }

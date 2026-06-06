@@ -68,12 +68,14 @@ BiblioTake/
 │   ├── template/
 │   │   ├── footer.html
 │   │   ├── header.html
+│   │   ├── sidebar-user.html
 │   │   └── search-form.html
 │   └── user/
 │       ├── showAggiungiRecensione.html
 │       ├── showDashboard.html
 │       ├── showEliminaRecensione.html
 │       ├── showModificaRecensione.html
+│       ├── showEliminaUser.html
 │       ├── showModificaUser.html
 │       ├── showPrestiti.html
 │       ├── showRecensioni.html
@@ -102,7 +104,6 @@ BiblioTake/
 │   ├── dashboard.php
 │   ├── elimina-recensione.php
 │   ├── elimina-user.php
-│   ├── informazioni-utente.php
 │   ├── modifica-user.php
 │   ├── prestiti.php
 │   ├── recensioni.php
@@ -111,7 +112,8 @@ BiblioTake/
 └── views/
     ├── template/
     │   ├── footer.php
-    │   └── header.php
+    │   ├── header.php
+    │   └── sidebar-user.php
     ├── show403.php
     ├── show404.php
     ├── show500.php
@@ -130,7 +132,10 @@ BiblioTake/
     ├── showModificaBiblioAdmin.php
     ├── showModificaLibroAdmin.php
     ├── showModificaPrestitoAdmin.php
+    ├── showEliminaUser.php
     ├── showModificaUser.php
+    ├── showPrestitiUser.php
+    ├── showRecensioniUser.php
     ├── showPrestitiAdmin.php
     ├── showRecensioniAdmin.php
     ├── showRegister.php

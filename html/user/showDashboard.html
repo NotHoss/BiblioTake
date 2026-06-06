@@ -1,12 +1,9 @@
-<!doctype html>
-<html lang="it">
-    <head>
-        <link rel="preload" href="fonts/OpenDyslexic-Regular.woff2" as="fnt" type="font/woff2" crossorigin />
-        <link rel="preload" href="fonts/OpenDyslexic-Bold.woff2" as="font" type="font/woff2" crossorigin />
-    </head>
-    
-    <body>
-        <div id="delete-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #0b0b0b41; padding: 10px; z-index: 100; justify-content: center; align-items: center;">
+[MESSAGES]
+
+[EMPTY_MESSAGE]
+
+<div id="page-content-user">
+        <!--<div id="delete-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #0b0b0b41; padding: 10px; z-index: 100; justify-content: center; align-items: center;">
             <div style="background-color: white; padding: 20px; border-radius: 5px; text-align: center; display: flex; flex-direction: column; gap: 20px;">
                 <p style="font-size: larger;" >
                     Sei sicuro di voler eliminare il tuo account?
@@ -20,9 +17,7 @@
                     </button>
                 </div>
             </div>
-        </div>
-
-        <div id="error-message"></div>
+        </div>-->
 
         <noscript>
             <div id="no-js-message">
@@ -30,35 +25,43 @@
             </div>
         </noscript>
 
-        <div id="error-message"></div>
-
-        <div id="page-content">
+        <div>
             [TO-LOGIN]
-            <h2>[USERNAME]</h2>
+            <h2 id="username">[USERNAME]</h2>
 
-            <div >
+            <div class="user-info">
                 <h3>Informazioni utente</h3>
-                <div>
-                    <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" width="48" height="48">
+                <div class="profile-image">
+                    <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]">
                 </div>
-                <div >
+                <div class="credentials">
                     <p>Email: [EMAIL]</p>
                     <p>Password: [PASSWORD]</p>
                 </div>
             </div>
-            <div>
-                <a href="modifica-user.php">Modifica informazioni</a>
+
+            <div class="settings">
+                <h3>Impostazioni</h3>
+                <p>Modifica le tue informazioni personali o elimina il tuo account.</p>
             </div>
-            <div>
-                <form method="post" action="elimina-user.php" id="form-delete">
+
+            <div id="modifica-account">
+                <a href="../user/modifica-user.php">Modifica <span lang="en">Account</span></a>
+            </div>
+            <!--<div>
+                <form method="post" action="showEliminaUser.html" id="form-delete">
                     <button type="submit">Elimina Account</button>
                 </form>
+            </div>-->
+            <div id="elimina-account">
+                <a href="../user/elimina-user.php">Elimina <span lang="en">Account</span></a>
             </div>
             
             <script src="scripts/back-to-top.js"></script>
         </div>
 
         <script>
+            /*
             const formDelete = document.getElementById('form-delete');
             const deleteModal = document.getElementById('delete-modal');
 
@@ -74,7 +77,6 @@
             document.getElementById('cancel-delete').addEventListener('click', () => {
                 deleteModal.style.display = 'none';
             });
-        </script>
-    </body>
-</html>
-
+            */
+    </script>
+</div>

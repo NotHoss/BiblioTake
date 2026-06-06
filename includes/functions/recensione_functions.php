@@ -151,3 +151,18 @@ function censuraRecensione($conn, $recensioneId) {
 
     return $stmt->execute();
 }
+
+function aggiungiRecensione($conn, $userId, $libroId, $testo, $valutazione) {
+    $stmt = $conn->prepare(
+        'INSERT INTO recensione (utente_id, libro_id, valutazione, testo) VALUES (?, ?, ?, ?)'
+    );
+    if (!$stmt) { return 'Errore prepare SQL: ' . $conn->error; }
+    if (!$stmt->bind_param('iiis', $userId, $libroId, $valutazione, $testo)) {
+        return 'Errore bind_param';
+    }
+    if (!$stmt->execute()) {
+        return 'Errore esecuzione query: ' . $stmt->error;
+    }
+    $stmt->close();
+    return true;
+}
