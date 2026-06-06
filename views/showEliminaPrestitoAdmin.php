@@ -11,6 +11,8 @@ if (!empty($message)) {
 $messages = $errorMsg . $successMsg;
 
 $template = file_get_contents(__DIR__ . '/../html/admin/showEliminaPrestitoAdmin.html');
+$returnUrl = getSafeAdminReturnUrl('prestiti-utente.php');
+$returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
 
 if (empty($prestito)) {
     echo strtr($template, [
@@ -20,18 +22,19 @@ if (empty($prestito)) {
         '[LIBRO]' => '',
         '[UTENTE]' => '',
         '[SUMMARY]' => '',
-        '[ANNULLA_HREF]' => 'prestiti-utente.php?utente_id=' . (int) ($utenteId ?? 0),
+        '[ANNULLA_HREF]' => $returnUrlSafe,
+        '[RETURN_URL]' => $returnUrlSafe,
     ]);
     return;
 }
 
-$summary = '<ul>'
+$summary = '<ul class="admin-summary-list">'
     . '<li><strong>ID</strong>: ' . htmlspecialchars((string) $prestito['id'], ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Utente</strong>: ' . htmlspecialchars((string) ($prestito['username'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Libro</strong>: ' . htmlspecialchars((string) ($prestito['libro_titolo'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Stato</strong>: ' . htmlspecialchars((string) ($prestito['stato'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
-    . '<li><strong>Data inizio</strong>: ' . htmlspecialchars((string) ($prestito['data_inizio'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
-    . '<li><strong>Data fine</strong>: ' . htmlspecialchars((string) ($prestito['data_fine'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
+    . '<li><strong>Data inizio</strong>: ' . formatDateForAdminDisplay($prestito['data_inizio'] ?? '') . '</li>'
+    . '<li><strong>Data fine</strong>: ' . formatDateForAdminDisplay($prestito['data_fine'] ?? '') . '</li>'
     . '</ul>';
 
 echo strtr($template, [
@@ -41,5 +44,6 @@ echo strtr($template, [
     '[LIBRO]' => htmlspecialchars((string) ($prestito['libro_titolo'] ?? ''), ENT_QUOTES, 'UTF-8'),
     '[UTENTE]' => htmlspecialchars((string) ($prestito['username'] ?? ''), ENT_QUOTES, 'UTF-8'),
     '[SUMMARY]' => $summary,
-    '[ANNULLA_HREF]' => 'prestiti-utente.php?utente_id=' . (int) ($prestito['utente_id'] ?? 0),
+    '[ANNULLA_HREF]' => $returnUrlSafe,
+    '[RETURN_URL]' => $returnUrlSafe,
 ]);

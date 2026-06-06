@@ -10,6 +10,8 @@ if (!empty($successMessage)) {
 $messages = $errorMsg . $successMsg;
 
 $template = file_get_contents(__DIR__ . '/../html/admin/showEliminaLibroAdmin.html');
+$returnUrl = getSafeAdminReturnUrl('libri.php');
+$returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
 
 if (!$libro) {
     echo strtr($template, [
@@ -20,6 +22,8 @@ if (!$libro) {
         '[SUMMARY]' => '',
         '[WARNING_MESSAGE]' => '',
         '[LIBRO_ID]' => '',
+        '[RETURN_URL]' => $returnUrlSafe,
+        '[ANNULLA_HREF]' => $returnUrlSafe,
     ]);
     return;
 }
@@ -29,7 +33,7 @@ if (!empty($message)) {
     $warningMsg = '<p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>';
 }
 
-$summary = '<ul>'
+$summary = '<ul class="admin-summary-list">'
     . '<li><strong>ID</strong>: ' . htmlspecialchars((string) $libroId, ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>ISBN</strong>: ' . htmlspecialchars((string) ($libro['codice_isbn'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Titolo</strong>: ' . htmlspecialchars((string) ($libro['titolo'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
@@ -48,4 +52,6 @@ echo strtr($template, [
     '[SUMMARY]' => $summary,
     '[WARNING_MESSAGE]' => $warningMsg,
     '[LIBRO_ID]' => htmlspecialchars((string) $libroId, ENT_QUOTES, 'UTF-8'),
+    '[RETURN_URL]' => $returnUrlSafe,
+    '[ANNULLA_HREF]' => $returnUrlSafe,
 ]);

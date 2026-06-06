@@ -52,6 +52,8 @@ $pagination = renderPagination('prestiti-utente.php', [
     'stato' => (string) ($filtri['stato'] ?? 'tutti'),
 ], $pagina, $totalPagine, 'Navigazione pagine risultati', 'Pagina precedente', 'Pagina successiva');
 $cercaSafe = htmlspecialchars((string) ($filtri['cerca'] ?? ''), ENT_QUOTES, 'UTF-8');
+$returnUrl = getCurrentAdminReturnUrl('prestiti-utente.php');
+$returnParam = rawurlencode($returnUrl);
 
 if ($utenteId >= 0) {
     $modificaPrestitoDisplay = 'class="none"';
@@ -94,25 +96,26 @@ if ($utenteId >= 0) {
             $statoPrestito = $statoRaw;
 
             // Link-based actions for modify/delete (dedicated pages)
-            $modificaLink = '<a class="table-action" href="modifica-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '">Modifica</a>';
-            $eliminaLink = '<a class="table-action" href="elimina-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '">Elimina</a>';
+            $modificaLink = '<a class="table-action" href="modifica-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '&return=' . $returnParam . '">Modifica</a>';
+            $eliminaLink = '<a class="table-action" href="elimina-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '&return=' . $returnParam . '">Elimina</a>';
 
             // Actions that require POST remain as inline form (concludi/proroga)
             $postActions = '';
             if ($statoPrestito === 'attivo') {
-                $postActions = '<button class="table-action" type="submit" name="azione" value="concludi">Concludi</button><button class="table-action" type="submit" name="azione" value="proroga">Proroga</button>';
+                $postActions = '<button class="table-action table-action-primary" type="submit" name="azione" value="concludi">Concludi</button><button class="table-action table-action-primary" type="submit" name="azione" value="proroga">Proroga</button>';
             } elseif ($statoPrestito === 'in_ritardo') {
-                $postActions = '<button class="table-action" type="submit" name="azione" value="concludi">Concludi</button>';
+                $postActions = '<button class="table-action table-action-primary" type="submit" name="azione" value="concludi">Concludi</button>';
             }
 
             $tableActions = '<div class="table-actions-grid">'
                 . '<div class="table-actions-row">' . $modificaLink . $eliminaLink . '</div>';
 
             if ($postActions !== '') {
-                $tableActions .= '<form class="table-action-form table-actions-row" action="prestiti-utente.php" method="post">'
+                $tableActions .= '<form class="table-action-form table-actions-row" action="' . htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8') . '" method="post">'
                     . '<input type="hidden" name="prestito_id" value="' . $id . '">'
                     . '<input type="hidden" name="utente_id" value="' . $utenteIdSafe . '">'
                     . '<input type="hidden" name="cerca" value="' . $cercaSafe . '">'
+                    . '<input type="hidden" name="return" value="' . htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8') . '">'
                     . $postActions
                     . '</form>';
             }

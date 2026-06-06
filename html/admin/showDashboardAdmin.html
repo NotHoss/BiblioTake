@@ -4,31 +4,34 @@
 
 [SUCCESS_MESSAGE]
 
-<section>
-	<h2>Statistiche</h2>
-	<ul>
-		<li>Libri totali: [LIBRI_TOTALI]</li>
-		<li>Libri prestati: [LIBRI_PRESTATI]</li>
-		<li>Libri disponibili: [LIBRI_DISPONIBILI]</li>
-		<li>Utenti totali: [UTENTI_TOTALI]</li>
-		<li>Recensioni totali: [RECENSIONI_TOTALI]</li>
-	</ul>
-</section>
+<div class="admin-dashboard-layout">
+	<aside class="admin-quick-nav" aria-labelledby="admin-quick-title">
+		<h3 id="admin-quick-title">Gestione rapida</h3>
+		<ul class="admin-dashboard-list admin-links-list">
+			<li><a href="libri.php">Gestione libri</a></li>
+			<li><a href="utenti.php">Gestione utenti</a></li>
+			<li><a href="prestiti-utente.php">Gestione prestiti</a></li>
+			<li><a href="recensioni.php">Gestione recensioni</a></li>
+		</ul>
+	</aside>
 
-<section>
-	<h2>Generalità della biblioteca</h2>
-	[GENERALITA_SUCCESS_MESSAGE]
-	[BIBLIOTECA_CONTENT]
-</section>
+	<div class="admin-dashboard-main">
+		<section class="admin-dashboard-section">
+			<h3>Statistiche</h3>
+			<ul class="admin-dashboard-list admin-stats-list">
+				<li>Libri totali: [LIBRI_TOTALI]</li>
+				<li>Libri prestati: [LIBRI_PRESTATI]</li>
+				<li>Libri disponibili: [LIBRI_DISPONIBILI]</li>
+				<li>Utenti totali: [UTENTI_TOTALI]</li>
+				<li>Recensioni totali: [RECENSIONI_TOTALI]</li>
+			</ul>
+		</section>
 
-<section>
-	<h2>Gestione rapida</h2>
-	<ul>
-		<li><a href="libri.php">Gestione libri</a></li>
-		<li><a href="utenti.php">Gestione utenti</a></li>
-		<li><a href="prestiti-utente.php">Gestione prestiti</a></li>
-		<li><a href="recensioni.php">Gestione recensioni</a></li>
-	</ul>
-</section>
-
+		<section class="admin-dashboard-section admin-library-details">
+			<h3>Generalità della biblioteca</h3>
+			[GENERALITA_SUCCESS_MESSAGE]
+			[BIBLIOTECA_CONTENT]
+		</section>
+	</div>
+</div>
 

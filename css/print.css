@@ -1,18 +1,36 @@
+@page {
+    margin: 1cm;
+    size: A4;
+}
+
 @media print {
+    :root {
+        --eventablecolor: #eee;
+        --borderlightcolor: #000;
+    }
+
     * {
-        padding: 0;
         margin: 0;
+        padding: 0;
         box-sizing: border-box;
+        box-shadow: none;
+        border-radius: 0;
+        color: #000;
+        background: #fff;
+        text-decoration: none;
     }
 
     html,
     body {
+        font-family: Georgia, "Times New Roman", Times, serif;
         font-size: 12pt;
-        font-family: "Times New Roman", Times, serif;
-        line-height: 1.45;
+        line-height: 1.5;
         color: #000;
         background: #fff;
-        margin: auto;
+    }
+
+    body {
+        margin: 0;
     }
 
     .skip-link,
@@ -21,58 +39,67 @@
     #hero form,
     #filtri-catalogo,
     #azioni-libro,
-    .admin-page-actions,
-    .table-action,
-    .table-action-form,
-    .form,
+    .admin-quick-nav,
     .search-form,
-    .content-form,
-    button,
-    input,
-    select,
-    textarea,
+    .admin-search-form,
+    .table-action-form,
+    .sr-only,
     noscript,
-    script {
+    script,
+    footer {
         display: none;
     }
 
     header {
-        padding: 0 1em;
+        display: block;
         text-align: center;
-        margin: 1em;
-        color: #000;
-        background: #fff;
+        margin: 0 0 0.4em;
+        padding: 0;
     }
 
     header h1 {
-        font-size: 1.8em;
-        line-height: 1.3;
-        margin: auto;
+        display: block;
+        margin: 0;
+        font-size: 1.5em;
+        line-height: 1.2;
+        text-align: center;
+        color: #000;
     }
 
     main {
-        padding-top: 2em;
-        padding-left: 3.5em;
-        padding-right: 2em;
-        padding-bottom: 2em;
-        border-left: 1px solid #000;
-        color: #000;
-        background: #fff;
         max-width: none;
         min-height: 0;
+        margin: 0;
+        padding: 0;
+        color: #000;
+        background: #fff;
     }
 
-    main h1,
-    main h2 {
+    h1,
+    h2,
+    h3,
+    h4,
+    img,
+    table,
+    fieldset {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    main h1 {
+        margin: 0;
         text-align: center;
-        line-height: 1.5em;
-        margin: 0.5em 0;
+        font-size: 1.4em;
+        line-height: 1.3;
     }
 
+    main h2,
     main h3,
     main h4 {
+        display: block;
+        margin: 1em 0 0.4em;
         color: #000;
-        margin: 0.8em 0 0.4em;
+        text-align: left;
         border: 0;
     }
 
@@ -85,66 +112,294 @@
         widows: 3;
     }
 
+    p {
+        margin-bottom: 0.8em;
+    }
+
+    ul,
+    ol {
+        margin: 0 0 1em;
+        padding-left: 1.5em;
+    }
+
+    li {
+        margin-bottom: 0.35em;
+    }
+
     a {
         color: #000;
-        text-decoration: underline;
+        text-decoration: none;
     }
 
     a[href^="http"]::after,
     a[href$=".php"]::after {
-        content: " (" attr(href) ")";
-        font-size: 10pt;
-    }
-
-    abbr[title]::after {
-        content: " (" attr(title) ")";
-        font-size: 10pt;
+        content: none;
     }
 
     img {
+        display: block;
         max-width: 100%;
         height: auto;
+        margin: 1em auto;
         page-break-inside: avoid;
     }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 1em 0;
+    .form,
+    .content-form,
+    .admin-form {
+        display: block;
         page-break-inside: avoid;
+    }
+
+    fieldset,
+    .admin-form fieldset {
+        display: block;
+        margin: 0 0 1em;
+        padding: 0.8em;
+        border: 1px solid #000;
+    }
+
+    legend,
+    .admin-form legend {
+        padding: 0 0.3em;
+        font-weight: bold;
+        color: #000;
+    }
+
+    .admin-form fieldset > p,
+    .content-form p,
+    .form p {
+        float: none;
+        width: auto;
+        margin: 0 0 0.6em;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.2em;
+        color: #000;
+    }
+
+    input,
+    select,
+    textarea {
+        display: inline-block;
+        width: auto;
+        max-width: 100%;
+        padding: 0.2em 0.35em;
+        border: 1px solid #000;
+        background: #fff;
+        color: #000;
+        font: inherit;
+    }
+
+    input[type="hidden"] {
+        display: none;
+    }
+
+    input[type="checkbox"] {
+        width: auto;
+        height: auto;
+    }
+
+    textarea {
+        display: block;
+        width: 100%;
+        min-height: 5em;
+    }
+
+    button,
+    button.button,
+    button.table-action,
+    input[type="submit"] {
+        display: inline-block;
+        padding: 0.25em 0.55em;
+        border: 1px solid #000;
+        background: #000;
+        color: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    a.button,
+    a.button-link,
+    a.table-action,
+    .admin-page-actions a,
+    .form a {
+        display: inline-block;
+        padding: 0.25em 0.55em;
+        border: 1px solid #000;
+        background: #fff;
+        color: #000;
+    }
+
+    table {
+        width: auto;
+        max-width: 100%;
+        margin: 1em auto;
+        border: 1px solid #000;
+        border-collapse: collapse;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 
     table caption {
         position: static;
         width: auto;
         height: auto;
+        margin-bottom: 0.4em;
         clip: auto;
         overflow: visible;
         white-space: normal;
-        margin-bottom: 0.4em;
         font-weight: bold;
+        text-align: center;
     }
 
     th,
     td {
-        border: 1px solid #000;
         padding: 0.4em;
+        border: 1px solid #000;
         text-align: left;
+        color: #000;
+        background: #fff;
+    }
+
+    thead th,
+    table thead th {
+        border: 1px solid #000;
+        background: #ccc;
+        color: #000;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    tbody tr:nth-child(even),
+    #gestione table tbody tr:nth-child(even) {
+        background: #fff;
+    }
+
+    tbody tr:nth-child(even) th,
+    tbody tr:nth-child(even) td,
+    #gestione table tbody tr:nth-child(even) th,
+    #gestione table tbody tr:nth-child(even) td {
+        border-color: #000;
         background: #fff;
         color: #000;
     }
 
-    /*
-    ==========================
-    ADMIN 
-    ==========================
-    */
+    tbody tr:nth-child(odd),
+    #gestione table tbody tr:nth-child(odd) {
+        background: var(--eventablecolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    tbody tr:nth-child(odd) th,
+    tbody tr:nth-child(odd) td,
+    #gestione table tbody tr:nth-child(odd) th,
+    #gestione table tbody tr:nth-child(odd) td {
+        border-color: #000;
+        background: var(--eventablecolor);
+        color: #000;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
     #gestione {
         overflow: visible;
     }
 
     #gestione table {
         min-width: 0;
+        margin-left: auto;
+        margin-right: auto;
         font-size: 10pt;
+    }
+
+    .mobile-table-label {
+        display: none;
+    }
+
+    .mobile-table-value {
+        display: inline;
+        padding: 0;
+    }
+
+    .admin-dashboard-layout,
+    .admin-dashboard-main,
+    .admin-library-details {
+        float: none;
+        width: auto;
+        margin: 0;
+    }
+
+    .admin-dashboard-section,
+    .admin-library-details {
+        page-break-inside: avoid;
+    }
+
+    .admin-dashboard-list,
+    .generalita-list,
+    .admin-summary-list {
+        list-style-type: none;
+        margin: 0.6em 0 1em;
+        padding: 0;
+        border: 1px solid #000;
+        background: #fff;
+    }
+
+    .admin-dashboard-list > li,
+    .generalita-list > li,
+    .admin-summary-list > li {
+        float: none;
+        width: auto;
+        min-height: 0;
+        margin: 0;
+        padding: 0.35em 0.5em;
+        border: 0;
+        border-bottom: 1px solid #000;
+        background: #fff;
+    }
+
+    .admin-dashboard-list > li:last-child,
+    .generalita-list > li:last-child,
+    .admin-summary-list > li:last-child {
+        border-bottom: 0;
+    }
+
+    nav[aria-label="Navigazione pagine risultati"] {
+        margin-top: 1em;
+        padding-top: 0.5em;
+        border-top: 1px solid #000;
+    }
+
+    nav[aria-label="Navigazione pagine risultati"] ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    nav[aria-label="Navigazione pagine risultati"] li {
+        display: inline-block;
+        margin: 0 0.1em;
+        padding: 0;
+        border: 0;
+    }
+
+    nav[aria-label="Navigazione pagine risultati"] a,
+    nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"] {
+        display: inline-block;
+        min-width: 2em;
+        padding: 0.25em 0.55em;
+        border: 1px solid #000;
+        background: #fff;
+        color: #000;
+    }
+
+    nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"] {
+        background: #000;
+        color: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 }

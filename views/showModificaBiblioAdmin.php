@@ -10,6 +10,8 @@ if (!empty($successMessage)) {
 }
 
 $template = file_get_contents(__DIR__ . '/../html/admin/showModificaBiblioAdmin.html');
+$returnUrl = getSafeAdminReturnUrl('index.php');
+$returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
 
 if (empty($biblioteca)) {
     echo strtr($template, [
@@ -23,6 +25,7 @@ if (empty($biblioteca)) {
         '[ORARIO_LUN_VEN]' => '',
         '[ORARIO_SABATO]' => '',
         '[ORARIO_DOMENICA]' => '',
+        '[ANNULLA_HREF]' => $returnUrlSafe,
     ]);
     return;
 }
@@ -38,4 +41,5 @@ echo strtr($template, [
     '[ORARIO_LUN_VEN]' => htmlspecialchars((string) ($biblioteca['orario_lun_ven'] ?? ''), ENT_QUOTES, 'UTF-8'),
     '[ORARIO_SABATO]' => htmlspecialchars((string) ($biblioteca['orario_sabato'] ?? ''), ENT_QUOTES, 'UTF-8'),
     '[ORARIO_DOMENICA]' => htmlspecialchars((string) ($biblioteca['orario_domenica'] ?? ''), ENT_QUOTES, 'UTF-8'),
+    '[ANNULLA_HREF]' => $returnUrlSafe,
 ]);

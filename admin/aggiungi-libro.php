@@ -14,6 +14,7 @@ $breadcrumb = array(
 $currentPage = 'admin';
 $errorMessage = '';
 $successMessage = '';
+$returnUrl = getSafeAdminReturnUrl('libri.php');
 
 $dati = [
     'codice_isbn' => '',
@@ -81,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                         $res['successMessage'] = 'Libro inserito con successo.';
                     }
                     $res['dati'] = array_fill_keys(array_keys($dati), '');
+                    $res['redirect'] = appendAdminQueryParam($returnUrl, ['created' => 1]);
                 } else {
                     $res['errorMessage'] = 'Impossibile inserire il libro.';
                     $res['dati'] = $dati;
@@ -95,6 +97,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
     $errorMessage = $res['errorMessage'] ?? '';
     $successMessage = $res['successMessage'] ?? '';
     $dati = $res['dati'] ?? $dati;
+    if (!empty($res['redirect'])) {
+        header('Location: ' . $res['redirect']);
+        exit;
+    }
 }
 $adminViewMode = 'create';
 $categorie = getCategorieLibri($conn);

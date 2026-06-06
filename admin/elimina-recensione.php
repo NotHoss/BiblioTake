@@ -12,10 +12,18 @@ $breadcrumb = array(
 	array('label' => 'Elimina recensione', 'href' => ''),
 );
 $currentPage = 'admin';
+$returnUrl = getSafeAdminReturnUrl('recensioni.php');
 
 $recensione = null;
-if ($conn instanceof mysqli && isset($_GET['id'])) {
-	$recensione = getRecensioneById($conn, (int) $_GET['id']);
+$recensioneId = isset($_GET['id']) ? (int) $_GET['id'] : (isset($_POST['id']) ? (int) $_POST['id'] : 0);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $recensioneId > 0) {
+	deleteRecensione($conn, $recensioneId);
+	header('Location: ' . appendAdminQueryParam($returnUrl, ['deleted' => 1]));
+	exit;
+}
+
+if ($conn instanceof mysqli && $recensioneId > 0) {
+	$recensione = getRecensioneById($conn, $recensioneId);
 }
 
 require_once __DIR__ . '/../views/template/header.php';

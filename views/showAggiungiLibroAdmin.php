@@ -10,6 +10,8 @@ if (!empty($successMessage)) {
 $messages = $errorMsg . $successMsg;
 
 $template = file_get_contents(__DIR__ . '/../html/admin/showAggiungiLibroAdmin.html');
+$returnUrl = getSafeAdminReturnUrl('libri.php');
+$returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
 
 $categorieOptions = '';
 foreach (($categorie ?? []) as $cat) {
@@ -31,4 +33,7 @@ echo strtr($template, [
     '[DESCRIZIONE]' => htmlspecialchars($dati['descrizione'], ENT_QUOTES, 'UTF-8'),
     '[PAGINE]' => htmlspecialchars($dati['pagine'], ENT_QUOTES, 'UTF-8'),
     '[CATEGORIE_OPTIONS]' => $categorieOptions,
+    '[CURRENT_YEAR]' => date('Y'),
+    '[RETURN_URL]' => $returnUrlSafe,
+    '[ANNULLA_HREF]' => $returnUrlSafe,
 ]);

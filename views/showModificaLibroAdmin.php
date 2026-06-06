@@ -10,6 +10,8 @@ if (!empty($successMessage)) {
 $messages = $errorMsg . $successMsg;
 
 $template = file_get_contents(__DIR__ . '/../html/admin/showModificaLibroAdmin.html');
+$returnUrl = getSafeAdminReturnUrl('libri.php');
+$returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
 
 if (!$libro) {
     echo strtr($template, [
@@ -32,6 +34,9 @@ if (!$libro) {
         '[DELETE_COPERTINA_TITLE]' => '',
         '[CATEGORIE_OPTIONS]' => '',
         '[TAGS]' => '',
+        '[CURRENT_YEAR]' => date('Y'),
+        '[RETURN_URL]' => $returnUrlSafe,
+        '[ANNULLA_HREF]' => $returnUrlSafe,
     ]);
     return;
 }
@@ -83,4 +88,7 @@ echo strtr($template, [
     '[DELETE_COPERTINA_DISABLED]' => $disabledAttr,
     '[DELETE_COPERTINA_TITLE]' => $titleAttr,
     '[CATEGORIE_OPTIONS]' => $categorieOptions,
+    '[CURRENT_YEAR]' => date('Y'),
+    '[RETURN_URL]' => $returnUrlSafe,
+    '[ANNULLA_HREF]' => $returnUrlSafe,
 ]);

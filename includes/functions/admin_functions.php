@@ -3,6 +3,44 @@
 // FUNZIONI ADMIN - Gestione Dashboard, Statistiche, Utenti
 // =====================================================================
 
+function getSafeAdminReturnUrl($fallback) {
+    $fallback = (string) $fallback;
+    $raw = isset($_POST['return']) ? (string) $_POST['return'] : (isset($_GET['return']) ? (string) $_GET['return'] : '');
+    $raw = trim($raw);
+
+    if ($raw === '' || preg_match('#^(?:[a-z][a-z0-9+.-]*:|//|/)#i', $raw) || strpos($raw, '..') !== false || preg_match('/[\r\n]/', $raw)) {
+        return $fallback;
+    }
+
+    return $raw;
+}
+
+function getCurrentAdminReturnUrl($fallback) {
+    $requestUri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
+    if ($requestUri === '') {
+        return (string) $fallback;
+    }
+
+    $path = parse_url($requestUri, PHP_URL_PATH);
+    if (!is_string($path) || $path === '') {
+        return (string) $fallback;
+    }
+
+    $url = basename($path);
+    $query = parse_url($requestUri, PHP_URL_QUERY);
+    if (is_string($query) && $query !== '') {
+        $url .= '?' . $query;
+    }
+
+    return $url ?: (string) $fallback;
+}
+
+function appendAdminQueryParam($url, array $params) {
+    $url = (string) $url;
+    $separator = strpos($url, '?') === false ? '?' : '&';
+    return $url . $separator . http_build_query($params);
+}
+
 function getStatisticheGenerali($conn) {
     $stats = [
         'libri_totali' => 0,

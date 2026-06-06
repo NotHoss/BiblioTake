@@ -19,6 +19,7 @@
     --contentbgcolor:#FFFAF5; /*colore background contenuto*/
     --contenttxtcolor:#000; /*colore testo sopra background contenuto*/
     --shadowcolor:rgba(62, 62, 107, 0.18);
+    --borderlightcolor: #e5e0ee;
 }
 
 html, body{ 
@@ -33,6 +34,8 @@ body{
     color:var(--contenttxtcolor);
     margin: 0;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .none {
@@ -249,6 +252,7 @@ main{
     margin: 0 auto;
     width: 100%;
     min-height: 60vh;
+    flex: 1 0 auto;
 }
 
 main h1{
@@ -271,7 +275,7 @@ TABELLA
 table{
     width: 100%;
     border-collapse: collapse;
-    margin: 1em 0;
+    margin: 1em auto;
 }
 
 th, td{
@@ -331,7 +335,7 @@ table a:visited {
 #gestione table {
   min-width: fit-content;
   border-collapse: collapse;
-  margin-top: 1rem;
+  margin: 1rem auto 0;
   background-color: var(--contentbgcolor);
 }
 
@@ -383,6 +387,13 @@ button.table-action{
     font-family: inherit;
 }
 
+button.table-action-primary{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
+    font-weight: normal;
+}
+
 .admin-page-actions{
     margin: 0 0 1rem;
 }
@@ -405,7 +416,7 @@ button.table-action{
     background: var(--contentbgcolor);
     color: var(--txtlinkcolor);
     text-decoration: none;
-    font-weight: 700;
+    font-weight: normal;
     line-height: 1.2;
     transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
 }
@@ -585,10 +596,10 @@ TITOLI SEZIONE (h3 nelle pagine pubbliche)
 main > section > h3,
 main > article > section > h3{
     font-size: 1.25em;
-    color: #3D3E6B;
+    color: var(--contenttxtcolor);
     margin-bottom: 0.8em;
     padding-bottom: 0.35em;
-    border-bottom: 2px solid var(--breadbgcolor);
+    border-bottom: 2px solid var(--borderlightcolor);
 }
 
 /*
@@ -664,7 +675,7 @@ SEZIONE ULTIMI ARRIVI (Homepage)
 
 #ultimi-arrivi article{
     background: #fff;
-    border: 1px solid #e5e0ee;
+    border: 1px solid var(--borderlightcolor);
     border-radius: 0.5em;
     padding: 1.3em;
     box-shadow: 0 2px 8px rgba(62, 62, 107, 0.07);
@@ -762,9 +773,14 @@ FORM
     font-family: inherit;
     cursor: pointer;
     min-height: 2.5em;
-    font-weight: bold;
+    font-weight: normal;
     letter-spacing: 0.02em;
     transition: background 0.2s;
+}
+
+.search-form-actions button,
+.admin-search-form .search-form-actions button{
+    font-weight: bold;
 }
 
 #ricerca-rapida input[type="search"]{
@@ -809,6 +825,165 @@ FORM
     font-weight: 700;
 }
 
+.admin-dashboard-section{
+    margin: 0 0 1.5rem;
+}
+
+.admin-dashboard-layout{
+    margin-top: 1.5rem;
+}
+
+.admin-dashboard-layout::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.admin-quick-nav{
+    float: left;
+    width: 24%;
+    padding-right: 1.5em;
+    border-right: 2px solid var(--borderlightcolor);
+}
+
+.admin-dashboard-main{
+    margin-left: 26%;
+}
+
+.admin-library-details{
+    margin-left: 0;
+}
+
+.admin-dashboard-list,
+.admin-summary-list{
+    list-style-type: none;
+    margin: 0.8rem 0 1rem;
+}
+
+.admin-dashboard-list::after,
+.admin-summary-list::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.admin-dashboard-list > li,
+.admin-summary-list > li{
+    background: #fff;
+    border: 1px solid var(--borderlightcolor);
+    border-left: 0.35rem solid var(--breadbgcolor);
+    border-radius: 0.45rem;
+    box-shadow: 0 2px 8px var(--shadowcolor);
+    margin: 0 0 0.65rem;
+    padding: 0.75rem 0.9rem;
+}
+
+.admin-stats-list > li{
+    float: left;
+    width: 31.33%;
+    min-height: 4.25rem;
+    margin-right: 2%;
+    font-weight: 700;
+}
+
+.admin-stats-list > li:nth-child(3n){
+    margin-right: 0;
+}
+
+.admin-links-list > li{
+    float: none;
+    width: 100%;
+    margin: 0 0 0.6rem;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+}
+
+.admin-links-list a{
+    display: block;
+    min-height: 2.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: 0.45rem;
+    border: 2px solid var(--breadbgcolor);
+    background: var(--contentbgcolor);
+    color: var(--txtlinkcolor);
+    font-weight: normal;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.admin-links-list a:visited{
+    color: var(--txtlinkcolor);
+}
+
+.admin-links-list a:hover,
+.admin-links-list a:focus{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
+    transform: translateY(-1px);
+    text-decoration: underline;
+}
+
+.generalita-list{
+    list-style-type: none;
+    margin: 0.8rem 0 1rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid #e5e0ee;
+    border-left: 0.35rem solid var(--breadbgcolor);
+    border-radius: 0.45rem;
+    background: var(--contentbgcolor);
+}
+
+.generalita-list > li{
+    margin: 0;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid #ece0f8;
+}
+
+.generalita-list > li.actions{
+    padding: 0.8rem 0 0;
+    border-bottom: 0;
+}
+
+.generalita-list .actions a{
+    display: inline-block;
+    min-height: 2.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: 0.45rem;
+    border: 2px solid var(--breadbgcolor);
+    background: var(--contentbgcolor);
+    color: var(--txtlinkcolor);
+    font-weight: normal;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.generalita-list .actions a:visited{
+    color: var(--txtlinkcolor);
+}
+
+.generalita-list .actions a:hover,
+.generalita-list .actions a:focus{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
+    transform: translateY(-1px);
+    text-decoration: underline;
+}
+
+.admin-summary-list{
+    clear: both;
+}
+
+.admin-summary-list > li strong,
+.generalita-list > li strong{
+    color: var(--contenttxtcolor);
+}
+
 .admin-form fieldset > p{
     float: left;
     width: 48%;
@@ -844,7 +1019,7 @@ FORM
     border-radius: 0.25em;
     cursor: pointer;
     font: inherit;
-    font-weight: 700;
+    font-weight: normal;
 }
 
 /*
@@ -1003,7 +1178,7 @@ CARD LIBRO (catalogo + homepage)
 
 .libro-card{
     background: #fff;
-    border: 1px solid #e5e0ee;
+    border: 1px solid --borderlightcolor;
     border-radius: 0.5em;
     padding: 1em;
     box-shadow: 0 2px 8px var(--shadowcolor);
@@ -1024,7 +1199,7 @@ CARD LIBRO (catalogo + homepage)
     margin-right: 1em;
     margin-bottom: 0.5em;
     border-radius: 0.35em;
-    border: 1px solid #e5e0ee;
+    border: 1px solid --borderlightcolor;
 }
 
 .libro-card h4{
@@ -1130,7 +1305,7 @@ DETTAGLIO LIBRO
     margin-bottom: 1em;
     border-radius: 0.5em;
     box-shadow: 0 6px 20px var(--shadowcolor);
-    border: 1px solid #e5e0ee;
+    border: 1px solid --borderlightcolor;
 }
 
 #info-libro{
@@ -1244,7 +1419,7 @@ RECENSIONI LIBRO
 
 .recensione-card{
     background: #fff;
-    border: 1px solid #e5e0ee;
+    border: 1px solid --borderlightcolor;
     border-radius: 0.5em;
     padding: 1.2em 1.4em;
     box-shadow: 0 1px 5px var(--shadowcolor);;
@@ -1342,6 +1517,7 @@ footer{
     text-align: center;
     font-size: 0.8em;
     padding: 1.2em;
+    flex-shrink: 0;
 }
 
 footer a{

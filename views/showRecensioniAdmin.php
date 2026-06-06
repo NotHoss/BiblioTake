@@ -58,6 +58,9 @@ $pagination = renderPagination('recensioni.php', [
     'voto' => (string) ($filtri['voto'] ?? ''),
     'stato_recensione' => (string) ($filtri['stato_recensione'] ?? 'tutte'),
 ], $pagina, $totalPagine, 'Navigazione pagine risultati', 'Pagina precedente', 'Pagina successiva');
+$returnUrl = getCurrentAdminReturnUrl('recensioni.php');
+$returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
+$returnParam = rawurlencode($returnUrl);
     
 if (empty($recensioni)) {
     echo strtr($template, [
@@ -84,9 +87,9 @@ foreach ($recensioni as $recensione) {
         '[LIBRO]' => '<a href="../dettaglio-libro.php?id=' . $libroIdRow . '">' . htmlspecialchars((string) $recensione['libro_titolo'], ENT_QUOTES, 'UTF-8') . '</a>',
         '[VOTO]' => htmlspecialchars((string) $recensione['valutazione'], ENT_QUOTES, 'UTF-8'),
         '[TESTO]' => htmlspecialchars((string) mb_substr($recensione['testo'], 0, 80), ENT_QUOTES, 'UTF-8') . '...',
-        '[DATA]' => htmlspecialchars((string) $recensione['data'], ENT_QUOTES, 'UTF-8'),
+        '[DATA]' => formatDateForAdminDisplay($recensione['data']),
         '[STATO]' => $recensione['censura'] ? 'Censurata' : 'Visibile',
-        '[AZIONI]' => '<div class="table-actions-list"><form class="table-action-form" action="recensioni.php" method="post"><input type="hidden" name="recensione_id" value="' . $id . '"><button class="table-action" type="submit" name="azione" value="censura">' . $censuraLabel . '</button></form><a class="table-action" href="elimina-recensione.php?id=' . $id . '">Elimina</a></div>',
+        '[AZIONI]' => '<div class="table-actions-list"><form class="table-action-form" action="' . $returnUrlSafe . '" method="post"><input type="hidden" name="recensione_id" value="' . $id . '"><input type="hidden" name="return" value="' . $returnUrlSafe . '"><button class="table-action table-action-primary" type="submit" name="azione" value="censura">' . $censuraLabel . '</button></form><a class="table-action" href="elimina-recensione.php?id=' . $id . '&return=' . $returnParam . '">Elimina</a></div>',
     ]) . "\n";
 }
 

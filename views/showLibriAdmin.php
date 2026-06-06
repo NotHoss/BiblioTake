@@ -100,6 +100,8 @@ if ($totalLibri === 0) {
 }
 
 $pagination = renderPagination('libri.php', $filtri, $pagina, $totalPagine, 'Navigazione pagine risultati', 'Pagina precedente', 'Pagina successiva');
+$returnUrl = getCurrentAdminReturnUrl('libri.php');
+$returnParam = rawurlencode($returnUrl);
 
 // List mode only — create/edit/delete moved to dedicated views
 $template = file_get_contents(__DIR__ . '/../html/admin/showLibriAdmin.html');
@@ -116,6 +118,7 @@ if (empty($libri)) {
         '[TABLE_DISPLAY]' => 'class="none"',
         '[TABLE_ROWS]' => '',
         '[PAGINATION]' => $pagination,
+        '[RETURN_PARAM]' => $returnParam,
     ]);
     return;
 }
@@ -125,8 +128,8 @@ foreach ($libri as $libroRow) {
     $id = htmlspecialchars((string) $libroRow['id'], ENT_QUOTES, 'UTF-8');
     $prestitiAttivi = (int) ($libroRow['prestiti_attivi'] ?? 0);
     $prestiti = 'Disponibile';
-    $azioni = '<div class="table-actions-list"><a class="table-action" href="modifica-libro.php?id=' . $id . '">Modifica</a>'
-        . '<a class="table-action" href="elimina-libro.php?id=' . $id . '">Elimina</a></div>';
+    $azioni = '<div class="table-actions-list"><a class="table-action" href="modifica-libro.php?id=' . $id . '&return=' . $returnParam . '">Modifica</a>'
+        . '<a class="table-action" href="elimina-libro.php?id=' . $id . '&return=' . $returnParam . '">Elimina</a></div>';
     if ($prestitiAttivi > 0) {
         $prestiti = 'Prestato';
             $prestitoId = (int) ($libroRow['prestito_id'] ?? 0);
@@ -157,6 +160,7 @@ echo strtr($template, [
     '[TABLE_DISPLAY]' => '',
     '[TABLE_ROWS]' => $tableRows,
     '[PAGINATION]' => $pagination,
+    '[RETURN_PARAM]' => $returnParam,
 ]);
 
 
