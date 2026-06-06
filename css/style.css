@@ -1013,6 +1013,45 @@ CHI SIAMO
 
 /*
 ==========================
+FONDATORI
+==========================
+*/
+
+#fondatori ul{
+    list-style-type: none;
+}
+
+#fondatori ul::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#fondatori ul li{
+    float: left;
+    width: 50%;
+    padding: 0.5em;
+    text-align: center;
+}
+
+#fondatori img{
+    width: 16em;
+    height: 16em;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #e5e0ee;
+    box-shadow: 0 2px 8px rgba(62, 62, 107, 0.1);
+}
+
+#fondatori p{
+    font-weight: bold;
+    color: #3D3E6B;
+    margin-top: 0.5em;
+    font-size: 1.05em;
+}
+
+/*
+==========================
 CONTATTI
 ==========================
 */
