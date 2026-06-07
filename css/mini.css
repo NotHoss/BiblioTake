@@ -10,3 +10,206 @@
 .admin-form{
     grid-template-columns: 1fr;
 }
+@media screen and (max-width: 1150px) {
+    /*
+    ==========================
+    FILTRI (aside)
+    ==========================
+    */
+
+    /*User*/
+
+    .sidebar-hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0.6em;
+        right: 0.6em;
+        z-index: 200;
+        width: 44px;
+        height: 44px;
+        cursor: pointer;
+        background: var(--breadbgcolor);
+        border-radius: 0.35em;
+        border: none;
+        padding: 0.4em;
+    }
+
+    .sidebar-hamburger span {
+        display: block;
+        width: 22px;
+        height: 3px;
+        margin: 3px 0;
+        background: var(--txtcolor);
+        border-radius: 2px;
+        transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .sidebar-toggle:checked ~ .sidebar-hamburger span:nth-child(1) {
+        transform: rotate(45deg) translate(4px, 4px);
+    }
+
+    .sidebar-toggle:checked ~ .sidebar-hamburger span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .sidebar-toggle:checked ~ .sidebar-hamburger span:nth-child(3) {
+        transform: rotate(-45deg) translate(4px, -4px);
+    }
+
+    .sidebar-user {
+        float: none;
+        width: 100%;
+        border-right: none;
+        padding: 0;
+        position: static;
+        height: auto;
+    }
+
+    .sidebar-user h2 {
+        display: none;
+        padding: 0.5em 0.7em;
+        background: var(--contentbgcolor);
+        color: var(--contenttxtcolor);
+        font-size: 1em;
+    }
+
+    .sidebar-user ul {
+        display: none;
+        list-style-type: none;
+        background: var(--contentbgcolor);
+        border-bottom: 2px solid #ece0f8;
+        padding: 0;
+    }
+
+    .sidebar-toggle:checked ~ h2 {
+        display: block;
+    }
+
+    .sidebar-toggle:checked ~ ul {
+        display: block;
+    }
+
+    .sidebar-user li {
+        border-bottom: 2px solid #ece0f8;
+    }
+
+    .sidebar-user .sidebar-link a {
+        display: block;
+        padding: 0.7em 0.7em;
+        color: var(--txtlinkcolor);
+        text-decoration: none;
+    }
+
+    .sidebar-user li:not(.sidebar-current-page):hover {
+        background-color: var(--hovercolor);
+        border-bottom: 2px solid var(--txtcolor);
+    }
+
+    .sidebar-user .sidebar-link:hover a {
+        color: var(--txtcolor);
+    }
+
+    /*
+    ==========================
+    DASHBOARD
+    ==========================
+    */
+
+    /*User*/
+
+    .page-content-user{
+        margin-left: 0;
+    }
+
+    .profile-image-big{
+        display: none;
+    }
+
+    .profile-image-small{
+        text-align: center;
+        margin: 0 auto 1em;
+        max-width: 100%;
+        overflow: hidden;
+        max-width: 80px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    #username{
+        text-align: left;
+        padding: 0.5em 2.5em 0.5em 0em;
+    }
+
+    .username-image-small {
+        position: relative;    /* div diventa il riferimento per l'immagine */
+    }
+
+    .username-image-small h2 {
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding-right: 60px;   /* spazio per non sovrapporsi all'immagine */
+    }
+
+    .username-image-small img {
+        position: absolute;
+        right: 0;
+        top: 50%;              /* centra verticalmente rispetto al div */
+        transform: translateY(-50%);
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+    }
+
+    /*Tabelle user*/
+
+    #prestiti-table {
+        /* placeholder mobile */
+    }
+
+    #prestiti-table-header {
+        /* placeholder mobile */
+    }
+
+    /*
+    ==========================
+    RECENSIONI
+    ==========================
+    */
+
+    .recensione-card {
+        padding: 1em;
+    }
+
+    .recensione-card header p {
+        display: block;
+        margin-right: 0;
+        margin-bottom: 0.3em;
+    }
+
+    /*
+    ==========================
+    PAGINAZIONE
+    ==========================
+    */
+
+    .page-content-user ~ nav[aria-label="Navigazione pagine risultati"] {
+        margin-left: 0;
+    }
+
+    nav[aria-label="Navigazione pagine risultati"] a {
+        min-width: 2em;
+        padding: 0.35em 0.6em;
+        font-size: 0.9em;
+    }
+
+    nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"] {
+        min-width: 2em;
+        padding: 0.35em 0.6em;
+    }
+}
