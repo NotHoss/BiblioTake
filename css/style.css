@@ -1594,23 +1594,6 @@ OVERRIDE PARTE B (.public-area)
     font-weight: bold;
 }
 
-#info-libro th,
-#info-libro td,
-#contatti th,
-#contatti td{
-    border-bottom: 1px solid #e8e3f0;
-}
-
-#info-libro th,
-#contatti th{
-    background: #f7f2fc;
-    color: #3D3E6B;
-}
-
-#info-libro tbody tr:hover,
-#contatti tbody tr:hover{
-    background: #faf7fe;
-}
 
 /*
 ==========================
