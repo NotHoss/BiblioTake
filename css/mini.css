@@ -375,6 +375,10 @@
     ==========================
     */
 
+    #chi-siamo section{
+        font-size: 1em;
+    }
+
     #fondatori ul li{
         float: none;
         width: 100%;
