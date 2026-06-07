@@ -5,8 +5,26 @@
 
 @media print {
     :root {
+        --bgcolor: #fff;
+        --txtcolor: #000;
+        --focuscolor: #000;
+        --breadbgcolor: #666;
+        --txtlinkcolor: #000;
+        --txtlinkvisited: #000;
+        --linkcolor: #000;
+        --linkvisited: #000;
+        --hovercolor: #ddd;
+        --bordercolor: #000;
         --eventablecolor: #eee;
+        --contentbgcolor: #fff;
+        --contenttxtcolor: #000;
+        --shadowcolor: transparent;
         --borderlightcolor: #000;
+        --print-table-header-bg: var(--contenttxtcolor);
+        --print-table-header-text: var(--contentbgcolor);
+        --print-table-row-bg: var(--contentbgcolor);
+        --print-table-row-alt-bg: var(--eventablecolor);
+        --print-table-border-width: 0.35mm;
     }
 
     * {
@@ -15,8 +33,8 @@
         box-sizing: border-box;
         box-shadow: none;
         border-radius: 0;
-        color: #000;
-        background: #fff;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
         text-decoration: none;
     }
 
@@ -25,8 +43,9 @@
         font-family: Georgia, "Times New Roman", Times, serif;
         font-size: 12pt;
         line-height: 1.5;
-        color: #000;
-        background: #fff;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
+        color-scheme: light;
     }
 
     body {
@@ -40,8 +59,7 @@
     #filtri-catalogo,
     #azioni-libro,
     .admin-quick-nav,
-    .search-form,
-    .admin-search-form,
+    .admin-page-actions,
     .table-action-form,
     .sr-only,
     noscript,
@@ -63,7 +81,7 @@
         font-size: 1.5em;
         line-height: 1.2;
         text-align: center;
-        color: #000;
+        color: var(--contenttxtcolor);
     }
 
     main {
@@ -71,8 +89,8 @@
         min-height: 0;
         margin: 0;
         padding: 0;
-        color: #000;
-        background: #fff;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
     }
 
     h1,
@@ -98,9 +116,14 @@
     main h4 {
         display: block;
         margin: 1em 0 0.4em;
-        color: #000;
+        color: var(--contenttxtcolor);
         text-align: left;
         border: 0;
+    }
+
+    main > section > h3,
+    main > article > section > h3 {
+        border-bottom: 1px solid var(--bordercolor);
     }
 
     p,
@@ -127,7 +150,7 @@
     }
 
     a {
-        color: #000;
+        color: var(--txtlinkcolor);
         text-decoration: none;
     }
 
@@ -156,14 +179,14 @@
         display: block;
         margin: 0 0 1em;
         padding: 0.8em;
-        border: 1px solid #000;
+        border: 1px solid var(--bordercolor);
     }
 
     legend,
     .admin-form legend {
         padding: 0 0.3em;
         font-weight: bold;
-        color: #000;
+        color: var(--contenttxtcolor);
     }
 
     .admin-form fieldset > p,
@@ -177,19 +200,19 @@
     label {
         display: block;
         margin-bottom: 0.2em;
-        color: #000;
+        color: var(--contenttxtcolor);
     }
 
     input,
     select,
     textarea {
-        display: inline-block;
-        width: auto;
+        display: block;
+        width: 100%;
         max-width: 100%;
         padding: 0.2em 0.35em;
-        border: 1px solid #000;
-        background: #fff;
-        color: #000;
+        border: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
+        color: var(--contenttxtcolor);
         font: inherit;
     }
 
@@ -198,25 +221,28 @@
     }
 
     input[type="checkbox"] {
+        display: inline-block;
         width: auto;
         height: auto;
+        accent-color: var(--focuscolor);
     }
 
     textarea {
-        display: block;
-        width: 100%;
         min-height: 5em;
     }
 
     button,
     button.button,
     button.table-action,
+    .form button,
+    .search-form-actions button,
+    .admin-search-form .search-form-actions button,
     input[type="submit"] {
         display: inline-block;
         padding: 0.25em 0.55em;
-        border: 1px solid #000;
-        background: #000;
-        color: #fff;
+        border: 1px solid var(--bordercolor);
+        background: var(--contenttxtcolor);
+        color: var(--contentbgcolor);
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
@@ -224,20 +250,64 @@
     a.button,
     a.button-link,
     a.table-action,
+    a.admin-return-link,
+    a.admin-primary-link,
     .admin-page-actions a,
     .form a {
         display: inline-block;
         padding: 0.25em 0.55em;
-        border: 1px solid #000;
-        background: #fff;
-        color: #000;
+        border: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
+        color: var(--txtlinkcolor);
+    }
+
+    .admin-form,
+    .admin-form > div {
+        display: block;
+        break-inside: auto;
+        page-break-inside: auto;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
+    }
+
+    .admin-form fieldset {
+        clear: both;
+    }
+
+    .admin-form fieldset > p {
+        display: block;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .admin-form input[type="file"]::file-selector-button,
+    .admin-form input[type="file"]::-webkit-file-upload-button {
+        border: 1px solid var(--bordercolor);
+        background: var(--eventablecolor);
+        color: var(--contenttxtcolor);
+        font: inherit;
+    }
+
+    .admin-form button,
+    .admin-form input[type="submit"] {
+        background: var(--contenttxtcolor);
+        color: var(--contentbgcolor);
+        border-color: var(--bordercolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .admin-form a {
+        background: var(--contentbgcolor);
+        color: var(--txtlinkcolor);
+        border: 1px solid var(--bordercolor);
     }
 
     table {
         width: auto;
         max-width: 100%;
         margin: 1em auto;
-        border: 1px solid #000;
+        border: var(--print-table-border-width) solid var(--bordercolor);
         border-collapse: collapse;
         page-break-inside: avoid;
         -webkit-print-color-adjust: exact;
@@ -259,38 +329,42 @@
     th,
     td {
         padding: 0.4em;
-        border: 1px solid #000;
+        border: var(--print-table-border-width) solid var(--bordercolor);
         text-align: left;
-        color: #000;
-        background: #fff;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
     }
 
     thead th,
     table thead th {
-        border: 1px solid #000;
-        background: #ccc;
-        color: #000;
+        border: 1px solid var(--bordercolor);
+        background: var(--print-table-header-bg);
+        color: var(--print-table-header-text);
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
     tbody tr:nth-child(even),
     #gestione table tbody tr:nth-child(even) {
-        background: #fff;
+        background: var(--print-table-row-alt-bg);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 
     tbody tr:nth-child(even) th,
     tbody tr:nth-child(even) td,
     #gestione table tbody tr:nth-child(even) th,
     #gestione table tbody tr:nth-child(even) td {
-        border-color: #000;
-        background: #fff;
-        color: #000;
+        border-color: var(--bordercolor);
+        background: var(--print-table-row-alt-bg);
+        color: var(--contenttxtcolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 
     tbody tr:nth-child(odd),
     #gestione table tbody tr:nth-child(odd) {
-        background: var(--eventablecolor);
+        background: var(--print-table-row-bg);
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
@@ -299,15 +373,17 @@
     tbody tr:nth-child(odd) td,
     #gestione table tbody tr:nth-child(odd) th,
     #gestione table tbody tr:nth-child(odd) td {
-        border-color: #000;
-        background: var(--eventablecolor);
-        color: #000;
+        border-color: var(--bordercolor);
+        background: var(--print-table-row-bg);
+        color: var(--contenttxtcolor);
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
     #gestione {
         overflow: visible;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
     }
 
     #gestione table {
@@ -315,6 +391,37 @@
         margin-left: auto;
         margin-right: auto;
         font-size: 10pt;
+        background: var(--contentbgcolor);
+    }
+
+    #gestione table thead th,
+    #info-libro th,
+    #contatti th {
+        background: var(--print-table-header-bg);
+        color: var(--print-table-header-text);
+        border: 1px solid var(--bordercolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    table,
+    th,
+    td,
+    #gestione table,
+    #gestione table th,
+    #gestione table td {
+        border-width: var(--print-table-border-width);
+        border-style: solid;
+        border-color: var(--bordercolor);
+    }
+
+    #gestione .table-actions,
+    #gestione .table-actions-list,
+    #gestione .table-actions-grid,
+    #gestione .table-actions-row {
+        display: block;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
     }
 
     .mobile-table-label {
@@ -332,6 +439,8 @@
         float: none;
         width: auto;
         margin: 0;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
     }
 
     .admin-dashboard-section,
@@ -340,16 +449,20 @@
     }
 
     .admin-dashboard-list,
+    .admin-stats-list,
+    .admin-links-list,
     .generalita-list,
     .admin-summary-list {
         list-style-type: none;
         margin: 0.6em 0 1em;
         padding: 0;
-        border: 1px solid #000;
-        background: #fff;
+        border: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
     }
 
     .admin-dashboard-list > li,
+    .admin-stats-list > li,
+    .admin-links-list > li,
     .generalita-list > li,
     .admin-summary-list > li {
         float: none;
@@ -358,20 +471,39 @@
         margin: 0;
         padding: 0.35em 0.5em;
         border: 0;
-        border-bottom: 1px solid #000;
-        background: #fff;
+        border-bottom: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
     }
 
     .admin-dashboard-list > li:last-child,
+    .admin-stats-list > li:last-child,
+    .admin-links-list > li:last-child,
     .generalita-list > li:last-child,
     .admin-summary-list > li:last-child {
         border-bottom: 0;
     }
 
+    .admin-page-actions,
+    .admin-links-list a,
+    .generalita-list .actions a {
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
+        box-shadow: none;
+    }
+
+    .admin-page-actions .admin-primary-link,
+    button.table-action-primary {
+        background: var(--contenttxtcolor);
+        color: var(--contentbgcolor);
+        border-color: var(--bordercolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
     nav[aria-label="Navigazione pagine risultati"] {
         margin-top: 1em;
         padding-top: 0.5em;
-        border-top: 1px solid #000;
+        border-top: 1px solid var(--bordercolor);
     }
 
     nav[aria-label="Navigazione pagine risultati"] ul {
@@ -391,14 +523,14 @@
         display: inline-block;
         min-width: 2em;
         padding: 0.25em 0.55em;
-        border: 1px solid #000;
-        background: #fff;
-        color: #000;
+        border: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
+        color: var(--txtlinkcolor);
     }
 
     nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"] {
-        background: #000;
-        color: #fff;
+        background: var(--contenttxtcolor);
+        color: var(--contentbgcolor);
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
