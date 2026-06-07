@@ -14,6 +14,7 @@ $breadcrumb = array(
 $currentPage = 'admin';
 $message = '';
 $errorMessage = '';
+$returnUrl = getSafeAdminReturnUrl('prestiti-utente.php');
 
 $prestitoId = isset($_GET['prestito_id']) ? (int) $_GET['prestito_id'] : (isset($_POST['prestito_id']) ? (int) $_POST['prestito_id'] : 0);
 $utenteId = isset($_GET['utente_id']) ? (int) $_GET['utente_id'] : 0;
@@ -46,10 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $prestitoId > 0 && $conn instanceof
     }
 
     $message = $res['message'] ?? $message;
-    $redirectQuery = !empty($res['cerca'])
-        ? 'cerca=' . rawurlencode((string) $res['cerca'])
-        : 'utente_id=' . (int) ($res['utenteId'] ?? 0);
-    header('Location: ../admin/prestiti-utente.php?' . $redirectQuery);
+    header('Location: ' . appendAdminQueryParam($returnUrl, ['deleted' => 1]));
     exit;
 }
 

@@ -14,6 +14,7 @@ $breadcrumb = array(
 $currentPage = 'admin';
 $message = '';
 $errorMessage = '';
+$returnUrl = getSafeAdminReturnUrl('prestiti-utente.php');
 
 $prestitoId = isset($_GET['prestito_id']) ? (int) $_GET['prestito_id'] : (isset($_POST['prestito_id']) ? (int) $_POST['prestito_id'] : 0);
 
@@ -29,45 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $prestitoId > 0 && $conn instanceof
 
     try {
         if ($azione === 'salva_modifica') {
-            $dataInizioNorm = normalizeDateTimeForDb(trim((string) ($_POST['data_inizio'] ?? '')));
-            $dataFineNorm = normalizeDateTimeForDb(trim((string) ($_POST['data_fine'] ?? '')));
-
-            $dati = [
-                'data_inizio' => $dataInizioNorm ?? '',
-                'data_fine' => $dataFineNorm ?? '',
-                'stato' => trim((string) ($_POST['stato'] ?? '')),
+            $validation = validatePrestitoAdminData($conn, [
+                'data_inizio' => $_POST['data_inizio'] ?? '',
+                'data_fine' => $_POST['data_fine'] ?? '',
+                'stato' => $_POST['stato'] ?? '',
                 'biblioteca_id' => 1,
-                'libro_id' => (int) ($_POST['libro_id'] ?? 0),
-                'utente_id' => (int) ($_POST['nuovo_utente_id'] ?? 0),
-            ];
+                'libro_id' => $_POST['libro_id'] ?? 0,
+                'nuovo_utente_id' => $_POST['nuovo_utente_id'] ?? 0,
+            ]);
 
-            $statiValidi = ['attivo', 'concluso', 'in_ritardo'];
-            $formValido =
-                $dati['data_inizio'] !== ''
-                && $dati['data_fine'] !== ''
-                && in_array($dati['stato'], $statiValidi, true)
-                && $dati['biblioteca_id'] > 0
-                && $dati['libro_id'] > 0
-                && $dati['utente_id'] > 0
-                && strtotime($dati['data_fine']) >= strtotime($dati['data_inizio']);
+            $dati = $validation['dati'];
 
-            if ($dataInizioNorm === null || $dataFineNorm === null) {
-                $res['message'] = 'Formato data non valido.';
-                $formValido = false;
-            }
-
-            if ($formValido) {
-                if (!isLibroExists($conn, $dati['libro_id'])) {
-                    $res['message'] = 'Errore: il libro specificato non esiste.';
-                    $formValido = false;
-                } elseif (!isUtenteExists($conn, $dati['utente_id'])) {
-                    $res['message'] = 'Errore: l\'utente specificato non esiste.';
-                    $formValido = false;
-                }
-            }
-
-            if (!$formValido) {
-                if ($res['message'] === '') $res['message'] = 'Dati non validi: controlla campi, stato e date.';
+            if (!$validation['ok']) {
+                $res['message'] = $validation['errorMessage'] !== '' ? $validation['errorMessage'] : 'Dati non validi: controlla campi, stato e date.';
                 $res['prestitoInModifica'] = getPrestitoById($conn, $prestitoId);
             } else {
                 if (updatePrestito($conn, $prestitoId, $dati)) {
@@ -103,10 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $prestitoId > 0 && $conn instanceof
     $prestitoInModifica = $res['prestitoInModifica'] ?? null;
 
     if (empty($prestitoInModifica)) {
-        $redirectQuery = !empty($res['cerca'])
-            ? 'cerca=' . rawurlencode((string) $res['cerca'])
-            : 'utente_id=' . (int) ($res['utenteId'] ?? 0);
-        header('Location: ../admin/prestiti-utente.php?' . $redirectQuery);
+        header('Location: ' . appendAdminQueryParam($returnUrl, ['updated' => 1]));
         exit;
     }
 }

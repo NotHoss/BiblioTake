@@ -1,53 +1,53 @@
-<h1>Gestione libri</h1>
-<p><a href="aggiungi-libro.php">Aggiungi nuovo libro</a></p>
+<div class="admin-page-actions">
+    <a class="button button-link admin-return-link" href="index.php">Vai alla dashboard</a>
+    <a class="button button-link admin-primary-link" href="aggiungi-libro.php?return=[RETURN_PARAM]">Aggiungi nuovo libro</a>
+</div>
+<h2>Gestione libri</h2>
 
-<div id="catalogo-layout">
-    <aside id="filtri-catalogo">
-        <h3>Filtra i risultati</h3>
-        [SEARCH_FORM]
-    </aside>
+<aside>
+    <h3>Filtra i risultati</h3>
+    [SEARCH_FORM]
+</aside>
 
-    <section id="risultati-catalogo">
-        [RESULTS_INFO]
+<section>
+    [RESULTS_INFO]
 
-        [MESSAGES]
+    [MESSAGES]
 
-        [EMPTY_MESSAGE]
+    [EMPTY_MESSAGE]
 
-        <div [TABLE_DISPLAY]>
-            <table>
+<p id="libri-table-summary" class="sr-only">Questa tabella elenca i libri gestiti dall'amministrazione con ISBN, titolo, autore, anno, categoria, stato del libro e azioni disponibili.</p>
+<section id="gestione" [TABLE_DISPLAY]>
+            <table aria-describedby="libri-table-summary">
+                <caption>Elenco libri</caption>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>ISBN</th>
-                        <th>Titolo</th>
-                        <th>Autore</th>
-                        <th>Anno</th>
-                        <th>Categoria</th>
-                        <th>Tags</th>
-                        <th>Stato Libro</th>
-                        <th>Azioni</th>
+                        <th scope="col"><abbr title="International Standard Book Number">ISBN</abbr></th>
+                        <th scope="col">Titolo</th>
+                        <th scope="col">Autore</th>
+                        <th scope="col">Anno</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Stato libro</th>
+                        <th scope="col">Azioni</th>
                     </tr>
                 </thead>
                 <tbody>
-<!-- ROW_TEMPLATE_START -->
+    <!-- ROW_TEMPLATE_START -->
                     <tr>
-                        <td>[ID]</td>
-                        <td>[ISBN]</td>
-                        <td>[TITOLO]</td>
-                        <td>[AUTORE]</td>
-                        <td>[ANNO]</td>
-                        <td>[CATEGORIA]</td>
-                        <td>[TAGS]</td>
-                        <td>[STATO_LIBRO]</td>
-                        <td>[AZIONI]</td>
+                        <th scope="row"><span class="mobile-table-label" aria-hidden="true">ISBN</span><span class="mobile-table-value">[ISBN]</span></th>
+                        <td><span class="mobile-table-label" aria-hidden="true">Titolo</span><span class="mobile-table-value">[TITOLO]</span></td>
+                        <td><span class="mobile-table-label" aria-hidden="true">Autore</span><span class="mobile-table-value">[AUTORE]</span></td>
+                        <td><span class="mobile-table-label" aria-hidden="true">Anno</span><span class="mobile-table-value">[ANNO]</span></td>
+                        <td><span class="mobile-table-label" aria-hidden="true">Categoria</span><span class="mobile-table-value">[CATEGORIA]</span></td>
+                        <td><span class="mobile-table-label" aria-hidden="true">Stato libro</span><span class="mobile-table-value">[STATO_LIBRO]</span></td>
+                        <td><span class="mobile-table-label" aria-hidden="true">Azioni</span><div class="mobile-table-value table-actions">[AZIONI]</div></td>
                     </tr>
-<!-- ROW_TEMPLATE_END -->
+    <!-- ROW_TEMPLATE_END -->
                     [TABLE_ROWS]
                 </tbody>
             </table>
-        </div>
+        </section>
 
-        [PAGINATION]
-    </section>
-</div>
+    [PAGINATION]
+</section>
+

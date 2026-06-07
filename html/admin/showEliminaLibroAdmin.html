@@ -1,15 +1,28 @@
-<h1>Elimina libro</h1>
+<h2>Elimina libro</h2>
 
 [MESSAGES]
 
 [NOT_FOUND_MESSAGE]
 
 <div [FORM_DISPLAY]>
-    <p>Stai per eliminare: <strong>[TITOLO]</strong></p>
-    [WARNING_MESSAGE]
-    <form method="post">
+    <noscript>
+        <p class="warning">
+            JavaScript è disattivato. La validazione dei dati avverrà solo lato server.
+        </p>
+    </noscript>
+
+    <form class="form admin-form" action="elimina-libro.php" method="post">
         <input type="hidden" name="id" value="[LIBRO_ID]">
-        
-        <p><button type="submit">Conferma eliminazione</button> <a href="libri.php">Annulla</a></p>
+        <input type="hidden" name="return" value="[RETURN_URL]">
+        <fieldset>
+            <legend>Conferma eliminazione</legend>
+            <p>Stai per eliminare il libro seguente.</p>
+            [SUMMARY]
+            [WARNING_MESSAGE]
+        </fieldset>
+        <fieldset>
+            <legend>Azioni</legend>
+            <p><button type="submit">Conferma eliminazione</button> <a href="[ANNULLA_HREF]">Annulla</a></p>
+        </fieldset>
     </form>
 </div>

@@ -1,231 +1,492 @@
-/*
-==========================
-CSS MOBILE - PARTE B (pagine pubbliche)
-==========================
-*/
+@media screen and (max-width: 1150px) {
+    /*
+    ==========================
+    ADMIN - Tabella
+    ==========================
+    */
+    #gestione {
+        overflow: visible;
+    }
 
-@media screen and (max-width: 880px){
+    #gestione table {
+        display: block;
+        min-width: 0;
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
 
-/*
-==========================
-SEZIONE HERO (Homepage)
-==========================
-*/
+    #gestione caption {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
 
-#hero{
-    padding: 2.5em 1.2em;
-    margin-bottom: 1.5em;
+    #gestione thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    #gestione tbody,
+    #gestione tr,
+    #gestione th,
+    #gestione td {
+        display: block;
+        width: 100%;
+    }
+
+    #gestione tbody tr {
+        margin-bottom: 1rem;
+        border: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
+    }
+
+    #gestione tbody tr:nth-child(odd) {
+        background: var(--contentbgcolor);
+    }
+
+    #gestione tbody tr:nth-child(even) {
+        background: var(--eventablecolor);
+    }
+
+    #gestione tbody th,
+    #gestione tbody td {
+        display: grid;
+        grid-template-columns: minmax(8rem, 40%) minmax(0, 1fr);
+        gap: 0;
+        align-items: stretch;
+        padding: 0;
+        border: 0;
+        border-bottom: 1px solid var(--bgcolor);
+        text-align: left;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    #gestione table tbody tr > th:last-child,
+    #gestione table tbody tr > td:last-child {
+        width: 100%;
+        padding: 0;
+        white-space: normal;
+    }
+
+    #gestione tbody tr > :last-child {
+        border-bottom: 0;
+    }
+
+    #gestione .mobile-table-label {
+        display: flex;
+        align-items: center;
+        min-height: 100%;
+        padding: 0.65rem 0.75rem;
+        background: var(--bgcolor);
+        color: var(--txtcolor);
+        font-weight: 700;
+        height: 100%;
+    }
+
+    #gestione .mobile-table-value {
+        display: block;
+        min-width: 0;
+        padding: 0.65rem 0.75rem;
+    }
+
+    #gestione tbody tr:nth-child(odd) .mobile-table-label {
+        border-bottom: 1px solid var(--contentbgcolor);
+    }
+
+    #gestione tbody tr:nth-child(even) .mobile-table-label {
+        border-bottom: 1px solid var(--eventablecolor);
+    }
+
+    #gestione .table-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+    }
+
+    #gestione tbody tr > :last-child .mobile-table-label,
+    #gestione tbody tr > :last-child .mobile-table-value {
+        border-bottom: 0;
+    }
+
+    #gestione tbody tr > :last-child .mobile-table-value {
+        display: flex;
+        align-items: center;
+    }
+
+    #gestione .table-actions-list {
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #gestione .table-actions-grid {
+        display: grid;
+        gap: 0.35rem;
+        justify-items: center;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #gestione .table-actions-row,
+    #gestione .table-actions .table-action-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        width: auto;
+        margin: 0;
+    }
+
+    #gestione .table-actions a.table-action,
+    #gestione .table-actions button.table-action {
+        display: inline-flex;
+        width: auto;
+        min-width: 5.2rem;
+        margin: 0;
+        text-align: center;
+        justify-content: center;
+    }
 }
 
-#hero h2{
-    font-size: 1.4em;
-}
+@media screen and (max-width: 880px) {
+    body {
+        font-size: 0.95em;
+    }
 
-#hero p{
-    font-size: 0.95em;
-    margin-bottom: 1.2em;
-}
+    /*
+    ==========================
+    SEZIONE HERO (Homepage)
+    ==========================
+    */
 
-#ricerca-rapida{
-    max-width: 100%;
-}
+    #hero{
+        padding: 2.5em 1.2em;
+        margin-bottom: 1.5em;
+    }
 
-#ricerca-rapida input[type="search"]{
-    width: 68%;
-}
+    #hero h2{
+        font-size: 1.4em;
+    }
 
-#ricerca-rapida button{
-    width: 32%;
-}
+    #hero p{
+        font-size: 0.95em;
+        margin-bottom: 1.2em;
+    }
 
-/*
-==========================
-SEZIONE CATEGORIE (Homepage)
-==========================
-*/
+    #ricerca-rapida{
+        max-width: 100%;
+    }
 
-#categorie a{
-    padding: 0.5em 1em;
-    min-height: 1.875em;
-    min-width: 2.75em;
-    line-height: 1.75em;
-}
+    #ricerca-rapida > div:first-of-type{
+        width: 68%;
+    }
 
-/*
-==========================
-SEZIONE ULTIMI ARRIVI (Homepage)
-==========================
-*/
+    #ricerca-rapida .search-form-actions{
+        width: 32%;
+    }
 
-#ultimi-arrivi > ul > li{
-    float: none;
-    width: 100%;
-    padding: 0.4em 0;
-}
+    #ricerca-rapida input[type="search"]{
+        width: 100%;
+    }
 
-/*
-==========================
-CATALOGO - FILTRI (aside)
-==========================
-*/
+    #ricerca-rapida button{
+        width: 100%;
+    }
 
-#filtri-catalogo{
-    float: none;
-    width: 100%;
-    margin-left: 0;
-    padding-right: 0;
-    border-right: none;
-    border-bottom: 2px solid #ece0f8;
-    padding-bottom: 1.2em;
-    margin-bottom: 1.5em;
-}
+    /*
+    ==========================
+    SEZIONE CATEGORIE (Homepage)
+    ==========================
+    */
 
-/*
-==========================
-CATALOGO - RISULTATI
-==========================
-*/
+    #categorie a{
+        padding: 0.5em 1em;
+        min-height: 1.875em;
+        min-width: 2.75em;
+        line-height: 1.75em;
+    }
 
-#risultati-catalogo{
-    margin-left: 0;
-}
+    /*
+    ==========================
+    SEZIONE ULTIMI ARRIVI (Homepage)
+    ==========================
+    */
 
-#lista-libri > li{
-    float: none;
-    width: 100%;
-    padding: 0.4em 0;
-}
+    #ultimi-arrivi > ul > li{
+        float: none;
+        width: 100%;
+        padding: 0.4em 0;
+    }
 
-/*
-==========================
-CARD LIBRO (catalogo + homepage)
-==========================
-*/
+    /*
+    ==========================
+    CATALOGO - FILTRI (aside)
+    ==========================
+    */
 
-.libro-card img{
-    float: none;
-    width: 40%;
-    max-width: 8em;
-    display: block;
-    margin: 0 auto 0.8em;
-}
+    #filtri-catalogo{
+        float: none;
+        width: 100%;
+        margin-left: 0;
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 2px solid #ece0f8;
+        padding-bottom: 1.2em;
+        margin-bottom: 1.5em;
+    }
 
-/*
-==========================
-PAGINAZIONE
-==========================
-*/
+    /*
+    ==========================
+    CATALOGO - RISULTATI
+    ==========================
+    */
 
-nav[aria-label="Navigazione pagine risultati"] a{
-    min-width: 2.75em;
-    min-height: 2.75em;
-    padding: 0.5em 0.9em;
-}
+    #risultati-catalogo{
+        margin-left: 0;
+    }
 
-nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"]{
-    min-width: 2.75em;
-    padding: 0.5em 0.9em;
-}
+    #lista-libri > li{
+        float: none;
+        width: 100%;
+        padding: 0.4em 0;
+    }
 
-/*
-==========================
-DETTAGLIO LIBRO
-==========================
-*/
+    /*
+    ==========================
+    CARD LIBRO (catalogo + homepage)
+    ==========================
+    */
 
-#dettaglio-libro > h2{
-    font-size: 1.3em;
-    text-align: center;
-}
+    .libro-card img{
+        float: none;
+        width: 40%;
+        max-width: 8em;
+        display: block;
+        margin: 0 auto 0.8em;
+    }
 
-#dettaglio-libro > img{
-    float: none;
-    width: 55%;
-    max-width: 12em;
-    display: block;
-    margin: 0 auto 1.2em;
-}
+    /*
+    ==========================
+    PAGINAZIONE
+    ==========================
+    */
 
-#info-libro th{
-    width: 40%;
-}
+    nav[aria-label="Navigazione pagine risultati"] a{
+        min-width: 2.75em;
+        min-height: 2.75em;
+        padding: 0.5em 0.9em;
+    }
 
-/*
-==========================
-TAG
-==========================
-*/
+    nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"]{
+        min-width: 2.75em;
+        padding: 0.5em 0.9em;
+    }
 
-#tag-libro a{
-    padding: 0.45em 0.9em;
-    min-height: 1.875em;
-    min-width: 2.75em;
-}
+    /*
+    ==========================
+    DETTAGLIO LIBRO
+    ==========================
+    */
 
-/*
-==========================
-AZIONI LIBRO
-==========================
-*/
+    #dettaglio-libro > h2{
+        font-size: 1.3em;
+        text-align: center;
+    }
 
-#azioni-libro a{
-    display: block;
-    text-align: center;
-    min-height: 2.75em;
-}
+    #dettaglio-libro > img{
+        float: none;
+        width: 55%;
+        max-width: 12em;
+        display: block;
+        margin: 0 auto 1.2em;
+    }
 
-/*
-==========================
-RECENSIONI LIBRO
-==========================
-*/
+    #info-libro th{
+        width: 40%;
+    }
 
-.recensione-card{
-    padding: 1em;
-}
+    /*
+    ==========================
+    TAG
+    ==========================
+    */
 
-.recensione-card header p{
-    display: block;
-    margin-right: 0;
-    margin-bottom: 0.2em;
-}
+    #tag-libro a{
+        padding: 0.45em 0.9em;
+        min-height: 1.875em;
+        min-width: 2.75em;
+    }
 
-/*
-==========================
-FONDATORI
-==========================
-*/
+    /*
+    ==========================
+    AZIONI LIBRO
+    ==========================
+    */
 
-#fondatori ul li{
-    float: none;
-    width: 100%;
-    padding: 0.4em 0;
-}
+    #azioni-libro a{
+        display: block;
+        text-align: center;
+        min-height: 2.75em;
+    }
 
-/*
-==========================
-CONTATTI
-==========================
-*/
+    /*
+    ==========================
+    RECENSIONI LIBRO
+    ==========================
+    */
 
-#contatti table{
-    max-width: 100%;
-}
+    .recensione-card{
+        padding: 1em;
+    }
 
-/*
-==========================
-FORM - tap target mobile (44x30px minimo)
-=========================
-*/
+    .recensione-card header p{
+        display: block;
+        margin-right: 0;
+        margin-bottom: 0.2em;
+    }
 
-#filtri-form button,
-#ricerca-rapida button{
-    min-height: 2.75em;
-}
+    /*
+    ==========================
+    FONDATORI
+    ==========================
+    */
 
-#filtri-form input[type="checkbox"]{
-    width: 1.75em;
-    height: 1.75em;
-}
+    #fondatori ul li{
+        float: none;
+        width: 100%;
+        padding: 0.4em 0;
+    }
 
+    /*
+    ==========================
+    CONTATTI
+    ==========================
+    */
+
+    #contatti table{
+        max-width: 100%;
+    }
+
+    /*
+    ==========================
+    FORM - tap target mobile (44x30px minimo)
+    =========================
+    */
+
+    #filtri-catalogo .search-form .search-form-actions button,
+    #ricerca-rapida button{
+        min-height: 2.75em;
+    }
+
+    #filtri-catalogo .search-form input[type="checkbox"]{
+        width: 1.75em;
+        height: 1.75em;
+    }
+
+    /*
+    ==========================
+    ADMIN
+    ==========================
+    */
+
+    .admin-page-actions .button-link,
+    .admin-page-actions .admin-return-link,
+    .admin-page-actions .admin-primary-link {
+        float: none;
+        display: block;
+        width: 100%;
+        margin: 0 0 0.5rem;
+        text-align: center;
+    }
+
+    .admin-form fieldset > p,
+    .admin-search-form > div,
+    .admin-search-form .compact-row > div {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .admin-quick-nav,
+    .admin-dashboard-main,
+    .admin-library-details {
+        float: none;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .admin-quick-nav {
+        padding-right: 0;
+        padding-bottom: 1rem;
+        margin-bottom: 1.2rem;
+        border-right: 0;
+        border-bottom: 2px solid var(--borderlightcolor);
+    }
+
+    .admin-links-list,
+    .admin-stats-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .admin-links-list::after,
+    .admin-stats-list::after {
+        content: none;
+        display: none;
+    }
+
+    .admin-links-list > li {
+        flex: 1 1 11rem;
+        margin: 0;
+    }
+
+    .admin-links-list a {
+        height: 100%;
+        text-align: center;
+    }
+
+    .admin-stats-list > li {
+        float: none;
+        flex: 1 1 12rem;
+        width: auto;
+        min-height: 0;
+        margin: 0;
+    }
+
+    .search-form .search-form-actions button,
+    .search-form .search-form-actions a,
+    .admin-search-form .search-form-actions button,
+    .admin-search-form .search-form-actions a,
+    .form-actions button,
+    .form-actions a {
+        display: block;
+        width: 100%;
+        margin: 0.5rem 0;
+        text-align: center;
+    }
 }

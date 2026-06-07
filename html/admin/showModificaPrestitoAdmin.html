@@ -1,31 +1,40 @@
-<h1>Modifica prestito</h1>
+<h2>Modifica prestito</h2>
 
 [MESSAGES]
 
-<form method="post">
+<noscript>
+    <p class="warning">
+        JavaScript è disattivato. La validazione dei dati avverrà solo lato server.
+    </p>
+</noscript>
+
+<form class="form admin-form" action="modifica-prestito.php" method="post">
     <input type="hidden" name="prestito_id" value="[PRESTITO_IN_MODIFICA_ID]">
-    <p>[TESTO_MODIFICA]</p>
-    <p>
+    <input type="hidden" name="azione" value="salva_modifica">
+    <input type="hidden" name="return" value="[RETURN_URL]">
+
+    <fieldset>
+        <legend>Riepilogo</legend>
+        <p>[TESTO_MODIFICA]</p>
         [TESTO_DETTAGLI]
-    </p>
-    <p>
-        <label>Data inizio
-            <input type="datetime-local" name="data_inizio" value="[DATA_INIZIO]" required>
-        </label>
-    </p>
-    <p>
-        <label>Stato
-            <select name="stato" required>
-                [STATO_OPTIONS]
-            </select>
-        </label>
-    </p>
-    <p>
-        [LIBRO_HIDDEN]
-        [UTENTE_HIDDEN]
-    </p>
-    <p>
-        <button type="submit" name="azione" value="salva_modifica">Salva modifiche</button>
-        <a href="prestiti-utente.php?utente_id=[UTENTE_ID]">Annulla</a>
-    </p>
+    </fieldset>
+
+    <fieldset>
+        <legend>Date e stato</legend>
+        <p><label for="data_inizio">Data inizio</label><input id="data_inizio" type="datetime-local" name="data_inizio" value="[DATA_INIZIO]" step="60" required aria-required="true"></p>
+        <p><label for="data_fine">Data fine</label><input id="data_fine" type="datetime-local" name="data_fine" value="[DATA_FINE]" step="60" required aria-required="true"></p>
+        <p><label for="stato">Stato</label><select id="stato" name="stato" required aria-required="true">[STATO_OPTIONS]</select></p>
+    </fieldset>
+
+    <fieldset>
+        <legend>Riferimenti</legend>
+        <p><label for="libro_id">Libro ID</label><input id="libro_id" type="number" name="libro_id" min="1" max="999999" value="[LIBRO_ID]" required aria-required="true"></p>
+        <p><label for="nuovo_utente_id">Utente ID</label><input id="nuovo_utente_id" type="number" name="nuovo_utente_id" min="1" max="999999" value="[NUOVO_UTENTE_ID]" required aria-required="true"></p>
+        <p>[LIBRO_HIDDEN] [UTENTE_HIDDEN]</p>
+    </fieldset>
+
+    <fieldset>
+        <legend>Azioni</legend>
+        <p><button type="submit" name="azione" value="salva_modifica">Salva modifiche</button> <a href="[ANNULLA_HREF]">Annulla</a></p>
+    </fieldset>
 </form>

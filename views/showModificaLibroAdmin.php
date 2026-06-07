@@ -1,21 +1,23 @@
 <?php
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = '<span>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</span>';
 }
 $successMsg = '';
 if (!empty($successMessage)) {
-    $successMsg = '<div>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $successMsg = '<span>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</span>';
 }
 $messages = $errorMsg . $successMsg;
 
 $template = file_get_contents(__DIR__ . '/../html/admin/showModificaLibroAdmin.html');
+$returnUrl = getSafeAdminReturnUrl('libri.php');
+$returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
 
 if (!$libro) {
     echo strtr($template, [
         '[MESSAGES]' => $messages,
         '[NOT_FOUND_MESSAGE]' => '<p>Libro non trovato.</p>',
-        '[FORM_DISPLAY]' => 'style="display:none;"',
+        '[FORM_DISPLAY]' => 'class="none"',
         '[LIBRO_ID]' => '',
         
         '[CODICE_ISBN]' => '',
@@ -32,6 +34,9 @@ if (!$libro) {
         '[DELETE_COPERTINA_TITLE]' => '',
         '[CATEGORIE_OPTIONS]' => '',
         '[TAGS]' => '',
+        '[CURRENT_YEAR]' => date('Y'),
+        '[RETURN_URL]' => $returnUrlSafe,
+        '[ANNULLA_HREF]' => $returnUrlSafe,
     ]);
     return;
 }
@@ -83,4 +88,7 @@ echo strtr($template, [
     '[DELETE_COPERTINA_DISABLED]' => $disabledAttr,
     '[DELETE_COPERTINA_TITLE]' => $titleAttr,
     '[CATEGORIE_OPTIONS]' => $categorieOptions,
+    '[CURRENT_YEAR]' => date('Y'),
+    '[RETURN_URL]' => $returnUrlSafe,
+    '[ANNULLA_HREF]' => $returnUrlSafe,
 ]);

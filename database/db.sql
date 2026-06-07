@@ -109,7 +109,7 @@ CREATE INDEX idx_prestito_libro_stato ON prestito (libro_id, stato);
 CREATE INDEX idx_recensione_libro ON recensione (libro_id);
 
 INSERT INTO biblioteca (id, indirizzo, telefono, email, note, orario_lun_ven, orario_sabato, orario_domenica) VALUES
-	(1, 'Via Garibaldi 12, Padova', '+39 02 88997766', 'contatti@bibliotake-padova.it', 'Abbiamo l''aria condizionata rotta, abbiamo avvisato i tecnici che arriveranno il prima possibile.', '9:00 - 19:00', '9:00 - 13:00', 'Chiuso');
+	(1, 'Via Garibaldi 12, Padova', '+39 02 88997766', 'contatti@bibliotake-padova.it', 'Saremo chiusi per il mese di Agosto, buone ferie!', '9:00 - 19:00', '9:00 - 13:00', 'Chiuso');
 
 INSERT INTO utente (id, email, username, password, foto_profilo, attivo, ruolo) VALUES
 	(101, 'luca.rossi@gmail.com', 'luca.rossi', '$2y$10$e0NRm7l8iA92f1bR6xL4fOd8kSMNw2w5sY4qC8x0Qh7oA3fXvYf4K', 'images/default-avatar.jpg', TRUE, 'utente'),

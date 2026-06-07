@@ -14,6 +14,7 @@ $breadcrumb = array(
 $currentPage = 'admin';
 $message = '';
 $errorMessage = '';
+$returnUrl = getSafeAdminReturnUrl('libri.php');
 
 $libroId = isset($_GET['id']) ? (int) $_GET['id'] : (isset($_POST['id']) ? (int) $_POST['id'] : 0);
 
@@ -31,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
     } else {
         try {
             if (deleteLibroWithCascade($conn, $libroId)) {
-                $res['redirect'] = 'libri.php?deleted=1';
+                $res['redirect'] = appendAdminQueryParam($returnUrl, ['deleted' => 1]);
             } else {
                 $res['message'] = 'Eliminazione non eseguita.';
             }

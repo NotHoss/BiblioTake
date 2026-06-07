@@ -1,85 +1,537 @@
-*{
-    padding: 0;
-    margin: 0;
+@page {
+    margin: 1cm;
+    size: A4;
 }
 
-html, body{ 
-    font-size: 12pt;
-    font-family: "Times New Roman", Times, sans-serif; /*font accessibili, font con grazie migliorano la lettura su carta*/
-    margin: auto;
-}
+@media print {
+    :root {
+        --bgcolor: #fff;
+        --txtcolor: #000;
+        --focuscolor: #000;
+        --breadbgcolor: #666;
+        --txtlinkcolor: #000;
+        --txtlinkvisited: #000;
+        --linkcolor: #000;
+        --linkvisited: #000;
+        --hovercolor: #ddd;
+        --bordercolor: #000;
+        --eventablecolor: #eee;
+        --contentbgcolor: #fff;
+        --contenttxtcolor: #000;
+        --shadowcolor: transparent;
+        --borderlightcolor: #000;
+        --print-table-header-bg: var(--contenttxtcolor);
+        --print-table-header-text: var(--contentbgcolor);
+        --print-table-row-bg: var(--contentbgcolor);
+        --print-table-row-alt-bg: var(--eventablecolor);
+        --print-table-border-width: 1px;
+    }
 
-header{
-    padding: 0em 1em; /*padding verticale 0em, orizzontale 1em*/
-    text-align: center;
-    margin: 1em;
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        box-shadow: none;
+        border-radius: 0;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
+        text-decoration: none;
+    }
 
-header h1{
-    content: url("images/logo.png");
-    margin: auto;
-    height: 3cm;
-}
+    html,
+    body {
+        font-family: Georgia, "Times New Roman", Times, serif;
+        font-size: 12pt;
+        line-height: 1.5;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
+        color-scheme: light;
+    }
 
-#menu{
-    display: none;
-}
+    body {
+        margin: 0;
+    }
 
+    .skip-link,
+    header nav,
+    .breadcrumb,
+    #hero form,
+    #filtri-catalogo,
+    #azioni-libro,
+    .admin-quick-nav,
+    .admin-page-actions,
+    .table-action-form,
+    .sr-only,
+    noscript,
+    script,
+    footer {
+        display: none;
+    }
 
-main{
-    padding-top: 2.0em;
-    padding-left: 3.5em;
-    padding-right: 2em;
-    padding-bottom: 2.0em;
-    border-left: 1px solid #000;
-}
+    header {
+        display: block;
+        text-align: center;
+        margin: 0 0 0.4em;
+        padding: 0;
+    }
 
-main h1{
-    text-align: center;
-    line-height: 1.5em;
-}
+    header h1 {
+        display: block;
+        margin: 0;
+        font-size: 1.5em;
+        line-height: 1.2;
+        text-align: center;
+        color: var(--contenttxtcolor);
+    }
 
-main h2{
-    text-align: center;
-    line-height: 1.5em;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-}
+    main {
+        max-width: none;
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
+    }
 
+    h1,
+    h2,
+    h3,
+    h4,
+    img,
+    table,
+    fieldset {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
 
-/*
-==========================
-SEZIONE BREADCRUMB
-==========================
-*/
+    main h1 {
+        margin: 0;
+        text-align: center;
+        font-size: 1.4em;
+        line-height: 1.3;
+    }
 
-#breadcrumb{
-    font-size: 1.1em;
-    border: 1px solid #000;
-    padding: 0.5em 0em 0.5em 1.0em;
+    main h2,
+    main h3,
+    main h4 {
+        display: block;
+        margin: 1em 0 0.4em;
+        color: var(--contenttxtcolor);
+        text-align: left;
+        border: 0;
+    }
 
-}
+    main > section > h3,
+    main > article > section > h3 {
+        border-bottom: 1px solid var(--bordercolor);
+    }
 
-/*
-==========================
-SEZIONE FOOTER
-==========================
-*/
+    p,
+    li,
+    dd,
+    td,
+    th {
+        orphans: 3;
+        widows: 3;
+    }
 
-footer{
-    background-color: var(--breadcolor);
-    color: var(--txtcolor);
-    text-align: center;
-    font-size: 0.8em;
-    border-top: 1px solid #000;
-    padding: 0.5em;
-}
+    p {
+        margin-bottom: 0.8em;
+    }
 
-footer>img{
-    display: none;
-}
+    ul,
+    ol {
+        margin: 0 0 1em;
+        padding-left: 1.5em;
+    }
 
-footer p{
-    font-style: italic;
-    display: inline;
+    li {
+        margin-bottom: 0.35em;
+    }
+
+    a {
+        color: var(--txtlinkcolor);
+        text-decoration: none;
+    }
+
+    a[href^="http"]::after,
+    a[href$=".php"]::after {
+        content: none;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1em auto;
+        page-break-inside: avoid;
+    }
+
+    .form,
+    .content-form,
+    .admin-form {
+        display: block;
+        page-break-inside: avoid;
+    }
+
+    fieldset,
+    .admin-form fieldset {
+        display: block;
+        margin: 0 0 1em;
+        padding: 0.8em;
+        border: 1px solid var(--bordercolor);
+    }
+
+    legend,
+    .admin-form legend {
+        padding: 0 0.3em;
+        font-weight: bold;
+        color: var(--contenttxtcolor);
+    }
+
+    .admin-form fieldset > p,
+    .content-form p,
+    .form p {
+        float: none;
+        width: auto;
+        margin: 0 0 0.6em;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.2em;
+        color: var(--contenttxtcolor);
+    }
+
+    input,
+    select,
+    textarea {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        padding: 0.2em 0.35em;
+        border: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
+        color: var(--contenttxtcolor);
+        font: inherit;
+    }
+
+    input[type="hidden"] {
+        display: none;
+    }
+
+    input[type="checkbox"] {
+        display: inline-block;
+        width: auto;
+        height: auto;
+        accent-color: var(--focuscolor);
+    }
+
+    textarea {
+        min-height: 5em;
+    }
+
+    button,
+    button.button,
+    button.table-action,
+    .form button,
+    .search-form-actions button,
+    .admin-search-form .search-form-actions button,
+    input[type="submit"] {
+        display: inline-block;
+        padding: 0.25em 0.55em;
+        border: 1px solid var(--bordercolor);
+        background: var(--contenttxtcolor);
+        color: var(--contentbgcolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    a.button,
+    a.button-link,
+    a.table-action,
+    a.admin-return-link,
+    a.admin-primary-link,
+    .admin-page-actions a,
+    .form a {
+        display: inline-block;
+        padding: 0.25em 0.55em;
+        border: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
+        color: var(--txtlinkcolor);
+    }
+
+    .admin-form,
+    .admin-form > div {
+        display: block;
+        break-inside: auto;
+        page-break-inside: auto;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
+    }
+
+    .admin-form fieldset {
+        clear: both;
+    }
+
+    .admin-form fieldset > p {
+        display: block;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .admin-form input[type="file"]::file-selector-button,
+    .admin-form input[type="file"]::-webkit-file-upload-button {
+        border: 1px solid var(--bordercolor);
+        background: var(--eventablecolor);
+        color: var(--contenttxtcolor);
+        font: inherit;
+    }
+
+    .admin-form button,
+    .admin-form input[type="submit"] {
+        background: var(--contenttxtcolor);
+        color: var(--contentbgcolor);
+        border-color: var(--bordercolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .admin-form a {
+        background: var(--contentbgcolor);
+        color: var(--txtlinkcolor);
+        border: 1px solid var(--bordercolor);
+    }
+
+    table {
+        width: auto;
+        max-width: 100%;
+        margin: 1em auto;
+        border: var(--print-table-border-width) solid var(--bordercolor);
+        border-collapse: collapse;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    table caption {
+        position: static;
+        width: auto;
+        height: auto;
+        margin-bottom: 0.4em;
+        clip: auto;
+        overflow: visible;
+        white-space: normal;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    th,
+    td {
+        padding: 0.4em;
+        border: var(--print-table-border-width) solid var(--bordercolor);
+        text-align: left;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
+    }
+
+    thead th,
+    table thead th {
+        border: 1px solid var(--bordercolor);
+        background: var(--print-table-header-bg);
+        color: var(--print-table-header-text);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    tbody tr:nth-child(even),
+    #gestione table tbody tr:nth-child(even) {
+        background: var(--print-table-row-alt-bg);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    tbody tr:nth-child(even) th,
+    tbody tr:nth-child(even) td,
+    #gestione table tbody tr:nth-child(even) th,
+    #gestione table tbody tr:nth-child(even) td {
+        border-color: var(--bordercolor);
+        background: var(--print-table-row-alt-bg);
+        color: var(--contenttxtcolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    tbody tr:nth-child(odd),
+    #gestione table tbody tr:nth-child(odd) {
+        background: var(--print-table-row-bg);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    tbody tr:nth-child(odd) th,
+    tbody tr:nth-child(odd) td,
+    #gestione table tbody tr:nth-child(odd) th,
+    #gestione table tbody tr:nth-child(odd) td {
+        border-color: var(--bordercolor);
+        background: var(--print-table-row-bg);
+        color: var(--contenttxtcolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    #gestione {
+        overflow: visible;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
+    }
+
+    #gestione table {
+        min-width: 0;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 10pt;
+        background: var(--contentbgcolor);
+    }
+
+    #gestione table thead th,
+    #info-libro th,
+    #contatti th {
+        background: var(--print-table-header-bg);
+        color: var(--print-table-header-text);
+        border: 1px solid var(--bordercolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    table,
+    th,
+    td,
+    #gestione table,
+    #gestione table th,
+    #gestione table td {
+        border-width: var(--print-table-border-width);
+        border-style: solid;
+        border-color: var(--bordercolor);
+    }
+
+    #gestione .table-actions,
+    #gestione .table-actions-list,
+    #gestione .table-actions-grid,
+    #gestione .table-actions-row {
+        display: block;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
+    }
+
+    .mobile-table-label {
+        display: none;
+    }
+
+    .mobile-table-value {
+        display: inline;
+        padding: 0;
+    }
+
+    .admin-dashboard-layout,
+    .admin-dashboard-main,
+    .admin-library-details {
+        float: none;
+        width: auto;
+        margin: 0;
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
+    }
+
+    .admin-dashboard-section,
+    .admin-library-details {
+        page-break-inside: avoid;
+    }
+
+    .admin-dashboard-list,
+    .admin-stats-list,
+    .admin-links-list,
+    .generalita-list,
+    .admin-summary-list {
+        list-style-type: none;
+        margin: 0.6em 0 1em;
+        padding: 0;
+        border: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
+    }
+
+    .admin-dashboard-list > li,
+    .admin-stats-list > li,
+    .admin-links-list > li,
+    .generalita-list > li,
+    .admin-summary-list > li {
+        float: none;
+        width: auto;
+        min-height: 0;
+        margin: 0;
+        padding: 0.35em 0.5em;
+        border: 0;
+        border-bottom: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
+    }
+
+    .admin-dashboard-list > li:last-child,
+    .admin-stats-list > li:last-child,
+    .admin-links-list > li:last-child,
+    .generalita-list > li:last-child,
+    .admin-summary-list > li:last-child {
+        border-bottom: 0;
+    }
+
+    .admin-page-actions,
+    .admin-links-list a,
+    .generalita-list .actions a {
+        color: var(--contenttxtcolor);
+        background: var(--contentbgcolor);
+        box-shadow: none;
+    }
+
+    .admin-page-actions .admin-primary-link,
+    button.table-action-primary {
+        background: var(--contenttxtcolor);
+        color: var(--contentbgcolor);
+        border-color: var(--bordercolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    nav[aria-label="Navigazione pagine risultati"] {
+        margin-top: 1em;
+        padding-top: 0.5em;
+        border-top: 1px solid var(--bordercolor);
+    }
+
+    nav[aria-label="Navigazione pagine risultati"] ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    nav[aria-label="Navigazione pagine risultati"] li {
+        display: inline-block;
+        margin: 0 0.1em;
+        padding: 0;
+        border: 0;
+    }
+
+    nav[aria-label="Navigazione pagine risultati"] a,
+    nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"] {
+        display: inline-block;
+        min-width: 2em;
+        padding: 0.25em 0.55em;
+        border: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
+        color: var(--txtlinkcolor);
+    }
+
+    nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"] {
+        background: var(--contenttxtcolor);
+        color: var(--contentbgcolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
 }

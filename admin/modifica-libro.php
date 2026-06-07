@@ -14,6 +14,7 @@ $breadcrumb = array(
 $currentPage = 'admin';
 $errorMessage = '';
 $errorMessage = '';
+$returnUrl = getSafeAdminReturnUrl('libri.php');
 
 $libroId = isset($_GET['id']) ? (int) $_GET['id'] : (isset($_POST['id']) ? (int) $_POST['id'] : 0);
 $libro = null;
@@ -82,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
             }
 
             if (updateLibro($conn, $libroId, $dati)) {
-                $res['redirect'] = 'libri.php?updated=1';
+                $res['redirect'] = appendAdminQueryParam($returnUrl, ['updated' => 1]);
             } else {
                 $res['errorMessage'] = 'Aggiornamento non eseguito.';
             }

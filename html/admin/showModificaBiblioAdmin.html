@@ -1,50 +1,36 @@
-<h1>Modifica generalità biblioteca</h1>
+<h2>Modifica generalità biblioteca</h2>
 
 [ERROR_MESSAGE]
 
 [SUCCESS_MESSAGE]
 
-<form method="post">
+<noscript>
+    <p class="warning">
+        JavaScript è disattivato. La validazione dei dati avverrà solo lato server.
+    </p>
+</noscript>
+
+<form class="form admin-form" action="modifica-biblio-admin.php" method="post">
     <input type="hidden" name="azione" value="aggiorna_generalita">
     <input type="hidden" name="biblioteca_id" value="[BIBLIOTECA_ID]">
 
-    <p>
-        <label for="indirizzo">Indirizzo</label><br>
-        <input type="text" id="indirizzo" name="indirizzo" value="[INDIRIZZO]" required>
-    </p>
+    <fieldset>
+        <legend>Generalità</legend>
+        <p><label for="indirizzo">Indirizzo</label><input type="text" id="indirizzo" name="indirizzo" value="[INDIRIZZO]" required aria-required="true" minlength="1" maxlength="100"></p>
+        <p><label for="telefono">Telefono</label><input type="text" id="telefono" name="telefono" value="[TELEFONO]" required aria-required="true" minlength="6" maxlength="20" pattern="[0-9 +()\-\/]{6,20}"></p>
+        <p><label for="email">Email</label><input type="email" id="email" name="email" value="[EMAIL]" required aria-required="true" maxlength="255"></p>
+    </fieldset>
 
-    <p>
-        <label for="telefono">Telefono</label><br>
-        <input type="text" id="telefono" name="telefono" value="[TELEFONO]" required>
-    </p>
+    <fieldset>
+        <legend>Orari e note</legend>
+        <p><label for="orario_lun_ven">Orario Lun-Ven</label><input type="text" id="orario_lun_ven" name="orario_lun_ven" value="[ORARIO_LUN_VEN]" required aria-required="true" minlength="1" maxlength="100"></p>
+        <p><label for="orario_sabato">Orario Sabato</label><input type="text" id="orario_sabato" name="orario_sabato" value="[ORARIO_SABATO]" required aria-required="true" minlength="1" maxlength="100"></p>
+        <p><label for="orario_domenica">Orario Domenica</label><input type="text" id="orario_domenica" name="orario_domenica" value="[ORARIO_DOMENICA]" required aria-required="true" minlength="1" maxlength="100"></p>
+        <p><label for="note">Note</label><textarea id="note" name="note" rows="4" maxlength="500">[NOTE]</textarea></p>
+    </fieldset>
 
-    <p>
-        <label for="email">Email</label><br>
-        <input type="email" id="email" name="email" value="[EMAIL]" required>
-    </p>
-
-    <p>
-        <label for="orario_lun_ven">Orario Lun-Ven</label><br>
-        <input type="text" id="orario_lun_ven" name="orario_lun_ven" value="[ORARIO_LUN_VEN]" required>
-    </p>
-
-    <p>
-        <label for="orario_sabato">Orario Sabato</label><br>
-        <input type="text" id="orario_sabato" name="orario_sabato" value="[ORARIO_SABATO]" required>
-    </p>
-
-    <p>
-        <label for="orario_domenica">Orario Domenica</label><br>
-        <input type="text" id="orario_domenica" name="orario_domenica" value="[ORARIO_DOMENICA]" required>
-    </p>
-
-    <p>
-        <label for="note">Note</label><br>
-        <textarea id="note" name="note" rows="4">[NOTE]</textarea>
-    </p>
-
-    <p>
-        <button type="submit">Aggiorna generalità</button>
-        <a href="index.php">Annulla</a>
-    </p>
+    <fieldset>
+        <legend>Azioni</legend>
+        <p><button type="submit">Salva modifiche</button> <a href="[ANNULLA_HREF]">Annulla</a></p>
+    </fieldset>
 </form>

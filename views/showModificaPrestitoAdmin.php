@@ -2,7 +2,7 @@
 // Expects: $prestitoInModifica (array), $message, $errorMessage
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = '<span>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</span>';
 }
 $successMsg = '';
 if (!empty($message)) {
@@ -11,6 +11,8 @@ if (!empty($message)) {
 $messages = $errorMsg . $successMsg;
 
 $template = file_get_contents(__DIR__ . '/../html/admin/showModificaPrestitoAdmin.html');
+$returnUrl = getSafeAdminReturnUrl('prestiti-utente.php');
+$returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
 
 if (empty($prestitoInModifica)) {
     echo strtr($template, [
@@ -23,8 +25,12 @@ if (empty($prestitoInModifica)) {
         '[LIBRO_ID]' => '',
         '[NUOVO_UTENTE_ID]' => '',
         '[PRESTITO_SUMMARY]' => '',
+        '[TESTO_MODIFICA]' => '',
+        '[TESTO_DETTAGLI]' => '',
         '[LIBRO_HIDDEN]' => '',
         '[UTENTE_HIDDEN]' => '',
+        '[RETURN_URL]' => $returnUrlSafe,
+        '[ANNULLA_HREF]' => $returnUrlSafe,
     ]);
     return;
 }
@@ -41,7 +47,7 @@ foreach ($statiPrestito as $stato) {
     $statiOptions .= '<option value="' . htmlspecialchars($stato, ENT_QUOTES, 'UTF-8') . '"' . $sel . '>' . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . '</option>';
 }
 
-$prestitoSummary = '<ul>'
+$prestitoSummary = '<ul class="admin-summary-list">'
     . '<li><strong>ID</strong>: ' . htmlspecialchars((string) $prestitoInModifica['id'], ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Stato</strong>: ' . htmlspecialchars(["attivo" => 'Attivo', "in_ritardo" => 'In ritardo', "concluso" => 'Concluso'][$prestitoInModifica['stato']] ?? (string) $prestitoInModifica['stato'], ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Libro</strong>: ' . htmlspecialchars((string) ($prestitoInModifica['libro_titolo'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
@@ -62,4 +68,6 @@ echo strtr($template, [
     '[PRESTITO_SUMMARY]' => $prestitoSummary,
     '[LIBRO_HIDDEN]' => '<input type="hidden" name="libro_id" value="' . htmlspecialchars((string) $prestitoInModifica['libro_id'], ENT_QUOTES, 'UTF-8') . '">',
     '[UTENTE_HIDDEN]' => '<input type="hidden" name="nuovo_utente_id" value="' . htmlspecialchars((string) $prestitoInModifica['utente_id'], ENT_QUOTES, 'UTF-8') . '">',
+    '[RETURN_URL]' => $returnUrlSafe,
+    '[ANNULLA_HREF]' => $returnUrlSafe,
 ]);

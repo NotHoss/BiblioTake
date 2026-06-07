@@ -27,25 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli) {
         // nothing to do
     } else {
         $bibliotecaId = (int) $_POST['biblioteca_id'];
-        $dati = [
-            'indirizzo' => trim((string) ($_POST['indirizzo'] ?? '')),
-            'telefono' => trim((string) ($_POST['telefono'] ?? '')),
-            'email' => trim((string) ($_POST['email'] ?? '')),
-            'note' => trim((string) ($_POST['note'] ?? '')),
-            'orario_lun_ven' => trim((string) ($_POST['orario_lun_ven'] ?? '')),
-            'orario_sabato' => trim((string) ($_POST['orario_sabato'] ?? '')),
-            'orario_domenica' => trim((string) ($_POST['orario_domenica'] ?? '')),
-        ];
+        $validation = validateBibliotecaAdminData($_POST);
+        $dati = $validation['dati'];
 
-        if (
-            $bibliotecaId > 0
-            && $dati['indirizzo'] !== ''
-            && $dati['telefono'] !== ''
-            && $dati['email'] !== ''
-            && $dati['orario_lun_ven'] !== ''
-            && $dati['orario_sabato'] !== ''
-            && $dati['orario_domenica'] !== ''
-        ) {
+        if ($bibliotecaId > 0 && $validation['ok']) {
             if (updateBibliotecaInfo($conn, $bibliotecaId, $dati)) {
                 $res['successMessage'] = 'Generalità della biblioteca aggiornate con successo.';
                 $res['biblioteca'] = getBibliotecaInfo($conn);
@@ -55,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli) {
                 $res['isEditGeneralita'] = true;
             }
         } else {
-            $res['errorMessage'] = 'Compila tutti i campi obbligatori delle generalità e degli orari.';
+            $res['errorMessage'] = $validation['errorMessage'] !== '' ? $validation['errorMessage'] : 'Compila tutti i campi obbligatori delle generalità e degli orari.';
             $res['isEditGeneralita'] = true;
         }
     }

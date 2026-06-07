@@ -1,51 +1,55 @@
-<h1>Gestione recensioni</h1>
-<p><a href="utenti.php">Torna agli utenti</a></p>
-
-<div id="catalogo-layout">
-    <aside id="filtri-catalogo">
-        <h3>Filtra i risultati</h3>
-        [SEARCH_FORM]
-    </aside>
-
-    <section id="risultati-catalogo">
-        [RESULTS_INFO]
-
-        [MESSAGES]
-
-        [EMPTY_MESSAGE]
-
-        <div [TABLE_DISPLAY]>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Utente</th>
-                        <th>Libro</th>
-                        <th>Voto</th>
-                        <th>Testo</th>
-                        <th>Data</th>
-                        <th>Stato</th>
-                        <th>Azioni</th>
-                    </tr>
-                </thead>
-                <tbody>
-<!-- ROW_TEMPLATE_START -->
-                    <tr>
-                        <td>[ID]</td>
-                        <td>[UTENTE]</td>
-                        <td>[LIBRO]</td>
-                        <td>[VOTO]</td>
-                        <td>[TESTO]</td>
-                        <td>[DATA]</td>
-                        <td>[STATO]</td>
-                        <td>[AZIONI]</td>
-                    </tr>
-<!-- ROW_TEMPLATE_END -->
-                    [TABLE_ROWS]
-                </tbody>
-            </table>
-        </div>
-
-        [PAGINATION]
-    </section>
+<div class="admin-page-actions">
+    <a class="button button-link admin-return-link" href="index.php">Vai alla dashboard</a>
+    <a class="button button-link admin-return-link" href="utenti.php">Vai agli utenti</a>
 </div>
+
+<h2>Gestione recensioni</h2>
+
+<aside>
+    <h3>Filtra i risultati</h3>
+    [SEARCH_FORM]
+</aside>
+
+<section>
+    [RESULTS_INFO]
+
+    [MESSAGES]
+
+    [EMPTY_MESSAGE]
+
+    <p id="recensioni-table-summary" class="sr-only">Questa tabella elenca le recensioni con identificativo, utente, libro, voto, testo, data, stato e azioni disponibili.</p>
+    <section id="gestione" [TABLE_DISPLAY]>
+        <table aria-describedby="recensioni-table-summary">
+            <caption>Elenco recensioni</caption>
+            <thead>
+                <tr>
+                    <th scope="col" abbr="identificatore">ID</th>
+                    <th scope="col">Utente</th>
+                    <th scope="col">Libro</th>
+                    <th scope="col">Voto</th>
+                    <th scope="col">Testo</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Stato</th>
+                    <th scope="col">Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+<!-- ROW_TEMPLATE_START -->
+                <tr>
+                    <th scope="row"><span class="mobile-table-label" aria-hidden="true">ID</span><span class="mobile-table-value">[ID]</span></th>
+                    <td><span class="mobile-table-label" aria-hidden="true">Utente</span><span class="mobile-table-value">[UTENTE]</span></td>
+                    <td><span class="mobile-table-label" aria-hidden="true">Libro</span><span class="mobile-table-value">[LIBRO]</span></td>
+                    <td><span class="mobile-table-label" aria-hidden="true">Voto</span><span class="mobile-table-value">[VOTO]</span></td>
+                    <td><span class="mobile-table-label" aria-hidden="true">Testo</span><span class="mobile-table-value">[TESTO]</span></td>
+                    <td><span class="mobile-table-label" aria-hidden="true">Data</span><span class="mobile-table-value">[DATA]</span></td>
+                    <td><span class="mobile-table-label" aria-hidden="true">Stato</span><span class="mobile-table-value">[STATO]</span></td>
+                    <td><span class="mobile-table-label" aria-hidden="true">Azioni</span><div class="mobile-table-value table-actions">[AZIONI]</div></td>
+                </tr>
+<!-- ROW_TEMPLATE_END -->
+                [TABLE_ROWS]
+            </tbody>
+        </table>
+    </section>
+
+    [PAGINATION]
+</section>

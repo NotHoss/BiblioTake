@@ -1,46 +1,57 @@
-<h1>Modifica libro</h1>
+<h2>Modifica libro</h2>
 
 [MESSAGES]
 
 [NOT_FOUND_MESSAGE]
 
 <div [FORM_DISPLAY]>
-    <form method="post" enctype="multipart/form-data">
+    <noscript>
+        <p class="warning">
+            JavaScript è disattivato. La validazione dei dati avverrà solo lato server.
+        </p>
+    </noscript>
+
+    <form class="form admin-form" action="modifica-libro.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="[LIBRO_ID]">
-        
-        <p><label>ISBN <input type="text" name="codice_isbn" value="[CODICE_ISBN]"></label></p>
-        <p><label>Titolo <input type="text" name="titolo" value="[TITOLO]"></label></p>
-        <p><label>Autore <input type="text" name="autore" value="[AUTORE]"></label></p>
-        <p><label>Casa editrice <input type="text" name="casa_editrice" value="[CASA_EDITRICE]"></label></p>
-        <p><label>Edizione <input type="number" name="edizione" value="[EDIZIONE]"></label></p>
-        <p><label>Anno <input type="number" name="anno" value="[ANNO]"></label></p>
-        <p><label>Lingua <input type="text" name="lingua" value="[LINGUA]"></label></p>
-        <p><label>Descrizione <textarea name="descrizione">[DESCRIZIONE]</textarea></label></p>
-        <p><label>Pagine <input type="number" name="pagine" value="[PAGINE]"></label></p>
-        <p>
-            <label>Copertina corrente: </label>
-            [COPERTINA_CORRENTE]
-        </p>
-        <p>
-            <label>
-                <input type="checkbox" name="delete_copertina" value="1" [DELETE_COPERTINA_DISABLED] [DELETE_COPERTINA_TITLE]>
-                Elimina copertina corrente
-            </label>
-        </p>
-        <p><label>Carica nuova copertina (JPG, max 5MB) <input type="file" name="copertina_file" accept=".jpg,.jpeg,image/jpeg"></label></p>
-        <p>
-            <label>Categoria
+        <input type="hidden" name="return" value="[RETURN_URL]">
+
+        <fieldset>
+            <legend>Informazioni libro</legend>
+            <p><label for="codice_isbn">ISBN</label><input type="text" name="codice_isbn" id="codice_isbn" value="[CODICE_ISBN]" required aria-required="true" minlength="10" maxlength="20" pattern="[0-9Xx-]{10,20}" title="ISBN di 10 o 13 cifre"></p>
+            <p><label for="titolo">Titolo</label><input type="text" name="titolo" id="titolo" value="[TITOLO]" required aria-required="true" minlength="1" maxlength="30"></p>
+            <p><label for="autore">Autore</label><input type="text" name="autore" id="autore" value="[AUTORE]" required aria-required="true" minlength="1" maxlength="30"></p>
+            <p><label for="casa_editrice">Casa editrice</label><input type="text" name="casa_editrice" id="casa_editrice" value="[CASA_EDITRICE]" required aria-required="true" minlength="1" maxlength="30"></p>
+            <p><label for="edizione">Edizione</label><input type="number" name="edizione" id="edizione" value="[EDIZIONE]" min="1" max="999" step="1" required aria-required="true"></p>
+            <p><label for="anno">Anno</label><input type="number" name="anno" id="anno" value="[ANNO]" min="1000" max="[CURRENT_YEAR]" step="1" required aria-required="true"></p>
+            <p><label for="lingua">Lingua</label><input type="text" name="lingua" id="lingua" value="[LINGUA]" required aria-required="true" minlength="1" maxlength="30"></p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Descrizione e classificazione</legend>
+            <p><label for="descrizione">Descrizione</label><textarea name="descrizione" id="descrizione" required aria-required="true" minlength="1" maxlength="5000">[DESCRIZIONE]</textarea></p>
+            <p><label for="pagine">Pagine</label><input type="number" name="pagine" id="pagine" value="[PAGINE]" min="1" max="99999" step="1" required aria-required="true"></p>
+            <p><label for="categoria-select-edit">Categoria</label>
                 <select name="categoria" id="categoria-select-edit">
                     <option value="">-- Scegli una categoria --</option>
                     [CATEGORIE_OPTIONS]
                     <option value="__NEW__">+ Aggiungi nuova categoria</option>
                 </select>
-            </label>
-            <input type="text" name="categoria_nuova" id="categoria-nuova-edit" placeholder="Nome nuova categoria">
-        </p>
-        <p>
-            <label>Tag (separati da virgola) <input type="text" name="tags" value="[TAGS]" placeholder="es. Fantasy, Storico"></label>
-        </p>
-        <p><button type="submit">Aggiorna libro</button> <a href="libri.php">Annulla</a></p>
+            </p>
+            <p><label for="categoria-nuova-edit">Nuova categoria</label><input type="text" name="categoria_nuova" id="categoria-nuova-edit" maxlength="30" placeholder="Nome nuova categoria"></p>
+            <p><label for="tags">Tag</label><input type="text" name="tags" id="tags" value="[TAGS]" maxlength="255" placeholder="es. Fantasy, Storico"></p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Copertina</legend>
+            <p><label for="copertina_file">Carica nuova copertina (JPG, max 5MB)</label><input type="file" name="copertina_file" id="copertina_file" accept=".jpg,.jpeg,image/jpeg"></p>
+            <p><label>Copertina corrente</label> [COPERTINA_CORRENTE]</p>
+            <p><label for="delete_copertina"><input type="checkbox" name="delete_copertina" id="delete_copertina" value="1" [DELETE_COPERTINA_DISABLED] [DELETE_COPERTINA_TITLE]> Elimina copertina corrente</label></p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Azioni</legend>
+            <p><button type="submit">Salva modifiche</button> <a href="[ANNULLA_HREF]">Annulla</a></p>
+        </fieldset>
+        
     </form>
 </div>
