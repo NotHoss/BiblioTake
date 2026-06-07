@@ -5,21 +5,23 @@
 }
 
 :root{
-    --bgcolor:#6E6FA8; /*colore background sito*/
+    --bgcolor:#5B4B9E; /*colore background sito*/
     --txtcolor:#FFFAF5; /*colore testo sopra background sito*/
-    --focuscolor:#000; /*colore accento (bottoni, focus, hover, tag)*/
-    --breadbgcolor:#A836F4; /*colore background breadcrumb*/
-    --txtlinkcolor:#000; /*colore link sopra background sito/breadcrumb*/
-    --txtlinkvisited:#A836F4;
-    --linkcolor:#FFFAF5; /*colore link sopra background sito/breadcrumb*/
-    --linkvisited:#000;
-    --hovercolor:#616294;
-    --bordercolor:#000;
-    --eventablecolor:#EBFFFE;
+    --breadcolor:#9530DD; /*colore accento (link, tag, hover)*/
+    --focuscolor:#000; /*colore focus su sfondo chiaro*/
+    --focuscolorlight:#FFFAF5; /*colore focus su sfondo scuro*/
+    --breadbgcolor:#4E4090; /*colore background bottoni*/
+    --txtlinkcolor:#000; /*colore link nel contenuto*/
+    --txtlinkvisited:#9530DD; /*colore link visitati nel contenuto*/
+    --linkcolor:#FFFAF5; /*colore link su sfondo scuro*/
+    --linkvisited:#D4CEE8; /*colore link visitati su sfondo scuro*/
+    --hovercolor:#616294; /*colore hover navigazione*/
+    --bordercolor:#000; /*colore bordi principali*/
+    --eventablecolor:#EBFFFE; /*colore sfondo tabella eventi*/
     --contentbgcolor:#FFFAF5; /*colore background contenuto*/
     --contenttxtcolor:#000; /*colore testo sopra background contenuto*/
-    --shadowcolor:rgba(62, 62, 107, 0.18);
-    --borderlightcolor: #e5e0ee;
+    --shadowcolor:rgba(62, 62, 107, 0.18); /*colore ombra*/
+    --borderlightcolor:#e5e0ee; /*colore bordi leggeri*/
 }
 
 html, body{ 
@@ -112,6 +114,12 @@ textarea:focus{
     outline-offset: 2px;
 }
 
+header a:focus,
+header button:focus,
+.breadcrumb a:focus{
+    outline-color: var(--focuscolorlight);
+}
+
 /*Link nel contenuto*/
 main a:link{
     color: var(--txtlinkcolor);
@@ -200,10 +208,11 @@ BREADCRUMB
 ==========================
 */
 .breadcrumb{
-    background-color: var(--breadbgcolor);
+    background-color: var(--bgcolor);
     color: var(--txtcolor);
     font-size: 0.95em;
     padding: 0.5em 4%;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .breadcrumb ul{
@@ -226,7 +235,7 @@ BREADCRUMB
 }
 
 .breadcrumb a:visited {
-  color: var(--linkcolor);
+  color: var(--txtcolor);
 }
 
 .breadcrumb a:hover,
@@ -359,7 +368,7 @@ button.table-action{
     min-height: 2.5em;
     border: 1px solid var(--breadbgcolor);
     border-radius: 0.35em;
-    background: var(--contentbgcolor);
+    background: #fff;
     color: var(--txtlinkcolor);
     text-decoration: none;
     font-size: 0.9em;
@@ -413,7 +422,7 @@ button.table-action-primary{
     margin: 0 0.75rem 0.75rem 0;
     border-radius: 0.45rem;
     border: 2px solid var(--breadbgcolor);
-    background: var(--contentbgcolor);
+    background: #fff;
     color: var(--txtlinkcolor);
     text-decoration: none;
     font-weight: normal;
@@ -630,7 +639,7 @@ SEZIONE CATEGORIE (Homepage)
 #categorie a{
     display: block;
     padding: 0.4em 1.1em;
-    background: var(--contentbgcolor);
+    background: #fff;
     color: var(--txtlinkcolor);
     text-decoration: none;
     border-radius: 1.5em;
@@ -811,7 +820,7 @@ FORM
     margin: 0 0 1rem;
     padding: 1rem;
     border: 0;
-    border-top: 1px solid #e4d9f5;
+    border-top: 1px solid #ece0f8;
 }
 
 .admin-form fieldset::after{
@@ -906,7 +915,7 @@ FORM
     padding: 0.65rem 1rem;
     border-radius: 0.45rem;
     border: 2px solid var(--breadbgcolor);
-    background: var(--contentbgcolor);
+    background: #fff;
     color: var(--txtlinkcolor);
     font-weight: normal;
     line-height: 1.2;
@@ -931,10 +940,10 @@ FORM
     list-style-type: none;
     margin: 0.8rem 0 1rem;
     padding: 0.9rem 1rem;
-    border: 1px solid #e5e0ee;
+    border: 1px solid var(--borderlightcolor);
     border-left: 0.35rem solid var(--breadbgcolor);
     border-radius: 0.45rem;
-    background: var(--contentbgcolor);
+    background: #fff;
 }
 
 .generalita-list > li{
@@ -954,7 +963,7 @@ FORM
     padding: 0.65rem 1rem;
     border-radius: 0.45rem;
     border: 2px solid var(--breadbgcolor);
-    background: var(--contentbgcolor);
+    background: #fff;
     color: var(--txtlinkcolor);
     font-weight: normal;
     line-height: 1.2;
@@ -1358,7 +1367,7 @@ DESCRIZIONE, TAG, AZIONI
 #tag-libro a{
     display: block;
     padding: 0.3em 0.9em;
-    background: var(--contentbgcolor);
+    background: #fff;
     color: var(--contenttxtcolor);
     text-decoration: none;
     border-radius: 1.5em;
@@ -1431,7 +1440,7 @@ RECENSIONI LIBRO
     margin: 0;
     padding: 0 0 0.6em 0;
     text-align: left;
-    border-bottom: 1px solid #f0e8f8;
+    border-bottom: 1px solid var(--borderlightcolor);
     margin-bottom: 0.7em;
 }
 
@@ -1515,7 +1524,7 @@ FONDATORI
     height: 16em;
     object-fit: cover;
     border-radius: 50%;
-    border: 3px solid #e5e0ee;
+    border: 3px solid var(--borderlightcolor);
     box-shadow: 0 2px 8px rgba(62, 62, 107, 0.1);
 }
 
@@ -1541,7 +1550,7 @@ CONTATTI
 }
 
 #contatti a{
-    color: #5B3E96;
+    color: var(--breadcolor);
 }
 
 #contatti a:hover{
