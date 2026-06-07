@@ -62,6 +62,227 @@ SEZIONE BREADCRUMB
 
 /*
 ==========================
+SEZIONE DASHBOARD
+==========================
+*/
+
+/*User*/
+
+/*========= NASCONDERE =========*/
+
+.sidebar-user, .sidebar-hamburger, .sidebar-toggle,
+noscript, script, #no-js-message, #modifica-account,
+.page-content-user-return, .elimina, .elimina-card, 
+.form-elimina, .form-elimina-recensione, 
+.settings, .avatar-option, .profile-image-small,
+input[type="hidden"]
+{
+    display: none;
+}
+
+.page-content-user {
+        margin-left: 0;
+    }
+
+    #username {
+        text-align: left;
+        font-size: 1.4em;
+        margin-bottom: 0.5em;
+        overflow: visible;
+        white-space: normal;
+    }
+
+    .username-image-small {
+        display: block;
+        margin-bottom: 1em;
+    }
+
+    .profile-image-big {
+        display: block;
+        width: 150px;
+        height: auto;
+        margin: 0 auto 1em;
+        border: 1px solid #000;
+    }
+
+    .user-info {
+        margin-bottom: 1em;
+    }
+
+    .credentials {
+        border: 1px solid #000;
+        padding: 0.75em;
+        margin-bottom: 1em;
+    }
+
+    .credentials p {
+        margin-bottom: 0.3em;
+    }
+
+    #modifica-account {
+        margin-top: 1em;
+    }
+
+    #modifica-account a {
+        display: inline-block;
+        padding: 0.25em 0.55em;
+        border: 1px solid #000;
+        background: #fff;
+        color: #000;
+    }
+
+/*========= RECENSIONI =========*/
+
+        .lista-recensioni {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .recensione-card {
+        border: 1px solid #000;
+        padding: 1em;
+        margin-bottom: 1em;
+        page-break-inside: avoid;
+    }
+
+    .recensione-card header {
+        border-bottom: 1px solid #000;
+        padding-bottom: 0.5em;
+        margin-bottom: 0.7em;
+    }
+
+    .recensione-card header p {
+        display: inline;
+        margin-right: 1em;
+    }
+
+    .recensione-titolo a {
+        font-weight: bold;
+        color: #000;
+    }
+
+    .recensione-card > p {
+        color: #000;
+    }
+
+/*========= FORM (Aggiungi Recensione, Modifica) =========*/
+    .form,
+    .form-recensione {
+        display: block;
+        page-break-inside: avoid;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.2em;
+        color: #000;
+    }
+
+    input, select, textarea {
+        display: inline-block;
+        width: auto;
+        max-width: 100%;
+        padding: 0.2em 0.35em;
+        border: 1px solid #000;
+        background: #fff;
+        color: #000;
+        font: inherit;
+    }
+
+    textarea {
+        display: block;
+        width: 100%;
+        min-height: 5em;
+    }
+
+    button,
+    input[type="submit"] {
+        display: inline-block;
+        padding: 0.25em 0.55em;
+        border: 1px solid #000;
+        background: #000;
+        color: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .form a,
+    .form-button {
+        display: inline-block;
+        padding: 0.25em 0.55em;
+        border: 1px solid #000;
+        background: #fff;
+        color: #000;
+    }
+
+/*
+==========================
+TABELLA PRESTITI
+==========================
+*/
+
+/*User*/
+#prestiti-table {
+        width: auto;
+        max-width: 100%;
+        margin: 1em auto;
+        border: 1px solid #000;
+        border-collapse: collapse;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    #prestiti-table-header {
+        position: static;
+        background: #ccc;
+        color: #000;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    #prestiti-table th,
+    #prestiti-table td {
+        padding: 0.4em;
+        border: 1px solid #000;
+        text-align: left;
+        color: #000;
+        background: #fff;
+    }
+
+    #prestiti-table thead th {
+        background: #ccc;
+        color: #000;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    #prestiti-table tbody tr:nth-child(odd) {
+        background: var(--eventablecolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    #prestiti-table tbody tr:nth-child(odd) th,
+    #prestiti-table tbody tr:nth-child(odd) td {
+        background: var(--eventablecolor);
+        color: #000;
+        border-color: #000;
+    }
+
+    #prestiti-table tbody tr:nth-child(even) {
+        background: #fff;
+    }
+
+    #prestiti-table tbody tr:nth-child(even) th,
+    #prestiti-table tbody tr:nth-child(even) td {
+        background: #fff;
+        color: #000;
+        border-color: #000;
+    }
+
+/*
+==========================
 SEZIONE FOOTER
 ==========================
 */
