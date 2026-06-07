@@ -102,4 +102,7 @@ $replacements = array(
     '[BREADCRUMB]' => $breadcrumbHtml,
 );
 
-echo strtr($template, $replacements);
+$parteBPages = array('home', 'catalogo', 'about', 'contatti');
+$mainClass = (isset($currentPage) && in_array($currentPage, $parteBPages)) ? ' class="public-area"' : '';
+$output = strtr($template, $replacements);
+echo str_replace('<main id="main-content">', '<main id="main-content"' . $mainClass . '>', $output);

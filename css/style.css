@@ -1540,8 +1540,67 @@ CONTATTI
     max-width: 35em;
 }
 
+#contatti a{
+    color: #5B3E96;
+}
+
 #contatti a:hover{
     color: var(--breadbgcolor);
+}
+
+/*
+==========================
+OVERRIDE PARTE B (.public-area)
+==========================
+*/
+
+.public-area{
+    max-width: 1800px;
+    padding: 2em 3%;
+}
+
+.public-area > section > h3,
+.public-area > article > section > h3{
+    border-bottom-color: var(--breadbgcolor);
+}
+
+#filtri-catalogo{
+    margin-left: -12%;
+    font-size: 1.05em;
+}
+
+#filtri-catalogo label{
+    font-size: 1.1em;
+}
+
+#filtri-catalogo input[type="search"],
+#filtri-catalogo input[type="text"],
+#filtri-catalogo input[type="number"],
+#filtri-catalogo select{
+    font-size: 1.05em;
+}
+
+#filtri-catalogo button{
+    font-size: 1.05em;
+    font-weight: bold;
+}
+
+#info-libro th,
+#info-libro td,
+#contatti th,
+#contatti td{
+    border-bottom: 1px solid #e8e3f0;
+}
+
+#info-libro th,
+#contatti th{
+    background: #f7f2fc;
+    color: #3D3E6B;
+}
+
+#info-libro tbody tr:hover,
+#contatti tbody tr:hover{
+    background: #faf7fe;
 }
 
 /*
