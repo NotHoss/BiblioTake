@@ -19,6 +19,9 @@
     --contentbgcolor:#FFFAF5; /*colore background contenuto*/
     --contenttxtcolor:#000; /*colore testo sopra background contenuto*/
     --shadowcolor:rgba(62, 62, 107, 0.18);
+    --deletecolor: #DC2626;       /* rosso accessibile - stato normale */
+    --deletehovercolor: #991B1B;  /* rosso scuro - hover */
+    --deletebordercolor: #991B1B; /* bordo - stato normale */
 }
 
 html, body{ 
@@ -764,6 +767,14 @@ FILTRI (aside)
 
 /*User*/
 
+.sidebar-toggle {
+    display: none;
+}
+
+.sidebar-hamburger {
+    display: none;
+}
+
 .sidebar-user{
     float: left;
     width: 24%;
@@ -962,7 +973,7 @@ nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"]{
     border: 1px solid var(--breadbgcolor);
 }
 
-#page-content-user ~ nav[aria-label="Navigazione pagine risultati"] {
+.page-content-user ~ nav[aria-label="Navigazione pagine risultati"] {
     margin-left: 26%;
 }
 
@@ -1140,7 +1151,11 @@ RECENSIONI LIBRO
 .form-recensione{
     display: flex;
     flex-direction: column;
-    gap: 20px;    
+    gap: 20px;
+}
+
+.form-elimina{
+
 }
 
 /*
@@ -1230,8 +1245,20 @@ DASHBOARD
     color: var(--txtcolor);
 }
 
-#page-content-user{
+.page-content-user{
     margin-left: 26%;
+}
+
+.page-content-user-return{
+    margin-top: 2em;
+}
+
+.page-content-user-elimina{
+    margin-top: 1em;
+}
+
+.confirm-message{
+    padding: 1em 1em 1em 0;
 }
 
 #username{
@@ -1249,6 +1276,7 @@ DASHBOARD
 .credentials{
     padding: 0.75em 0;
 }
+
 .credentials p + p{
     padding: 0.25em 0;
 }
@@ -1257,7 +1285,7 @@ DASHBOARD
     margin-top: 1.5em;
 }
 
-#elimina-account{
+.elimina{
     margin-top: 1.5em;
 }
 
@@ -1271,22 +1299,50 @@ DASHBOARD
     text-decoration: none;
 }
 
-#elimina-account a{
-    padding: 0.5em;
-    border-radius: 0.35em;
-    background: var(--bgcolor);
+main .elimina a, main .elimina button, main .form-elimina button{
+    background-color: var(--deletecolor);
+    border: 1px solid var(--deletebordercolor);
     color: var(--txtcolor);
     text-decoration: none;
+    padding: 0.5em;
+    border-radius: 0.35em;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+main .elimina a:hover, main .elimina a:focus,
+main .elimina button:hover, main .elimina button:focus,
+main .form-elimina button:hover, main .form-elimina button:focus{
+    background-color: var(--deletehovercolor);
+    border-color: var(--deletehovercolor);
+    color: var(--txtcolor);
+}
+
+main .elimina-card a{
+    background-color: var(--deletecolor);
+    border: 1px solid var(--deletebordercolor);
+    color: var(--txtcolor);
+    text-decoration: none;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border-radius: 0.35em;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+main .elimina-card a:hover, main .elimina-card a:focus{
+    background-color: var(--deletehovercolor);
+    border-color: var(--deletehovercolor);
+    color: var(--txtcolor);
 }
 
 #modifica-account a:hover{
     background: var(--breadbgcolor);
     border: 1px solid var(--bgcolor);
     color: var(--txtcolor);
-}
-#elimina-account a:hover{
-    background: var(--breadbgcolor);
-    border: 1px solid var(--bgcolor);
 }
 
 .lista-recensioni{
@@ -1302,6 +1358,7 @@ DASHBOARD
     color: var(--txtlinkcolor);
     text-decoration: none;
 }
+
 
 /*
 ==========================

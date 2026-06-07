@@ -13,7 +13,6 @@ $successMessage = '';
 $breadcrumb = array(
     array('label' => 'Home',     'href' => 'index.php'),
     array('label' => 'Libro', 'href' => 'dashboard.php'),
-    //array('label' => 'Recensioni', 'href' => 'recensioni.php'),
     array('label' => 'Aggiungi Recensione', 'href' => ''),
 );
 
@@ -32,20 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 
-    $libroIdHtml    = (int) $libro['id'];
-    $libroTitoloHtml = htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8');
-
     require_once __DIR__ . '/../views/template/header.php';
-    require_once __DIR__ . '/../views/template/sidebar-user.php';
-
-    $template = file_get_contents(__DIR__ . '/../html/user/showAggiungiRecensione.html');
-    echo strtr($template, [
-        '[MESSAGES]'     => '',
-        '[LIBRO_ID]'     => $libroIdHtml,
-        '[LIBRO_TITOLO]' => $libroTitoloHtml,
-    ]);
-
+    require_once __DIR__ . '/../views/showAggiungiRecensione.php';
     require_once __DIR__ . '/../views/template/footer.php';
+
     if ($conn instanceof mysqli) { $conn->close(); }
     exit;
 }
@@ -80,18 +69,8 @@ if ($voto < 1 || $voto > 5 || $testo === '') {
 }
 
 // Se c'è un errore, mostra di nuovo il form
-$libroTitoloHtml = htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8');
-
 require_once __DIR__ . '/../views/template/header.php';
-require_once __DIR__ . '/../views/template/sidebar-user.php';
-
-$template = file_get_contents(__DIR__ . '/../html/user/showAggiungiRecensione.html');
-echo strtr($template, [
-    '[MESSAGES]'     => '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>',
-    '[LIBRO_ID]'     => (int) $libro['id'],
-    '[LIBRO_TITOLO]' => $libroTitoloHtml,
-]);
-
+require_once __DIR__ . '/../views/showAggiungiRecensione.php';
 require_once __DIR__ . '/../views/template/footer.php';
+
 if ($conn instanceof mysqli) { $conn->close(); }
-?>

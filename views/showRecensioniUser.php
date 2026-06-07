@@ -35,10 +35,10 @@ foreach ($recensioni as $rec) {
 
 // r.id, l.titolo, l.autore, l.id, r.valutazione, r.testo, r.data
 
-    $id = htmlspecialchars((string) $rec['id'], ENT_QUOTES, 'UTF-8');
+    $id = htmlspecialchars((string) $rec['recensione_id'], ENT_QUOTES, 'UTF-8');
     $titolo = htmlspecialchars((string) $rec['titolo'], ENT_QUOTES, 'UTF-8');
     $autore = htmlspecialchars((string) $rec['autore'], ENT_QUOTES, 'UTF-8');
-    $libroId = htmlspecialchars((string) $rec['id'], ENT_QUOTES, 'UTF-8');
+    $libroId = htmlspecialchars((string) $rec['libro_id'], ENT_QUOTES, 'UTF-8');
     $valutazione = (int) $rec['valutazione'];
     $testo = htmlspecialchars((string) $rec['testo'], ENT_QUOTES, 'UTF-8');
     $data = htmlspecialchars((string) $rec['data'], ENT_QUOTES, 'UTF-8');
@@ -53,6 +53,7 @@ foreach ($recensioni as $rec) {
     $listaCard .= '<p>' . $autore . '</p>';
     $listaCard .= '<p><time datetime="' . $dataAttr . '">' . $dataHtml . '</time></p>';
     $listaCard .= '<p><strong>Valutazione: </strong>' . $valutazione . '</p>';
+    $listaCard .= '<p class="elimina-card"><a href="../user/elimina-recensione.php?id=' . $id . '">Elimina</a></p>';
     $listaCard .= '</header>';
     $listaCard .= '<p>' . $testo . '</p>';
     $listaCard .= '</article>';

@@ -34,26 +34,6 @@ function getPrestitiUser($conn, $userId, $tipo = 'attivi') {        //la variabi
     return $prestiti;
 }
 
-function getRecensioniUser($conn, $userId) {
-    $stmt = $conn->prepare(
-        "SELECT r.id, l.titolo, l.autore, l.id, r.valutazione, r.testo, r.data
-         FROM recensione r
-         JOIN libro l ON r.libro_id = l.id
-         WHERE r.utente_id = ?"
-    );
-    
-    if (!$stmt) {throw new RuntimeException("Errore prepare SQL: " . $conn->error);}
-    if (!$stmt->bind_param('i', $userId)) {throw new RuntimeException("Errore bind_param");;}
-    if (!$stmt->execute()) {throw new RuntimeException("Errore esecuzione query");}
-
-    $result = $stmt->get_result();
-    if (!$result) {throw new RuntimeException("Errore recupero risultati");}
-
-    $recensioni = $result->fetch_all(MYSQLI_ASSOC);
-    $stmt->close();
-    return $recensioni;
-}
-
 function getUserInfo($conn, $userId) {
     $stmt = $conn->prepare("SELECT id, email, username, foto_profilo, ruolo FROM utente WHERE id = ?");
     
