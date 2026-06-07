@@ -1,80 +1,58 @@
-<!doctype html>
-<html lang="it">
-    <head>
-        <link rel="preload" href="fonts/OpenDyslexic-Regular.woff2" as="fnt" type="font/woff2" crossorigin />
-        <link rel="preload" href="fonts/OpenDyslexic-Bold.woff2" as="font" type="font/woff2" crossorigin />
-    </head>
-    
-    <body>
-        <div id="delete-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #0b0b0b41; padding: 10px; z-index: 100; justify-content: center; align-items: center;">
-            <div style="background-color: white; padding: 20px; border-radius: 5px; text-align: center; display: flex; flex-direction: column; gap: 20px;">
-                <p style="font-size: larger;" >
-                    Sei sicuro di voler eliminare il tuo account?
-                </p>
-                <div style="display: flex; width: 100%; justify-content: end; gap: 10px;">
-                    <button id="confirm-delete" style="background-color: rgb(142, 28, 28); color: white; padding: 5px 8px; border: none; border-radius: 3px;">
-                        Sì, elimina
-                    </button>
-                    <button id="cancel-delete" style=" background-color: lightgray; color: black; padding: 5px 8px; border: none; border-radius: 3px;">
-                        Annulla
-                    </button>
-                </div>
+<div id="user-dashboard">
+
+    <div id="delete-modal" class="confirm-modal" aria-modal="true" role="dialog" aria-labelledby="modal-title" hidden>
+        <div class="confirm-modal-box">
+            <p id="modal-title">Sei sicuro di voler eliminare il tuo account?</p>
+            <div class="confirm-modal-actions">
+                <button id="confirm-delete" class="btn-danger">Sì, elimina</button>
+                <button id="cancel-delete" class="btn-secondary">Annulla</button>
             </div>
         </div>
+    </div>
 
-        <div id="error-message"></div>
+    <noscript>
+        <div class="auth-errors" role="alert">
+            <ul><li>JavaScript è disabilitato. Alcune funzionalità potrebbero non essere disponibili.</li></ul>
+        </div>
+    </noscript>
 
-        <noscript>
-            <div id="no-js-message">
-                <strong>JavaScript &egrave; disabilitato.</strong>
-            </div>
-        </noscript>
+    [TO-LOGIN]
 
-        <div id="error-message"></div>
+    <h2>[USERNAME]</h2>
 
-        <div id="page-content">
-            [TO-LOGIN]
-            <h2>[USERNAME]</h2>
-
-            <div >
-                <h3>Informazioni utente</h3>
-                <div>
-                    <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" width="48" height="48">
-                </div>
-                <div >
-                    <p>Email: [EMAIL]</p>
-                    <p>Password: [PASSWORD]</p>
-                </div>
-            </div>
-            <div>
-                <a href="modifica-user.php">Modifica informazioni</a>
-            </div>
-            <div>
-                <form method="post" action="elimina-user.php" id="form-delete">
-                    <button type="submit">Elimina Account</button>
+    <section aria-labelledby="info-utente-titolo">
+        <h3 id="info-utente-titolo">Informazioni utente</h3>
+        <ul class="generalita-list">
+            <li class="user-avatar-item">
+                <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="user-avatar">
+            </li>
+            <li><strong>Email:</strong> [EMAIL]</li>
+            <li><strong>Password:</strong> [PASSWORD]</li>
+            <li class="actions">
+                <a href="modifica-user.php" class="btn-primary">Modifica informazioni</a>
+                <form method="post" action="elimina-user.php" id="form-delete" style="display:inline">
+                    <button type="submit" class="btn-danger">Elimina account</button>
                 </form>
-            </div>
-            
-            <script src="scripts/back-to-top.js"></script>
-        </div>
+            </li>
+        </ul>
+    </section>
 
-        <script>
-            const formDelete = document.getElementById('form-delete');
-            const deleteModal = document.getElementById('delete-modal');
+</div>
 
-            formDelete.addEventListener('submit', (event) => {
-                event.preventDefault();
-                deleteModal.style.display = 'flex';     //rende visibile la finestra di avviso (con display: flex)
-            });
+<script>
+    const formDelete = document.getElementById('form-delete');
+    const deleteModal = document.getElementById('delete-modal');
 
-            document.getElementById('confirm-delete').addEventListener('click', () => {
-                formDelete.submit();
-            });
+    formDelete.addEventListener('submit', function(event) {
+        event.preventDefault();
+        deleteModal.hidden = false;
+    });
 
-            document.getElementById('cancel-delete').addEventListener('click', () => {
-                deleteModal.style.display = 'none';
-            });
-        </script>
-    </body>
-</html>
+    document.getElementById('confirm-delete').addEventListener('click', function() {
+        formDelete.submit();
+    });
 
+    document.getElementById('cancel-delete').addEventListener('click', function() {
+        deleteModal.hidden = true;
+    });
+</script>

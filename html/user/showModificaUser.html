@@ -1,48 +1,44 @@
-<div id="error-message"></div>
+<div id="user-modifica">
 
-<noscript>
-    <div id="no-js-message">
-        <strong>JavaScript &egrave; disabilitato.</strong>
-    </div>
-</noscript>
+    <noscript>
+        <div class="auth-errors" role="alert">
+            <ul><li>JavaScript è disabilitato. Alcune funzionalità potrebbero non essere disponibili.</li></ul>
+        </div>
+    </noscript>
 
-<div id="page-content">
     [TO-LOGIN]
-    <h2>[USERNAME]</h2>
 
-    <div >
-        <h3>Modifica Profilo</h3>
-        <form method="POST" action="modifica-user.php" id="modifica-profilo">
-            <section>
+    <h2>Modifica profilo</h2>
 
-                <!-- <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" width="48" height="48"> 
-                    per ora tolgo la possibilità di cambiare l'immagine, perché dovremmo creare una lista di immagini 
-                    da cui scegliere, e trovare un modo per cui se clicchi sull'immagine, ti copia il percorso 
-                <input type="file" name="new_profile_image" enctype="multipart/form-data" accept="image/*" value="null"/>
-                -->
-
-                <p>Username:</p>
-                <input type="text" name="new_username" value="[USERNAME]" placeholder="Username">
-                <p>Email:</p>
-                <input type="email" name="new_email" value="[EMAIL]" placeholder="Email">
-                <div>
-                    <p>Password:</p>
-                    <input type="password" name="current_password" placeholder="Password attuale"/>
-                    <input type="password" name="new_password" placeholder="Nuova password"/>
-                    <input type="password" name="confirm_new_password" placeholder="Conferma nuova password"/>
-                </div>
-            </section>
+    <form method="POST" action="modifica-user.php" id="modifica-profilo" class="form user-edit-form">
+        <section>
             <p>
-                <input type="submit" class="form-button" name="salva-modifiche" value="Salva Modifiche"/>
-                <a href="dashboard.php">Annulla</a>
+                <label for="new_username">Username</label>
+                <input type="text" id="new_username" name="new_username" value="[USERNAME]" required>
             </p>
-        </form>
-    </div>
-    <!--<div>
-        <a href="user/modifica-utente.php">Conferma modifiche</a>
-    </div>-->
-        
-    <script src="scripts/back-to-top.js"></script>
+            <p>
+                <label for="new_email">Email</label>
+                <input type="email" id="new_email" name="new_email" value="[EMAIL]" required>
+            </p>
+            <p>
+                <label for="current_password">Password attuale</label>
+                <input type="password" id="current_password" name="current_password">
+            </p>
+            <p>
+                <label for="new_password">Nuova password</label>
+                <input type="password" id="new_password" name="new_password">
+            </p>
+            <p>
+                <label for="confirm_new_password">Conferma nuova password</label>
+                <input type="password" id="confirm_new_password" name="confirm_new_password">
+            </p>
+        </section>
+        <p class="form-actions">
+            <button type="submit" name="salva-modifiche" class="btn-primary">Salva modifiche</button>
+            <a href="dashboard.php" class="btn-secondary-link">Annulla</a>
+        </p>
+    </form>
+
 </div>
 
 <script>
@@ -54,19 +50,11 @@
 
             let hasChanges = false;
 
-            inputs.forEach(input => {
-                const originalValue = input.defaultValue;
-                if (input.value !== originalValue) {
+            inputs.forEach(function(input) {
+                if (input.value !== input.defaultValue) {
                     hasChanges = true;
-                    input.dataset.modified = 'true';
                 }
             });
-
-            // Per l'immagine: controlla se è stato selezionato un file
-            const fileInput = form.querySelector('input[type="file"]');
-            if (fileInput && fileInput.files.length > 0) {
-                hasChanges = true;
-            }
 
             if (!hasChanges) {
                 e.preventDefault();
