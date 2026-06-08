@@ -6,6 +6,8 @@
     */
     #gestione {
         overflow: visible;
+        width: 100%;
+        margin-left: 0;
     }
 
     #gestione table {
@@ -427,12 +429,39 @@
         text-align: center;
     }
 
+    .admin-page-actions {
+        width: 100%;
+        margin-left: 0;
+        display: block;
+    }
+
     .admin-form fieldset > p,
     .admin-search-form > div,
     .admin-search-form .compact-row > div {
         float: none;
+        flex: 1 1 100%;
         width: 100%;
         margin-right: 0;
+    }
+
+    .admin-search-form,
+    .admin-search-form .compact-row {
+        display: block;
+    }
+
+    .admin-search-form {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .admin-filter-panel {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .admin-dashboard-layout {
+        width: 100%;
+        margin-left: 0;
     }
 
     .admin-quick-nav,

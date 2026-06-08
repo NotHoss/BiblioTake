@@ -342,10 +342,16 @@ table a:visited {
 }
 
 #gestione table {
-  min-width: fit-content;
+  width: 100%;
+  min-width: 0;
   border-collapse: collapse;
   margin: 1rem auto 0;
   background-color: var(--contentbgcolor);
+}
+
+#gestione{
+    width: min(94vw, 1692px);
+    margin-left: calc(50% - min(47vw, 846px));
 }
 
 #gestione table tr:nth-child(even){
@@ -405,21 +411,28 @@ button.table-action-primary{
 
 .admin-page-actions{
     margin: 0 0 1rem;
+    width: min(94vw, 1692px);
+    margin-left: calc(50% - min(47vw, 846px));
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
 .admin-page-actions::after{
-    content: "";
-    display: table;
-    clear: both;
+    content: none;
+    display: none;
 }
 
 .admin-page-actions .button-link,
 .admin-page-actions .admin-return-link,
 .admin-page-actions .admin-primary-link{
-    float: left;
+    float: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-height: 2.75rem;
     padding: 0.5rem 1rem;
-    margin: 0 0.75rem 0.75rem 0;
+    margin: 0;
     border-radius: 0.45rem;
     border: 2px solid var(--breadbgcolor);
     background: #fff;
@@ -840,6 +853,8 @@ FORM
 
 .admin-dashboard-layout{
     margin-top: 1.5rem;
+    width: min(94vw, 1692px);
+    margin-left: calc(50% - min(47vw, 846px));
 }
 
 .admin-dashboard-layout::after{
@@ -1093,32 +1108,58 @@ FILTRI (aside)
 
 /*Admin*/
 
+.admin-filter-panel{
+    width: min(94vw, 1692px);
+    margin-left: calc(50% - min(47vw, 846px));
+}
+
+.admin-filter-panel h3{
+    margin-bottom: 0.8em;
+}
+
 .admin-search-form{
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem 2%;
+    width: 100%;
+    margin-bottom: 1.25rem;
 }
 
 .admin-search-form::after{
-    content: "";
-    display: table;
-    clear: both;
+    content: none;
+    display: none;
 }
 
 .admin-search-form > div{
-    float: left;
-    width: 48%;
-    margin: 0 2% 1rem 0;
+    float: none;
+    flex: 1 1 16rem;
+    width: auto;
+    margin: 0;
 }
 
 .admin-search-form .search-form-actions{
-    clear: both;
+    clear: none;
     float: none;
+    flex: 1 1 100%;
     width: 100%;
-    margin-top: 0.3rem;
+    margin-top: 0;
+    text-align: center;
 }
 
 .admin-search-form .search-form-actions button,
 .admin-search-form .search-form-actions a{
     width: auto;
+}
+
+.admin-search-form .search-form-actions button{
+    display: block;
+    margin: 0 auto;
+}
+
+.admin-search-form .search-form-actions a{
+    display: table;
+    margin: 0.6rem auto 0;
 }
 
 .admin-search-form input[type="checkbox"]{
@@ -1127,21 +1168,24 @@ FILTRI (aside)
 }
 
 .admin-search-form .compact-row{
-    clear: both;
-    display: block;
+    clear: none;
+    display: flex;
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+    gap: 1rem 2%;
     width: 100%;
 }
 
 .admin-search-form .compact-row::after{
-    content: "";
-    display: table;
-    clear: both;
+    content: none;
+    display: none;
 }
 
 .admin-search-form .compact-row > div{
-    float: left;
-    width: 23%;
-    margin-right: 2%;
+    float: none;
+    flex: 1 1 12rem;
+    width: auto;
+    margin-right: 0;
     min-width: 8rem;
 }
 
