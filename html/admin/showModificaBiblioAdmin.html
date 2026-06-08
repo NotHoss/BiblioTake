@@ -16,17 +16,17 @@
 
     <fieldset>
         <legend>Generalità</legend>
-        <p><label for="indirizzo">Indirizzo</label><input type="text" id="indirizzo" name="indirizzo" value="[INDIRIZZO]" required aria-required="true" minlength="1" maxlength="100"></p>
-        <p><label for="telefono">Telefono</label><input type="text" id="telefono" name="telefono" value="[TELEFONO]" required aria-required="true" minlength="6" maxlength="20" pattern="[0-9 +()\-\/]{6,20}"></p>
-        <p><label for="email">Email</label><input type="email" id="email" name="email" value="[EMAIL]" required aria-required="true" maxlength="255"></p>
+        <p><label for="indirizzo">Indirizzo</label><input type="text" id="indirizzo" name="indirizzo" value="[INDIRIZZO]" required aria-required="true" minlength="1" maxlength="100" autocomplete="street-address" placeholder="es. Via Roma 1, Padova" aria-describedby="indirizzo_help"><span class="field-help" id="indirizzo_help">Inserisci l'indirizzo mettendo Via e citt&agrave; separate da virgola.</span></p>
+        <p><label for="telefono">Telefono</label><input type="text" id="telefono" name="telefono" value="[TELEFONO]" required aria-required="true" minlength="13" maxlength="13" autocomplete="tel" placeholder="es. +391234567890" aria-describedby="telefono_help"><span class="field-help" id="telefono_help">Inserisci il numero di telefono a 10 cifre dopo il prefisso +39.</span></p>
+        <p><label for="email">Email</label><input type="email" id="email" name="email" value="[EMAIL]" required aria-required="true" maxlength="255" autocomplete="email"></p>
     </fieldset>
 
     <fieldset>
         <legend>Orari e note</legend>
-        <p><label for="orario_lun_ven">Orario Lun-Ven</label><input type="text" id="orario_lun_ven" name="orario_lun_ven" value="[ORARIO_LUN_VEN]" required aria-required="true" minlength="1" maxlength="100"></p>
-        <p><label for="orario_sabato">Orario Sabato</label><input type="text" id="orario_sabato" name="orario_sabato" value="[ORARIO_SABATO]" required aria-required="true" minlength="1" maxlength="100"></p>
-        <p><label for="orario_domenica">Orario Domenica</label><input type="text" id="orario_domenica" name="orario_domenica" value="[ORARIO_DOMENICA]" required aria-required="true" minlength="1" maxlength="100"></p>
-        <p><label for="note">Note</label><textarea id="note" name="note" rows="4" maxlength="500">[NOTE]</textarea></p>
+        <p><label for="orario_lun_ven">Orario <abbr title="da Luned&igrave; a Venerd&igrave;">Lun-Ven</abbr></label><input type="text" id="orario_lun_ven" name="orario_lun_ven" value="[ORARIO_LUN_VEN]" required aria-required="true" minlength="1" maxlength="100" placeholder="es. 9:00 - 19:00" aria-describedby="orario_lun_ven_help"><span class="field-help" id="orario_lun_ven_help">Inserisci l'orario di inizio e di fine separati da un - oppure inserisci "Chiuso".</span></p>
+        <p><label for="orario_sabato">Orario Sabato</label><input type="text" id="orario_sabato" name="orario_sabato" value="[ORARIO_SABATO]" required aria-required="true" minlength="1" maxlength="100" placeholder="es. 9:00 - 13:00" aria-describedby="orario_sabato_help"><span class="field-help" id="orario_sabato_help">Inserisci l'orario di inizio e di fine separati da un - oppure inserisci "Chiuso".</span></p>
+        <p><label for="orario_domenica">Orario Domenica</label><input type="text" id="orario_domenica" name="orario_domenica" value="[ORARIO_DOMENICA]" required aria-required="true" minlength="1" maxlength="100" placeholder="es. Chiuso" aria-describedby="orario_domenica_help"><span class="field-help" id="orario_domenica_help">Inserisci l'orario di inizio e di fine separati da un - oppure inserisci "Chiuso".</span></p>
+        <p><label for="note">Note</label><textarea id="note" name="note" rows="4" minlength="10" maxlength="100" aria-describedby="note_help">[NOTE]</textarea><span class="field-help" id="note_help">Inserisci una nota facoltativa compresa tra 10 e 100 caratteri.</span></p>
     </fieldset>
 
     <fieldset>

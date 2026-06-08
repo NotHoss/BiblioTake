@@ -258,6 +258,88 @@ function createLibro($conn, array $dati) {
     return $nuovoId;
 }
 
+function capitalizeFirstLetter($value) {
+    $value = trim(preg_replace('/\s+/u', ' ', (string) $value));
+    if ($value === '') {
+        return '';
+    }
+
+    $firstChar = mb_substr($value, 0, 1, 'UTF-8');
+    $rest = mb_substr($value, 1, null, 'UTF-8');
+
+    return mb_strtoupper($firstChar, 'UTF-8') . $rest;
+}
+
+function normalizeLibroTags($tags) {
+    $tagNames = array_filter(array_map('trim', explode(',', (string) $tags)));
+    $normalized = [];
+
+    foreach ($tagNames as $tagName) {
+        $normalizedTag = capitalizeFirstLetter($tagName);
+        if ($normalizedTag !== '') {
+            $normalized[] = $normalizedTag;
+        }
+    }
+
+    return implode(', ', $normalized);
+}
+
+function validateLibroAdminData(array $input) {
+    $currentYear = (int) date('Y');
+    $data = [
+        'codice_isbn' => trim((string) ($input['codice_isbn'] ?? '')),
+        'titolo' => capitalizeFirstLetter($input['titolo'] ?? ''),
+        'autore' => capitalizeFirstLetter($input['autore'] ?? ''),
+        'casa_editrice' => capitalizeFirstLetter($input['casa_editrice'] ?? ''),
+        'edizione' => (int) ($input['edizione'] ?? 0),
+        'anno' => (int) ($input['anno'] ?? 0),
+        'lingua' => capitalizeFirstLetter($input['lingua'] ?? ''),
+        'descrizione' => capitalizeFirstLetter($input['descrizione'] ?? ''),
+        'pagine' => (int) ($input['pagine'] ?? 0),
+        'copertina' => trim((string) ($input['copertina'] ?? '')),
+        'categoria' => capitalizeFirstLetter($input['categoria'] ?? ''),
+        'tags' => normalizeLibroTags($input['tags'] ?? ''),
+    ];
+    $errors = [];
+
+    if (!preg_match('/^[0-9]{13}$/', $data['codice_isbn'])) {
+        $errors[] = 'ISBN non valido: inserisci esattamente 13 cifre.';
+    }
+    if ($data['titolo'] === '' || mb_strlen($data['titolo'], 'UTF-8') > 30) {
+        $errors[] = 'Titolo obbligatorio e lungo al massimo 30 caratteri.';
+    }
+    if (mb_strlen($data['autore'], 'UTF-8') < 2 || mb_strlen($data['autore'], 'UTF-8') > 30) {
+        $errors[] = 'Autore obbligatorio: inserisci almeno 2 caratteri e al massimo 30.';
+    }
+    if ($data['casa_editrice'] === '' || mb_strlen($data['casa_editrice'], 'UTF-8') > 30) {
+        $errors[] = 'Casa editrice obbligatoria e lunga al massimo 30 caratteri.';
+    }
+    if ($data['edizione'] < 1 || $data['edizione'] > 999) {
+        $errors[] = 'Edizione non valida: inserisci un valore maggiore o uguale a 1.';
+    }
+    if ($data['anno'] < 1000 || $data['anno'] > $currentYear) {
+        $errors[] = 'Anno non valido: inserisci un valore compreso tra 1000 e ' . $currentYear . '.';
+    }
+    if ($data['lingua'] === '' || mb_strlen($data['lingua'], 'UTF-8') > 30) {
+        $errors[] = 'Lingua obbligatoria e lunga al massimo 30 caratteri.';
+    }
+    if (mb_strlen($data['descrizione'], 'UTF-8') < 1000 || mb_strlen($data['descrizione'], 'UTF-8') > 5000) {
+        $errors[] = 'Descrizione non valida: inserisci una descrizione di almeno 1000 caratteri e al massimo 5000.';
+    }
+    if ($data['pagine'] < 1 || $data['pagine'] > 99999) {
+        $errors[] = 'Pagine non valide: inserisci un valore maggiore o uguale a 1.';
+    }
+    if ($data['categoria'] === '' || mb_strlen($data['categoria'], 'UTF-8') > 30) {
+        $errors[] = 'Categoria obbligatoria e lunga al massimo 30 caratteri.';
+    }
+
+    return [
+        'ok' => empty($errors),
+        'errorMessage' => implode(' ', $errors),
+        'dati' => $data,
+    ];
+}
+
 function updateLibro($conn, $id, array $dati) {
     $stmt = $conn->prepare(
         'UPDATE libro
@@ -321,7 +403,8 @@ function syncTagsForLibro($conn, $libroId, array $tags) {
 
     foreach ($tags as $tagName) {
         if ($tagName === '') continue;
-        $nome = trim((string) $tagName);
+        $nome = capitalizeFirstLetter($tagName);
+        if ($nome === '') continue;
         $tagId = null;
 
         if ($stmtSelect) {

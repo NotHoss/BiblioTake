@@ -1022,6 +1022,35 @@ FORM
     width: 100%;
 }
 
+.admin-form .field-help{
+    display: block;
+    margin-top: 0.35rem;
+    color: #444;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.admin-book-form fieldset{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1rem 2%;
+}
+
+.admin-book-form fieldset::after{
+    content: none;
+    display: none;
+}
+
+.admin-book-form fieldset > p{
+    float: none;
+    width: auto;
+    margin: 0;
+}
+
+.admin-book-form .full-row{
+    grid-column: 1 / -1;
+}
+
 .admin-form textarea{
     min-height: 8rem;
     resize: vertical;
@@ -1109,6 +1138,11 @@ FILTRI (aside)
 /*Admin*/
 
 .admin-filter-panel{
+    width: min(94vw, 1692px);
+    margin-left: calc(50% - min(47vw, 846px));
+}
+
+.admin-results-panel{
     width: min(94vw, 1692px);
     margin-left: calc(50% - min(47vw, 846px));
 }

@@ -2,11 +2,11 @@
 // Expects: $prestito (array), $utenteId and $message / $errorMessage
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = renderAdminStatusMessage($errorMessage, 'error');
 }
 $successMsg = '';
 if (!empty($message)) {
-    $successMsg = '<p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>';
+    $successMsg = renderAdminStatusMessage($message, 'success');
 }
 $messages = $errorMsg . $successMsg;
 
@@ -16,7 +16,7 @@ $returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
 
 if (empty($prestito)) {
     echo strtr($template, [
-        '[MESSAGES]' => $messages . '<p>Prestito non trovato.</p>',
+        '[MESSAGES]' => $messages . renderAdminStatusMessage('Prestito non trovato.', 'error'),
         '[PRESTITO_ID]' => '',
         '[UTENTE_ID]' => '',
         '[LIBRO]' => '',

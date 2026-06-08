@@ -3,11 +3,11 @@ $adminViewMode = $adminViewMode ?? 'list';
 
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = renderAdminStatusMessage($errorMessage, 'error');
 }
 $successMsg = '';
 if (!empty($successMessage)) {
-    $successMsg = '<div>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $successMsg = renderAdminStatusMessage($successMessage, 'success');
 }
 $messages = $errorMsg . $successMsg;
 
@@ -126,16 +126,17 @@ if (empty($libri)) {
 $tableRows = '';
 foreach ($libri as $libroRow) {
     $id = htmlspecialchars((string) $libroRow['id'], ENT_QUOTES, 'UTF-8');
+    $titoloLibro = htmlspecialchars((string) $libroRow['titolo'], ENT_QUOTES, 'UTF-8');
     $prestitiAttivi = (int) ($libroRow['prestiti_attivi'] ?? 0);
     $prestiti = 'Disponibile';
-    $azioni = '<div class="table-actions-list"><a class="table-action" href="modifica-libro.php?id=' . $id . '&return=' . $returnParam . '">Modifica</a>'
-        . '<a class="table-action" href="elimina-libro.php?id=' . $id . '&return=' . $returnParam . '">Elimina</a></div>';
+    $azioni = '<div class="table-actions-list"><a class="table-action" href="modifica-libro.php?id=' . $id . '&return=' . $returnParam . '" aria-label="Modifica libro ' . $titoloLibro . '">Modifica</a>'
+        . '<a class="table-action" href="elimina-libro.php?id=' . $id . '&return=' . $returnParam . '" aria-label="Elimina libro ' . $titoloLibro . '">Elimina</a></div>';
     if ($prestitiAttivi > 0) {
         $prestiti = 'Prestato';
             $prestitoId = (int) ($libroRow['prestito_id'] ?? 0);
             if ($prestitoId > 0) {
                 $prestitoIdSafe = htmlspecialchars((string) $prestitoId, ENT_QUOTES, 'UTF-8');
-                $azioni = '<div class="table-actions-list"><a class="table-action" href="prestiti-utente.php?prestito_id=' . $prestitoIdSafe . '">Vai al prestito</a></div>';
+                $azioni = '<div class="table-actions-list"><a class="table-action" href="prestiti-utente.php?prestito_id=' . $prestitoIdSafe . '" aria-label="Vai al prestito attivo del libro ' . $titoloLibro . '">Vai al prestito</a></div>';
             }
     }
 
@@ -143,7 +144,7 @@ foreach ($libri as $libroRow) {
 
     $tableRows .= strtr($rowTemplate, [
         '[ISBN]' => $isbn,
-        '[TITOLO]' => htmlspecialchars((string) $libroRow['titolo'], ENT_QUOTES, 'UTF-8'),
+        '[TITOLO]' => $titoloLibro,
         '[AUTORE]' => htmlspecialchars((string) $libroRow['autore'], ENT_QUOTES, 'UTF-8'),
         '[ANNO]' => htmlspecialchars((string) $libroRow['anno'], ENT_QUOTES, 'UTF-8'),
         '[CATEGORIA]' => htmlspecialchars((string) $libroRow['categoria'], ENT_QUOTES, 'UTF-8'),

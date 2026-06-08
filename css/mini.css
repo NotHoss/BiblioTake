@@ -444,6 +444,18 @@
         margin-right: 0;
     }
 
+    .admin-form .field-help {
+        font-size: 0.95em;
+    }
+
+    .admin-book-form fieldset {
+        display: block;
+    }
+
+    .admin-book-form fieldset > p {
+        margin-bottom: 1rem;
+    }
+
     .admin-search-form,
     .admin-search-form .compact-row {
         display: block;
@@ -455,6 +467,11 @@
     }
 
     .admin-filter-panel {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .admin-results-panel {
         width: 100%;
         margin-left: 0;
     }

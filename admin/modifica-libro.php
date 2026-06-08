@@ -13,7 +13,7 @@ $breadcrumb = array(
 );
 $currentPage = 'admin';
 $errorMessage = '';
-$errorMessage = '';
+$successMessage = '';
 $returnUrl = getSafeAdminReturnUrl('libri.php');
 
 $libroId = isset($_GET['id']) ? (int) $_GET['id'] : (isset($_POST['id']) ? (int) $_POST['id'] : 0);
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
             'lingua' => trim((string) ($_POST['lingua'] ?? '')),
             'descrizione' => trim((string) ($_POST['descrizione'] ?? '')),
             'pagine' => (int) ($_POST['pagine'] ?? 0),
-            'copertina' => trim((string) ($_POST['copertina'] ?? '')),
+            'copertina' => trim((string) ($libro['copertina'] ?? '')),
             'categoria' => trim((string) ($_POST['categoria'] ?? '')),
             'tags' => trim((string) ($_POST['tags'] ?? '')),
         ];
@@ -48,6 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
         }
 
         try {
+            $validation = validateLibroAdminData($dati);
+            $dati = $validation['dati'];
+            if (!$validation['ok']) {
+                throw new InvalidArgumentException($validation['errorMessage']);
+            }
+
             if (isset($_POST['delete_copertina']) && $_POST['delete_copertina'] === '1') {
                 if (!empty($libro['copertina'])) {
                     $basename = basename($libro['copertina']);
@@ -62,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
             if (isset($_FILES['copertina_file']) && $_FILES['copertina_file']['error'] === UPLOAD_ERR_OK) {
                 $file = validateAndProcessCopertina($_FILES['copertina_file']);
                 if ($file === null) {
-                    throw new RuntimeException('File copertina non valido. Usa JPG fino a 5MB.');
+                    throw new RuntimeException('File copertina non valido. Usa un file JPEG di massimo 5 MB.');
                 }
 
                 if (!empty($libro['copertina'])) {
@@ -89,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
             }
         } catch (Throwable $e) {
             $res['errorMessage'] = 'Impossibile aggiornare il libro: ' . $e->getMessage();
+            $libro = array_merge($libro ?: [], $dati);
         }
     }
 

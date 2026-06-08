@@ -37,12 +37,12 @@
 
     $errorMsg = '';
     if ($errorMessage !== '') {
-        $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+        $errorMsg = renderAdminStatusMessage($errorMessage, 'error');
     }
 
     $successMsg = '';
     if (!empty($successMessage)) {
-        $successMsg = '<div>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+        $successMsg = renderAdminStatusMessage($successMessage, 'success');
     }
 
     $template = file_get_contents(__DIR__ . '/../html/admin/showDashboardAdmin.html');

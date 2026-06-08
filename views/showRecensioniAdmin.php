@@ -1,11 +1,11 @@
 <?php
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<span>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</span>';
+    $errorMsg = renderAdminStatusMessage($errorMessage, 'error');
 }
 $successMsg = '';
 if (!empty($message)) {
-    $successMsg = '<p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>';
+    $successMsg = renderAdminStatusMessage($message, 'success');
 }
 $messages = $errorMsg . $successMsg;
 
@@ -79,17 +79,21 @@ $tableRows = '';
 foreach ($recensioni as $recensione) {
     $id = htmlspecialchars((string) $recensione['id'], ENT_QUOTES, 'UTF-8');
     $libroIdRow = htmlspecialchars((string) ($recensione['libro_id'] ?? 0), ENT_QUOTES, 'UTF-8');
+    $usernameSafe = htmlspecialchars((string) $recensione['username'], ENT_QUOTES, 'UTF-8');
+    $titoloLibroSafe = htmlspecialchars((string) $recensione['libro_titolo'], ENT_QUOTES, 'UTF-8');
     $censuraLabel = $recensione['censura'] ? 'Mostra' : 'Censura';
+    $censuraAriaLabel = ($recensione['censura'] ? 'Mostra' : 'Censura') . ' recensione ' . $id . ' di ' . $usernameSafe . ' per ' . $titoloLibroSafe;
+    $eliminaAriaLabel = 'Elimina recensione ' . $id . ' di ' . $usernameSafe . ' per ' . $titoloLibroSafe;
 
     $tableRows .= strtr($rowTemplate, [
         '[ID]' => $id,
-        '[UTENTE]' => '<a href="utenti.php?cerca=' . rawurlencode((string) $recensione['username']) . '">' . htmlspecialchars((string) $recensione['username'], ENT_QUOTES, 'UTF-8') . '</a>',
-        '[LIBRO]' => '<a href="../dettaglio-libro.php?id=' . $libroIdRow . '">' . htmlspecialchars((string) $recensione['libro_titolo'], ENT_QUOTES, 'UTF-8') . '</a>',
+        '[UTENTE]' => '<a href="utenti.php?cerca=' . rawurlencode((string) $recensione['username']) . '">' . $usernameSafe . '</a>',
+        '[LIBRO]' => '<a href="../dettaglio-libro.php?id=' . $libroIdRow . '">' . $titoloLibroSafe . '</a>',
         '[VOTO]' => htmlspecialchars((string) $recensione['valutazione'], ENT_QUOTES, 'UTF-8'),
         '[TESTO]' => htmlspecialchars((string) mb_substr($recensione['testo'], 0, 80), ENT_QUOTES, 'UTF-8') . '...',
         '[DATA]' => formatDateForAdminDisplay($recensione['data']),
         '[STATO]' => $recensione['censura'] ? 'Censurata' : 'Visibile',
-        '[AZIONI]' => '<div class="table-actions-list"><form class="table-action-form" action="' . $returnUrlSafe . '" method="post"><input type="hidden" name="recensione_id" value="' . $id . '"><input type="hidden" name="return" value="' . $returnUrlSafe . '"><button class="table-action table-action-primary" type="submit" name="azione" value="censura">' . $censuraLabel . '</button></form><a class="table-action" href="elimina-recensione.php?id=' . $id . '&return=' . $returnParam . '">Elimina</a></div>',
+        '[AZIONI]' => '<div class="table-actions-list"><form class="table-action-form" action="' . $returnUrlSafe . '" method="post"><input type="hidden" name="recensione_id" value="' . $id . '"><input type="hidden" name="return" value="' . $returnUrlSafe . '"><button class="table-action table-action-primary" type="submit" name="azione" value="censura" aria-label="' . $censuraAriaLabel . '">' . $censuraLabel . '</button></form><a class="table-action" href="elimina-recensione.php?id=' . $id . '&return=' . $returnParam . '" aria-label="' . $eliminaAriaLabel . '">Elimina</a></div>',
     ]) . "\n";
 }
 

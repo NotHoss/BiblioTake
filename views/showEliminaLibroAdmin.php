@@ -1,11 +1,11 @@
 <?php
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = renderAdminStatusMessage($errorMessage, 'error');
 }
 $successMsg = '';
 if (!empty($successMessage)) {
-    $successMsg = '<div>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $successMsg = renderAdminStatusMessage($successMessage, 'success');
 }
 $messages = $errorMsg . $successMsg;
 
@@ -16,7 +16,7 @@ $returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
 if (!$libro) {
     echo strtr($template, [
         '[MESSAGES]' => $messages,
-        '[NOT_FOUND_MESSAGE]' => '<p>Libro non trovato.</p>',
+        '[NOT_FOUND_MESSAGE]' => renderAdminStatusMessage('Libro non trovato.', 'error'),
         '[FORM_DISPLAY]' => 'class="none"',
         '[TITOLO]' => '',
         '[SUMMARY]' => '',
@@ -30,7 +30,7 @@ if (!$libro) {
 
 $warningMsg = '';
 if (!empty($message)) {
-    $warningMsg = '<p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>';
+    $warningMsg = renderAdminStatusMessage($message, 'warning');
 }
 
 $summary = '<ul class="admin-summary-list">'

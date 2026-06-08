@@ -48,6 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli) {
     $successMessage = $res['successMessage'] ?? '';
     $errorMessage = $res['errorMessage'] ?? '';
     $biblioteca = $res['biblioteca'] ?? $biblioteca;
+    if ($errorMessage !== '' && isset($dati, $bibliotecaId)) {
+        $biblioteca = array_merge($biblioteca ?: [], $dati, ['id' => $bibliotecaId]);
+    }
 
     if ($successMessage !== '') {
         header('Location: index.php?generalita_success=1');

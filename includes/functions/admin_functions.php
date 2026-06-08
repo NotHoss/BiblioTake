@@ -41,6 +41,26 @@ function appendAdminQueryParam($url, array $params) {
     return $url . $separator . http_build_query($params);
 }
 
+function renderAdminStatusMessage($message, $type = 'info') {
+    $message = trim((string) $message);
+    if ($message === '') {
+        return '';
+    }
+
+    $type = preg_replace('/[^a-z0-9_-]/i', '', strtolower((string) $type));
+    if ($type === '') {
+        $type = 'info';
+    }
+
+    $isAlert = in_array($type, ['error', 'warning'], true);
+    $role = $isAlert ? 'alert' : 'status';
+    $ariaLive = $isAlert ? 'assertive' : 'polite';
+
+    return '<p class="admin-message admin-message-' . htmlspecialchars($type, ENT_QUOTES, 'UTF-8') . '" role="' . $role . '" aria-live="' . $ariaLive . '">'
+        . htmlspecialchars($message, ENT_QUOTES, 'UTF-8')
+        . '</p>';
+}
+
 function getStatisticheGenerali($conn) {
     $stats = [
         'libri_totali' => 0,
@@ -373,11 +393,28 @@ function validateBibliotecaAdminData(array $input) {
         return mb_strtoupper($firstChar, 'UTF-8') . $rest;
     };
 
+    $normalizeOrario = static function ($value) {
+        $value = trim(preg_replace('/\s+/u', ' ', (string) $value));
+        if (mb_strtolower($value, 'UTF-8') === 'chiuso') {
+            return 'Chiuso';
+        }
+
+        return preg_replace('/\s*-\s*/u', ' - ', $value);
+    };
+
+    $orarioLabels = [
+        'orario_lun_ven' => 'Orario Lun-Ven',
+        'orario_sabato' => 'Orario Sabato',
+        'orario_domenica' => 'Orario Domenica',
+    ];
+
     $indirizzo = $capitalizeFirst($input['indirizzo'] ?? '');
     if ($indirizzo === '') {
         $errors[] = 'Indirizzo obbligatorio.';
     } elseif (mb_strlen($indirizzo, 'UTF-8') > 100) {
-        $errors[] = 'Indirizzo troppo lungo (max 100 caratteri).';
+        $errors[] = 'Indirizzo troppo lungo (massimo 100 caratteri).';
+    } elseif (!preg_match('/^Via\s+.+\d+\s*,\s*[\p{L}\' .-]{2,}$/u', $indirizzo)) {
+        $errors[] = 'Indirizzo non valido: inserisci Via, numero civico e citta separati da virgola.';
     } else {
         $data['indirizzo'] = $indirizzo;
     }
@@ -385,8 +422,8 @@ function validateBibliotecaAdminData(array $input) {
     $telefono = trim((string) ($input['telefono'] ?? ''));
     if ($telefono === '') {
         $errors[] = 'Telefono obbligatorio.';
-    } elseif (mb_strlen($telefono, 'UTF-8') > 20 || !preg_match('/^[0-9 +()\-\/]{6,20}$/', $telefono)) {
-        $errors[] = 'Telefono non valido.';
+    } elseif (!preg_match('/^\+39\d{10}$/', $telefono)) {
+        $errors[] = 'Telefono non valido: inserisci +39 seguito da 10 cifre.';
     } else {
         $data['telefono'] = $telefono;
     }
@@ -394,7 +431,11 @@ function validateBibliotecaAdminData(array $input) {
     $email = strtolower(trim((string) ($input['email'] ?? '')));
     if ($email === '') {
         $errors[] = 'Email obbligatoria.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email, 'UTF-8') > 255) {
+    } elseif (
+        mb_strlen($email, 'UTF-8') > 255
+        || !preg_match('/^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$/', $email)
+        || !filter_var($email, FILTER_VALIDATE_EMAIL)
+    ) {
         $errors[] = 'Email non valida.';
     } else {
         $data['email'] = $email;
@@ -402,19 +443,22 @@ function validateBibliotecaAdminData(array $input) {
 
     $note = trim((string) ($input['note'] ?? ''));
     if ($note !== '') {
-        if (mb_strlen($note, 'UTF-8') > 500) {
-            $errors[] = 'Note troppo lunghe (max 500 caratteri).';
+        $noteLength = mb_strlen($note, 'UTF-8');
+        if ($noteLength < 10 || $noteLength > 100) {
+            $errors[] = 'Note non valide: inserisci una nota facoltativa compresa tra 10 e 100 caratteri.';
         } else {
             $data['note'] = $capitalizeFirst($note);
         }
     }
 
-    foreach (['orario_lun_ven', 'orario_sabato', 'orario_domenica'] as $campoOrario) {
-        $valore = trim((string) ($input[$campoOrario] ?? ''));
+    foreach ($orarioLabels as $campoOrario => $labelOrario) {
+        $valore = $normalizeOrario($input[$campoOrario] ?? '');
         if ($valore === '') {
-            $errors[] = ucfirst(str_replace('_', ' ', $campoOrario)) . ' obbligatorio.';
+            $errors[] = $labelOrario . ' obbligatorio.';
         } elseif (mb_strlen($valore, 'UTF-8') > 100) {
-            $errors[] = ucfirst(str_replace('_', ' ', $campoOrario)) . ' troppo lungo (max 100 caratteri).';
+            $errors[] = $labelOrario . ' troppo lungo (massimo 100 caratteri).';
+        } elseif (!preg_match('/^(?:Chiuso|(?:[1-9]|1[0-9]|2[0-4]):[0-5][0-9]\s*-\s*(?:[1-9]|1[0-9]|2[0-4]):[0-5][0-9])$/', $valore)) {
+            $errors[] = $labelOrario . ' non valido: usa un intervallo come 9:00 - 19:00 oppure Chiuso.';
         } else {
             $data[$campoOrario] = $valore;
         }

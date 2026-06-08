@@ -1,11 +1,11 @@
 <?php
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<span>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</span>';
+    $errorMsg = renderAdminStatusMessage($errorMessage, 'error');
 }
 $successMsg = '';
 if (!empty($successMessage)) {
-    $successMsg = '<span>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</span>';
+    $successMsg = renderAdminStatusMessage($successMessage, 'success');
 }
 $messages = $errorMsg . $successMsg;
 
@@ -16,7 +16,7 @@ $returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
 if (!$libro) {
     echo strtr($template, [
         '[MESSAGES]' => $messages,
-        '[NOT_FOUND_MESSAGE]' => '<p>Libro non trovato.</p>',
+        '[NOT_FOUND_MESSAGE]' => renderAdminStatusMessage('Libro non trovato.', 'error'),
         '[FORM_DISPLAY]' => 'class="none"',
         '[LIBRO_ID]' => '',
         
@@ -31,7 +31,8 @@ if (!$libro) {
         '[PAGINE]' => '',
         '[COPERTINA_CORRENTE]' => '',
         '[DELETE_COPERTINA_DISABLED]' => '',
-        '[DELETE_COPERTINA_TITLE]' => '',
+        '[DELETE_COPERTINA_DESCRIBEDBY]' => '',
+        '[DELETE_COPERTINA_HELP]' => '',
         '[CATEGORIE_OPTIONS]' => '',
         '[TAGS]' => '',
         '[CURRENT_YEAR]' => date('Y'),
@@ -61,7 +62,12 @@ if (!empty($libro['copertina']) && basename($libro['copertina']) !== basename(DE
 }
     
 $disabledAttr = !$canDeleteCover ? 'disabled' : '';
-$titleAttr = !$canDeleteCover ? 'title="Non è possibile eliminare la copertina placeholder"' : '';
+$deleteCoverDescribedBy = '';
+$deleteCoverHelp = '';
+if (!$canDeleteCover) {
+    $deleteCoverDescribedBy = 'aria-describedby="delete_copertina_help"';
+    $deleteCoverHelp = '<span id="delete_copertina_help">Non &egrave; possibile eliminare la copertina placeholder.</span>';
+}
 
 $tagsArr = getTagsByLibroId($conn, $libroId);
 $tagsCsv = '';
@@ -86,7 +92,8 @@ echo strtr($template, [
     '[PAGINE]' => htmlspecialchars((string) ($libro['pagine'] ?? ''), ENT_QUOTES, 'UTF-8'),
     '[COPERTINA_CORRENTE]' => $copertinaHtml,
     '[DELETE_COPERTINA_DISABLED]' => $disabledAttr,
-    '[DELETE_COPERTINA_TITLE]' => $titleAttr,
+    '[DELETE_COPERTINA_DESCRIBEDBY]' => $deleteCoverDescribedBy,
+    '[DELETE_COPERTINA_HELP]' => $deleteCoverHelp,
     '[CATEGORIE_OPTIONS]' => $categorieOptions,
     '[CURRENT_YEAR]' => date('Y'),
     '[RETURN_URL]' => $returnUrlSafe,

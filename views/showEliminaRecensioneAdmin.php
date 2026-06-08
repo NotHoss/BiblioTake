@@ -1,12 +1,12 @@
 <?php
 $errorMsg = '';
 if (!empty($errorMessage)) {
-	$errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+	$errorMsg = renderAdminStatusMessage($errorMessage, 'error');
 }
 
 $successMsg = '';
 if (!empty($successMessage)) {
-	$successMsg = '<div>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+	$successMsg = renderAdminStatusMessage($successMessage, 'success');
 }
 
 $messages = $errorMsg . $successMsg;
@@ -17,7 +17,7 @@ $returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
 if (empty($recensione)) {
 	echo strtr($template, [
 		'[MESSAGES]' => $messages,
-		'[NOT_FOUND_MESSAGE]' => '<p>Recensione non trovata.</p>',
+		'[NOT_FOUND_MESSAGE]' => renderAdminStatusMessage('Recensione non trovata.', 'error'),
 		'[FORM_DISPLAY]' => 'class="none"',
 		'[WARNING_MESSAGE]' => '',
 		'[RECENSIONE_ID]' => '',

@@ -3,11 +3,11 @@ $adminViewMode = $adminViewMode ?? 'prestiti';
 
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<span>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</span>';
+    $errorMsg = renderAdminStatusMessage($errorMessage, 'error');
 }
 $successMsg = '';
 if (!empty($message)) {
-    $successMsg = '<p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>';
+    $successMsg = renderAdminStatusMessage($message, 'success');
 }
 $messages = $errorMsg . $successMsg;
 
@@ -83,6 +83,7 @@ if ($utenteId >= 0) {
             $usernameLink = '<a href="utenti.php?cerca=' . rawurlencode((string) ($prestito['username'] ?? '')) . '">' . $username . '</a>';
             $titolo = htmlspecialchars((string) $prestito['libro_titolo'], ENT_QUOTES, 'UTF-8');
             $libroLink = '<a href="../dettaglio-libro.php?id=' . htmlspecialchars((string) ($prestito['libro_id'] ?? 0), ENT_QUOTES, 'UTF-8') . '">' . $titolo . '</a>';
+            $prestitoContext = 'prestito ' . $id . ' di ' . $username . ' per ' . $titolo;
             $statoRaw = (string) $prestito['stato'];
             $stato = [
                 'attivo' => 'Attivo',
@@ -96,15 +97,15 @@ if ($utenteId >= 0) {
             $statoPrestito = $statoRaw;
 
             // Link-based actions for modify/delete (dedicated pages)
-            $modificaLink = '<a class="table-action" href="modifica-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '&return=' . $returnParam . '">Modifica</a>';
-            $eliminaLink = '<a class="table-action" href="elimina-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '&return=' . $returnParam . '">Elimina</a>';
+            $modificaLink = '<a class="table-action" href="modifica-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '&return=' . $returnParam . '" aria-label="Modifica ' . $prestitoContext . '">Modifica</a>';
+            $eliminaLink = '<a class="table-action" href="elimina-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '&return=' . $returnParam . '" aria-label="Elimina ' . $prestitoContext . '">Elimina</a>';
 
             // Actions that require POST remain as inline form (concludi/proroga)
             $postActions = '';
             if ($statoPrestito === 'attivo') {
-                $postActions = '<button class="table-action table-action-primary" type="submit" name="azione" value="concludi">Concludi</button><button class="table-action table-action-primary" type="submit" name="azione" value="proroga">Proroga</button>';
+                $postActions = '<button class="table-action table-action-primary" type="submit" name="azione" value="concludi" aria-label="Concludi ' . $prestitoContext . '">Concludi</button><button class="table-action table-action-primary" type="submit" name="azione" value="proroga" aria-label="Proroga ' . $prestitoContext . '">Proroga</button>';
             } elseif ($statoPrestito === 'in_ritardo') {
-                $postActions = '<button class="table-action table-action-primary" type="submit" name="azione" value="concludi">Concludi</button>';
+                $postActions = '<button class="table-action table-action-primary" type="submit" name="azione" value="concludi" aria-label="Concludi ' . $prestitoContext . '">Concludi</button>';
             }
 
             $tableActions = '<div class="table-actions-grid">'

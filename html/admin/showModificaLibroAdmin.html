@@ -11,25 +11,25 @@
         </p>
     </noscript>
 
-    <form class="form admin-form" action="modifica-libro.php" method="post" enctype="multipart/form-data">
+    <form class="form admin-form admin-book-form" action="modifica-libro.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="[LIBRO_ID]">
         <input type="hidden" name="return" value="[RETURN_URL]">
 
         <fieldset>
             <legend>Informazioni libro</legend>
-            <p><label for="codice_isbn">ISBN</label><input type="text" name="codice_isbn" id="codice_isbn" value="[CODICE_ISBN]" required aria-required="true" minlength="10" maxlength="20" pattern="[0-9Xx-]{10,20}" title="ISBN di 10 o 13 cifre"></p>
-            <p><label for="titolo">Titolo</label><input type="text" name="titolo" id="titolo" value="[TITOLO]" required aria-required="true" minlength="1" maxlength="30"></p>
-            <p><label for="autore">Autore</label><input type="text" name="autore" id="autore" value="[AUTORE]" required aria-required="true" minlength="1" maxlength="30"></p>
-            <p><label for="casa_editrice">Casa editrice</label><input type="text" name="casa_editrice" id="casa_editrice" value="[CASA_EDITRICE]" required aria-required="true" minlength="1" maxlength="30"></p>
-            <p><label for="edizione">Edizione</label><input type="number" name="edizione" id="edizione" value="[EDIZIONE]" min="1" max="999" step="1" required aria-required="true"></p>
-            <p><label for="anno">Anno</label><input type="number" name="anno" id="anno" value="[ANNO]" min="1000" max="[CURRENT_YEAR]" step="1" required aria-required="true"></p>
-            <p><label for="lingua">Lingua</label><input type="text" name="lingua" id="lingua" value="[LINGUA]" required aria-required="true" minlength="1" maxlength="30"></p>
+            <p><label for="codice_isbn">ISBN</label><input type="text" name="codice_isbn" id="codice_isbn" value="[CODICE_ISBN]" required aria-required="true" minlength="13" maxlength="13" title="ISBN di 13 cifre" placeholder="es. 1234567890123" aria-describedby="codice_isbn_help"><span class="field-help" id="codice_isbn_help">Inserisci 13 caratteri numerici.</span></p>
+            <p><label for="titolo">Titolo</label><input type="text" name="titolo" id="titolo" value="[TITOLO]" required aria-required="true" minlength="1" maxlength="30" placeholder="es. Il nome della rosa"></p>
+            <p><label for="autore">Autore</label><input type="text" name="autore" id="autore" value="[AUTORE]" required aria-required="true" minlength="2" maxlength="30" placeholder="es. Mario Rossi" aria-describedby="autore_help"><span class="field-help" id="autore_help">Inserisci il nome dell'autore di almeno 2 caratteri.</span></p>
+            <p><label for="casa_editrice">Casa editrice</label><input type="text" name="casa_editrice" id="casa_editrice" value="[CASA_EDITRICE]" required aria-required="true" minlength="1" maxlength="30" placeholder="es. Mondadori"></p>
+            <p><label for="edizione">Edizione</label><input type="number" name="edizione" id="edizione" value="[EDIZIONE]" min="1" max="999" step="1" required aria-required="true" aria-describedby="edizione_help"><span class="field-help" id="edizione_help">Inserisci un valore maggiore o uguale a 1.</span></p>
+            <p><label for="anno">Anno</label><input type="number" name="anno" id="anno" value="[ANNO]" min="1000" max="[CURRENT_YEAR]" step="1" required aria-required="true" aria-describedby="anno_help"><span class="field-help" id="anno_help">Inserisci un valore compreso tra 1000 e [CURRENT_YEAR].</span></p>
+            <p><label for="lingua">Lingua</label><input type="text" name="lingua" id="lingua" value="[LINGUA]" required aria-required="true" minlength="1" maxlength="30" placeholder="es. Italiano"></p>
         </fieldset>
 
         <fieldset>
             <legend>Descrizione e classificazione</legend>
-            <p><label for="descrizione">Descrizione</label><textarea name="descrizione" id="descrizione" required aria-required="true" minlength="1" maxlength="5000">[DESCRIZIONE]</textarea></p>
-            <p><label for="pagine">Pagine</label><input type="number" name="pagine" id="pagine" value="[PAGINE]" min="1" max="99999" step="1" required aria-required="true"></p>
+            <p class="full-row"><label for="descrizione">Descrizione</label><textarea name="descrizione" id="descrizione" required aria-required="true" minlength="1000" maxlength="5000" aria-describedby="descrizione_help">[DESCRIZIONE]</textarea><span class="field-help" id="descrizione_help">Inserisci una descrizione compresa tra 1000 e 5000 caratteri.</span></p>
+            <p><label for="pagine">Pagine</label><input type="number" name="pagine" id="pagine" value="[PAGINE]" min="1" max="99999" step="1" required aria-required="true" aria-describedby="pagine_help"><span class="field-help" id="pagine_help">Inserisci un valore maggiore o uguale a 1.</span></p>
             <p><label for="categoria-select-edit">Categoria</label>
                 <select name="categoria" id="categoria-select-edit">
                     <option value="">-- Scegli una categoria --</option>
@@ -37,20 +37,20 @@
                     <option value="__NEW__">+ Aggiungi nuova categoria</option>
                 </select>
             </p>
-            <p><label for="categoria-nuova-edit">Nuova categoria</label><input type="text" name="categoria_nuova" id="categoria-nuova-edit" maxlength="30" placeholder="Nome nuova categoria"></p>
-            <p><label for="tags">Tag</label><input type="text" name="tags" id="tags" value="[TAGS]" maxlength="255" placeholder="es. Fantasy, Storico"></p>
+            <p><label for="categoria-nuova-edit">Nuova categoria</label><input type="text" name="categoria_nuova" id="categoria-nuova-edit" maxlength="30" placeholder="es. Romanzo"></p>
+            <p><label for="tags">Tag</label><input type="text" name="tags" id="tags" value="[TAGS]" maxlength="255" placeholder="es. Fantasy, Storico" aria-describedby="tags_help"><span class="field-help" id="tags_help">Aggiungi uno o pi&ugrave; tag separati da una virgola.</span></p>
         </fieldset>
 
         <fieldset>
             <legend>Copertina</legend>
-            <p><label for="copertina_file">Carica nuova copertina (JPG, max 5MB)</label><input type="file" name="copertina_file" id="copertina_file" accept=".jpg,.jpeg,image/jpeg"></p>
+            <p><label for="copertina_file">Carica nuova copertina (<abbr title="Joint Photographic Experts Group">JPEG</abbr>, massimo 5 <abbr title="megabyte">MB</abbr>)</label><input type="file" name="copertina_file" id="copertina_file" accept=".jpg,.jpeg,image/jpeg"></p>
             <p><label>Copertina corrente</label> [COPERTINA_CORRENTE]</p>
-            <p><label for="delete_copertina"><input type="checkbox" name="delete_copertina" id="delete_copertina" value="1" [DELETE_COPERTINA_DISABLED] [DELETE_COPERTINA_TITLE]> Elimina copertina corrente</label></p>
+            <p><label for="delete_copertina"><input type="checkbox" name="delete_copertina" id="delete_copertina" value="1" [DELETE_COPERTINA_DISABLED] [DELETE_COPERTINA_DESCRIBEDBY]> Elimina copertina corrente</label> [DELETE_COPERTINA_HELP]</p>
         </fieldset>
 
         <fieldset>
             <legend>Azioni</legend>
-            <p><button type="submit">Salva modifiche</button> <a href="[ANNULLA_HREF]">Annulla</a></p>
+            <p class="full-row"><button type="submit">Salva modifiche</button> <a href="[ANNULLA_HREF]">Annulla</a></p>
         </fieldset>
         
     </form>

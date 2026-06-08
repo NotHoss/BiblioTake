@@ -3,11 +3,11 @@ $adminViewMode = $adminViewMode ?? 'list';
 
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<span>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</span>';
+    $errorMsg = renderAdminStatusMessage($errorMessage, 'error');
 }
 $successMsg = '';
 if (!empty($message)) {
-    $successMsg = '<p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p>';
+    $successMsg = renderAdminStatusMessage($message, 'success');
 }
 $messages = $errorMsg . $successMsg;
 
@@ -77,14 +77,15 @@ if (empty($utenti)) {
 $tableRows = '';
 foreach ($utenti as $utente) {
     $azioni = [];
+    $usernameSafe = htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8');
     if ((int) ($utente['prestiti_totali'] ?? 0) > 0) {
-        $azioni[] = '<a class="table-action" href="prestiti-utente.php?cerca=' . rawurlencode((string) $utente['username']) . '">Prestiti</a>';
+        $azioni[] = '<a class="table-action" href="prestiti-utente.php?cerca=' . rawurlencode((string) $utente['username']) . '" aria-label="Mostra prestiti di ' . $usernameSafe . '">Prestiti</a>';
     }
     if ((int) ($utente['recensioni_totali'] ?? 0) > 0) {
-        $azioni[] = '<a class="table-action" href="recensioni.php?cerca=' . rawurlencode((string) $utente['username']) . '">Recensioni</a>';
+        $azioni[] = '<a class="table-action" href="recensioni.php?cerca=' . rawurlencode((string) $utente['username']) . '" aria-label="Mostra recensioni di ' . $usernameSafe . '">Recensioni</a>';
     }
     $tableRows .= strtr($rowTemplate, [
-        '[USERNAME]' => htmlspecialchars((string) $utente['username'], ENT_QUOTES, 'UTF-8'),
+        '[USERNAME]' => $usernameSafe,
         '[EMAIL]' => htmlspecialchars((string) $utente['email'], ENT_QUOTES, 'UTF-8'),
         '[PRESTITI_TOTALI]' => htmlspecialchars((string) ($utente['prestiti_totali'] ?? 0), ENT_QUOTES, 'UTF-8'),
         '[PRESTITI_ATTIVI]' => htmlspecialchars((string) ($utente['prestiti_attivi'] ?? 0), ENT_QUOTES, 'UTF-8'),

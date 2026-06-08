@@ -42,14 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
         $dati['categoria'] = isset($_POST['categoria_nuova']) ? trim((string) $_POST['categoria_nuova']) : '';
     }
 
-    $campiObbligatori = ['codice_isbn', 'titolo', 'autore', 'casa_editrice', 'anno', 'lingua', 'descrizione', 'pagine', 'categoria'];
-    $campiMancanti = [];
-    foreach ($campiObbligatori as $campo) {
-        if ($dati[$campo] === '') $campiMancanti[] = $campo;
-    }
+    $validation = validateLibroAdminData($dati);
+    $dati = $validation['dati'];
 
-    if (!empty($campiMancanti)) {
-        $res['errorMessage'] = 'Compila tutti i campi obbligatori: ' . implode(', ', $campiMancanti);
+    if (!$validation['ok']) {
+        $res['errorMessage'] = $validation['errorMessage'];
         $res['dati'] = $dati;
     } else {
         try {
@@ -57,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
             if (isset($_FILES['copertina_file']) && $_FILES['copertina_file']['error'] === UPLOAD_ERR_OK) {
                 $fileCopertina = validateAndProcessCopertina($_FILES['copertina_file']);
                 if (!$fileCopertina) {
-                    $res['errorMessage'] = 'Il file della copertina deve essere un file JPG valido (max 5MB).';
+                    $res['errorMessage'] = 'Il file della copertina deve essere un file JPEG valido (massimo 5 MB).';
                     $res['dati'] = $dati;
                 }
             }
