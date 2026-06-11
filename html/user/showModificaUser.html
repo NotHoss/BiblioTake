@@ -8,61 +8,63 @@
     </noscript>
 
     [TO-LOGIN]
-    <h2>[USERNAME]</h2>
+    <h2 id="modifica-user">[USERNAME]</h2>
 
-    <div >
+    <div>
         <h3>Modifica Profilo</h3>
-        <form method="POST" action="modifica-user.php" id="modifica-profilo">
+        <form method="POST" action="modifica-user.php" id="modifica-profilo" class="modifica-form">
             <section>
 
-                <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]"> 
+                <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="current-avatar">
                 <!-- lista di immagini tra cui può scegliere -->
-                 <label class="avatar-option">
-                    <input type="radio" name="selected_avatar" value="images/avatar1.jpg" hidden>
-                    <img src="../images/avatar1.jpg" alt="Avatar 1">
-                </label>
-                <label class="avatar-option">
-                    <input type="radio" name="selected_avatar" value="images/avatar2.jpg" hidden>
-                    <img src="../images/avatar2.jpg" alt="Avatar 2">
-                </label>
-                <label class="avatar-option">
-                    <input type="radio" name="selected_avatar" value="images/avatar3.jpg" hidden>
-                    <img src="../images/avatar3.jpg" alt="Avatar 3">
-                </label>
-                <label class="avatar-option">
-                    <input type="radio" name="selected_avatar" value="images/avatar4.jpg" hidden>
-                    <img src="../images/avatar4.jpg" alt="Avatar 4">
-                </label>
-                <label class="avatar-option">
-                    <input type="radio" name="selected_avatar" value="images/avatar5.jpg" hidden>
-                    <img src="../images/avatar5.jpg" alt="Avatar 5">
-                </label>
-                <label class="avatar-option">
-                    <input type="radio" name="selected_avatar" value="images/avatar6.jpg" hidden>
-                    <img src="../images/avatar6.jpg" alt="Avatar 6">
-                </label>
-                <label class="avatar-option">
-                    <input type="radio" name="selected_avatar" value="images/avatar7.jpg" hidden>
-                    <img src="../images/avatar7.jpg" alt="Avatar 7">
-                </label>
-                <label class="avatar-option">
-                    <input type="radio" name="selected_avatar" value="images/avatar8.jpg" hidden>
-                    <img src="../images/avatar8.jpg" alt="Avatar 8">
-                </label>
-                <label class="avatar-option">
-                    <input type="radio" name="selected_avatar" value="images/avatar9.jpg" hidden>
-                    <img src="../images/avatar9.jpg" alt="Avatar 9">
-                </label>
-                <label class="avatar-option">
-                    <input type="radio" name="selected_avatar" value="images/avatar10.jpg" hidden>
-                    <img src="../images/avatar10.jpg" alt="Avatar 10">
-                </label>
+                <div class="avatar-grid">
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar1.jpg" hidden>
+                        <img src="../images/avatar1.jpg" alt="Avatar 1">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar2.jpg" hidden>
+                        <img src="../images/avatar2.jpg" alt="Avatar 2">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar3.jpg" hidden>
+                        <img src="../images/avatar3.jpg" alt="Avatar 3">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar4.jpg" hidden>
+                        <img src="../images/avatar4.jpg" alt="Avatar 4">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar5.jpg" hidden>
+                        <img src="../images/avatar5.jpg" alt="Avatar 5">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar6.jpg" hidden>
+                        <img src="../images/avatar6.jpg" alt="Avatar 6">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar7.jpg" hidden>
+                        <img src="../images/avatar7.jpg" alt="Avatar 7">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar8.jpg" hidden>
+                        <img src="../images/avatar8.jpg" alt="Avatar 8">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar9.jpg" hidden>
+                        <img src="../images/avatar9.jpg" alt="Avatar 9">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar10.jpg" hidden>
+                        <img src="../images/avatar10.jpg" alt="Avatar 10">
+                    </label>
+                </div>
 
                 <p>Username:</p>
                 <input type="text" name="new_username" value="[USERNAME]" placeholder="Username">
                 <p>Email:</p>
                 <input type="email" name="new_email" value="[EMAIL]" placeholder="Email">
-                <div>
+                <div class="password-fields">
                     <p>Password:</p>
                     <input type="password" name="current_password" placeholder="Password attuale"/>
                     <input type="password" name="new_password" placeholder="Nuova password"/>

@@ -1373,6 +1373,114 @@ main .elimina-card a:hover, main .elimina-card a:focus{
     text-decoration: none;
 }
 
+/*
+==========================
+MODIFICA PROFILO UTENTE
+==========================
+*/
+
+#modifica-user{
+    text-align: left;
+}
+
+.modifica-form section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+    margin-bottom: 1.5em;
+}
+
+.current-avatar {
+    width: 100px;
+    height: 100px;
+    /*border-radius: 50%;*/
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 1em;
+    /*border: 2px solid var(--breadbgcolor);*/
+}
+
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5em;
+    margin-bottom: 1em;
+}
+
+.avatar-option {
+    display: block;
+    cursor: pointer;
+    text-align: center;
+    padding: 0.3em;
+    border: 2px solid transparent;
+    /*border-radius: 0.35em;*/
+    transition: border-color 0.2s;
+}
+
+.avatar-option:hover {
+    border-color: var(--breadbgcolor);
+}
+
+.avatar-option.selected {
+    border-color: var(--breadbgcolor);
+    background: var(--eventablecolor);
+}
+
+.avatar-option img {
+    width: 50px;
+    height: 50px;
+    /*border-radius: 50%;*/
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+.password-fields {
+    display: grid;
+    gap: 0.8em;
+}
+
+.modifica-form input[type="text"],
+.modifica-form input[type="email"],
+.modifica-form input[type="password"] {
+    width: 100%;
+    padding: 0.55em 0.8em;
+    border: 2px solid #c5c5c5;
+    border-radius: 0.35em;
+    font-size: 1em;
+    font-family: inherit;
+    background: #fff;
+    color: var(--contenttxtcolor);
+    line-height: 1.5;
+    min-height: 2.5em;
+    transition: border-color 0.2s;
+}
+
+.modifica-form input[type="text"]:focus,
+.modifica-form input[type="email"]:focus,
+.modifica-form input[type="password"]:focus {
+    border-color: var(--breadbgcolor);
+}
+
+.form-button {
+    display: inline-block;
+    padding: 0.55em 1.5em;
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border: 2px solid transparent;
+    border-radius: 0.35em;
+    font-size: 1em;
+    font-family: inherit;
+    cursor: pointer;
+    min-height: 2.5em;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    transition: background 0.2s;
+}
+
+.form-button:hover {
+    background: var(--hovercolor);
+}
 
 /*
 ==========================

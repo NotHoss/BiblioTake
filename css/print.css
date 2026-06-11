@@ -165,7 +165,7 @@ input[type="hidden"]
         color: #000;
     }
 
-/*========= FORM (Aggiungi Recensione, Modifica) =========*/
+/*========= FORM (Aggiungi Recensione, Modifica Recensione e Modifica Profilo) =========*/
     .form,
     .form-recensione {
         display: block;
@@ -213,6 +213,34 @@ input[type="hidden"]
         border: 1px solid #000;
         background: #fff;
         color: #000;
+    }
+
+    .current-avatar {
+        display: block;
+        width: 100px;
+        height: auto;
+        margin: 0 auto 1em;
+        border: 1px solid #000;
+    }
+
+    .avatar-grid {
+        display: none;
+    }
+
+    .password-fields {
+        display: block;
+    }
+
+    .modifica-form input[type="text"],
+    .modifica-form input[type="email"],
+    .modifica-form input[type="password"] {
+        width: auto;
+        max-width: 100%;
+        padding: 0.2em 0.35em;
+        border: 1px solid #000;
+        background: #fff;
+        color: #000;
+        font: inherit;
     }
 
 /*
