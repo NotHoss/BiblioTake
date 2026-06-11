@@ -91,7 +91,7 @@ CREATE TABLE recensione (
 	valutazione INT NOT NULL,
 	testo TEXT,
 	censura BOOLEAN NOT NULL DEFAULT FALSE,
-	data DATETIME NOT NULL,
+	data DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	libro_id INT NOT NULL,
 	utente_id INT NOT NULL,
 	CONSTRAINT recensione_libro_fk FOREIGN KEY (libro_id)

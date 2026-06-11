@@ -64,7 +64,8 @@
     .sr-only,
     noscript,
     script,
-    footer {
+    footer,
+    #menu {
         display: none;
     }
 
@@ -169,7 +170,8 @@
 
     .form,
     .content-form,
-    .admin-form {
+    .admin-form,
+    .form-recensione {
         display: block;
         page-break-inside: avoid;
     }
@@ -197,23 +199,130 @@
         margin: 0 0 0.6em;
     }
 
+    /*========= DASHBOARD USER =========*/
+
+    .sidebar-user,
+    .sidebar-hamburger,
+    .sidebar-toggle,
+    #no-js-message,
+    .page-content-user-return,
+    .elimina,
+    .elimina-card,
+    .form-elimina,
+    .form-elimina-recensione,
+    .settings,
+    .avatar-option,
+    .profile-image-small,
+    input[type="hidden"] {
+        display: none;
+    }
+
+    .page-content-user {
+        margin-left: 0;
+    }
+
+    #username {
+        text-align: left;
+        font-size: 1.4em;
+        margin-bottom: 0.5em;
+        overflow: visible;
+        white-space: normal;
+    }
+
+    .username-image-small {
+        display: block;
+        margin-bottom: 1em;
+    }
+
+    .profile-image-big {
+        display: block;
+        width: 150px;
+        height: auto;
+        margin: 0 auto 1em;
+        border: 1px solid var(--bordercolor);
+    }
+
+    .user-info {
+        margin-bottom: 1em;
+    }
+
+    .credentials {
+        border: 1px solid var(--bordercolor);
+        padding: 0.75em;
+        margin-bottom: 1em;
+    }
+
+    .credentials p {
+        margin-bottom: 0.3em;
+    }
+
+    #modifica-account {
+        margin-top: 1em;
+    }
+
+    #modifica-account a {
+        display: inline-block;
+        padding: 0.25em 0.55em;
+        border: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
+        color: var(--contenttxtcolor);
+    }
+
+    /*========= RECENSIONI =========*/
+
+    .lista-recensioni {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .recensione-card {
+        border: 1px solid var(--bordercolor);
+        padding: 1em;
+        margin-bottom: 1em;
+        page-break-inside: avoid;
+    }
+
+    .recensione-card header {
+        border-bottom: 1px solid var(--bordercolor);
+        padding-bottom: 0.5em;
+        margin-bottom: 0.7em;
+    }
+
+    .recensione-card header p {
+        display: inline;
+        margin-right: 1em;
+    }
+
+    .recensione-titolo a {
+        font-weight: bold;
+        color: var(--contenttxtcolor);
+    }
+
+    .recensione-card > p {
+        color: var(--contenttxtcolor);
+    }
+
     label {
         display: block;
         margin-bottom: 0.2em;
         color: var(--contenttxtcolor);
     }
 
-    input,
-    select,
-    textarea {
-        display: block;
-        width: 100%;
+    input, select, textarea {
+        display: inline-block;
+        width: auto;
         max-width: 100%;
         padding: 0.2em 0.35em;
         border: 1px solid var(--bordercolor);
         background: var(--contentbgcolor);
         color: var(--contenttxtcolor);
         font: inherit;
+    }
+
+    textarea {
+        display: block;
+        width: 100%;
+        min-height: 5em;
     }
 
     input[type="hidden"] {
@@ -225,10 +334,6 @@
         width: auto;
         height: auto;
         accent-color: var(--focuscolor);
-    }
-
-    textarea {
-        min-height: 5em;
     }
 
     button,
@@ -253,12 +358,40 @@
     a.admin-return-link,
     a.admin-primary-link,
     .admin-page-actions a,
-    .form a {
+    .form a,
+    .form-button {
         display: inline-block;
         padding: 0.25em 0.55em;
         border: 1px solid var(--bordercolor);
         background: var(--contentbgcolor);
         color: var(--txtlinkcolor);
+    }
+
+    .current-avatar {
+        display: block;
+        width: 100px;
+        height: auto;
+        margin: 0 auto 1em;
+    }
+
+    .avatar-grid {
+        display: none;
+    }
+
+    .password-fields {
+        display: block;
+    }
+
+    .modifica-form input[type="text"],
+    .modifica-form input[type="email"],
+    .modifica-form input[type="password"] {
+        width: auto;
+        max-width: 100%;
+        padding: 0.2em 0.35em;
+        border: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
+        color: var(--contenttxtcolor);
+        font: inherit;
     }
 
     .admin-form,
@@ -303,7 +436,8 @@
         border: 1px solid var(--bordercolor);
     }
 
-    table {
+    table,
+    #prestiti-table {
         width: auto;
         max-width: 100%;
         margin: 1em auto;
@@ -324,6 +458,14 @@
         white-space: normal;
         font-weight: bold;
         text-align: center;
+    }
+
+    #prestiti-table-header {
+        position: static;
+        background: var(--hovercolor);
+        color: var(--contenttxtcolor);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 
     th,

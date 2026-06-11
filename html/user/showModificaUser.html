@@ -1,46 +1,81 @@
-<div id="error-message"></div>
+<div class="page-content-user">
+    <div id="error-message"></div>
 
-<noscript>
-    <div id="no-js-message">
-        <strong>JavaScript &egrave; disabilitato.</strong>
-    </div>
-</noscript>
+    <noscript>
+        <div id="no-js-message">
+            <strong>JavaScript &egrave; disabilitato.</strong>
+        </div>
+    </noscript>
 
-<div id="page-content">
     [TO-LOGIN]
-    <h2>[USERNAME]</h2>
+    <h2 id="modifica-user">[USERNAME]</h2>
 
-    <div >
+    <div>
         <h3>Modifica Profilo</h3>
-        <form method="POST" action="modifica-user.php" id="modifica-profilo">
+        <form method="POST" action="modifica-user.php" id="modifica-profilo" class="modifica-form">
             <section>
 
-                <!-- <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" width="48" height="48"> 
-                    per ora tolgo la possibilità di cambiare l'immagine, perché dovremmo creare una lista di immagini 
-                    da cui scegliere, e trovare un modo per cui se clicchi sull'immagine, ti copia il percorso 
-                <input type="file" name="new_profile_image" enctype="multipart/form-data" accept="image/*" value="null"/>
-                -->
+                <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="current-avatar">
+                <!-- lista di immagini tra cui può scegliere -->
+                <div class="avatar-grid">
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar1.webpn">
+                        <img src="../images/avatar1.webpn" alt="Avatar 1">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar2.webpn">
+                        <img src="../images/avatar2.webpn" alt="Avatar 2">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar3.webpn">
+                        <img src="../images/avatar3.webpn" alt="Avatar 3">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar4.webpn">
+                        <img src="../images/avatar4.webpn" alt="Avatar 4">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar5.webpn">
+                        <img src="../images/avatar5.webpn" alt="Avatar 5">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar6.webpn">
+                        <img src="../images/avatar6.webpn" alt="Avatar 6">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar7.webpn">
+                        <img src="../images/avatar7.webpn" alt="Avatar 7">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar8.webpn">
+                        <img src="../images/avatar8.webpn" alt="Avatar 8">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar9.webpn">
+                        <img src="../images/avatar9.webpn" alt="Avatar 9">
+                    </label>
+                    <label class="avatar-option">
+                        <input type="radio" name="selected_avatar" value="images/avatar10.webpn">
+                        <img src="../images/avatar10.webpn" alt="Avatar 10">
+                    </label>
+                </div>
 
-                <p>Username:</p>
-                <input type="text" name="new_username" value="[USERNAME]" placeholder="Username">
-                <p>Email:</p>
-                <input type="email" name="new_email" value="[EMAIL]" placeholder="Email">
-                <div>
-                    <p>Password:</p>
-                    <input type="password" name="current_password" placeholder="Password attuale"/>
-                    <input type="password" name="new_password" placeholder="Nuova password"/>
-                    <input type="password" name="confirm_new_password" placeholder="Conferma nuova password"/>
+                <label for="new_username">Username</label>
+                <input type="text" id="new_username" name="new_username" value="[USERNAME]" placeholder="Username">
+                <label for="new_email">Email</label>
+                <input type="email" id="new_email" name="new_email" value="[EMAIL]" placeholder="Email">
+                <div class="password-fields">
+                    <label for="current_password">Password attuale</label>
+                    <input type="password" id="current_password" name="current_password" placeholder="Password attuale"/>
+                    <label for="new_password">Nuova password</label>
+                    <input type="password" id="new_password" name="new_password" placeholder="Nuova password"/>
+                    <label for="confirm_new_password">Conferma nuova password</label>
+                    <input type="password" id="confirm_new_password" name="confirm_new_password" placeholder="Conferma nuova password"/>
                 </div>
             </section>
-            <p>
-                <input type="submit" class="form-button" name="salva-modifiche" value="Salva Modifiche"/>
-                <a href="dashboard.php">Annulla</a>
-            </p>
+            <input type="submit" class="form-button" name="salva-modifiche" value="Salva Modifiche"/>
         </form>
     </div>
-    <!--<div>
-        <a href="user/modifica-utente.php">Conferma modifiche</a>
-    </div>-->
         
     <script src="scripts/back-to-top.js"></script>
 </div>
@@ -48,6 +83,27 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('modifica-profilo');
+        const avatarOptions = document.querySelectorAll('.avatar-option');
+        const profileImage = form.querySelector('section > img'); // Immagine corrente
+
+        changedAvatar = false;
+        // Quando fai click su un avatar, segna il radio come selezionato e aggiorna l'anteprima
+        avatarOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+
+                // Rimuove selected da tutti, e lo aggiunge solo a quello cliccato
+                avatarOptions.forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+
+                // Aggiorna l'anteprima con l'immagine selezionata
+                const selectedImg = this.querySelector('img');
+                profileImage.src = selectedImg.src;
+                profileImage.alt = selectedImg.alt;
+                changedAvatar = true;
+            });
+        });
 
         form.addEventListener('submit', function(e) {
             const inputs = form.querySelectorAll('input[name="new_username"], input[name="new_email"], input[name="current_password"], input[name="new_password"], input[name="confirm_new_password"]');
@@ -62,13 +118,7 @@
                 }
             });
 
-            // Per l'immagine: controlla se è stato selezionato un file
-            const fileInput = form.querySelector('input[type="file"]');
-            if (fileInput && fileInput.files.length > 0) {
-                hasChanges = true;
-            }
-
-            if (!hasChanges) {
+            if (!hasChanges && changedAvatar === false) {
                 e.preventDefault();
                 alert('Nessuna modifica rilevata.');
             }

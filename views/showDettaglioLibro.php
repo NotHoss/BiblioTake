@@ -94,6 +94,12 @@ $template = str_replace('[LINGUA]',                 $lingua,                $tem
 $template = str_replace('[PAGINE]',                 $pagine,                $template);
 $template = str_replace('[CATEGORIA]',              $categoria,             $template);
 $template = str_replace('[ISBN]',                   $isbn,                  $template);
+//aggiungi recensione
+$linkRecensione = '';
+if (isset($_SESSION['user_id'])) {
+    $linkRecensione = '<a href="user/aggiungi-recensione.php?libro_id=' . (int) $libro['id'] . '">Aggiungi recensione</a>';
+}
+$template = str_replace('[LINK_RECENSIONE]', $linkRecensione, $template);
 $template = str_replace('[DISPONIBILITA]',          $disponibilitaTesto,    $template);
 $template = str_replace('[RIGA_VALUTAZIONE_MEDIA]', $rigaValutazioneMedia,  $template);
 $template = str_replace('[SEZIONE_DESCRIZIONE]',    $sezioneDescrizione,    $template);

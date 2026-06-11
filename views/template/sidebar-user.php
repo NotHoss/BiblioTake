@@ -1,0 +1,106 @@
+<?php
+
+if (isset($_SESSION['user_id'])) {
+    $user = getUserInfo($conn, $_SESSION['user_id']);
+
+    $navItems = array(
+    array('key' => $user['username'],     'href' => 'dashboard.php',    'label' => $user['username']),
+    array('key' => 'prestiti_attivi', 'href' => 'prestiti-attivi.php', 'label' => 'Prestiti attivi'),
+    array('key' => 'prestiti_passati',    'href' => 'prestiti-passati.php',    'label' => 'Prestiti passati'),
+    array('key' => 'recensioni', 'href' => 'recensioni.php', 'label' => 'Recensioni'),
+);
+}
+$template = file_get_contents(__DIR__ . '/../../html/template/sidebar-user.html');
+
+
+
+$navigation = array();
+
+foreach ($navItems as $item) {
+    $isCurrent = isset($currentPage) && $currentPage === $item['key'];
+    $label = htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8');
+    $langAttr = isset($item['lang']) ? ' lang="' . htmlspecialchars($item['lang'], ENT_QUOTES, 'UTF-8') . '"' : '';
+
+    if ($isCurrent) {
+        $navigation[] = '<li aria-current="page" class="current-page"><span' . $langAttr . '>' . $label . '</span></li>';
+        continue;
+    }
+
+    //$navigation[] = '<li><a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '"' . $langAttr . '>' . $label . '</a></li>';
+}
+
+if(isset($_SESSION['user_id'])){
+    if(isset($currentPage)){
+        if ($currentPage === 'dashboard') {
+            $usernameHtml = '<li aria-current="page" class="sidebar-current-page">' . htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8') . '</li>';
+        } else {
+            $usernameHtml = '<li class="sidebar-link"><a href="dashboard.php">' . htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8') . '</a></li>';
+        }
+        if ($currentPage === 'prestiti-attivi') {
+            $prestitiAttiviHtml = '<li aria-current="page" class="sidebar-current-page">Prestiti Attivi</li>';
+        } else {
+            $prestitiAttiviHtml = '<li class="sidebar-link"><a href="prestiti-attivi.php">Prestiti Attivi</a></li>';
+        }
+        if($currentPage === 'prestiti-passati'){
+            $prestitiPassatiHtml = '<li aria-current="page" class="sidebar-current-page">Prestiti Passati</li>';
+        }
+        else{
+            $prestitiPassatiHtml = '<li class="sidebar-link"><a href="prestiti-passati.php">Prestiti Passati</a></li>';
+        }
+        if($currentPage === 'recensioni'){
+            $recensioniHtml = '<li aria-current="page" class="sidebar-current-page">Recensioni</li>';
+        }
+        else{
+            $recensioniHtml = '<li class="sidebar-link"><a href="recensioni.php">Recensioni</a></li>';
+        }
+    }
+
+    $breadcrumbHtml = '';
+    if (!empty($breadcrumb) && is_array($breadcrumb)) {
+        $breadcrumbItems = array();
+        $lastIndex = count($breadcrumb) - 1;
+
+        foreach ($breadcrumb as $index => $crumb) {
+            $label = isset($crumb['label']) ? htmlspecialchars($crumb['label'], ENT_QUOTES, 'UTF-8') : '';
+            $href = isset($crumb['href']) ? trim($crumb['href']) : '';
+
+            if ($index === $lastIndex || $href === '') {
+                $breadcrumbItems[] = '<li><span aria-current="page">' . $label . '</span></li>';
+            } else {
+                $breadcrumbItems[] = '<li><a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '">' . $label . '</a></li>';
+            }
+        }
+
+        $breadcrumbHtml = '<nav class="breadcrumb" aria-label="Percorso nel sito"><ul>' . implode('', $breadcrumbItems) . '</ul></nav>';
+    }
+
+    $replacements = array(
+        '[PAGE_TITLE]' => htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'),
+        '[PAGE_DESCRIPTION]' => htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'),
+        '[PAGE_KEYWORDS]' => htmlspecialchars($pageKeywords, ENT_QUOTES, 'UTF-8'),
+        '[NAVIGATION]' => implode('', $navigation),
+        '[USERNAME]'          => $usernameHtml,
+        '[PRESTITI-ATTIVI]'   => $prestitiAttiviHtml,
+        '[PRESTITI-PASSATI]'  => $prestitiPassatiHtml,
+        '[RECENSIONI]'        => $recensioniHtml,
+    );
+
+}
+else{
+    $navigation[] = '<li><a href="login.php">Login</a></li>';
+    $navigation[] = '<li><a href="register.php">Registrati</a></li>';
+    $replacements = array(
+        '[PAGE_TITLE]' => '',
+        '[PAGE_DESCRIPTION]' => '',
+        '[PAGE_KEYWORDS]' => '',
+        '[NAVIGATION]' => '',
+        '[USERNAME]'          => '',
+        '[PRESTITI-ATTIVI]'   => '',
+        '[PRESTITI-PASSATI]'  => '',
+        '[RECENSIONI]'        => '',
+    );
+}
+
+
+
+echo strtr($template, $replacements);

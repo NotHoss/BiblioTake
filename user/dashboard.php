@@ -4,11 +4,6 @@ require_once __DIR__ . '/../includes/resources.php';
 
 $pageTitle = 'Profilo | BiblioTake';
 $currentPage = 'dashboard';
-$breadcrumb = array(
-    array('label' => 'Home', 'href' => '../index.php'),
-    array('label' => 'Area utente', 'href' => 'dashboard.php'),
-    array('label' => 'Profilo', 'href' => ''),
-);
 $errorMessage = '';
 $successMessage = '';
 
@@ -17,7 +12,13 @@ if (isset($_SESSION['user_id'])) {
     $user = getUserInfo($conn, $_SESSION['user_id']);
 }
 
+$breadcrumb = array(
+    array('label' => 'Home',     'href' => 'index.php'),
+    array('label' => 'Profilo', 'href' => ''),
+);
+
 require_once __DIR__ . '/../views/template/header.php';
+require_once __DIR__ . '/../views/template/sidebar-user.php';
 require_once __DIR__ . '/../views/showDashboard.php';
 require_once __DIR__ . '/../views/template/footer.php';
 

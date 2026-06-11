@@ -22,6 +22,9 @@
     --contenttxtcolor:#000; /*colore testo sopra background contenuto*/
     --shadowcolor:rgba(62, 62, 107, 0.18); /*colore ombra*/
     --borderlightcolor:#e5e0ee; /*colore bordi leggeri*/
+    --deletecolor: #DC2626;       /* rosso accessibile - stato normale */
+    --deletehovercolor: #991B1B;  /* rosso scuro - hover */
+    --deletebordercolor: #991B1B; /* bordo - stato normale */
 }
 
 html, body{ 
@@ -521,6 +524,30 @@ div.table-action{
     margin-bottom: 0.35rem;
 }
 
+#prestiti-table-header{
+    background-color: var(--bgcolor);
+    color: var(--txtcolor);
+}
+
+#prestiti-table{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#prestiti-table th{
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border: 1px solid var(--bordercolor);
+    text-align: center;
+}
+
+#prestiti-table tbody tr:nth-child(even) {
+    background-color: var(--eventablecolor);
+}
+
+#prestiti-table tbody tr:nth-child(odd) {
+    background-color: var(--contentbgcolor);
+}
 
 /*
 ==========================
@@ -1074,6 +1101,8 @@ FORM
     font: inherit;
     font-weight: normal;
 }
+/*User*/
+
 
 /*
 ==========================
@@ -1223,6 +1252,175 @@ FILTRI (aside)
     min-width: 8rem;
 }
 
+/*User*/
+
+.sidebar-toggle {
+    display: none;
+}
+
+.sidebar-hamburger {
+    display: none;
+}
+
+.sidebar-user{
+    float: left;
+    width: 24%;
+    padding-right: 1.5em;
+    border-right: 2px solid #ece0f8;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    text-decoration: none;
+}
+
+.sidebar-current-page{
+    font-weight: bold;
+    background: var(--bgcolor);
+    padding: 0.5em 0 0.5em 0.7em;
+    border-bottom: 2px solid #ece0f8;
+    color: var(--txtcolor);
+}
+
+.sidebar-user ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-user li{
+    /*padding: 0.5em 0 0.5em 0.7em;*/
+    border-bottom: 2px solid #ece0f8;
+}
+
+.sidebar-user .sidebar-link a {
+    display: block;
+    padding: 0.5em 0 0.5em 0.7em;
+    color: var(--txtlinkcolor);
+    text-decoration: none;
+}
+
+.sidebar-user li a:visited{
+    color: var(--txtlinkvisited);
+    /*padding: 0.4em 0.7em;*/
+    text-decoration: none;
+}
+
+.sidebar-user li:not(.sidebar-current-page):hover{
+    background-color: var(--hovercolor);
+    border-bottom: 2px solid var(--txtcolor);
+    color: var(--txtcolor);
+    text-decoration: underline;
+}
+
+.sidebar-user .sidebar-link:hover a{
+    color: var(--txtcolor);
+    text-decoration: underline;
+}
+
+/*========= MODIFICA PROFILO UTENTE =========*/
+
+#modifica-user{
+    text-align: left;
+}
+
+.modifica-form section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+    margin-bottom: 1.5em;
+}
+
+.current-avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 1em;
+}
+
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5em;
+    margin-bottom: 1em;
+}
+
+.avatar-option {
+    display: block;
+    cursor: pointer;
+    text-align: center;
+    padding: 0.3em;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.avatar-option:hover {
+    border-color: var(--breadbgcolor);
+}
+
+.avatar-option.selected {
+    border-color: var(--breadbgcolor);
+    background: var(--eventablecolor);
+}
+
+.avatar-option img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+.avatar-option input[type="radio"]{
+    display: none;
+}
+
+.password-fields {
+    display: grid;
+    gap: 0.8em;
+}
+
+.modifica-form input[type="text"],
+.modifica-form input[type="email"],
+.modifica-form input[type="password"] {
+    width: 100%;
+    padding: 0.55em 0.8em;
+    border: 2px solid #c5c5c5;
+    border-radius: 0.35em;
+    font-size: 1em;
+    font-family: inherit;
+    background: #fff;
+    color: var(--contenttxtcolor);
+    line-height: 1.5;
+    min-height: 2.5em;
+    transition: border-color 0.2s;
+}
+
+.modifica-form input[type="text"]:focus,
+.modifica-form input[type="email"]:focus,
+.modifica-form input[type="password"]:focus {
+    border-color: var(--breadbgcolor);
+}
+
+.form-button {
+    display: inline-block;
+    padding: 0.55em 1.5em;
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border: 2px solid transparent;
+    border-radius: 0.35em;
+    font-size: 1em;
+    font-family: inherit;
+    cursor: pointer;
+    min-height: 2.5em;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    transition: background 0.2s;
+}
+
+.form-button:hover {
+    background: var(--hovercolor);
+}
+
 /*
 ==========================
 CATALOGO - RISULTATI
@@ -1365,6 +1563,10 @@ nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"]{
     border-radius: 0.35em;
     font-weight: bold;
     border: 1px solid var(--breadbgcolor);
+}
+
+.page-content-user ~ nav[aria-label="Navigazione pagine risultati"] {
+    margin-left: 26%;
 }
 
 /*
@@ -1538,6 +1740,16 @@ RECENSIONI LIBRO
     line-height: 1.65;
 }
 
+.form-recensione{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-elimina{
+
+}
+
 /*
 ==========================
 CHI SIAMO
@@ -1672,7 +1884,166 @@ OVERRIDE PARTE B (.public-area)
     font-weight: bold;
 }
 
+/*
+==========================
+DASHBOARD
+==========================
+*/
 
+/*Admin*/
+
+/*User*/
+
+.empty-result{
+    margin-left: 26%;
+}
+
+.empty-result p{
+    margin-bottom: 1em;
+}
+
+.empty-result a{
+    padding: 0.5em;
+    border-radius: 0.35em;
+    background: var(--contentbgcolor);
+    border: 1px solid var(--bgcolor);
+    color: var(--txtlinkcolor);
+    text-decoration: none;
+}
+
+.empty-result a:hover{
+    background: var(--breadbgcolor);
+    border: 1px solid var(--bgcolor);
+    color: var(--txtcolor);
+}
+
+.page-content-user{
+    margin-left: 26%;
+}
+
+.user-info{
+    display: flex; 
+    width: 100%; 
+    justify-content: space-between; 
+    flex-wrap: wrap;
+}
+
+
+.page-content-user-return{
+    margin-top: 2em;
+}
+
+.page-content-user-elimina{
+    margin-top: 1em;
+}
+
+.confirm-message{
+    padding: 1em 1em 1em 0;
+}
+
+#username{
+    text-align: left;
+    padding: 0.5em 0;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+}
+
+.profile-image-big{
+    width: 150px;
+    height: 150px;
+    margin-right: 10em;
+}
+
+.profile-image-small{
+    display: none;
+}
+
+.credentials{
+    padding: 0.75em 0;
+}
+
+.credentials p + p{
+    padding: 0.25em 0;
+}
+
+#modifica-account{
+    margin-top: 1.5em;
+}
+
+.elimina{
+    margin-top: 1.5em;
+}
+
+#modifica-account a{
+    padding: 0.5em;
+    border-radius: 0.35em;
+    background: var(--contentbgcolor);
+    border: 1px solid var(--bgcolor);
+    color: var(--txtlinkcolor);
+    margin-top: 1em;
+    text-decoration: none;
+}
+
+main .elimina a, main .elimina button, main .form-elimina button{
+    background-color: var(--deletecolor);
+    border: 1px solid var(--deletebordercolor);
+    color: var(--txtcolor);
+    text-decoration: none;
+    padding: 0.5em;
+    border-radius: 0.35em;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+main .elimina a:hover, main .elimina a:focus,
+main .elimina button:hover, main .elimina button:focus,
+main .form-elimina button:hover, main .form-elimina button:focus{
+    background-color: var(--deletehovercolor);
+    border-color: var(--deletehovercolor);
+    color: var(--txtcolor);
+}
+
+main .elimina-card a{
+    background-color: var(--deletecolor);
+    border: 1px solid var(--deletebordercolor);
+    color: var(--txtcolor);
+    text-decoration: none;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border-radius: 0.35em;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+main .elimina-card a:hover, main .elimina-card a:focus{
+    background-color: var(--deletehovercolor);
+    border-color: var(--deletehovercolor);
+    color: var(--txtcolor);
+}
+
+#modifica-account a:hover{
+    background: var(--breadbgcolor);
+    border: 1px solid var(--bgcolor);
+    color: var(--txtcolor);
+}
+
+.lista-recensioni{
+    list-style-type: none;
+}
+
+.lista-recensioni > li {
+    margin-bottom: 1em;
+}
+
+.recensione-titolo a{
+    font-weight: bold;
+    color: var(--txtlinkcolor);
+    text-decoration: none;
+}
 /*
 ==========================
 SEZIONE FOOTER
