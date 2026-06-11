@@ -139,6 +139,11 @@
         margin: 0 auto;
     }
 
+    .avatar-option img {
+        width: 80px;
+        height: 80px;
+    }
+
     #username{
         text-align: left;
         padding: 0.5em 2.5em 0.5em 0em;
