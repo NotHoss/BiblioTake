@@ -19,9 +19,9 @@ if ($libro === null) {
     exit;
 }
 
-$pageTitle       = htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8') . ' — BiblioTake';
-$pageDescription = 'Scheda del libro ' . htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8') . ' di ' . htmlspecialchars($libro['autore'], ENT_QUOTES, 'UTF-8') . '. Informazioni, disponibilità e recensioni.';
-$pageKeywords    = htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8') . ', ' . htmlspecialchars($libro['autore'], ENT_QUOTES, 'UTF-8') . ', biblioteca, prestito';
+$pageTitle       = $libro['titolo'] . ' — BiblioTake';
+$pageDescription = 'Scheda del libro ' . $libro['titolo'] . ' di ' . $libro['autore'] . '. Informazioni, disponibilità e recensioni.';
+$pageKeywords    = $libro['titolo'] . ', ' . $libro['autore'] . ', biblioteca, prestito';
 $currentPage     = 'catalogo';
 $breadcrumb      = array(
     array('label' => 'Home',                           'href' => 'index.php'),
