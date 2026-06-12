@@ -1,6 +1,7 @@
 <?php
 require_once 'includes/resources.php';
 
+//sessione avviata qui perche isLoggedIn() viene chiamato prima di header.php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -19,6 +20,7 @@ if ($libro === null) {
     exit;
 }
 
+//niente htmlspecialchars qui, ci pensa header.php a fare l'escape
 $pageTitle       = $libro['titolo'] . ' — BiblioTake';
 $pageDescription = 'Scheda del libro ' . $libro['titolo'] . ' di ' . $libro['autore'] . '. Informazioni, disponibilità e recensioni.';
 $pageKeywords    = $libro['titolo'] . ', ' . $libro['autore'] . ', biblioteca, prestito';

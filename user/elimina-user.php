@@ -22,7 +22,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
         $result = deleteUtente($conn, $userInfo['id']);
         if($result === true){
             session_destroy();
-            header('Location: /index.php');
+            header('Location: ../index.php');
             exit();
         }
         else{

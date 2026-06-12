@@ -23,7 +23,13 @@ $pageDescription = isset($pageDescription) && $pageDescription !== '' ? $pageDes
 $pageKeywords = isset($pageKeywords) ? $pageKeywords : '';
 
 $navigation = array();
-$baseUrl = rtrim(WEB_ROOT, '/');
+//percorso relativo alla root del sito, calcolato in base alla profondita
+//della pagina corrente. sostituisce WEB_ROOT assoluto per assicurarsi che funzioni anche sulla macchina di lab
+$projectRoot = dirname(__DIR__, 2);
+$scriptDir   = dirname($_SERVER['SCRIPT_FILENAME']);
+$rel         = ltrim(str_replace($projectRoot, '', $scriptDir), '/\\');
+$depth       = ($rel !== '') ? substr_count($rel, '/') + 1 : 0;
+$baseUrl     = $depth > 0 ? implode('/', array_fill(0, $depth, '..')) : '.';
 
 foreach ($navItems as $item) {
     $isCurrent = isset($currentPage) && $currentPage === $item['key'];

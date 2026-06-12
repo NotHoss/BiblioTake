@@ -4,6 +4,7 @@
 // Avviare la sessione e responsabilita del modello chiamante: deve invocare
 // session_start() prima di qualsiasi output e prima di includere resources.php.
 
+//accetta login per email o username (la prof accede con admin/admin)
 function loginUser($conn, $login, $password) {
     $stmt = $conn->prepare(
         'SELECT id, email, username, password, ruolo, attivo

@@ -12,12 +12,14 @@ $loginValore = '';
 $intended    = isset($_GET['intended']) ? $_GET['intended'] : '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //campo login accetta email o username per permettere accesso con admin/admin
     $loginValore = isset($_POST['login'])    ? trim($_POST['login'])     : '';
     $password    = isset($_POST['password']) ? (string) $_POST['password'] : '';
 
     if ($loginValore === '') {
         $errors[] = 'Inserisci email o username.';
     }
+    //niente check su lunghezza minima password: bloccherebbe credenziali corte come admin/admin richieste dalla prof
     if ($password === '') {
         $errors[] = 'Inserisci la password.';
     }
