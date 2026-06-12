@@ -27,7 +27,7 @@ if (!empty($intended)) {
     </p>
     <p>
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" required />
     </p>
     <p>
         <button type="submit">Accedi</button>

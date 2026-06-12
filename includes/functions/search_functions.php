@@ -46,9 +46,9 @@ function renderSearchForm(array $config) {
             }
             $fieldsHtml .= '</select>';
         } elseif ($type === 'checkbox') {
-            $fieldsHtml .= '<input type="checkbox" id="' . $id . '" name="' . $name . '" value="1"' . $checked . '>';
+            $fieldsHtml .= '<input type="checkbox" id="' . $id . '" name="' . $name . '" value="1"' . $checked . ' />';
         } else {
-            $fieldsHtml .= '<input type="' . htmlspecialchars($type, ENT_QUOTES, 'UTF-8') . '" id="' . $id . '" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '" placeholder="' . $placeholder . '"' . $min . $max . $step . '>';
+            $fieldsHtml .= '<input type="' . htmlspecialchars($type, ENT_QUOTES, 'UTF-8') . '" id="' . $id . '" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '" placeholder="' . $placeholder . '"' . $min . $max . $step . ' />';
         }
 
         $fieldsHtml .= '</div>';

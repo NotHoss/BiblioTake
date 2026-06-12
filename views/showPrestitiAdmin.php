@@ -113,10 +113,10 @@ if ($utenteId >= 0) {
 
             if ($postActions !== '') {
                 $tableActions .= '<form class="table-action-form table-actions-row" action="' . htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8') . '" method="post">'
-                    . '<input type="hidden" name="prestito_id" value="' . $id . '">'
-                    . '<input type="hidden" name="utente_id" value="' . $utenteIdSafe . '">'
-                    . '<input type="hidden" name="cerca" value="' . $cercaSafe . '">'
-                    . '<input type="hidden" name="return" value="' . htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8') . '">'
+                    . '<input type="hidden" name="prestito_id" value="' . $id . '" />'
+                    . '<input type="hidden" name="utente_id" value="' . $utenteIdSafe . '" />'
+                    . '<input type="hidden" name="cerca" value="' . $cercaSafe . '" />'
+                    . '<input type="hidden" name="return" value="' . htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8') . '" />'
                     . $postActions
                     . '</form>';
             }

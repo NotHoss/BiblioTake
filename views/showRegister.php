@@ -24,11 +24,11 @@
     </p>
     <p>
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" required />
     </p>
     <p>
         <label for="password-conferma">Conferma password</label>
-        <input type="password" id="password-conferma" name="password-conferma" required>
+        <input type="password" id="password-conferma" name="password-conferma" required />
     </p>
     <p>
         <button type="submit">Registrati</button>
