@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {    //se la richiesta è di tipo POS
 
     $risultato = aggiungiRecensione($conn, $_SESSION['user_id'], $libroId, $testo, $voto);
 
-    if($risultato === true){header('Location: index.php?msg=recensione_aggiunta');} //se la recensione è stata aggiunta con successo, reindirizza alla pagina principale con un messaggio di successo
+    if($risultato === true){header('Location: index.php?msg=recensione_aggiunta'); exit;} //se la recensione è stata aggiunta con successo, reindirizza alla pagina principale con un messaggio di successo
     else{$errorMessage = $risultato;} //se c'è stato un errore durante l'aggiunta della recensione, mostra il messaggio di errore nella stessa pagina (potrebbe essere utile se vogliamo restare sulla pagina del libro invece di tornare alla homepage)
     //else {header('Location: index.php?msg=' . urlencode('errore: ' . $risultato));} //se c'è stato un errore durante l'aggiunta della recensione, reindirizza alla pagina principale con un messaggio di errore che include il motivo dell'errore
     exit;
