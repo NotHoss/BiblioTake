@@ -824,6 +824,45 @@ FORM
     background: var(--breadbgcolor);
 }
 
+/*
+==========================
+VALIDAZIONE FORM (lato client JS)
+==========================
+classi usate da js/validation.js:
+- .input-error sull'input/textarea/select quando ha un errore
+- .campo-errore sullo <span role="alert"> mostrato sotto l'input
+colore rosso #B00020 scelto per contrasto 8.2:1 su sfondo #FFFAF5 (WCAG AAA).
+*/
+
+.form input.input-error,
+.form textarea.input-error,
+.form select.input-error{
+    border-color: #B00020;
+    border-width: 2px;
+    background-color: #FFF5F6;
+}
+
+.form input.input-error:focus,
+.form textarea.input-error:focus,
+.form select.input-error:focus{
+    border-color: #B00020;
+    outline: 2px solid #B00020;
+    outline-offset: 2px;
+}
+
+.campo-errore{
+    display: block;
+    color: #B00020;
+    font-size: 0.9em;
+    line-height: 1.4;
+    margin-top: 0.3em;
+    font-weight: bold;
+}
+
+.campo-errore:empty{
+    display: none;
+}
+
 /*Admin*/
 
 .admin-form{
