@@ -756,7 +756,7 @@ function validateAndProcessCopertina($file) {
     }
     
     // Verifica che sia effettivamente un'immagine JPG usando getimagesize
-    $imageInfo = @getimagesize($file['tmp_name']);
+    $imageInfo = getimagesize($file['tmp_name']);
     if ($imageInfo === false || !in_array($imageInfo[2], [IMAGETYPE_JPEG], true)) {
         return null;
     }
