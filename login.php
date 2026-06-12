@@ -8,22 +8,22 @@ if (isLoggedIn()) {
 }
 
 $errors      = array();
-$emailValore = '';
+$loginValore = '';
 $intended    = isset($_GET['intended']) ? $_GET['intended'] : '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $emailValore = isset($_POST['email'])    ? trim($_POST['email'])     : '';
+    $loginValore = isset($_POST['login'])    ? trim($_POST['login'])     : '';
     $password    = isset($_POST['password']) ? (string) $_POST['password'] : '';
 
-    if (!filter_var($emailValore, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = 'Indirizzo email non valido.';
+    if ($loginValore === '') {
+        $errors[] = 'Inserisci email o username.';
     }
-    if (strlen($password) < MIN_PASSWORD_LENGTH) {
-        $errors[] = 'La password deve contenere almeno ' . MIN_PASSWORD_LENGTH . ' caratteri.';
+    if ($password === '') {
+        $errors[] = 'Inserisci la password.';
     }
 
     if (empty($errors)) {
-        if (loginUser($conn, $emailValore, $password)) {
+        if (loginUser($conn, $loginValore, $password)) {
             // Sanifica intended per prevenire open redirect
             $safe = isAdmin() ? 'admin/index.php' : 'index.php';
             if ($intended !== '' &&

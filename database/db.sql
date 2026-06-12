@@ -113,9 +113,9 @@ INSERT INTO biblioteca (id, indirizzo, telefono, email, note, orario_lun_ven, or
 
 INSERT INTO utente (id, email, username, password, foto_profilo, attivo, ruolo) VALUES
 	(101, 'luca.rossi@gmail.com', 'luca.rossi', '$2y$10$e0NRm7l8iA92f1bR6xL4fOd8kSMNw2w5sY4qC8x0Qh7oA3fXvYf4K', 'images/default-avatar.jpg', TRUE, 'utente'),
-	(102, 'user@gmail.com', 'user', '$2y$10$CMi/jExR0PTN.f4K6TJwkejd3hL4yV03Gkyt/3v7ALhq7rWcHHO7y', 'images/default-avatar.jpg', TRUE, 'utente'),
+	(102, 'user@gmail.com', 'user', '$2y$10$pImTXY.xqQqECmToCB6QMOf9J9re1jBpKjiVUPisj0mO8TLPmc/LG', 'images/default-avatar.jpg', TRUE, 'utente'),
 	(103, 'marco.verdi@gmail.com', 'marco.verdi', '$2y$10$A8h2kP5tR3mQ7vX1nD6yEuL4bS9zF2cH5jK8qW3rN0pT6mV4xC7Zg', 'images/default-avatar.jpg', FALSE, 'utente'),
-	(104, 'admin@bibliotake.it', 'admin', '$2y$10$JRxG6EJzVeJG3.41PVJGUuF4D7YElYoN9c99XydwmJPCzd2jO3IPm', 'images/default-avatar.jpg', TRUE, 'admin'),
+	(104, 'admin@bibliotake.it', 'admin', '$2y$10$LdH86xishj74KT0pab7zfOnt5VTkoqWxkV50WMFVJdr0BnpZES1kS', 'images/default-avatar.jpg', TRUE, 'admin'),
 	(105, 'anna.neri@gmail.com', 'anna.neri', '$2y$10$V4nK2mP8qR1sT6uY3zX7cE4hJ9mL0oP2rS5tV8wZ1aC4dF7gH6Jk', 'images/default-avatar.jpg', TRUE, 'utente'),
 	(106, 'paolo.mazza@gmail.com', 'paolo.mazza', '$2y$10$P1qW3eR5tY7uI9oP2aS4dF6gH8jK0lZ2xC4vB6nM8qW1eR3tY5uI', 'images/default-avatar.jpg', TRUE, 'utente'),
 	(107, 'alessia.ferri@gmail.com', 'alessia.ferri', '$2y$10$CMi/jExR0PTN.f4K6TJwkejd3hL4yV03Gkyt/3v7ALhq7rWcHHO7y', 'images/default-avatar.jpg', TRUE, 'utente'),

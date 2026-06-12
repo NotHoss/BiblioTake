@@ -18,9 +18,9 @@ if (!empty($intended)) {
 
 <form action="<?= htmlspecialchars($actionUrl, ENT_QUOTES, 'UTF-8') ?>" method="post">
     <p>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email"
-               value="<?= htmlspecialchars($emailValore, ENT_QUOTES, 'UTF-8') ?>" required>
+        <label for="login">Email</label>
+        <input type="text" id="login" name="login"
+               value="<?= htmlspecialchars($loginValore, ENT_QUOTES, 'UTF-8') ?>" required>
     </p>
     <p>
         <label for="password">Password</label>

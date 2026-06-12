@@ -4,13 +4,13 @@
 // Avviare la sessione e responsabilita del modello chiamante: deve invocare
 // session_start() prima di qualsiasi output e prima di includere resources.php.
 
-function loginUser($conn, $email, $password) {
+function loginUser($conn, $login, $password) {
     $stmt = $conn->prepare(
         'SELECT id, email, username, password, ruolo, attivo
          FROM utente
-         WHERE email = ?'
+         WHERE email = ? OR username = ?'
     );
-    $stmt->bind_param('s', $email);
+    $stmt->bind_param('ss', $login, $login);
     $stmt->execute();
     $user = $stmt->get_result()->fetch_assoc();
     $stmt->close();
