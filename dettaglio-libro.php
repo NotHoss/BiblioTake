@@ -1,6 +1,10 @@
 <?php
 require_once 'includes/resources.php';
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $libroId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 if ($libroId <= 0) {
