@@ -750,6 +750,7 @@ FORM
 .form input[type="text"],
 .form input[type="number"],
 .form input[type="email"],
+.form input[type="password"],
 .form input[type="file"],
 .form input[type="datetime-local"],
 .form textarea,
@@ -1073,6 +1074,253 @@ FORM
     cursor: pointer;
     font: inherit;
     font-weight: normal;
+}
+
+/*
+==========================
+AUTH (login / registrazione)
+==========================
+*/
+
+.auth-wrapper{
+    max-width: 26em;
+    margin: 2em auto;
+    background: #fff;
+    border: 1px solid var(--borderlightcolor);
+    border-left: 0.35rem solid var(--breadbgcolor);
+    border-radius: 0.45rem;
+    box-shadow: 0 2px 12px var(--shadowcolor);
+    padding: 2em 2.2em 1.8em;
+}
+
+.auth-wrapper h2{
+    margin-bottom: 1em;
+    text-align: left;
+}
+
+.auth-wrapper .form p{
+    margin-bottom: 1em;
+}
+
+.auth-wrapper .form button{
+    width: 100%;
+    margin-top: 0.4em;
+}
+
+.auth-wrapper > p{
+    margin-top: 1em;
+    font-size: 0.95em;
+    text-align: center;
+}
+
+.auth-errors{
+    margin-bottom: 1.2em;
+    padding: 0.8em 1em;
+    background: #fdf0f5;
+    border: 1px solid #e8a0bb;
+    border-radius: 0.35em;
+    color: #7a1535;
+}
+
+.auth-errors ul{
+    list-style-type: disc;
+    padding-left: 1.4em;
+    margin: 0;
+}
+
+/*
+==========================
+AREA UTENTE
+==========================
+*/
+
+/* Avatar */
+
+.user-avatar-item{
+    border-bottom: none;
+    padding-bottom: 0.2em;
+}
+
+.user-avatar{
+    width: 5em;
+    height: 5em;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--borderlightcolor);
+    box-shadow: 0 2px 8px var(--shadowcolor);
+    display: block;
+}
+
+/* Override: .generalita-list .actions a ha specificity alta, ripristino btn-primary */
+
+.generalita-list .actions .btn-primary,
+.generalita-list .actions .btn-primary:visited{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
+}
+
+.generalita-list .actions .btn-primary:hover,
+.generalita-list .actions .btn-primary:focus{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+/* Edit form */
+
+.user-edit-form{
+    max-width: 32em;
+}
+
+.user-edit-form section{
+    margin-bottom: 0.5em;
+}
+
+.user-edit-form p{
+    margin-bottom: 1em;
+}
+
+.user-edit-form .form-actions{
+    margin-top: 1.2em;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+/* Bottoni condivisi area utente */
+
+.btn-primary{
+    display: inline-block;
+    padding: 0.55em 1.2em;
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    text-decoration: none;
+    border: 2px solid var(--breadbgcolor);
+    border-radius: 0.35em;
+    font-size: 1em;
+    font-family: inherit;
+    cursor: pointer;
+    min-height: 2.5em;
+    line-height: 1.5;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.btn-primary:visited{
+    color: var(--txtcolor);
+}
+
+.btn-primary:hover,
+.btn-primary:focus{
+    box-shadow: 0 3px 10px var(--shadowcolor);
+    transform: translateY(-1px);
+}
+
+.btn-danger{
+    display: inline-block;
+    padding: 0.55em 1.2em;
+    background: #a82020;
+    color: #fff;
+    border: 2px solid #a82020;
+    border-radius: 0.35em;
+    font-size: 1em;
+    font-family: inherit;
+    cursor: pointer;
+    min-height: 2.5em;
+    line-height: 1.5;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.btn-danger:hover,
+.btn-danger:focus{
+    background: #8a1a1a;
+    border-color: #8a1a1a;
+    transform: translateY(-1px);
+}
+
+.btn-secondary{
+    display: inline-block;
+    padding: 0.55em 1.2em;
+    background: #fff;
+    color: var(--contenttxtcolor);
+    border: 2px solid var(--borderlightcolor);
+    border-radius: 0.35em;
+    font-size: 1em;
+    font-family: inherit;
+    cursor: pointer;
+    min-height: 2.5em;
+    line-height: 1.5;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus{
+    background: var(--borderlightcolor);
+}
+
+.btn-secondary-link{
+    display: inline-block;
+    padding: 0.55em 1.2em;
+    background: #fff;
+    color: var(--contenttxtcolor);
+    border: 2px solid var(--borderlightcolor);
+    border-radius: 0.35em;
+    text-decoration: none;
+    min-height: 2.5em;
+    line-height: 1.5;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-secondary-link:visited{
+    color: var(--contenttxtcolor);
+}
+
+.btn-secondary-link:hover,
+.btn-secondary-link:focus{
+    background: var(--borderlightcolor);
+    text-decoration: none;
+}
+
+/* Modal conferma eliminazione */
+
+.confirm-modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(11, 11, 11, 0.5);
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-modal[hidden]{
+    display: none;
+}
+
+.confirm-modal-box{
+    background: #fff;
+    border: 1px solid var(--borderlightcolor);
+    border-radius: 0.45em;
+    padding: 1.8em 2em;
+    max-width: 24em;
+    width: 90%;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+    text-align: center;
+}
+
+.confirm-modal-box p{
+    margin-bottom: 1.2em;
+    font-size: 1.05em;
+}
+
+.confirm-modal-actions{
+    display: flex;
+    justify-content: center;
+    gap: 0.8em;
 }
 
 /*
