@@ -5,7 +5,7 @@
 //  metodo 1, automatico:
 //      aggiungere l'attributo data-validate al tag <form> e includere questo file
 //      con uno <script src="js/validation.js"></script> nella pagina.
-//      l'inizializzazione parte da sola al DOMContentLoaded.
+//      l'inizializzazione parte da sola al dom content loaded.
 //
 //  metodo 2, manuale (es. login.js, register.js, ecc.):
 //      var form = document.getElementById('idForm');
