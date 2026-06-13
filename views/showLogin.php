@@ -1,38 +1,22 @@
-<div class="auth-wrapper">
-<h2>Accedi</h2>
-
-<?php if (!empty($errors)): ?>
-    <div role="alert" class="auth-errors">
-        <ul>
-            <?php foreach ($errors as $err): ?>
-                <li><?= htmlspecialchars($err, ENT_QUOTES, 'UTF-8') ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
-
 <?php
+$errorsHtml = '';
+if (!empty($errors)) {
+    $errorsHtml = '<div role="alert" class="auth-errors"><ul>';
+    foreach ($errors as $err) {
+        $errorsHtml .= '<li>' . htmlspecialchars($err, ENT_QUOTES, 'UTF-8') . '</li>';
+    }
+    $errorsHtml .= '</ul></div>';
+}
+
 $actionUrl = 'login.php';
-// The controller may provide an $intended variable; views should not read superglobals.
 if (!empty($intended)) {
     $actionUrl .= '?intended=' . urlencode($intended);
 }
-?>
 
-<form class="form" action="<?= htmlspecialchars($actionUrl, ENT_QUOTES, 'UTF-8') ?>" method="post" data-validate="data-validate">
-    <p>
-        <label for="login">Email</label>
-        <input type="text" id="login" name="login"
-               value="<?= htmlspecialchars($loginValore, ENT_QUOTES, 'UTF-8') ?>" required>
-    </p>
-    <p>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
-    </p>
-    <p>
-        <button type="submit">Accedi</button>
-    </p>
-</form>
+$template = file_get_contents(__DIR__ . '/../html/showLogin.html');
 
-<p><a href="register.php">Non hai un account? Registrati</a></p>
-</div>
+echo strtr($template, [
+    '[ERRORS]'      => $errorsHtml,
+    '[FORM_ACTION]' => htmlspecialchars($actionUrl, ENT_QUOTES, 'UTF-8'),
+    '[LOGIN_VALUE]' => htmlspecialchars($loginValore, ENT_QUOTES, 'UTF-8'),
+]);
