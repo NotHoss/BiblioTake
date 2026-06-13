@@ -19,7 +19,7 @@ if (!empty($intended)) {
 }
 ?>
 
-<form class="form" action="<?= htmlspecialchars($actionUrl, ENT_QUOTES, 'UTF-8') ?>" method="post">
+<form class="form" action="<?= htmlspecialchars($actionUrl, ENT_QUOTES, 'UTF-8') ?>" method="post" data-validate="data-validate">
     <p>
         <label for="login">Email</label>
         <input type="text" id="login" name="login"

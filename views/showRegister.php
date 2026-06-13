@@ -11,7 +11,7 @@
     </div>
 <?php endif; ?>
 
-<form class="form" action="register.php" method="post">
+<form class="form" action="register.php" method="post" data-validate="data-validate">
     <p>
         <label for="email">Email</label>
         <input type="email" id="email" name="email"
