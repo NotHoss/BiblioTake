@@ -1,22 +1,6 @@
 <div id="user-dashboard">
 
-    <div id="delete-modal" class="confirm-modal" aria-modal="true" role="dialog" aria-labelledby="modal-title" hidden>
-        <div class="confirm-modal-box">
-            <p id="modal-title">Sei sicuro di voler eliminare il tuo account?</p>
-            <div class="confirm-modal-actions">
-                <button id="confirm-delete" class="btn-danger">Sì, elimina</button>
-                <button id="cancel-delete" class="btn-secondary">Annulla</button>
-            </div>
-        </div>
-    </div>
-
-    <noscript>
-        <div class="auth-errors" role="alert">
-            <ul><li>JavaScript è disabilitato. Alcune funzionalità potrebbero non essere disponibili.</li></ul>
-        </div>
-    </noscript>
-
-    <h2>[USERNAME]</h2>
+<h2>[USERNAME]</h2>
 
     <section aria-labelledby="info-utente-titolo">
         <h3 id="info-utente-titolo">Informazioni utente</h3>
@@ -28,29 +12,10 @@
             <li><strong>Password:</strong> [PASSWORD]</li>
             <li class="actions">
                 <a href="modifica-user.php" class="btn-primary">Modifica informazioni</a>
-                <form method="post" action="elimina-user.php" id="form-delete" style="display:inline">
-                    <button type="submit" class="btn-danger">Elimina account</button>
-                </form>
+                <a href="elimina-user.php" class="btn-danger">Elimina account</a>
             </li>
         </ul>
     </section>
 
 </div>
 
-<script>
-    const formDelete = document.getElementById('form-delete');
-    const deleteModal = document.getElementById('delete-modal');
-
-    formDelete.addEventListener('submit', function(event) {
-        event.preventDefault();
-        deleteModal.hidden = false;
-    });
-
-    document.getElementById('confirm-delete').addEventListener('click', function() {
-        formDelete.submit();
-    });
-
-    document.getElementById('cancel-delete').addEventListener('click', function() {
-        deleteModal.hidden = true;
-    });
-</script>
