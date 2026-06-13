@@ -38,12 +38,20 @@ function getLibri($conn, $filtri, $pagina) {
         $types   .= 's';
     }
 
+    $joins = '';
+    if (!empty($filtri['tag'])) {
+        $joins = ' INNER JOIN libro_tag lt ON lt.libro_id = l.id INNER JOIN tag t ON t.id = lt.tag_id';
+        $where[]  = 't.nome = ?';
+        $params[] = $filtri['tag'];
+        $types   .= 's';
+    }
+
     $sql = 'SELECT l.*, (
                 SELECT ROUND(AVG(r.valutazione), 1)
                 FROM recensione r
                 WHERE r.libro_id = l.id
             ) AS media_voti
-            FROM libro l';
+            FROM libro l' . $joins;
 
     if (!empty($where)) {
         $sql .= ' WHERE ' . implode(' AND ', $where);
@@ -107,7 +115,15 @@ function countLibri($conn, $filtri) {
         $types   .= 's';
     }
 
-    $sql = 'SELECT COUNT(*) AS totale FROM libro l';
+    $joins = '';
+    if (!empty($filtri['tag'])) {
+        $joins = ' INNER JOIN libro_tag lt ON lt.libro_id = l.id INNER JOIN tag t ON t.id = lt.tag_id';
+        $where[]  = 't.nome = ?';
+        $params[] = $filtri['tag'];
+        $types   .= 's';
+    }
+
+    $sql = 'SELECT COUNT(*) AS totale FROM libro l' . $joins;
 
     if (!empty($where)) {
         $sql .= ' WHERE ' . implode(' AND ', $where);

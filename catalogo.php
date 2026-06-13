@@ -17,6 +17,7 @@ $filtri = [
     'anno'        => isset($_GET['anno']) && $_GET['anno'] !== '' ? (int) $_GET['anno'] : '',
     'disponibile' => isset($_GET['disponibile']) ? $_GET['disponibile']        : '',
     'ordine'      => isset($_GET['ordine'])       ? $_GET['ordine']            : '',
+    'tag'         => isset($_GET['tag'])          ? trim($_GET['tag'])         : '',
 ];
 
 $totalLibri  = countLibri($conn, $filtri);
