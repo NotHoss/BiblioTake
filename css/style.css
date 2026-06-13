@@ -1256,6 +1256,9 @@ DASHBOARD
     flex-wrap: wrap;
 }
 
+.settings{
+    margin-top: 2em;
+}
 
 .page-content-user-return{
     margin-top: 2em;

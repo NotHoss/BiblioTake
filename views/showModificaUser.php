@@ -8,8 +8,7 @@ if (empty($userInfo)) {
     $foto = !empty($userInfo['foto_profilo']) ? htmlspecialchars('/'.$userInfo['foto_profilo'], ENT_QUOTES, 'UTF-8') : '/images/default-avatar.jpg';
 
     $placeholders = [
-        '[TO-LOGIN]' => '',     //Rimuove il link di login poiché l'utente è già loggato
-        '[USERNAME]' => htmlspecialchars($userInfo['username'] ?? '', ENT_QUOTES, 'UTF-8'),
+        '[USERNAME]' => htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8'),
         '[EMAIL]' => htmlspecialchars($userInfo['email'] ?? '', ENT_QUOTES, 'UTF-8'),
         '[PASSWORD]' => '********', //Voglio mostrare la password solo nella pagina di modifica delle informazioni 
         '[IMMAGINE_PROFILO]' => $foto,
