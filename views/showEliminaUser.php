@@ -8,7 +8,6 @@ if (empty($userInfo)) {
     $foto = !empty($userInfo['foto_profilo']) ? htmlspecialchars('/'.$userInfo['foto_profilo'], ENT_QUOTES, 'UTF-8') : '/images/default-avatar.jpg';
 
     $placeholders = [
-        '[TO-LOGIN]' => '',     //Rimuove il link di login poiché l'utente è già loggato
         '[USERNAME]' => htmlspecialchars($userInfo['username'] ?? '', ENT_QUOTES, 'UTF-8'),
     ];
 
