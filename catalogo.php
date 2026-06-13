@@ -27,6 +27,7 @@ $pagina      = max(1, min($page, $totalPagine));
 
 $libri     = getLibri($conn, $filtri, $pagina);
 $categorie = getCategorie($conn);
+$tags      = getAllTags($conn);
 
 require_once 'views/template/header.php';
 require_once 'views/showCatalogo.php';
