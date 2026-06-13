@@ -32,12 +32,16 @@ if (empty($user)) {
     $foto = !empty($user['foto_profilo']) ? htmlspecialchars('/' . $user['foto_profilo'], ENT_QUOTES, 'UTF-8') : '/images/default-avatar.jpg';  // molto importante lo / all'inizio del percorso per assicurarsi che venga risolto correttamente rispetto alla root del sito
 
     $placeholders = [
-        '[MESSAGES]' => $messages,
-        '[EMPTY_MESSAGE]' => '',
-        '[TO-LOGIN]' => '',     //Rimuove il link di login poiché l'utente è già loggato
         '[USERNAME]' => htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8'),
         '[EMAIL]' => htmlspecialchars($user['email'] ?? '', ENT_QUOTES, 'UTF-8'),
         '[PASSWORD]' => '********', //Voglio mostrare la password solo nella pagina di modifica delle informazioni 
+        '[IMMAGINE_PROFILO]' => $foto,
+    ];
+
+    $placeholders = [
+        '[USERNAME]' => htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8'),
+        '[EMAIL]' => htmlspecialchars($user['email'] ?? '', ENT_QUOTES, 'UTF-8'),
+        '[PASSWORD]' => '********',
         '[IMMAGINE_PROFILO]' => $foto,
     ];
 

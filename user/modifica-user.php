@@ -24,7 +24,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
         if($updatedProfileImage === true){
             $userInfo['foto_profilo'] = $newProfileImage; // Aggiorna l'informazione dell'immagine del profilo nell'array $userInfo
             $successMessage = 'Immagine del profilo aggiornata con successo.';
-            header('Location: /user/dashboard.php');
+            header('Location: dashboard.php');
             exit();
         }
         else{
@@ -38,7 +38,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
         $result = changeUsername($conn, $userInfo['id'], $newUsername);
         if($result === true){
             $successMessage = 'Username aggiornato con successo.';
-            header('Location: /user/dashboard.php');
+            header('Location: dashboard.php');
             exit();
         }
         else{
@@ -51,7 +51,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
         $result = changeEmail($conn, $userInfo['id'], $newEmail);
         if($result === true){
             $successMessage = 'Email aggiornata con successo.';
-            header('Location: /user/dashboard.php');
+            header('Location: dashboard.php');
             exit();
         }
         else{
@@ -78,7 +78,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
                 $result = changePassword($conn, $userInfo['id'], $_POST['confirm_new_password']);
                 if($result === true){
                     $successMessage = 'Password aggiornata con successo.';
-                    header('Location: /user/dashboard.php');
+                    header('Location: dashboard.php');
                     exit();
                 }
                 else{

@@ -66,8 +66,8 @@ echo strtr($template, [
     '[TESTO_MODIFICA]' => 'Stai modificando il prestito:',
     '[TESTO_DETTAGLI]' => $prestitoSummary,
     '[PRESTITO_SUMMARY]' => $prestitoSummary,
-    '[LIBRO_HIDDEN]' => '<input type="hidden" name="libro_id" value="' . htmlspecialchars((string) $prestitoInModifica['libro_id'], ENT_QUOTES, 'UTF-8') . '">',
-    '[UTENTE_HIDDEN]' => '<input type="hidden" name="nuovo_utente_id" value="' . htmlspecialchars((string) $prestitoInModifica['utente_id'], ENT_QUOTES, 'UTF-8') . '">',
+    '[LIBRO_HIDDEN]' => '<input type="hidden" name="libro_id" value="' . htmlspecialchars((string) $prestitoInModifica['libro_id'], ENT_QUOTES, 'UTF-8') . '" />',
+    '[UTENTE_HIDDEN]' => '<input type="hidden" name="nuovo_utente_id" value="' . htmlspecialchars((string) $prestitoInModifica['utente_id'], ENT_QUOTES, 'UTF-8') . '" />',
     '[RETURN_URL]' => $returnUrlSafe,
     '[ANNULLA_HREF]' => $returnUrlSafe,
 ]);

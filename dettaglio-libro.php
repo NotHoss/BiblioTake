@@ -1,6 +1,11 @@
 <?php
 require_once 'includes/resources.php';
 
+//sessione avviata qui perche isLoggedIn() viene chiamato prima di header.php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $libroId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 if ($libroId <= 0) {
@@ -15,9 +20,10 @@ if ($libro === null) {
     exit;
 }
 
-$pageTitle       = htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8') . ' — BiblioTake';
-$pageDescription = 'Scheda del libro ' . htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8') . ' di ' . htmlspecialchars($libro['autore'], ENT_QUOTES, 'UTF-8') . '. Informazioni, disponibilità e recensioni.';
-$pageKeywords    = htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8') . ', ' . htmlspecialchars($libro['autore'], ENT_QUOTES, 'UTF-8') . ', biblioteca, prestito';
+//niente htmlspecialchars qui, ci pensa header.php a fare l'escape
+$pageTitle       = $libro['titolo'] . ' — BiblioTake';
+$pageDescription = 'Scheda del libro ' . $libro['titolo'] . ' di ' . $libro['autore'] . '. Informazioni, disponibilità e recensioni.';
+$pageKeywords    = $libro['titolo'] . ', ' . $libro['autore'] . ', biblioteca, prestito';
 $currentPage     = 'catalogo';
 $breadcrumb      = array(
     array('label' => 'Home',                           'href' => 'index.php'),

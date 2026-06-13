@@ -486,7 +486,7 @@ function deleteLibroWithCascade($conn, $id) {
                 if ($basename !== basename(DEFAULT_COVER)) {
                     $fileToDelete = __DIR__ . '/../' . $copertinaPath;
                     if (is_file($fileToDelete)) {
-                        @unlink($fileToDelete);
+                        unlink($fileToDelete);
                     }
                 }
             }

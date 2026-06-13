@@ -2,8 +2,9 @@
 session_start();
 require_once 'includes/resources.php';
 
+//link relativo invece di WEB_ROOT assoluto per portabilita consegna
 if (isLoggedIn()) {
-    header('Location: ' . WEB_ROOT . 'user/dashboard.php');
+    header('Location: user/dashboard.php');
     exit;
 }
 
@@ -41,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         if (registerUser($conn, $emailValore, $usernameValore, $password)) {
                 if (loginUser($conn, $emailValore, $password)) {
-                header('Location: ' . WEB_ROOT . 'user/dashboard.php?benvenuto=1');
+                header('Location: user/dashboard.php?benvenuto=1');
                 exit;
             }
             header('Location: login.php?registrato=1');

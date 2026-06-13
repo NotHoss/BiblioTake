@@ -1,14 +1,17 @@
+<div class="auth-wrapper">
 <h2>Registrati</h2>
 
 <?php if (!empty($errors)): ?>
-    <ul>
-        <?php foreach ($errors as $err): ?>
-            <li><?= htmlspecialchars($err, ENT_QUOTES, 'UTF-8') ?></li>
-        <?php endforeach; ?>
-    </ul>
+    <div role="alert" class="auth-errors">
+        <ul>
+            <?php foreach ($errors as $err): ?>
+                <li><?= htmlspecialchars($err, ENT_QUOTES, 'UTF-8') ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
 <?php endif; ?>
 
-<form action="register.php" method="post">
+<form class="form" action="register.php" method="post">
     <p>
         <label for="email">Email</label>
         <input type="email" id="email" name="email"
@@ -21,11 +24,11 @@
     </p>
     <p>
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" required />
     </p>
     <p>
         <label for="password-conferma">Conferma password</label>
-        <input type="password" id="password-conferma" name="password-conferma" required>
+        <input type="password" id="password-conferma" name="password-conferma" required />
     </p>
     <p>
         <button type="submit">Registrati</button>
@@ -33,3 +36,4 @@
 </form>
 
 <p><a href="login.php">Hai gia un account? Accedi</a></p>
+</div>

@@ -97,7 +97,7 @@ if (empty($libri)) {
 
         $listaLibri .= '<li>';
         $listaLibri .= '<article class="libro-card">';
-        $listaLibri .= '<img src="' . $copertinaSrc . '" alt="' . $copertinAlt . '">';
+        $listaLibri .= '<img src="' . $copertinaSrc . '" alt="' . $copertinAlt . '" />';
         $listaLibri .= '<h4><a href="dettaglio-libro.php?id=' . $libroId . '">' . $titolo . '</a></h4>';
         $listaLibri .= '<p><strong>Autore:</strong> ' . $autore . '</p>';
         $listaLibri .= '<p><strong>Categoria:</strong> ' . $categoria . '</p>';

@@ -73,7 +73,9 @@
                     <input type="password" id="confirm_new_password" name="confirm_new_password" placeholder="Conferma nuova password"/>
                 </div>
             </section>
+
             <input type="submit" class="form-button" name="salva-modifiche" value="Salva Modifiche"/>
+            <a href="dashboard.php" class="btn-secondary-link">Annulla</a>
         </form>
     </div>
         
@@ -110,11 +112,9 @@
 
             let hasChanges = false;
 
-            inputs.forEach(input => {
-                const originalValue = input.defaultValue;
-                if (input.value !== originalValue) {
+            inputs.forEach(function(input) {
+                if (input.value !== input.defaultValue) {
                     hasChanges = true;
-                    input.dataset.modified = 'true';
                 }
             });
 

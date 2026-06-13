@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                     $basename = basename($libro['copertina']);
                     if ($basename !== basename(DEFAULT_COVER)) {
                         $pathToDelete = __DIR__ . '/../' . $libro['copertina'];
-                        if (is_file($pathToDelete)) {@unlink($pathToDelete);} 
+                        if (is_file($pathToDelete)) {unlink($pathToDelete);} 
                     }
                 }
                 $dati['copertina'] = DEFAULT_COVER;
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                     $basenameOld = basename($libro['copertina']);
                     if ($basenameOld !== basename(DEFAULT_COVER)) {
                         $old = __DIR__ . '/../' . $libro['copertina'];
-                        if (is_file($old)) {@unlink($old);}    
+                        if (is_file($old)) {unlink($old);}    
                     }
                 }
 

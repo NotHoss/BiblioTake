@@ -23,7 +23,19 @@ $pageDescription = isset($pageDescription) && $pageDescription !== '' ? $pageDes
 $pageKeywords = isset($pageKeywords) ? $pageKeywords : '';
 
 $navigation = array();
-$baseUrl = rtrim(WEB_ROOT, '/');
+//percorso relativo alla root del sito, calcolato in base alla profondita
+//della pagina corrente. sostituisce WEB_ROOT assoluto per assicurarsi che funzioni anche sulla macchina di lab
+//uso realpath su entrambi i path: normalizza eventuali symlink (es. /var/www/html/BiblioTake -> /home/.../BiblioTake)
+//cosi il confronto funziona sia con php -S sia con apache
+$projectRoot = realpath(__DIR__ . '/../..');
+$scriptDir   = realpath(dirname($_SERVER['SCRIPT_FILENAME']));
+if ($projectRoot !== false && $scriptDir !== false && strpos($scriptDir, $projectRoot) === 0) {
+    $rel   = ltrim(substr($scriptDir, strlen($projectRoot)), '/\\');
+    $depth = ($rel !== '') ? substr_count(str_replace('\\', '/', $rel), '/') + 1 : 0;
+} else {
+    $depth = 0;
+}
+$baseUrl = $depth > 0 ? implode('/', array_fill(0, $depth, '..')) : '.';
 
 foreach ($navItems as $item) {
     $isCurrent = isset($currentPage) && $currentPage === $item['key'];
