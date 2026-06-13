@@ -18,7 +18,7 @@ else {
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '' && $userId > 0) {
-    //if(isset($_POST['delete_account']) && $_POST['delete_account'] === 'on' && isset($_POST['confirm_delete']) && $_POST['confirm_delete'] === 'on'){
+    if(isset($_POST['confirm_delete']) && $_POST['confirm_delete'] === 'on'){
         $result = deleteUtente($conn, $userInfo['id']);
         if($result === true){
             session_destroy();
@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
         else{
             $errorMessage = is_string($result) ? $result : 'Si è verificato un errore durante l\'eliminazione dell\'account.';
         }
-    //}
+    }
 }
 
 $breadcrumb = array(
