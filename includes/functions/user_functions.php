@@ -16,7 +16,7 @@ function getPrestitiUser($conn, $userId, $tipo = 'attivi') {        //la variabi
     }
 
     $stmt = $conn->prepare(
-        "SELECT p.id, l.titolo, l.autore, p.data_inizio, p.data_fine
+        "SELECT l.titolo, l.autore, l.anno, l.categoria, p.data_inizio, p.data_fine, p.stato
          FROM prestito p
          JOIN libro l ON p.libro_id = l.id
          WHERE p.utente_id = ? AND $where"
@@ -31,89 +31,6 @@ function getPrestitiUser($conn, $userId, $tipo = 'attivi') {        //la variabi
 
     $prestiti = $result->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
-    return $prestiti;
-}
-
-function countPrestitiUserFiltrati($conn, $userId, $tipo = 'attivi', array $filtri = []) {
-    if (!in_array($tipo, ['attivi', 'passati'], true)) {
-        throw new InvalidArgumentException("Tipo di prestito non valido: $tipo");
-    }
-
-    $where = ["p.utente_id = ?"];
-    $params = [(int) $userId];
-    $types = 'i';
-
-    if ($tipo === 'passati') {
-        $where[] = "p.stato = 'concluso'";
-    } else {
-        $where[] = "p.stato IN ('attivo', 'in_ritardo')";
-    }
-
-    if (!empty($filtri['cerca'])) {
-        $searchValue = trim((string) $filtri['cerca']);
-        $where[] = '(l.titolo LIKE ? OR l.autore LIKE ?)';
-        $like = '%' . $searchValue . '%';
-        $params[] = $like;
-        $params[] = $like;
-        $types .= 'ss';
-    }
-
-    $sql = 'SELECT COUNT(*) AS totale FROM prestito p INNER JOIN libro l ON p.libro_id = l.id WHERE ' . implode(' AND ', $where);
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param($types, ...$params);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $stmt->close();
-
-    return (int) ($row['totale'] ?? 0);
-}
-
-function getPrestitiUserFiltrati($conn, $userId, $tipo = 'attivi', array $filtri = [], $pagina = 1, $limit = 10) {
-    if (!in_array($tipo, ['attivi', 'passati'], true)) {
-        throw new InvalidArgumentException("Tipo di prestito non valido: $tipo");
-    }
-
-    $pagina = max(1, (int) $pagina);
-    $limit = max(1, (int) $limit);
-    $offset = ($pagina - 1) * $limit;
-
-    $where = ["p.utente_id = ?"];
-    $params = [(int) $userId];
-    $types = 'i';
-
-    if ($tipo === 'passati') {
-        $where[] = "p.stato = 'concluso'";
-    } else {
-        $where[] = "p.stato IN ('attivo', 'in_ritardo')";
-    }
-
-    if (!empty($filtri['cerca'])) {
-        $searchValue = trim((string) $filtri['cerca']);
-        $where[] = '(l.titolo LIKE ? OR l.autore LIKE ?)';
-        $like = '%' . $searchValue . '%';
-        $params[] = $like;
-        $params[] = $like;
-        $types .= 'ss';
-    }
-
-    $sql = "SELECT p.id, l.titolo, l.autore, p.data_inizio, p.data_fine, p.stato
-            FROM prestito p
-            JOIN libro l ON p.libro_id = l.id
-            WHERE " . implode(' AND ', $where) . ' ORDER BY p.data_inizio DESC LIMIT ? OFFSET ?';
-
-    $params[] = $limit;
-    $params[] = $offset;
-    $types .= 'ii';
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param($types, ...$params);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $prestiti = $result->fetch_all(MYSQLI_ASSOC);
-    $stmt->close();
-
     return $prestiti;
 }
 

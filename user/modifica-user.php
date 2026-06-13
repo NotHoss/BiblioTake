@@ -5,12 +5,7 @@ require_once '../includes/resources.php';
 requireRole('utente');
 
 $pageTitle = 'Profilo | BiblioTake';
-$currentPage = 'dashboard';
-$breadcrumb = array(
-    array('label' => 'Home', 'href' => '../index.php'),
-    array('label' => 'Area utente', 'href' => 'dashboard.php'),
-    array('label' => 'Modifica profilo', 'href' => ''),
-);
+$currentPage = 'modifica-profilo';
 $errorMessage = '';
 $successMessage = '';
 
@@ -23,14 +18,13 @@ else {
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '' && $userId > 0) {
-    if(isset($_FILES['new_profile_image']) && $_FILES['new_profile_image']['error'] === UPLOAD_ERR_OK){
-        $newProfileImage = 'images/profili/' . $userId . '.jpg';
-        move_uploaded_file($_FILES['new_profile_image']['tmp_name'], __DIR__ . '/../' . $newProfileImage);
+    if(isset($_POST['selected_avatar']) && $_POST['selected_avatar'] !== $userInfo['foto_profilo']){
+        $newProfileImage = $_POST['selected_avatar'];
         $updatedProfileImage = changeFotoProfilo($conn, $userInfo['id'], $newProfileImage);
         if($updatedProfileImage === true){
             $userInfo['foto_profilo'] = $newProfileImage; // Aggiorna l'informazione dell'immagine del profilo nell'array $userInfo
             $successMessage = 'Immagine del profilo aggiornata con successo.';
-            header('Location: dashboard.php');
+            header('Location: /user/dashboard.php');
             exit();
         }
         else{
@@ -44,7 +38,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
         $result = changeUsername($conn, $userInfo['id'], $newUsername);
         if($result === true){
             $successMessage = 'Username aggiornato con successo.';
-            header('Location: dashboard.php');
+            header('Location: /user/dashboard.php');
             exit();
         }
         else{
@@ -57,7 +51,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
         $result = changeEmail($conn, $userInfo['id'], $newEmail);
         if($result === true){
             $successMessage = 'Email aggiornata con successo.';
-            header('Location: dashboard.php');
+            header('Location: /user/dashboard.php');
             exit();
         }
         else{
@@ -84,7 +78,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
                 $result = changePassword($conn, $userInfo['id'], $_POST['confirm_new_password']);
                 if($result === true){
                     $successMessage = 'Password aggiornata con successo.';
-                    header('Location: dashboard.php');
+                    header('Location: /user/dashboard.php');
                     exit();
                 }
                 else{
@@ -97,7 +91,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
     }
 }
 
+$breadcrumb = array(
+    array('label' => 'Home',     'href' => 'index.php'),
+    array('label' => 'Profilo', 'href' => 'dashboard.php'),
+    array('label' => 'Modifica Profilo', 'href' => ''),
+);
+
 require_once __DIR__ . '/../views/template/header.php';
+require_once __DIR__ . '/../views/template/sidebar-user.php';
 require_once __DIR__ . '/../views/showModificaUser.php';
 require_once __DIR__ . '/../views/template/footer.php';
 

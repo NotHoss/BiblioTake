@@ -5,7 +5,7 @@ require_once '../includes/resources.php';
 requireRole('utente');
 
 $pageTitle = 'Profilo | BiblioTake';
-$currentPage = 'dashboard';
+$currentPage = 'elimina-profilo';
 $errorMessage = '';
 $successMessage = '';
 
@@ -22,7 +22,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
         $result = deleteUtente($conn, $userInfo['id']);
         if($result === true){
             session_destroy();
-            header('Location: ../index.php');
+            header('Location: /index.php');
             exit();
         }
         else{
@@ -30,3 +30,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
         }
     //}
 }
+
+$breadcrumb = array(
+    array('label' => 'Home',     'href' => 'index.php'),
+    array('label' => 'Profilo', 'href' => 'dashboard.php'),
+    array('label' => 'Elimina Profilo', 'href' => ''),
+);
+
+require_once __DIR__ . '/../views/template/header.php';
+require_once __DIR__ . '/../views/template/sidebar-user.php';
+require_once __DIR__ . '/../views/showEliminaUser.php';
+require_once __DIR__ . '/../views/template/footer.php';
+
+if ($conn instanceof mysqli) {
+    $conn->close();
+}
+
+?>

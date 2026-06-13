@@ -137,9 +137,18 @@ function getRecensioneById($conn, $recensioneId) {
     return $recensione;
 }
 
+//cancellazione fisica della recensione (uso admin). vedi censuraRecensioneUtente per la versione utente che si limita a nascondere.
 function deleteRecensione($conn, $recensioneId) {
     $stmt = $conn->prepare('DELETE FROM recensione WHERE id = ?');
     $stmt->bind_param('i', $recensioneId);
+
+    return $stmt->execute();
+}
+
+//nasconde la recensione dell'utente (set censura=1) con check ownership. usata dal flusso utente: l'utente non puo' cancellare fisicamente, puo' solo nascondere la propria recensione.
+function censuraRecensioneUtente($conn, $recensioneId, $userId) {
+    $stmt = $conn->prepare('UPDATE recensione SET censura = 1 WHERE id = ? AND utente_id = ?');
+    $stmt->bind_param('ii', $recensioneId, $userId);
 
     return $stmt->execute();
 }
@@ -150,4 +159,59 @@ function censuraRecensione($conn, $recensioneId) {
     $stmt->bind_param('i', $recensioneId);
 
     return $stmt->execute();
+}
+
+function getRecensioniUser($conn, $userId) {
+    $stmt = $conn->prepare(
+        "SELECT r.id AS recensione_id, l.titolo, l.autore, l.id AS libro_id, r.valutazione, r.testo, r.data
+         FROM recensione r
+         JOIN libro l ON r.libro_id = l.id
+         WHERE r.utente_id = ? AND censura = 0"
+    );
+    
+    if (!$stmt) {throw new RuntimeException("Errore prepare SQL: " . $conn->error);}
+    if (!$stmt->bind_param('i', $userId)) {throw new RuntimeException("Errore bind_param");;}
+    if (!$stmt->execute()) {throw new RuntimeException("Errore esecuzione query");}
+
+    $result = $stmt->get_result();
+    if (!$result) {throw new RuntimeException("Errore recupero risultati");}
+
+    $recensioni = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+    return $recensioni;
+}
+
+function getRecensioneSingolaUser($conn, $userId, $recensioneId){
+    $stmt = $conn->prepare(
+        "SELECT r.id, r.utente_id, l.titolo, l.autore, l.id AS libro_id, r.valutazione, r.testo, r.data
+         FROM recensione r
+         JOIN libro l ON r.libro_id = l.id
+         WHERE r.utente_id = ? AND r.id = ? AND censura = 0"
+    );
+    
+    if (!$stmt) {throw new RuntimeException("Errore prepare SQL: " . $conn->error);}
+    if (!$stmt->bind_param('ii', $userId, $recensioneId)) {throw new RuntimeException("Errore bind_param");;}
+    if (!$stmt->execute()) {throw new RuntimeException("Errore esecuzione query");}
+
+    $result = $stmt->get_result();
+    if (!$result) {throw new RuntimeException("Errore recupero risultati");}
+
+    $recensione = $result->fetch_assoc();
+    $stmt->close();
+    return $recensione;
+}
+
+function aggiungiRecensione($conn, $userId, $libroId, $testo, $valutazione) {
+    $stmt = $conn->prepare(
+        'INSERT INTO recensione (utente_id, libro_id, valutazione, testo) VALUES (?, ?, ?, ?)'
+    );
+    if (!$stmt) { return 'Errore prepare SQL: ' . $conn->error; }
+    if (!$stmt->bind_param('iiis', $userId, $libroId, $valutazione, $testo)) {
+        return 'Errore bind_param';
+    }
+    if (!$stmt->execute()) {
+        return 'Errore esecuzione query: ' . $stmt->error;
+    }
+    $stmt->close();
+    return true;
 }

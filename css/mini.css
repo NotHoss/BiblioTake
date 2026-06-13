@@ -540,3 +540,103 @@
         text-align: center;
     }
 }
+
+/*
+==========================
+SIDEBAR UTENTE - MOBILE
+==========================
+*/
+@media screen and (max-width: 1150px) {
+    .sidebar-hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /*position: absolute;*/
+        top: 0.6em;
+        right: 0.6em;
+        z-index: 200;
+        width: 44px;
+        height: 44px;
+        cursor: pointer;
+        background: var(--breadbgcolor);
+        border-radius: 0.35em;
+        border: none;
+        padding: 0.4em;
+    }
+
+    .sidebar-hamburger span {
+        /*display: block;*/
+        width: 22px;
+        height: 3px;
+        margin: 3px 0;
+        background: var(--txtcolor);
+        border-radius: 2px;
+        transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .sidebar-toggle:checked ~ .sidebar-hamburger span:nth-child(1) {
+        transform: rotate(45deg) translate(4px, 4px);
+    }
+
+    .sidebar-toggle:checked ~ .sidebar-hamburger span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .sidebar-toggle:checked ~ .sidebar-hamburger span:nth-child(3) {
+        transform: rotate(-45deg) translate(4px, -4px);
+    }
+
+    .sidebar-user {
+        float: none;
+        width: 100%;
+        border-right: none;
+        padding: 0;
+        position: static;
+        height: auto;
+    }
+
+    .sidebar-user h2 {
+        display: none;
+        padding: 0.5em 0.7em;
+        background: var(--contentbgcolor);
+        color: var(--contenttxtcolor);
+        font-size: 1em;
+    }
+
+    .sidebar-user ul {
+        display: none;
+        list-style-type: none;
+        background: var(--contentbgcolor);
+        border-bottom: 2px solid #ece0f8;
+        padding: 0;
+    }
+
+    .sidebar-toggle:checked ~ h2 {
+        display: block;
+    }
+
+    .sidebar-toggle:checked ~ ul {
+        display: block;
+    }
+
+    .sidebar-user li {
+        border-bottom: 2px solid #ece0f8;
+    }
+
+    .sidebar-user .sidebar-link a {
+        display: block;
+        padding: 0.7em 0.7em;
+        color: var(--txtlinkcolor);
+        text-decoration: none;
+    }
+
+    .sidebar-user li:not(.sidebar-current-page):hover {
+        background-color: var(--hovercolor);
+        border-bottom: 2px solid var(--txtcolor);
+    }
+
+    .sidebar-user .sidebar-link:hover a {
+        color: var(--txtcolor);
+    }
+}
