@@ -59,7 +59,7 @@ if (empty($recensioni)) {
     $listaRecensioni = '<ul>';
     foreach ($recensioni as $recensione) {
         $username     = htmlspecialchars($recensione['username'], ENT_QUOTES, 'UTF-8');
-        $dataDatetime = htmlspecialchars($recensione['data'], ENT_QUOTES, 'UTF-8');
+        $dataDatetime = date('Y-m-d\TH:i:s', strtotime($recensione['data']));
         $dataFormated = htmlspecialchars(date('d/m/Y', strtotime($recensione['data'])), ENT_QUOTES, 'UTF-8');
         $valutazione  = (int) $recensione['valutazione'];
 
