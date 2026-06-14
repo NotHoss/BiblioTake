@@ -1753,6 +1753,10 @@ DESCRIZIONE, TAG, AZIONI
     color: #444;
 }
 
+#azioni-libro .info-prestito{
+    margin-top: 1.5em;
+}
+
 #azioni-libro a{
     display: inline-block;
     padding: 0.6em 1.5em;

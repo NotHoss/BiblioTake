@@ -35,6 +35,9 @@ $tags          = getTagsByLibroId($conn, $libroId);
 $recensioni    = getRecensioniByLibroId($conn, $libroId);
 $disponibile   = isLibroDisponibile($conn, $libroId);
 $utenteLoggato = isLoggedIn();
+$haPrestitoAttivo = $utenteLoggato
+    ? utenteHaPrestitoAttivo($conn, $libroId, (int) $_SESSION['user_id'])
+    : false;
 
 require_once 'views/template/header.php';
 require_once 'views/showDettaglioLibro.php';
