@@ -43,13 +43,13 @@ foreach($prestiti as $prestitoRow){
     $stato = htmlspecialchars((string) $prestitoRow['stato'], ENT_QUOTES, 'UTF-8');
 
     $tableRows .= "<tr>
-        <td>{$titolo}</td>
-        <td>{$autore}</td>
-        <td>{$anno}</td>
-        <td>{$categoria}</td>
-        <td>{$data_inizio}</td>
-        <td>{$data_fine}</td>
-        <td>{$stato}</td>
+        <td data-label=\"Titolo\">{$titolo}</td>
+        <td data-label=\"Autore\">{$autore}</td>
+        <td data-label=\"Anno\">{$anno}</td>
+        <td data-label=\"Categoria\">{$categoria}</td>
+        <td data-label=\"Inizio Prestito\">{$data_inizio}</td>
+        <td data-label=\"Fine Prestito\">{$data_fine}</td>
+        <td data-label=\"Stato\">{$stato}</td>
     </tr>\n";
 }
 

@@ -1549,60 +1549,6 @@ FILTRI (aside)
     display: none;
 }
 
-.sidebar-user{
-    float: left;
-    width: 24%;
-    padding-right: 1.5em;
-    border-right: 2px solid #ece0f8;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    text-decoration: none;
-}
-
-.sidebar-current-page{
-    font-weight: bold;
-    background: var(--bgcolor);
-    padding: 0.5em 0 0.5em 0.7em;
-    border-bottom: 2px solid #ece0f8;
-    color: var(--txtcolor);
-}
-
-.sidebar-user ul{
-    list-style-type: none;
-    padding: 0;
-}
-
-.sidebar-user li{
-    /*padding: 0.5em 0 0.5em 0.7em;*/
-    border-bottom: 2px solid #ece0f8;
-}
-
-.sidebar-user .sidebar-link a {
-    display: block;
-    padding: 0.5em 0 0.5em 0.7em;
-    color: var(--txtlinkcolor);
-    text-decoration: none;
-}
-
-.sidebar-user li a:visited{
-    color: var(--txtlinkvisited);
-    /*padding: 0.4em 0.7em;*/
-    text-decoration: none;
-}
-
-.sidebar-user li:not(.sidebar-current-page):hover{
-    background-color: var(--hovercolor);
-    border-bottom: 2px solid var(--txtcolor);
-    color: var(--txtcolor);
-    text-decoration: underline;
-}
-
-.sidebar-user .sidebar-link:hover a{
-    color: var(--txtcolor);
-    text-decoration: underline;
-}
-
 /*========= MODIFICA PROFILO UTENTE =========*/
 
 #modifica-user{
@@ -2213,8 +2159,8 @@ DASHBOARD
     width: 100%; 
     justify-content: space-between; 
     flex-wrap: wrap;
+    align-items: center;
 }
-
 
 .page-content-user-return{
     margin-top: 2em;
@@ -2231,20 +2177,22 @@ DASHBOARD
 #username{
     text-align: left;
     padding: 0.5em 0;
-    overflow: hidden; 
+    overflow: hidden; /*remove*/ 
     text-overflow: ellipsis; 
     white-space: nowrap;
+    overflow-wrap: anywhere;
 }
 
 .profile-image-big{
     width: 150px;
     height: 150px;
-    margin-right: 10em;
+    margin: 0 5em 0.5em 0;
+    border-radius: 10%;
 }
 
 .profile-image-small{
     display: none;
-}
+} 
 
 .credentials{
     padding: 0.75em 0;
