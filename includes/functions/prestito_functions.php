@@ -253,6 +253,32 @@ function aggiornaStatoPrestito($conn, $prestitoId, $stato) {
     return $stmt->execute();
 }
 
+function utenteHaPrestitoAttivo($conn, $libroId, $utenteId) {
+    $stmt = $conn->prepare(
+        "SELECT COUNT(*) AS totale
+         FROM prestito
+         WHERE libro_id = ? AND utente_id = ? AND stato IN ('attivo', 'in_ritardo')"
+    );
+    $stmt->bind_param('ii', $libroId, $utenteId);
+    $stmt->execute();
+    $row = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    return (int) $row['totale'] > 0;
+}
+
+function creaPrestito($conn, $libroId, $utenteId) {
+    $stmt = $conn->prepare(
+        "INSERT INTO prestito (data_inizio, data_fine, stato, biblioteca_id, libro_id, utente_id)
+         VALUES (NOW(), DATE_ADD(NOW(), INTERVAL 30 DAY), 'attivo', 1, ?, ?)"
+    );
+    $stmt->bind_param('ii', $libroId, $utenteId);
+    $ok = $stmt->execute();
+    $stmt->close();
+
+    return $ok;
+}
+
 function concludePrestito($conn, $prestitoId) {
     return aggiornaStatoPrestito($conn, $prestitoId, 'concluso');
 }
