@@ -32,7 +32,7 @@ if (!$recensione || (int) $recensione['utente_id'] !== (int) $_SESSION['user_id'
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '' && $recensioneId > 0) {
     try{
-        $result = deleteRecensione($conn, $recensioneId, $_SESSION['user_id']);
+        $result = censuraRecensioneUtente($conn, $recensioneId, $_SESSION['user_id']);
         if ($result === true) {
             //header('Location: ../user/recensioni.php?deleted=1');
             header('Location: recensioni.php'); // ../user/recensioni.php

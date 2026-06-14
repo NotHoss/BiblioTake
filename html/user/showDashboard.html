@@ -1,34 +1,24 @@
 <div class="page-content-user">
-    <noscript>
-        <div id="no-js-message">
-            <strong>JavaScript &egrave; disabilitato.</strong>
-        </div>
-    </noscript>
-        
-        <div class="username-image-small">
-            <h2 id="username" title="[USERNAME]">[USERNAME]</h2>
-            <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="profile-image-small">
-        </div>
+    <h2>[USERNAME]</h2>
 
-        <h3>Informazioni utente</h3>
-        <section class="user-info">
-            <div>
-                <p>Email: [EMAIL]</p>
-                <p>Password: [PASSWORD]</p>
+    <section aria-labelledby="info-utente-titolo">
+        <h3 id="info-utente-titolo">Informazioni utente</h3>
+        <ul class="generalita-list">
+            <li class="user-avatar-item user-info">
+                <h2 id="username" title="[USERNAME]">[USERNAME]</h2>
+                        <div class="username-image-small">
+                            <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="profile-image-small">
+                        </div>
+                <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="profile-image-big">
+            </li>
+            <li><strong>Email:</strong> [EMAIL]</li>
+            <li><strong>Password:</strong> [PASSWORD]</li>
+            <li class="actions">
+                <a href="modifica-user.php" class="btn-primary">Modifica informazioni</a>
+                <a href="elimina-user.php" class="btn-danger">Elimina account</a>
+            </li>
+        </ul>
+    </section>
 
-                <div class="settings">
-                    <h3>Impostazioni</h3>
-                    <p>Modifica le tue informazioni personali o elimina il tuo account.</p>
-                </div>
-            </div>
-            <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="profile-image-big">
-        </section>
-        
-        <div id="modifica-account">
-            <a href="../user/modifica-user.php">Modifica <span lang="en">Account</span></a>
-        </div>
-        <div class="elimina">
-            <a href="../user/elimina-user.php">Elimina <span lang="en">Account</span></a>
-        </div>
-        <script src="scripts/back-to-top.js"></script>
 </div>
+

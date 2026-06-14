@@ -26,6 +26,8 @@ function loginUser($conn, $login, $password) {
         return false;
     }
 
+    session_regenerate_id(true);
+
     $_SESSION['user_id']       = (int) $user['id'];
     $_SESSION['user_email']    = $user['email'];
     $_SESSION['user_username'] = $user['username'];

@@ -6,6 +6,11 @@ foreach ($categorie as $cat) {
     $opzioniCategoria[(string) $cat['categoria']] = (string) $cat['categoria'];
 }
 
+$opzioniTag = ['' => 'Tutti i tag'];
+foreach ($tags as $t) {
+    $opzioniTag[(string) $t['nome']] = (string) $t['nome'];
+}
+
 $searchForm = renderSearchForm([
     'action' => 'catalogo.php',
     'class' => 'form search-form',
@@ -28,6 +33,14 @@ $searchForm = renderSearchForm([
             'label' => 'Categoria',
             'selected' => (string) ($filtri['categoria'] ?? ''),
             'options' => $opzioniCategoria,
+        ],
+        [
+            'type' => 'select',
+            'name' => 'tag',
+            'id' => 'tag',
+            'label' => 'Tag',
+            'selected' => (string) ($filtri['tag'] ?? ''),
+            'options' => $opzioniTag,
         ],
         [
             'type' => 'text',

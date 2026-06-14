@@ -17,6 +17,7 @@ $filtri = [
     'anno'        => isset($_GET['anno']) && $_GET['anno'] !== '' ? (int) $_GET['anno'] : '',
     'disponibile' => isset($_GET['disponibile']) ? $_GET['disponibile']        : '',
     'ordine'      => isset($_GET['ordine'])       ? $_GET['ordine']            : '',
+    'tag'         => isset($_GET['tag'])          ? trim($_GET['tag'])         : '',
 ];
 
 $totalLibri  = countLibri($conn, $filtri);
@@ -26,6 +27,7 @@ $pagina      = max(1, min($page, $totalPagine));
 
 $libri     = getLibri($conn, $filtri, $pagina);
 $categorie = getCategorie($conn);
+$tags      = getAllTags($conn);
 
 require_once 'views/template/header.php';
 require_once 'views/showCatalogo.php';

@@ -1,0 +1,29 @@
+<div class="auth-wrapper">
+<h2>Registrati</h2>
+
+[ERRORS]
+
+<form class="form" action="register.php" method="post" data-validate="data-validate">
+    <p>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="[EMAIL_VALUE]" required="required" />
+    </p>
+    <p>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" value="[USERNAME_VALUE]" required="required" />
+    </p>
+    <p>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required="required" />
+    </p>
+    <p>
+        <label for="password-conferma">Conferma password</label>
+        <input type="password" id="password-conferma" name="password-conferma" required="required" data-match="password" />
+    </p>
+    <p>
+        <button type="submit">Registrati</button>
+    </p>
+</form>
+
+<p><a href="login.php">Hai gia un account? Accedi</a></p>
+</div>

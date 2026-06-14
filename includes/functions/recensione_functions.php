@@ -137,8 +137,17 @@ function getRecensioneById($conn, $recensioneId) {
     return $recensione;
 }
 
-function deleteRecensione($conn, $recensioneId, $userId){
-    $stmt = $conn->prepare('UPDATE recensione SET censura = 1 WHERE id = ? AND utente_id = ?'); 
+//cancellazione fisica della recensione (uso admin). vedi censuraRecensioneUtente per la versione utente che si limita a nascondere.
+function deleteRecensione($conn, $recensioneId) {
+    $stmt = $conn->prepare('DELETE FROM recensione WHERE id = ?');
+    $stmt->bind_param('i', $recensioneId);
+
+    return $stmt->execute();
+}
+
+//nasconde la recensione dell'utente (set censura=1) con check ownership. usata dal flusso utente: l'utente non puo' cancellare fisicamente, puo' solo nascondere la propria recensione.
+function censuraRecensioneUtente($conn, $recensioneId, $userId) {
+    $stmt = $conn->prepare('UPDATE recensione SET censura = 1 WHERE id = ? AND utente_id = ?');
     $stmt->bind_param('ii', $recensioneId, $userId);
 
     return $stmt->execute();

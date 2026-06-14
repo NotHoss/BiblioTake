@@ -1,4 +1,4 @@
-@media screen and (max-width: 1150px) {
+@media screen and (min-width: 881px) and (max-width: 1150px){
     /*
     ==========================
     ADMIN - Tabella
@@ -171,6 +171,88 @@
         margin: 0;
         text-align: center;
         justify-content: center;
+    }
+
+    /*
+    ==========================
+    USER
+    ==========================
+    */
+    
+    .profile-image-big{
+        display: none;
+    }
+
+    .avatar-option img {
+        width: 80px;
+        height: 80px;
+    }
+
+    #username{
+        text-align: left;
+        padding: 0;
+    }
+
+    .user-info{
+        padding: 0;
+    }
+
+    .profile-image-small{
+        text-align: center;
+        margin: 0 auto 1em;
+        max-width: 100%;
+        overflow: hidden;
+        max-width: 80px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        border-radius: 10px;
+    }
+
+    .username-image-small {
+        display: flex;
+        align-items: center;
+    }
+
+    .username-image-small h2 {
+        float: left;
+    }
+
+    .username-image-small img {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        float: right;
+    }
+
+    /*Tabelle user*/
+
+    #prestiti-table {
+        /* placeholder mobile */
+    }
+
+    #prestiti-table-header {
+        /* placeholder mobile */
+    }
+
+    /*
+    ==========================
+    MODIFICA PROFILO UTENTE
+    ==========================
+    */
+
+    .avatar-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.4em;
+    }
+
+    .avatar-option img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .password-fields {
+        gap: 0.6em;
     }
 }
 
@@ -539,16 +621,65 @@
         margin: 0.5rem 0;
         text-align: center;
     }
-}
-@media screen and (max-width: 1150px) {
+
     /*
     ==========================
-    FILTRI (aside)
+    USER
     ==========================
     */
+    
+    .profile-image-big{
+        display: none;
+    }
 
-    /*User*/
+    .avatar-option img {
+        width: 80px;
+        height: 80px;
+    }
 
+    #username{
+        text-align: left;
+        padding: 0;
+    }
+
+    .user-info{
+        padding: 0;
+    }
+
+    .profile-image-small{
+        text-align: center;
+        margin: 0 auto 1em;
+        overflow: hidden;
+        height: 80px;
+        width: 80px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        border-radius: 10px;
+    }
+
+    .username-image-small {
+        display: flex;
+        align-items: center;
+    }
+
+    .username-image-small h2 {
+        float: left;
+    }
+
+    .username-image-small img {
+        width: 60px;
+        height: 60px;
+        float: right;
+        border-radius: 10px;
+    }
+
+    /*
+    ==========================
+    SIDEBAR UTENTE - MOBILE
+    ==========================
+    */
+    
     .sidebar-hamburger {
         display: flex;
         flex-direction: column;
@@ -568,7 +699,6 @@
     }
 
     .sidebar-hamburger span {
-        /*display: block;*/
         width: 22px;
         height: 3px;
         margin: 3px 0;
@@ -642,63 +772,8 @@
         color: var(--txtcolor);
     }
 
-    /*
-    ==========================
-    DASHBOARD
-    ==========================
-    */
-
-    /*User*/
-
     .page-content-user{
         margin-left: 0;
-    }
-
-    .profile-image-big{
-        display: none;
-    }
-
-    .profile-image-small{
-        text-align: center;
-        margin: 0 auto 1em;
-        max-width: 100%;
-        overflow: hidden;
-        max-width: 80px;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-    }
-
-    .avatar-option img {
-        width: 80px;
-        height: 80px;
-    }
-
-    #username{
-        text-align: left;
-        padding: 0.5em 2.5em 0.5em 0em;
-    }
-
-    .username-image-small {
-        position: relative;    /* div diventa il riferimento per l'immagine */
-    }
-
-    .username-image-small h2 {
-        margin: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding-right: 60px;   /* spazio per non sovrapporsi all'immagine */
-    }
-
-    .username-image-small img {
-        position: absolute;
-        right: 0;
-        top: 50%;              /* centra verticalmente rispetto al div */
-        transform: translateY(-50%);
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
     }
 
     /*Tabelle user*/
@@ -767,4 +842,5 @@
         min-width: 2em;
         padding: 0.35em 0.6em;
     }
+
 }

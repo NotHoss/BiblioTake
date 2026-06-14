@@ -37,7 +37,7 @@ if (!empty($tags)) {
     $sezioneTags = '<section id="tag-libro"><h3>Tag</h3><ul>';
     foreach ($tags as $tag) {
         $tagNome     = htmlspecialchars($tag['nome'], ENT_QUOTES, 'UTF-8');
-        $sezioneTags .= '<li><a href="catalogo.php?cerca=' . urlencode($tag['nome']) . '">' . $tagNome . '</a></li>';
+        $sezioneTags .= '<li><a href="catalogo.php?tag=' . urlencode($tag['nome']) . '">' . $tagNome . '</a></li>';
     }
     $sezioneTags .= '</ul></section>';
 }
@@ -59,7 +59,7 @@ if (empty($recensioni)) {
     $listaRecensioni = '<ul>';
     foreach ($recensioni as $recensione) {
         $username     = htmlspecialchars($recensione['username'], ENT_QUOTES, 'UTF-8');
-        $dataDatetime = htmlspecialchars($recensione['data'], ENT_QUOTES, 'UTF-8');
+        $dataDatetime = date('Y-m-d\TH:i:s', strtotime($recensione['data']));
         $dataFormated = htmlspecialchars(date('d/m/Y', strtotime($recensione['data'])), ENT_QUOTES, 'UTF-8');
         $valutazione  = (int) $recensione['valutazione'];
 
