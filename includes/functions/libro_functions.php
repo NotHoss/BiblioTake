@@ -333,11 +333,13 @@ function validateLibroAdminData(array $input) {
     if ($data['edizione'] < 1 || $data['edizione'] > 999) {
         $errors[] = 'Edizione non valida: inserisci un valore maggiore o uguale a 1.';
     }
-    if ($data['anno'] < 1000 || $data['anno'] > $currentYear) {
-        $errors[] = 'Anno non valido: inserisci un valore compreso tra 1000 e ' . $currentYear . '.';
+    if ($data['anno'] < 1900 || $data['anno'] > $currentYear) {
+        $errors[] = 'Anno non valido: inserisci un valore compreso tra 1900 e ' . $currentYear . '.';
     }
     if ($data['lingua'] === '' || mb_strlen($data['lingua'], 'UTF-8') > 30) {
         $errors[] = 'Lingua obbligatoria e lunga al massimo 30 caratteri.';
+    } elseif (!preg_match('/^[\p{L} ]+$/u', $data['lingua'])) {
+        $errors[] = 'Lingua non valida: inserisci solo lettere e spazi.';
     }
     if (mb_strlen($data['descrizione'], 'UTF-8') < 1000 || mb_strlen($data['descrizione'], 'UTF-8') > 5000) {
         $errors[] = 'Descrizione non valida: inserisci una descrizione di almeno 1000 caratteri e al massimo 5000.';
@@ -500,7 +502,7 @@ function deleteLibroWithCascade($conn, $id) {
             if (!empty($copertinaPath)) {
                 $basename = basename($copertinaPath);
                 if ($basename !== basename(DEFAULT_COVER)) {
-                    $fileToDelete = __DIR__ . '/../' . $copertinaPath;
+                    $fileToDelete = __DIR__ . '/../../' . $copertinaPath;
                     if (is_file($fileToDelete)) {
                         unlink($fileToDelete);
                     }

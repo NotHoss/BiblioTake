@@ -23,8 +23,8 @@ $pageDescription = isset($pageDescription) && $pageDescription !== '' ? $pageDes
 $pageKeywords = isset($pageKeywords) ? $pageKeywords : '';
 
 $navigation = array();
-//percorso relativo alla root del sito, calcolato in base alla profondita
-//della pagina corrente. sostituisce WEB_ROOT assoluto per assicurarsi che funzioni anche sulla macchina di lab
+// Percorso relativo alla root del sito, calcolato in base alla profondita
+// della pagina corrente.
 //uso realpath su entrambi i path: normalizza eventuali symlink (es. /var/www/html/BiblioTake -> /home/.../BiblioTake)
 //cosi il confronto funziona sia con php -S sia con apache
 $projectRoot = realpath(__DIR__ . '/../..');
@@ -35,7 +35,7 @@ if ($projectRoot !== false && $scriptDir !== false && strpos($scriptDir, $projec
 } else {
     $depth = 0;
 }
-$baseUrl = $depth > 0 ? implode('/', array_fill(0, $depth, '..')) : '.';
+$relativeRoot = $depth > 0 ? implode('/', array_fill(0, $depth, '..')) : '.';
 
 foreach ($navItems as $item) {
     $isCurrent = isset($currentPage) && $currentPage === $item['key'];
@@ -49,7 +49,7 @@ foreach ($navItems as $item) {
 
     $href = $item['href'];
     if (!preg_match('#^(https?://|/)#i', $href)) {
-        $href = $baseUrl . '/' . ltrim($href, '/');
+        $href = $relativeRoot . '/' . ltrim($href, '/');
     }
 
     $navigation[] = '<li><a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '"' . $langAttr . '>' . $label . '</a></li>';
@@ -60,28 +60,28 @@ if (isset($_SESSION['user_id'])) {
         if (isset($currentPage) && $currentPage === 'admin') {
             $navigation[] = '<li aria-current="page" class="current-page">Amministrazione</li>';
         } else {
-            $navigation[] = '<li><a href="' . htmlspecialchars($baseUrl . '/admin/index.php', ENT_QUOTES, 'UTF-8') . '">Amministrazione</a></li>';
+            $navigation[] = '<li><a href="' . htmlspecialchars($relativeRoot . '/admin/index.php', ENT_QUOTES, 'UTF-8') . '">Amministrazione</a></li>';
         }
     } else {
         if (isset($currentPage) && $currentPage === 'dashboard') {
             $navigation[] = '<li aria-current="page" class="current-page">Area utente</li>';
         } else {
-            $navigation[] = '<li><a href="' . htmlspecialchars($baseUrl . '/user/dashboard.php', ENT_QUOTES, 'UTF-8') . '">Area utente</a></li>';
+            $navigation[] = '<li><a href="' . htmlspecialchars($relativeRoot . '/user/dashboard.php', ENT_QUOTES, 'UTF-8') . '">Area utente</a></li>';
         }
     }
 
-    $navigation[] = '<li><a href="' . htmlspecialchars($baseUrl . '/logout.php', ENT_QUOTES, 'UTF-8') . '">Esci</a></li>';
+    $navigation[] = '<li><a href="' . htmlspecialchars($relativeRoot . '/logout.php', ENT_QUOTES, 'UTF-8') . '">Esci</a></li>';
 } else {
     if (isset($currentPage) && $currentPage === 'login') {
         $navigation[] = '<li aria-current="page" class="current-page">Accedi</li>';
     } else {
-        $navigation[] = '<li><a href="' . htmlspecialchars($baseUrl . '/login.php', ENT_QUOTES, 'UTF-8') . '">Accedi</a></li>';
+        $navigation[] = '<li><a href="' . htmlspecialchars($relativeRoot . '/login.php', ENT_QUOTES, 'UTF-8') . '">Accedi</a></li>';
     }
 
     if (isset($currentPage) && $currentPage === 'register') {
         $navigation[] = '<li aria-current="page" class="current-page">Registrati</li>';
     } else {
-        $navigation[] = '<li><a href="' . htmlspecialchars($baseUrl . '/register.php', ENT_QUOTES, 'UTF-8') . '">Registrati</a></li>';
+        $navigation[] = '<li><a href="' . htmlspecialchars($relativeRoot . '/register.php', ENT_QUOTES, 'UTF-8') . '">Registrati</a></li>';
     }
 }
 
@@ -110,7 +110,7 @@ $replacements = array(
     '[PAGE_KEYWORDS]' => htmlspecialchars($pageKeywords, ENT_QUOTES, 'UTF-8'),
     '[SITE_NAME]' => $siteName,
     '[NAVIGATION]' => implode('', $navigation),
-    '[WEB_ROOT]' => $baseUrl,
+    '[RELATIVE_ROOT]' => $relativeRoot,
     '[BREADCRUMB]' => $breadcrumbHtml,
 );
 

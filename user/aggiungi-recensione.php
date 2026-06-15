@@ -11,7 +11,7 @@ $errorMessage = '';
 $successMessage = '';
 
 $breadcrumb = array(
-    array('label' => 'Home',     'href' => 'index.php'),
+    array('label' => 'Home',     'href' => '../index.php'),
     array('label' => 'Libro', 'href' => 'dashboard.php'),
     array('label' => 'Aggiungi Recensione', 'href' => ''),
 );
@@ -21,13 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $libroId = isset($_GET['libro_id']) ? (int) $_GET['libro_id'] : 0;
 
     if ($libroId <= 0) {
-        header('Location: 404.php');
+        header('Location: ../404.php');
         exit;
     }
 
     $libro = getLibroById($conn, $libroId);
     if (!$libro) {
-        header('Location: 404.php');
+        header('Location: ../404.php');
         exit;
     }
 
@@ -45,13 +45,13 @@ $testo   = isset($_POST['testo']) ? trim($_POST['testo']) : '';
 $voto    = isset($_POST['valutazione']) ? (int) $_POST['valutazione'] : null;
 
 if ($libroId <= 0) {
-    header('Location: 404.php');
+    header('Location: ../404.php');
     exit;
 }
 
 $libro = getLibroById($conn, $libroId);
 if (!$libro) {
-    header('Location: 404.php');
+    header('Location: ../404.php');
     exit;
 }
 

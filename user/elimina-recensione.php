@@ -11,7 +11,7 @@ $errorMessage = '';
 $successMessage = '';
 
 $breadcrumb = array(
-    array('label' => 'Home',     'href' => 'index.php'),
+    array('label' => 'Home',     'href' => '../index.php'),
     array('label' => 'Profilo', 'href' => 'dashboard.php'),
     array('label' => 'Recensioni', 'href' => 'recensioni.php'),
     array('label' => 'Elimina', 'href' => ''),
@@ -34,8 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
     try{
         $result = censuraRecensioneUtente($conn, $recensioneId, $_SESSION['user_id']);
         if ($result === true) {
-            //header('Location: ../user/recensioni.php?deleted=1');
-            header('Location: recensioni.php'); // ../user/recensioni.php
+            header('Location: recensioni.php');
             exit;
         }
         $errorMessage = is_string($result) ? $result : 'Eliminazione non riuscita.';

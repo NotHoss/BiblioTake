@@ -80,9 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                 }
 
                 $nomeFile = 'cover-' . $libroId . '.jpg';
-                $percorsoDestinazione = __DIR__ . '/../images/' . $nomeFile;
+                $percorsoDestinazione = __DIR__ . '/../images/cover/' . $nomeFile;
                 if (move_uploaded_file($file['tmp_name'], $percorsoDestinazione)) {
-                    $dati['copertina'] = 'images/' . $nomeFile;
+                    $dati['copertina'] = 'images/cover/' . $nomeFile;
                 } else {
                     throw new RuntimeException('Impossibile salvare il file della copertina.');
                 }

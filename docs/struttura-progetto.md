@@ -82,6 +82,9 @@ BiblioTake/
 │       ├── showRestituisci.html
 │       └── showRichiediPrestito.html
 ├── images/
+│   ├── avatar/
+│   ├── cover/
+│   └── fondatori/
 ├── index.php
 ├── includes/
 │   ├── config.php
@@ -209,7 +212,7 @@ I file già presenti (`caratteristiche.md`, `convenzioni.md`, `db_pseudocodice.m
 
 ### `images/`
 
-Immagini usate nel sito (copertine libri, logo, icone).
+Immagini usate nel sito. Gli avatar sono in `images/avatar/`, le copertine in `images/cover/` e le foto dei fondatori in `images/fondatori/`.
 
 Regole:
 - Formati ammessi: `.jpg` per foto, `.png` per immagini con trasparenza, `.svg` per icone.

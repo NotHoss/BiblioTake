@@ -23,8 +23,7 @@
     --shadowcolor:rgba(62, 62, 107, 0.18); /*colore ombra*/
     --borderlightcolor:#e5e0ee; /*colore bordi leggeri*/
     --deletecolor: #DC2626;       /* rosso accessibile - stato normale */
-    --deletehovercolor: #991B1B;  /* rosso scuro - hover */
-    --deletebordercolor: #991B1B; /* bordo - stato normale */
+    --deletebordercolor: #000;    /* bordo con contrasto 4.35:1 sul rosso */
 }
 
 html, body{ 
@@ -1983,10 +1982,6 @@ RECENSIONI LIBRO
     gap: 20px;
 }
 
-.form-elimina{
-
-}
-
 /*
 ==========================
 CHI SIAMO
@@ -2240,8 +2235,8 @@ main .elimina a, main .elimina button, main .form-elimina button{
 main .elimina a:hover, main .elimina a:focus,
 main .elimina button:hover, main .elimina button:focus,
 main .form-elimina button:hover, main .form-elimina button:focus{
-    background-color: var(--deletehovercolor);
-    border-color: var(--deletehovercolor);
+    background-color: var(--deletecolor);
+    border-color: var(--deletebordercolor);
     color: var(--txtcolor);
 }
 
@@ -2259,8 +2254,8 @@ main .elimina-card a{
 }
 
 main .elimina-card a:hover, main .elimina-card a:focus{
-    background-color: var(--deletehovercolor);
-    border-color: var(--deletehovercolor);
+    background-color: var(--deletecolor);
+    border-color: var(--deletebordercolor);
     color: var(--txtcolor);
 }
 

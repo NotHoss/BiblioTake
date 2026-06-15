@@ -12,7 +12,7 @@ $successMessage = '';
 $user = getUserInfo($conn, $_SESSION['user_id']);
 
 $breadcrumb = array(
-    array('label' => 'Home',    'href' => 'index.php'),
+    array('label' => 'Home',    'href' => '../index.php'),
     array('label' => 'Profilo', 'href' => ''),
 );
 

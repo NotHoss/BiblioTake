@@ -11,7 +11,7 @@ $errorMessage = '';
 $prestitiTitle = 'Prestiti Passati';
 
 $breadcrumb = array(
-    array('label' => 'Home',     'href' => 'index.php'),
+    array('label' => 'Home',     'href' => '../index.php'),
     array('label' => 'Profilo', 'href' => 'dashboard.php'),
     array('label' => 'Prestiti Passati', 'href' => ''),
 );

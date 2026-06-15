@@ -2,7 +2,7 @@
 session_start();
 require_once 'includes/resources.php';
 
-//link relativo invece di WEB_ROOT assoluto per portabilita consegna
+// Link relativo per mantenere il progetto portabile.
 if (isLoggedIn()) {
     header('Location: user/dashboard.php');
     exit;

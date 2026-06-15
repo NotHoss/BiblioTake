@@ -30,6 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $safe = isAdmin() ? 'admin/index.php' : 'index.php';
             if ($intended !== '' &&
                 preg_match('#^[a-zA-Z0-9_./?=&%-]+$#', $intended)
+                && $intended[0] !== '/'
+                && strpos($intended, '..') === false
                 && strpos($intended, '//') === false
                 && strpos($intended, ':') === false
             ) {

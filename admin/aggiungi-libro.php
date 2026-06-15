@@ -64,9 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                 if ($nuovoId > 0) {
                     if ($fileCopertina !== null) {
                         $nomeFile = 'cover-' . $nuovoId . '.jpg';
-                        $percorsoDestinazione = __DIR__ . '/../images/' . $nomeFile;
+                        $percorsoDestinazione = __DIR__ . '/../images/cover/' . $nomeFile;
                         if (move_uploaded_file($fileCopertina['tmp_name'], $percorsoDestinazione)) {
-                            $percorsoDb = 'images/' . $nomeFile;
+                            $percorsoDb = 'images/cover/' . $nomeFile;
                             $stmt = $conn->prepare('UPDATE libro SET copertina = ? WHERE id = ?');
                             $stmt->bind_param('si', $percorsoDb, $nuovoId);
                             $stmt->execute();

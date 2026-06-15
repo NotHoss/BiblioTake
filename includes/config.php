@@ -10,9 +10,6 @@ define('DB_NAME', 'bibliotake');
 define('SITE_NAME',        'BiblioTake');
 define('SITE_DESCRIPTION', 'Biblioteca digitale del corso di Tecnologie Web');
 
-// Web root - percorso dalla radice web del server
-define('WEB_ROOT', '/BiblioTake/');
-
 // Paginazione del catalogo
 define('MAX_PER_PAGINA', 12);
 
@@ -22,10 +19,10 @@ define('MIN_USERNAME_LENGTH', 3);
 define('MAX_USERNAME_LENGTH', 50);
 
 // Avatar di default per i nuovi utenti
-define('DEFAULT_AVATAR', 'images/default-avatar.jpg');
+define('DEFAULT_AVATAR', 'images/avatar/default-avatar.webp');
 
 // Copertina di default per i nuovi libri
-define('DEFAULT_COVER', 'images/default-cover.jpg');
+define('DEFAULT_COVER', 'images/cover/default-cover.jpg');
 
 // In sviluppo gli errori sono visibili. In produzione invertire i due flag.
 error_reporting(E_ALL);

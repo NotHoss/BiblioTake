@@ -72,7 +72,7 @@ $searchForm = renderSearchForm([
             'name' => 'anno',
             'label' => 'Anno',
             'value' => ($filtroAnnoValue !== '') ? (string) $filtroAnnoValue : '',
-            'min' => 0,
+            'min' => 1900,
             'max' => date('Y'),
         ],
         [

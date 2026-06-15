@@ -87,7 +87,7 @@ function registerUser($conn, $email, $username, $password) {
 //calcola il path relativo verso la root del progetto, stessa logica di views/template/header.php
 //serve per i redirect (login.php, 403.php) emessi da pagine in sottocartelle (admin/, user/):
 //un Location relativo da /admin/* punterebbe a /admin/login.php che non esiste
-function getAuthBaseUrl() {
+function getRelativeProjectRoot() {
     $projectRoot = realpath(__DIR__ . '/../..');
     $scriptDir   = realpath(dirname($_SERVER['SCRIPT_FILENAME']));
     if ($projectRoot !== false && $scriptDir !== false && strpos($scriptDir, $projectRoot) === 0) {
@@ -99,13 +99,27 @@ function getAuthBaseUrl() {
     return $depth > 0 ? implode('/', array_fill(0, $depth, '..')) : '.';
 }
 
+function getCurrentRelativeRequest() {
+    $projectRoot = realpath(__DIR__ . '/../..');
+    $scriptPath = realpath($_SERVER['SCRIPT_FILENAME']);
+    if ($projectRoot === false || $scriptPath === false || strpos($scriptPath, $projectRoot) !== 0) {
+        return 'index.php';
+    }
+
+    $relativePath = ltrim(substr($scriptPath, strlen($projectRoot)), '/\\');
+    $relativePath = str_replace('\\', '/', $relativePath);
+    $queryString = isset($_SERVER['QUERY_STRING']) ? trim((string) $_SERVER['QUERY_STRING']) : '';
+
+    return $relativePath . ($queryString !== '' ? '?' . $queryString : '');
+}
+
 function requireLogin() {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
     if (!isset($_SESSION['user_id'])) {
-        $intended = urlencode($_SERVER['REQUEST_URI']);
-        header('Location: ' . getAuthBaseUrl() . '/login.php?intended=' . $intended);
+        $intended = urlencode(getCurrentRelativeRequest());
+        header('Location: ' . getRelativeProjectRoot() . '/login.php?intended=' . $intended);
         exit;
     }
 }
@@ -113,7 +127,7 @@ function requireLogin() {
 function requireRole($role) {
     requireLogin();
     if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== $role) {
-        header('Location: ' . getAuthBaseUrl() . '/403.php');
+        header('Location: ' . getRelativeProjectRoot() . '/403.php');
         exit;
     }
 }

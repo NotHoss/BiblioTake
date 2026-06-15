@@ -29,7 +29,8 @@ if (empty($user)) {
 } else {
     $template = file_get_contents(__DIR__ . '/../html/user/showDashboard.html');
     
-    $foto = !empty($user['foto_profilo']) ? htmlspecialchars('/' . $user['foto_profilo'], ENT_QUOTES, 'UTF-8') : '/images/default-avatar.jpg';  // molto importante lo / all'inizio del percorso per assicurarsi che venga risolto correttamente rispetto alla root del sito
+    $fotoProfilo = !empty($user['foto_profilo']) ? $user['foto_profilo'] : DEFAULT_AVATAR;
+    $foto = htmlspecialchars('../' . $fotoProfilo, ENT_QUOTES, 'UTF-8');
 
     $placeholders = [
         '[USERNAME]' => htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8'),
