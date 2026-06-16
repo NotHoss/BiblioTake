@@ -26,13 +26,13 @@
         <p class="full-row"><label for="descrizione">Descrizione</label><textarea name="descrizione" id="descrizione" required aria-required="true" minlength="1000" maxlength="5000" aria-describedby="descrizione_help">[DESCRIZIONE]</textarea><span class="field-help" id="descrizione_help">Inserisci una descrizione compresa tra 1000 e 5000 caratteri.</span></p>
         <p><label for="pagine">Pagine</label><input type="number" name="pagine" id="pagine" value="[PAGINE]" min="1" max="99999" step="1" required aria-required="true" aria-describedby="pagine_help" /><span class="field-help" id="pagine_help">Inserisci un valore maggiore o uguale a 1.</span></p>
         <p><label for="categoria-select">Categoria</label>
-            <select name="categoria" id="categoria-select" required aria-required="true">
+            <select name="categoria" id="categoria-select" required aria-required="true" aria-controls="categoria-nuova">
                 <option value="">-- Scegli una categoria --</option>
                 [CATEGORIE_OPTIONS]
                 <option value="__NEW__">+ Aggiungi nuova categoria</option>
             </select>
         </p>
-        <p><label for="categoria-nuova">Nuova categoria</label><input type="text" name="categoria_nuova" id="categoria-nuova" maxlength="30" placeholder="es. Romanzo" /></p>
+        <p><label for="categoria-nuova">Nuova categoria</label><input type="text" name="categoria_nuova" id="categoria-nuova" maxlength="30" placeholder="es. Romanzo" aria-describedby="categoria_nuova_help" /><span class="field-help" id="categoria_nuova_help">Inserisci un testo di massimo 30 caratteri.</span></p>
         <p><label for="tags">Tag (facoltativo)</label><input type="text" name="tags" id="tags" value="[TAGS]" maxlength="255" placeholder="es. Fantasy, Storico" aria-describedby="tags_help" /><span class="field-help" id="tags_help">Inserisci uno o pi&ugrave; tag separati da una virgola.</span></p>
     </fieldset>
 
@@ -47,3 +47,4 @@
     </fieldset>
 
 </form>
+<script src="../js/admin-book-category.js"></script>
