@@ -28,7 +28,7 @@ $searchForm = renderSearchForm([
             'name' => 'cerca',
             'label' => 'Cerca',
             'value' => (string) ($filtri['cerca'] ?? ''),
-            'placeholder' => 'ID, Username, titolo o autore',
+            'placeholder' => 'ID, nome utente, titolo o autore',
         ],
         [
             'type' => 'select',

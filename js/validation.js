@@ -18,7 +18,13 @@
 //  data-match="idAltroCampo"   conferma uguale a un altro campo (es. password)
 //  data-error-msg="..."        messaggio per qualsiasi errore di quel campo
 //  data-email-msg="..."        messaggio per formato email non valido
+//  data-pattern-msg="..."      messaggio per formato non valido
+//  data-existing-values="a,b"  valori gia presenti da non riutilizzare
+//  data-duplicate-msg="..."    messaggio se il valore e gia presente
 //  data-max-mb="2"             dimensione massima file in MB
+//  data-image-width="705"      larghezza richiesta per immagini
+//  data-image-height="1125"    altezza richiesta per immagini
+//  data-image-dimensions-msg="..." messaggio per dimensioni immagine errate
 //
 //l'attributo title se presente viene usato come messaggio sostitutivo
 //(standard HTML5, viene mostrato dal browser come hint sul campo).
@@ -36,16 +42,19 @@
         minlength: 'inserisci almeno [N] caratteri.',
         maxlength: 'non puoi superare [N] caratteri.',
         pattern:   'il formato inserito non è valido.',
-        email:     'inserisci un indirizzo email valido.',
+        email:     'inserisci un indirizzo di posta elettronica valido.',
         url:       'inserisci un URL valido.',
         number:    'inserisci un numero valido.',
         min:       'il valore minimo è [N].',
         max:       'il valore massimo è [N].',
         date:      'inserisci una data valida.',
         match:     'i due campi non coincidono.',
+        duplicate: 'questo valore e gia presente.',
         file:      'seleziona un file.',
-        fileSize:  'il file supera [N] MB.',
-        fileType:  'tipo di file non consentito.'
+        fileSize:  'il file supera [N] megabyte.',
+        fileType:  'tipo di file non consentito.',
+        imageDimensions: 'le dimensioni dell\'immagine non sono valide.',
+        imageDimensionsChecking: 'attendi il controllo delle dimensioni dell\'immagine.'
     };
 
     //tipi da ignorare nella validazione (non hanno valore utente)
@@ -144,6 +153,17 @@
         return !re || re.test(valore);
     }
 
+    function valoreGiaPresente(input, valore) {
+        var raw = input.getAttribute('data-existing-values');
+        if (!raw) return false;
+
+        var valori = raw.split(',');
+        for (var i = 0; i < valori.length; i++) {
+            if (trim(valori[i]) === valore) return true;
+        }
+        return false;
+    }
+
     //valida un radio group: chiamato sul primo radio del gruppo
     function validaRadio(input) {
         if (!input.form) return true;
@@ -177,6 +197,14 @@
         }
 
         if (tipo === 'file') {
+            if (!input.files || input.files.length === 0) {
+                input.removeAttribute('data-image-dimensions-state');
+                if (input.required) {
+                    return mostraErrore(input, MSG.file);
+                }
+                return rimuoviErrore(input);
+            }
+
             if (input.required && (!input.files || input.files.length === 0)) {
                 return mostraErrore(input, MSG.file);
             }
@@ -193,6 +221,22 @@
                     }
                 }
             }
+
+            if (richiedeDimensioniImmagine(input)) {
+                if (!supportaControlloDimensioniImmagine()) {
+                    return rimuoviErrore(input);
+                }
+
+                var statoDimensioni = input.getAttribute('data-image-dimensions-state');
+                if (statoDimensioni === 'error') {
+                    return mostraErrore(input, messaggioDimensioniImmagine(input));
+                }
+                if (statoDimensioni !== 'ok') {
+                    controllaDimensioniImmagine(input);
+                    return mostraErrore(input, MSG.imageDimensionsChecking);
+                }
+            }
+
             return rimuoviErrore(input);
         }
 
@@ -265,7 +309,7 @@
 
         //pattern
         if (!rispettaPattern(input, valoreTrim)) {
-            return mostraErrore(input, MSG.pattern);
+            return mostraErrore(input, input.getAttribute('data-pattern-msg') || MSG.pattern);
         }
 
         //data-match: campo deve coincidere con un altro (conferma password)
@@ -275,6 +319,10 @@
             if (altro && altro.value !== input.value) {
                 return mostraErrore(input, MSG.match);
             }
+        }
+
+        if (valoreGiaPresente(input, valoreTrim)) {
+            return mostraErrore(input, input.getAttribute('data-duplicate-msg') || MSG.duplicate);
         }
 
         return rimuoviErrore(input);
@@ -304,6 +352,67 @@
             }
         }
         return false;
+    }
+
+    function richiedeDimensioniImmagine(input) {
+        return input.getAttribute('data-image-width') !== null ||
+            input.getAttribute('data-image-height') !== null;
+    }
+
+    function supportaControlloDimensioniImmagine() {
+        return typeof Image !== 'undefined' &&
+            window.URL &&
+            typeof window.URL.createObjectURL === 'function' &&
+            typeof window.URL.revokeObjectURL === 'function';
+    }
+
+    function messaggioDimensioniImmagine(input) {
+        var custom = input.getAttribute('data-image-dimensions-msg');
+        if (custom && trim(custom) !== '') return custom;
+
+        var width = input.getAttribute('data-image-width');
+        var height = input.getAttribute('data-image-height');
+        if (width && height) return MSG.imageDimensions + ' Dimensioni richieste: ' + width + ' x ' + height + ' pixel.';
+        return MSG.imageDimensions;
+    }
+
+    function controllaDimensioniImmagine(input) {
+        if (!richiedeDimensioniImmagine(input) || !input.files || input.files.length === 0) return;
+
+        var file = input.files[0];
+        var width = parseInt(input.getAttribute('data-image-width'), 10);
+        var height = parseInt(input.getAttribute('data-image-height'), 10);
+        if (isNaN(width) && isNaN(height)) return;
+
+        input.setAttribute('data-image-dimensions-state', 'checking');
+
+        var url = null;
+        var img = new Image();
+        img.onload = function () {
+            if (url && window.URL && typeof window.URL.revokeObjectURL === 'function') {
+                window.URL.revokeObjectURL(url);
+            }
+
+            var okWidth = isNaN(width) || img.width === width;
+            var okHeight = isNaN(height) || img.height === height;
+            if (okWidth && okHeight) {
+                input.setAttribute('data-image-dimensions-state', 'ok');
+                rimuoviErrore(input);
+            } else {
+                input.setAttribute('data-image-dimensions-state', 'error');
+                mostraErrore(input, messaggioDimensioniImmagine(input));
+            }
+        };
+        img.onerror = function () {
+            if (url && window.URL && typeof window.URL.revokeObjectURL === 'function') {
+                window.URL.revokeObjectURL(url);
+            }
+            input.setAttribute('data-image-dimensions-state', 'error');
+            mostraErrore(input, MSG.fileType);
+        };
+
+        url = window.URL.createObjectURL(file);
+        img.src = url;
     }
 
     //valida tutti i campi del form. ritorna true se tutto ok.
@@ -355,10 +464,21 @@
                 validaCampo(e.target);
             });
 
+            //input: utile per controlli che devono apparire mentre si scrive
+            //(es. valori gia presenti come ISBN duplicati)
+            if (el.getAttribute('data-existing-values') !== null) {
+                el.addEventListener('input', function (e) {
+                    validaCampo(e.target);
+                });
+            }
+
             //change: utile per select, checkbox, radio, file
             if (tipo === 'radio' || tipo === 'checkbox' || tipo === 'file' ||
                 el.tagName.toLowerCase() === 'select') {
                 el.addEventListener('change', function (e) {
+                    if ((e.target.type || '').toLowerCase() === 'file') {
+                        e.target.removeAttribute('data-image-dimensions-state');
+                    }
                     validaCampo(e.target);
                 });
             }

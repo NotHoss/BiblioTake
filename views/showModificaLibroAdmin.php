@@ -12,6 +12,7 @@ $messages = $errorMsg . $successMsg;
 $template = file_get_contents(__DIR__ . '/../html/admin/showModificaLibroAdmin.html');
 $returnUrl = getSafeAdminReturnUrl('libri.php');
 $returnUrlSafe = htmlspecialchars($returnUrl, ENT_QUOTES, 'UTF-8');
+$isbnExistingValues = htmlspecialchars(implode(',', $conn instanceof mysqli ? getCodiciIsbnLibri($conn, $libroId ?? 0) : []), ENT_QUOTES, 'UTF-8');
 
 if (!$libro) {
     echo strtr($template, [
@@ -21,6 +22,7 @@ if (!$libro) {
         '[LIBRO_ID]' => '',
         
         '[CODICE_ISBN]' => '',
+        '[ISBN_EXISTING_VALUES]' => '',
         '[TITOLO]' => '',
         '[AUTORE]' => '',
         '[CASA_EDITRICE]' => '',
@@ -34,6 +36,8 @@ if (!$libro) {
         '[DELETE_COPERTINA_DESCRIBEDBY]' => '',
         '[DELETE_COPERTINA_HELP]' => '',
         '[CATEGORIE_OPTIONS]' => '',
+        '[CATEGORIA_NUOVA]' => '',
+        '[CATEGORIA_NUOVA_SELECTED]' => '',
         '[TAGS]' => '',
         '[CURRENT_YEAR]' => date('Y'),
         '[RETURN_URL]' => $returnUrlSafe,
@@ -43,8 +47,11 @@ if (!$libro) {
 }
 
 $categorieOptions = '';
+$categoriaCorrente = (string) ($libro['categoria'] ?? '');
+$categoriaIsNew = $categoriaCorrente !== '' && !in_array($categoriaCorrente, array_map('strval', $categorie ?? []), true);
+$categoriaNuovaValue = $categoriaIsNew ? $categoriaCorrente : '';
 foreach (($categorie ?? []) as $cat) {
-    $selected = ($libro['categoria'] === $cat ? 'selected' : '');
+    $selected = (!$categoriaIsNew && $libro['categoria'] === $cat ? 'selected' : '');
     $catHtml = htmlspecialchars($cat, ENT_QUOTES, 'UTF-8');
     $categorieOptions .= '<option value="' . $catHtml . '" ' . $selected . '>' . $catHtml . '</option>';
 }
@@ -82,6 +89,7 @@ echo strtr($template, [
     '[LIBRO_ID]' => htmlspecialchars((string) $libroId, ENT_QUOTES, 'UTF-8'),
     '[TAGS]' => htmlspecialchars($tagsCsv, ENT_QUOTES, 'UTF-8'),
     '[CODICE_ISBN]' => htmlspecialchars((string) $libro['codice_isbn'], ENT_QUOTES, 'UTF-8'),
+    '[ISBN_EXISTING_VALUES]' => $isbnExistingValues,
     '[TITOLO]' => htmlspecialchars((string) $libro['titolo'], ENT_QUOTES, 'UTF-8'),
     '[AUTORE]' => htmlspecialchars((string) $libro['autore'], ENT_QUOTES, 'UTF-8'),
     '[CASA_EDITRICE]' => htmlspecialchars((string) ($libro['casa_editrice'] ?? ''), ENT_QUOTES, 'UTF-8'),
@@ -95,6 +103,8 @@ echo strtr($template, [
     '[DELETE_COPERTINA_DESCRIBEDBY]' => $deleteCoverDescribedBy,
     '[DELETE_COPERTINA_HELP]' => $deleteCoverHelp,
     '[CATEGORIE_OPTIONS]' => $categorieOptions,
+    '[CATEGORIA_NUOVA]' => htmlspecialchars($categoriaNuovaValue, ENT_QUOTES, 'UTF-8'),
+    '[CATEGORIA_NUOVA_SELECTED]' => $categoriaIsNew ? 'selected' : '',
     '[CURRENT_YEAR]' => date('Y'),
     '[RETURN_URL]' => $returnUrlSafe,
     '[ANNULLA_HREF]' => $returnUrlSafe,

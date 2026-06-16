@@ -2,9 +2,9 @@
 require_once '../includes/resources.php';
 requireRole('admin');
 
-$pageTitle = 'Modifica libro — Admin BiblioTake';
+$pageTitle = 'Modifica libro - Amministrazione BiblioTake';
 $pageDescription = 'Modifica i dettagli di un libro presente nel catalogo.';
-$pageKeywords = 'admin, modifica libro, catalogo, BiblioTake';
+$pageKeywords = 'amministrazione, modifica libro, catalogo, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php'),
     array('label' => 'Admin', 'href' => 'index.php'),
@@ -53,6 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
             if (!$validation['ok']) {
                 throw new InvalidArgumentException($validation['errorMessage']);
             }
+            if (!isCodiceIsbnDisponibile($conn, $dati['codice_isbn'], $libroId)) {
+                throw new InvalidArgumentException('Questo codice identificativo e gia presente nel catalogo.');
+            }
 
             if (isset($_POST['delete_copertina']) && $_POST['delete_copertina'] === '1') {
                 if (!empty($libro['copertina'])) {
@@ -68,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
             if (isset($_FILES['copertina_file']) && $_FILES['copertina_file']['error'] === UPLOAD_ERR_OK) {
                 $file = validateAndProcessCopertina($_FILES['copertina_file']);
                 if ($file === null) {
-                    throw new RuntimeException('File copertina non valido. Usa un file JPEG di massimo 5 MB.');
+                    throw new RuntimeException('File copertina non valido. Usa un .jpg di massimo 5 megabyte con dimensioni esatte 705 x 1125 pixel.');
                 }
 
                 if (!empty($libro['copertina'])) {
@@ -94,7 +97,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                 $res['errorMessage'] = 'Aggiornamento non eseguito.';
             }
         } catch (Throwable $e) {
-            $res['errorMessage'] = 'Impossibile aggiornare il libro: ' . $e->getMessage();
+            if (strpos($e->getMessage(), 'Duplicate entry') !== false && strpos($e->getMessage(), 'codice_isbn') !== false) {
+                $res['errorMessage'] = 'Impossibile aggiornare il libro: questo codice identificativo e gia presente nel catalogo.';
+            } else {
+                $res['errorMessage'] = 'Impossibile aggiornare il libro: ' . $e->getMessage();
+            }
             $libro = array_merge($libro ?: [], $dati);
         }
     }

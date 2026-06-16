@@ -430,13 +430,13 @@ function validateBibliotecaAdminData(array $input) {
 
     $email = strtolower(trim((string) ($input['email'] ?? '')));
     if ($email === '') {
-        $errors[] = 'Email obbligatoria.';
+        $errors[] = 'Indirizzo email obbligatorio.';
     } elseif (
         mb_strlen($email, 'UTF-8') > 255
         || !preg_match('/^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$/', $email)
         || !filter_var($email, FILTER_VALIDATE_EMAIL)
     ) {
-        $errors[] = 'Email non valida.';
+        $errors[] = 'Indirizzo email non valido.';
     } else {
         $data['email'] = $email;
     }
@@ -758,6 +758,10 @@ function validateAndProcessCopertina($file) {
     // Verifica che sia effettivamente un'immagine JPG usando getimagesize
     $imageInfo = getimagesize($file['tmp_name']);
     if ($imageInfo === false || !in_array($imageInfo[2], [IMAGETYPE_JPEG], true)) {
+        return null;
+    }
+
+    if ((int) $imageInfo[0] !== 705 || (int) $imageInfo[1] !== 1125) {
         return null;
     }
     

@@ -35,7 +35,7 @@ if (!empty($message)) {
 
 $summary = '<ul class="admin-summary-list">'
     . '<li><strong>ID</strong>: ' . htmlspecialchars((string) $libroId, ENT_QUOTES, 'UTF-8') . '</li>'
-    . '<li><strong>ISBN</strong>: ' . htmlspecialchars((string) ($libro['codice_isbn'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
+    . '<li><strong><abbr title="International Standard Book Number" lang="en">ISBN</abbr></strong>: ' . htmlspecialchars((string) ($libro['codice_isbn'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Titolo</strong>: ' . htmlspecialchars((string) ($libro['titolo'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Autore</strong>: ' . htmlspecialchars((string) ($libro['autore'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Editore</strong>: ' . htmlspecialchars((string) ($libro['casa_editrice'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'

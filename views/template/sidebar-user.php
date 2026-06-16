@@ -87,7 +87,7 @@ if(isset($_SESSION['user_id'])){
 
 }
 else{
-    $navigation[] = '<li><a href="login.php">Login</a></li>';
+    $navigation[] = '<li><a href="login.php"><span lang="en">Login</span></a></li>';
     $navigation[] = '<li><a href="register.php">Registrati</a></li>';
     $replacements = array(
         '[PAGE_TITLE]' => '',

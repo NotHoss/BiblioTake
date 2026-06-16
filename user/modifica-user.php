@@ -37,7 +37,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
         $newUsername = $_POST['new_username'];
         $result = changeUsername($conn, $userInfo['id'], $newUsername);
         if($result === true){
-            $successMessage = 'Username aggiornato con successo.';
+            $successMessage = 'Nome utente aggiornato con successo.';
             header('Location: dashboard.php');
             exit();
         }
@@ -50,7 +50,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
         $newEmail = $_POST['new_email'];
         $result = changeEmail($conn, $userInfo['id'], $newEmail);
         if($result === true){
-            $successMessage = 'Email aggiornata con successo.';
+            $successMessage = 'Indirizzo email aggiornato con successo.';
             header('Location: dashboard.php');
             exit();
         }

@@ -1,5 +1,5 @@
 <div class="admin-page-actions admin-page-actions-single">
-    <a class="button button-link admin-return-link" href="index.php">Vai alla dashboard</a>
+    <a class="button button-link admin-return-link" href="index.php">Vai alla <span lang="en">dashboard</span></a>
 </div>
 
 <h2>Gestione utenti</h2>
@@ -17,14 +17,14 @@
 
         [EMPTY_MESSAGE]
 
-        <p id="utenti-table-summary" class="sr-only">Questa tabella elenca gli utenti con nome utente, email, prestiti totali, prestiti attivi, recensioni totali, stato e azioni disponibili.</p>
+        <p id="utenti-table-summary" class="sr-only">Questa tabella elenca gli utenti con nome utente, <span lang="en">email</span>, prestiti totali, prestiti attivi, recensioni totali, stato e azioni disponibili.</p>
         <section id="gestione" [TABLE_DISPLAY]>
             <table aria-describedby="utenti-table-summary">
                 <caption>Elenco utenti</caption>
                 <thead>
                     <tr>
                         <th scope="col">Utente</th>
-                        <th scope="col">Email</th>
+                        <th scope="col"><span lang="en">Email</span></th>
                         <th scope="col">Prestiti totali</th>
                         <th scope="col">Prestiti attivi</th>
                         <th scope="col">Recensioni totali</th>
@@ -36,7 +36,7 @@
 <!-- ROW_TEMPLATE_START -->
                     <tr>
                         <th scope="row"><span class="mobile-table-label" aria-hidden="true">Utente</span><span class="mobile-table-value">[USERNAME]</span></th>
-                        <td><span class="mobile-table-label" aria-hidden="true">Email</span><span class="mobile-table-value">[EMAIL]</span></td>
+                        <td><span class="mobile-table-label" aria-hidden="true" lang="en">Email</span><span class="mobile-table-value">[EMAIL]</span></td>
                         <td><span class="mobile-table-label" aria-hidden="true">Prestiti totali</span><span class="mobile-table-value">[PRESTITI_TOTALI]</span></td>
                         <td><span class="mobile-table-label" aria-hidden="true">Prestiti attivi</span><span class="mobile-table-value">[PRESTITI_ATTIVI]</span></td>
                         <td><span class="mobile-table-label" aria-hidden="true">Recensioni totali</span><span class="mobile-table-value">[RECENSIONI_TOTALI]</span></td>

@@ -2,9 +2,9 @@
 require_once '../includes/resources.php';
 requireRole('admin');
 
-$pageTitle = 'Modifica prestito — Admin BiblioTake';
+$pageTitle = 'Modifica prestito - Amministrazione BiblioTake';
 $pageDescription = 'Modifica i dettagli di un prestito.';
-$pageKeywords = 'admin, prestiti, modifica, BiblioTake';
+$pageKeywords = 'amministrazione, prestiti, modifica, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php'),
     array('label' => 'Admin', 'href' => 'index.php'),

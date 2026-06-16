@@ -16,13 +16,13 @@
 
     [EMPTY_MESSAGE]
 
-<p id="libri-table-summary" class="sr-only">Questa tabella elenca i libri gestiti dall'amministrazione con ISBN, titolo, autore, anno, categoria, stato del libro e azioni disponibili.</p>
+<p id="libri-table-summary" class="sr-only">Questa tabella elenca i libri gestiti dall'amministrazione con <abbr title="International Standard Book Number" lang="en">ISBN</abbr>, titolo, autore, anno, categoria, stato del libro e azioni disponibili.</p>
 <section id="gestione" [TABLE_DISPLAY]>
             <table aria-describedby="libri-table-summary">
                 <caption>Elenco libri</caption>
                 <thead>
                     <tr>
-                        <th scope="col"><abbr title="International Standard Book Number">ISBN</abbr></th>
+                        <th scope="col"><abbr title="International Standard Book Number" lang="en">ISBN</abbr></th>
                         <th scope="col">Titolo</th>
                         <th scope="col">Autore</th>
                         <th scope="col">Anno</th>
@@ -34,7 +34,7 @@
                 <tbody>
     <!-- ROW_TEMPLATE_START -->
                     <tr>
-                        <th scope="row"><span class="mobile-table-label" aria-hidden="true">ISBN</span><span class="mobile-table-value">[ISBN]</span></th>
+                        <th scope="row"><span class="mobile-table-label" aria-hidden="true"><abbr title="International Standard Book Number" lang="en">ISBN</abbr></span><span class="mobile-table-value">[ISBN]</span></th>
                         <td><span class="mobile-table-label" aria-hidden="true">Titolo</span><span class="mobile-table-value">[TITOLO]</span></td>
                         <td><span class="mobile-table-label" aria-hidden="true">Autore</span><span class="mobile-table-value">[AUTORE]</span></td>
                         <td><span class="mobile-table-label" aria-hidden="true">Anno</span><span class="mobile-table-value">[ANNO]</span></td>

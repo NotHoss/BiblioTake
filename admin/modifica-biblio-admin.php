@@ -2,9 +2,9 @@
 require_once '../includes/resources.php';
 requireRole('admin');
 
-$pageTitle = 'Modifica generalità biblioteca — Admin BiblioTake';
+$pageTitle = 'Modifica generalità biblioteca - Amministrazione BiblioTake';
 $pageDescription = 'Aggiorna indirizzo, contatti e orari della biblioteca.';
-$pageKeywords = 'admin, biblioteca, modifica, generalità, BiblioTake';
+$pageKeywords = 'amministrazione, biblioteca, modifica, generalità, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php'),
     array('label' => 'Admin', 'href' => 'index.php'),

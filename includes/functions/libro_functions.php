@@ -33,9 +33,14 @@ function getLibri($conn, $filtri, $pagina) {
     }
 
     if (!empty($filtri['cerca'])) {
-        $where[]  = 'l.titolo LIKE ?';
-        $params[] = '%' . $filtri['cerca'] . '%';
-        $types   .= 's';
+        $searchValue = trim((string) $filtri['cerca']);
+        $where[] = '(l.id = ? OR l.codice_isbn LIKE ? OR l.titolo LIKE ? OR l.autore LIKE ?)';
+        $params[] = (int) $searchValue;
+        $like = '%' . $searchValue . '%';
+        $params[] = $like;
+        $params[] = $like;
+        $params[] = $like;
+        $types   .= 'isss';
     }
 
     $joins = '';
@@ -110,9 +115,14 @@ function countLibri($conn, $filtri) {
     }
 
     if (!empty($filtri['cerca'])) {
-        $where[]  = 'l.titolo LIKE ?';
-        $params[] = '%' . $filtri['cerca'] . '%';
-        $types   .= 's';
+        $searchValue = trim((string) $filtri['cerca']);
+        $where[] = '(l.id = ? OR l.codice_isbn LIKE ? OR l.titolo LIKE ? OR l.autore LIKE ?)';
+        $params[] = (int) $searchValue;
+        $like = '%' . $searchValue . '%';
+        $params[] = $like;
+        $params[] = $like;
+        $params[] = $like;
+        $types   .= 'isss';
     }
 
     $joins = '';
@@ -274,6 +284,46 @@ function createLibro($conn, array $dati) {
     return $nuovoId;
 }
 
+function getCodiciIsbnLibri($conn, $excludeId = 0) {
+    $excludeId = (int) $excludeId;
+    if ($excludeId > 0) {
+        $stmt = $conn->prepare('SELECT codice_isbn FROM libro WHERE id <> ? ORDER BY codice_isbn ASC');
+        $stmt->bind_param('i', $excludeId);
+    } else {
+        $stmt = $conn->prepare('SELECT codice_isbn FROM libro ORDER BY codice_isbn ASC');
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $codici = [];
+    while ($row = $result->fetch_assoc()) {
+        $codici[] = (string) $row['codice_isbn'];
+    }
+    $stmt->close();
+
+    return $codici;
+}
+
+function isCodiceIsbnDisponibile($conn, $codiceIsbn, $excludeId = 0) {
+    $codiceIsbn = trim((string) $codiceIsbn);
+    $excludeId = (int) $excludeId;
+
+    if ($excludeId > 0) {
+        $stmt = $conn->prepare('SELECT id FROM libro WHERE codice_isbn = ? AND id <> ? LIMIT 1');
+        $stmt->bind_param('si', $codiceIsbn, $excludeId);
+    } else {
+        $stmt = $conn->prepare('SELECT id FROM libro WHERE codice_isbn = ? LIMIT 1');
+        $stmt->bind_param('s', $codiceIsbn);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $disponibile = $result->fetch_assoc() === null;
+    $stmt->close();
+
+    return $disponibile;
+}
+
 function capitalizeFirstLetter($value) {
     $value = trim(preg_replace('/\s+/u', ' ', (string) $value));
     if ($value === '') {
@@ -319,7 +369,7 @@ function validateLibroAdminData(array $input) {
     $errors = [];
 
     if (!preg_match('/^[0-9]{13}$/', $data['codice_isbn'])) {
-        $errors[] = 'ISBN non valido: inserisci esattamente 13 cifre.';
+        $errors[] = 'Codice identificativo del libro non valido: inserisci esattamente 13 cifre.';
     }
     if ($data['titolo'] === '' || mb_strlen($data['titolo'], 'UTF-8') > 30) {
         $errors[] = 'Titolo obbligatorio e lungo al massimo 30 caratteri.';
@@ -333,8 +383,8 @@ function validateLibroAdminData(array $input) {
     if ($data['edizione'] < 1 || $data['edizione'] > 999) {
         $errors[] = 'Edizione non valida: inserisci un valore maggiore o uguale a 1.';
     }
-    if ($data['anno'] < 1900 || $data['anno'] > $currentYear) {
-        $errors[] = 'Anno non valido: inserisci un valore compreso tra 1900 e ' . $currentYear . '.';
+    if ($data['anno'] < 1901 || $data['anno'] > $currentYear) {
+        $errors[] = 'Anno non valido: inserisci un valore compreso tra 1901 e ' . $currentYear . '.';
     }
     if ($data['lingua'] === '' || mb_strlen($data['lingua'], 'UTF-8') > 30) {
         $errors[] = 'Lingua obbligatoria e lunga al massimo 30 caratteri.';

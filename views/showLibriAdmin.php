@@ -45,7 +45,7 @@ $searchForm = renderSearchForm([
             'name' => 'cerca',
             'label' => 'Cerca',
             'value' => (string) ($filtri['cerca'] ?? ''),
-            'placeholder' => 'ISBN o titolo del libro',
+            'placeholder' => 'Codice ISBN del libro o titolo',
         ],
         [
             'type' => 'text',
@@ -73,7 +73,7 @@ $searchForm = renderSearchForm([
             'name' => 'anno',
             'label' => 'Anno',
             'value' => ($filtroAnnoValue !== '') ? (string) $filtroAnnoValue : '',
-            'min' => 1900,
+            'min' => 1901,
             'max' => date('Y'),
         ],
         [
@@ -142,9 +142,10 @@ foreach ($libri as $libroRow) {
     }
 
     $isbn = htmlspecialchars((string) $libroRow['codice_isbn'], ENT_QUOTES, 'UTF-8');
+    $isbnLink = '<a href="../dettaglio-libro.php?id=' . $id . '" aria-label="Apri nel catalogo il libro ' . $titoloLibro . ', codice ' . $isbn . '">' . $isbn . '</a>';
 
     $tableRows .= strtr($rowTemplate, [
-        '[ISBN]' => $isbn,
+        '[ISBN]' => $isbnLink,
         '[TITOLO]' => $titoloLibro,
         '[AUTORE]' => htmlspecialchars((string) $libroRow['autore'], ENT_QUOTES, 'UTF-8'),
         '[ANNO]' => htmlspecialchars((string) $libroRow['anno'], ENT_QUOTES, 'UTF-8'),

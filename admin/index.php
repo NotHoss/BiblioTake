@@ -2,9 +2,9 @@
 require_once '../includes/resources.php';
 requireRole('admin');
 
-$pageTitle = 'Dashboard Admin — BiblioTake';
+$pageTitle = 'Dashboard amministrazione - BiblioTake';
 $pageDescription = 'Pannello amministrativo: statistiche e gestione della biblioteca.';
-$pageKeywords = 'admin, dashboard, statistiche, gestione, BiblioTake';
+$pageKeywords = 'amministrazione, statistiche, gestione, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php'),
     array('label' => 'Admin', 'href' => ''),

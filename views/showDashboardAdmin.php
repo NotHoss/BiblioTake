@@ -12,7 +12,7 @@
             $items[] = '<li><strong>Telefono:</strong> ' . htmlspecialchars($biblioteca['telefono'], ENT_QUOTES, 'UTF-8') . '</li>';
         }
         if (!empty($biblioteca['email'])) {
-            $items[] = '<li><strong>Email:</strong> ' . htmlspecialchars($biblioteca['email'], ENT_QUOTES, 'UTF-8') . '</li>';
+            $items[] = '<li><strong><span lang="en">Email</span>:</strong> ' . htmlspecialchars($biblioteca['email'], ENT_QUOTES, 'UTF-8') . '</li>';
         }
         $orari = [];
         if (!empty($biblioteca['orario_lun_ven'])) {

@@ -2,9 +2,9 @@
 require_once '../includes/resources.php';
 requireRole('admin');
 
-$pageTitle = 'Gestione Utenti — Admin BiblioTake';
+$pageTitle = 'Gestione utenti - Amministrazione BiblioTake';
 $pageDescription = 'Gestione degli account utenti, prestiti e ruoli della biblioteca.';
-$pageKeywords = 'admin, utenti, gestione, prestiti, BiblioTake';
+$pageKeywords = 'amministrazione, utenti, gestione, prestiti, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php'),
     array('label' => 'Admin', 'href' => 'index.php'),

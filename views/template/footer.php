@@ -11,11 +11,14 @@ if ($projectRoot !== false && $scriptDir !== false && strpos($scriptDir, $projec
     $depth = 0;
 }
 $relativeRoot = $depth > 0 ? implode('/', array_fill(0, $depth, '..')) : '.';
+$validationPath = __DIR__ . '/../../js/validation.js';
+$validationVersion = is_file($validationPath) ? (string) filemtime($validationPath) : (string) time();
 
 $replacements = array(
     '[YEAR]' => date('Y'),
     '[SITE_NAME]' => htmlspecialchars(SITE_NAME, ENT_QUOTES, 'UTF-8'),
     '[RELATIVE_ROOT]' => $relativeRoot,
+    '[VALIDATION_VERSION]' => htmlspecialchars($validationVersion, ENT_QUOTES, 'UTF-8'),
 );
 
 echo strtr($template, $replacements);

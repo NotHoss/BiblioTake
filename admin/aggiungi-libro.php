@@ -2,9 +2,9 @@
 require_once '../includes/resources.php';
 requireRole('admin');
 
-$pageTitle = 'Aggiungi libro — Admin BiblioTake';
+$pageTitle = 'Aggiungi libro - Amministrazione BiblioTake';
 $pageDescription = 'Aggiungi un nuovo libro al catalogo della biblioteca.';
-$pageKeywords = 'admin, aggiungi libro, catalogo, BiblioTake';
+$pageKeywords = 'amministrazione, aggiungi libro, catalogo, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php'),
     array('label' => 'Admin', 'href' => 'index.php'),
@@ -48,13 +48,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
     if (!$validation['ok']) {
         $res['errorMessage'] = $validation['errorMessage'];
         $res['dati'] = $dati;
+    } elseif (!isCodiceIsbnDisponibile($conn, $dati['codice_isbn'])) {
+        $res['errorMessage'] = 'Questo codice identificativo è gia presente nel catalogo.';
+        $res['dati'] = $dati;
     } else {
         try {
             $fileCopertina = null;
             if (isset($_FILES['copertina_file']) && $_FILES['copertina_file']['error'] === UPLOAD_ERR_OK) {
                 $fileCopertina = validateAndProcessCopertina($_FILES['copertina_file']);
                 if (!$fileCopertina) {
-                    $res['errorMessage'] = 'Il file della copertina deve essere un file JPEG valido (massimo 5 MB).';
+                    $res['errorMessage'] = 'Il file della copertina deve essere un .jpg valido, massimo 5 megabyte, con dimensioni esatte 705 x 1125 pixel.';
                     $res['dati'] = $dati;
                 }
             }
@@ -86,7 +89,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                 }
             }
         } catch (Throwable $e) {
-            $res['errorMessage'] = 'Impossibile inserire il libro: ' . $e->getMessage();
+            if (strpos($e->getMessage(), 'Duplicate entry') !== false && strpos($e->getMessage(), 'codice_isbn') !== false) {
+                $res['errorMessage'] = 'Impossibile inserire il libro: questo codice identificativo e gia presente nel catalogo.';
+            } else {
+                $res['errorMessage'] = 'Impossibile inserire il libro: ' . $e->getMessage();
+            }
             $res['dati'] = $dati;
         }
     }

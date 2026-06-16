@@ -2,9 +2,9 @@
 require_once '../includes/resources.php';
 requireRole('admin');
 
-$pageTitle = 'Elimina recensione — Admin BiblioTake';
+$pageTitle = 'Elimina recensione - Amministrazione BiblioTake';
 $pageDescription = 'Conferma eliminazione di una recensione.';
-$pageKeywords = 'admin, recensioni, eliminazione, BiblioTake';
+$pageKeywords = 'amministrazione, recensioni, eliminazione, BiblioTake';
 $breadcrumb = array(
 	array('label' => 'Home', 'href' => '../index.php'),
 	array('label' => 'Admin', 'href' => 'index.php'),

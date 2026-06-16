@@ -22,9 +22,9 @@ $searchForm = renderSearchForm([
             'type' => 'search',
             'name' => 'cerca',
             'id' => 'cerca',
-            'label' => 'Titolo',
+            'label' => 'Cerca',
             'value' => (string) ($filtri['cerca'] ?? ''),
-            'placeholder' => 'Titolo o ISBN',
+            'placeholder' => 'Codice ISBN del libro o titolo',
         ],
         [
             'type' => 'select',
@@ -55,7 +55,7 @@ $searchForm = renderSearchForm([
             'id' => 'anno',
             'label' => 'Anno',
             'value' => ($filtri['anno'] !== '') ? (string) $filtri['anno'] : '',
-            'min' => 1900,
+            'min' => 1901,
             'max' => $annoCorrente,
         ],
         [
