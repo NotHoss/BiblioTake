@@ -17,6 +17,7 @@
 //attributi custom:
 //  data-match="idAltroCampo"   conferma uguale a un altro campo (es. password)
 //  data-error-msg="..."        messaggio per qualsiasi errore di quel campo
+//  data-email-msg="..."        messaggio per formato email non valido
 //  data-max-mb="2"             dimensione massima file in MB
 //
 //l'attributo title se presente viene usato come messaggio sostitutivo
@@ -133,6 +134,16 @@
         return true;
     }
 
+    //valida il valore contro l'attributo pattern, se presente.
+    function rispettaPattern(input, valore) {
+        var pat = input.getAttribute('pattern');
+        if (!pat) return true;
+
+        var re = null;
+        try { re = new RegExp('^(?:' + pat + ')$'); } catch (e) { re = null; }
+        return !re || re.test(valore);
+    }
+
     //valida un radio group: chiamato sul primo radio del gruppo
     function validaRadio(input) {
         if (!input.form) return true;
@@ -201,7 +212,10 @@
         if (tipo === 'email') {
             //regex volutamente permissiva (validazione finale spetta al server)
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valoreTrim)) {
-                return mostraErrore(input, MSG.email);
+                return mostraErrore(input, input.getAttribute('data-email-msg') || MSG.email);
+            }
+            if (!rispettaPattern(input, valoreTrim)) {
+                return mostraErrore(input, input.getAttribute('data-email-msg') || MSG.pattern);
             }
         } else if (tipo === 'url') {
             if (!/^https?:\/\/[^\s]+$/.test(valoreTrim)) {
@@ -250,13 +264,8 @@
         }
 
         //pattern
-        var pat = input.getAttribute('pattern');
-        if (pat) {
-            var re = null;
-            try { re = new RegExp('^(?:' + pat + ')$'); } catch (e) { re = null; }
-            if (re && !re.test(valoreTrim)) {
-                return mostraErrore(input, MSG.pattern);
-            }
+        if (!rispettaPattern(input, valoreTrim)) {
+            return mostraErrore(input, MSG.pattern);
         }
 
         //data-match: campo deve coincidere con un altro (conferma password)

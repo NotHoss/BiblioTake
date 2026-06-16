@@ -36,6 +36,7 @@ foreach (($tagsDisponibili ?? []) as $tag) {
 $searchForm = renderSearchForm([
     'action' => 'libri.php',
     'class' => 'form admin-search-form',
+    'validate' => true,
     'submitLabel' => 'Applica filtri',
     'resetHref' => 'libri.php',
     'fields' => [

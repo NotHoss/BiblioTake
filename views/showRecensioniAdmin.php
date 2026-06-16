@@ -17,6 +17,7 @@ $template = preg_replace('/<!-- ROW_TEMPLATE_START -->.*?<!-- ROW_TEMPLATE_END -
 $searchForm = renderSearchForm([
     'action' => 'recensioni.php',
     'class' => 'form admin-search-form',
+    'validate' => true,
     'submitLabel' => 'Applica filtri',
     'resetHref' => 'recensioni.php',
     'fields' => [

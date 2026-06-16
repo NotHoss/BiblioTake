@@ -19,6 +19,7 @@ $template = preg_replace('/<!-- ROW_TEMPLATE_START -->.*?<!-- ROW_TEMPLATE_END -
 $searchForm = renderSearchForm([
     'action' => 'prestiti-utente.php',
     'class' => 'form admin-search-form',
+    'validate' => true,
     'submitLabel' => 'Applica filtri',
     'resetHref' => 'prestiti-utente.php',
     'fields' => [

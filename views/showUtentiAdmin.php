@@ -20,6 +20,7 @@ $resultsPerPage = isset($resultsPerPage) ? (int) $resultsPerPage : 10;
 $searchForm = renderSearchForm([
     'action' => 'utenti.php',
     'class' => 'form admin-search-form',
+    'validate' => true,
     'submitLabel' => 'Filtra',
     'resetHref' => 'utenti.php',
     'fields' => [

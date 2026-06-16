@@ -67,11 +67,14 @@ function renderSearchForm(array $config) {
         $resetLink = '<a href="' . htmlspecialchars($resetHref, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($resetLabel, ENT_QUOTES, 'UTF-8') . '</a>';
     }
 
+    $formAttrs = !empty($config['validate']) ? ' data-validate="data-validate"' : '';
+
     return renderHtmlTemplate($templatePath, [
         '[FORM_ACTION]' => htmlspecialchars((string) ($config['action'] ?? ''), ENT_QUOTES, 'UTF-8'),
         '[FORM_METHOD]' => htmlspecialchars(strtolower((string) ($config['method'] ?? 'get')) === 'post' ? 'post' : 'get', ENT_QUOTES, 'UTF-8'),
         '[FORM_CLASS]' => htmlspecialchars((string) ($config['class'] ?? 'search-form'), ENT_QUOTES, 'UTF-8'),
         '[FORM_ID]' => htmlspecialchars((string) ($config['id'] ?? 'search-form'), ENT_QUOTES, 'UTF-8'),
+        '[FORM_ATTRS]' => $formAttrs,
         '[FORM_FIELDS]' => $fieldsHtml,
         '[SUBMIT_LABEL]' => htmlspecialchars((string) ($config['submitLabel'] ?? 'Filtra'), ENT_QUOTES, 'UTF-8'),
         '[RESET_LINK]' => $resetLink,
