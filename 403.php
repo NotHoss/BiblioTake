@@ -7,7 +7,7 @@ $pageDescription = 'Non hai i permessi necessari per accedere a questa pagina.';
 $pageKeywords    = '403, accesso negato, errore, autorizzazione';
 $currentPage     = '';
 $breadcrumb      = array(
-    array('label' => 'Home',           'href' => 'index.php'),
+    array('label' => 'Home',           'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Accesso negato', 'href' => ''),
 );
 

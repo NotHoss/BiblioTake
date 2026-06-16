@@ -6,8 +6,8 @@ $pageTitle = 'Dashboard amministrazione - BiblioTake';
 $pageDescription = 'Pannello amministrativo: statistiche e gestione della biblioteca.';
 $pageKeywords = 'amministrazione, statistiche, gestione, BiblioTake';
 $breadcrumb = array(
-    array('label' => 'Home', 'href' => '../index.php'),
-    array('label' => 'Admin', 'href' => ''),
+    array('label' => 'Home', 'href' => '../index.php', 'lang' => 'en'),
+    array('label' => 'Admin', 'href' => '', 'lang' => 'en'),
 );
 $currentPage = 'admin';
 

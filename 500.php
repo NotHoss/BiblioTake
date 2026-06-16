@@ -7,7 +7,7 @@ $pageDescription = 'Si è verificato un errore interno del server. Riprova tra q
 $pageKeywords    = '500, errore server, problema tecnico';
 $currentPage     = '';
 $breadcrumb      = array(
-    array('label' => 'Home',       'href' => 'index.php'),
+    array('label' => 'Home',       'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Errore 500', 'href' => ''),
 );
 

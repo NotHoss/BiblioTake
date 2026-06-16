@@ -57,7 +57,7 @@ $pageDescription = 'Crea un nuovo account su BiblioTake per richiedere prestiti 
 $pageKeywords    = 'registrazione, nuovo account, iscriviti, biblioteca';
 $currentPage     = 'register';
 $breadcrumb      = array(
-    array('label' => 'Home',        'href' => 'index.php'),
+    array('label' => 'Home',        'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Registrati',  'href' => ''),
 );
 

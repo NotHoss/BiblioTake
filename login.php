@@ -49,7 +49,7 @@ $pageDescription = 'Accedi al tuo account BiblioTake per gestire prestiti e rece
 $pageKeywords    = 'login, accesso, account, biblioteca';
 $currentPage     = 'login';
 $breadcrumb      = array(
-    array('label' => 'Home',   'href' => 'index.php'),
+    array('label' => 'Home',   'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Accedi', 'href' => ''),
 );
 

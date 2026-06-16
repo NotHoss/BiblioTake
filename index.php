@@ -6,7 +6,7 @@ $pageDescription = 'Scopri il catalogo della biblioteca: cerca libri, consulta l
 $pageKeywords    = 'biblioteca, libri, catalogo, prestito, BiblioTake';
 $currentPage     = 'home';
 $breadcrumb      = array(
-    array('label' => 'Home', 'href' => ''),
+    array('label' => 'Home', 'href' => '', 'lang' => 'en'),
 );
 
 $libriRecenti = getLibriRecenti($conn, 6);

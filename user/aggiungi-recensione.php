@@ -11,7 +11,7 @@ $errorMessage = '';
 $successMessage = '';
 
 $breadcrumb = array(
-    array('label' => 'Home',     'href' => '../index.php'),
+    array('label' => 'Home',     'href' => '../index.php', 'lang' => 'en'),
     array('label' => 'Libro', 'href' => 'dashboard.php'),
     array('label' => 'Aggiungi Recensione', 'href' => ''),
 );

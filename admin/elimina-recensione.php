@@ -6,8 +6,8 @@ $pageTitle = 'Elimina recensione - Amministrazione BiblioTake';
 $pageDescription = 'Conferma eliminazione di una recensione.';
 $pageKeywords = 'amministrazione, recensioni, eliminazione, BiblioTake';
 $breadcrumb = array(
-	array('label' => 'Home', 'href' => '../index.php'),
-	array('label' => 'Admin', 'href' => 'index.php'),
+	array('label' => 'Home', 'href' => '../index.php', 'lang' => 'en'),
+	array('label' => 'Admin', 'href' => 'index.php', 'lang' => 'en'),
 	array('label' => 'Gestione recensioni', 'href' => 'recensioni.php'),
 	array('label' => 'Elimina recensione', 'href' => ''),
 );

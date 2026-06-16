@@ -62,12 +62,13 @@ if(isset($_SESSION['user_id'])){
 
         foreach ($breadcrumb as $index => $crumb) {
             $label = isset($crumb['label']) ? htmlspecialchars($crumb['label'], ENT_QUOTES, 'UTF-8') : '';
+            $langAttr = isset($crumb['lang']) ? ' lang="' . htmlspecialchars($crumb['lang'], ENT_QUOTES, 'UTF-8') . '"' : '';
             $href = isset($crumb['href']) ? trim($crumb['href']) : '';
 
             if ($index === $lastIndex || $href === '') {
-                $breadcrumbItems[] = '<li><span aria-current="page">' . $label . '</span></li>';
+                $breadcrumbItems[] = '<li><span aria-current="page"' . $langAttr . '>' . $label . '</span></li>';
             } else {
-                $breadcrumbItems[] = '<li><a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '">' . $label . '</a></li>';
+                $breadcrumbItems[] = '<li><a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '"' . $langAttr . '>' . $label . '</a></li>';
             }
         }
 

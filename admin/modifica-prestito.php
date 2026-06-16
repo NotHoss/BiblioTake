@@ -6,8 +6,8 @@ $pageTitle = 'Modifica prestito - Amministrazione BiblioTake';
 $pageDescription = 'Modifica i dettagli di un prestito.';
 $pageKeywords = 'amministrazione, prestiti, modifica, BiblioTake';
 $breadcrumb = array(
-    array('label' => 'Home', 'href' => '../index.php'),
-    array('label' => 'Admin', 'href' => 'index.php'),
+    array('label' => 'Home', 'href' => '../index.php', 'lang' => 'en'),
+    array('label' => 'Admin', 'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Gestione prestiti', 'href' => 'prestiti-utente.php?utente_id=0'),
     array('label' => 'Modifica prestito', 'href' => ''),
 );

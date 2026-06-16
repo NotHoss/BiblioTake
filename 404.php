@@ -7,7 +7,7 @@ $pageDescription = 'La pagina che stai cercando non esiste o è stata spostata.'
 $pageKeywords    = '404, pagina non trovata, errore';
 $currentPage     = '';
 $breadcrumb      = array(
-    array('label' => 'Home',       'href' => 'index.php'),
+    array('label' => 'Home',       'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Errore 404', 'href' => ''),
 );
 

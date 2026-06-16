@@ -7,7 +7,7 @@ $pageKeywords    = 'contatti, biblioteca, BiblioTake, informazioni, email, telef
 $currentPage     = 'contatti';
 
 $breadcrumb = array(
-    array('label' => 'Home',     'href' => 'index.php'),
+    array('label' => 'Home',     'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Contatti', 'href' => ''),
 );
 

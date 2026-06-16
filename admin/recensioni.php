@@ -6,8 +6,8 @@ $pageTitle = 'Gestione recensioni - Amministrazione BiblioTake';
 $pageDescription = 'Controlla e gestisci le recensioni inviate dagli utenti.';
 $pageKeywords = 'amministrazione, recensioni, utenti, gestione, BiblioTake';
 $breadcrumb = array(
-    array('label' => 'Home', 'href' => '../index.php'),
-    array('label' => 'Admin', 'href' => 'index.php'),
+    array('label' => 'Home', 'href' => '../index.php', 'lang' => 'en'),
+    array('label' => 'Admin', 'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Gestione utenti', 'href' => 'utenti.php'),
     array('label' => 'Gestione recensioni', 'href' => ''),
 );

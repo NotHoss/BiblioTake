@@ -6,7 +6,7 @@ $pageDescription = 'Informazioni su BiblioTake, il sistema di gestione della bib
 $pageKeywords    = 'BiblioTake, biblioteca, chi siamo, informazioni, UNIPD';
 $currentPage     = 'about';
 $breadcrumb      = array(
-    array('label' => 'Home',      'href' => 'index.php'),
+    array('label' => 'Home',      'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Chi siamo', 'href' => ''),
 );
 

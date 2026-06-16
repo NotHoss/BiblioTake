@@ -92,7 +92,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMes
 }
 
 $breadcrumb = array(
-    array('label' => 'Home',     'href' => '../index.php'),
+    array('label' => 'Home',     'href' => '../index.php', 'lang' => 'en'),
     array('label' => 'Profilo', 'href' => 'dashboard.php'),
     array('label' => 'Modifica Profilo', 'href' => ''),
 );

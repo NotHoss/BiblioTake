@@ -37,25 +37,6 @@ if ($projectRoot !== false && $scriptDir !== false && strpos($scriptDir, $projec
 }
 $relativeRoot = $depth > 0 ? implode('/', array_fill(0, $depth, '..')) : '.';
 
-if (!function_exists('formatForeignTerms')) {
-    function formatForeignTerms($text) {
-        $safe = htmlspecialchars((string) $text, ENT_QUOTES, 'UTF-8');
-        $terms = array(
-            'Home' => '<span lang="en">Home</span>',
-            'Admin' => '<span lang="en">Admin</span>',
-            'Dashboard' => '<span lang="en">Dashboard</span>',
-            'Email' => '<span lang="en">Email</span>',
-            'Username' => '<span lang="en">Username</span>',
-            'Login' => '<span lang="en">Login</span>',
-            'ISBN' => '<abbr title="International Standard Book Number" lang="en">ISBN</abbr>',
-            'JPEG' => '<abbr title="Joint Photographic Experts Group" lang="en">JPEG</abbr>',
-            'MB' => '<abbr title="megabyte" lang="en">MB</abbr>',
-        );
-
-        return strtr($safe, $terms);
-    }
-}
-
 foreach ($navItems as $item) {
     $isCurrent = isset($currentPage) && $currentPage === $item['key'];
     $label = htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8');
@@ -110,13 +91,14 @@ if (!empty($breadcrumb) && is_array($breadcrumb)) {
     $lastIndex = count($breadcrumb) - 1;
 
     foreach ($breadcrumb as $index => $crumb) {
-        $label = isset($crumb['label']) ? formatForeignTerms($crumb['label']) : '';
+        $label = isset($crumb['label']) ? htmlspecialchars($crumb['label'], ENT_QUOTES, 'UTF-8') : '';
+        $langAttr = isset($crumb['lang']) ? ' lang="' . htmlspecialchars($crumb['lang'], ENT_QUOTES, 'UTF-8') . '"' : '';
         $href = isset($crumb['href']) ? trim($crumb['href']) : '';
 
         if ($index === $lastIndex || $href === '') {
-            $breadcrumbItems[] = '<li><span aria-current="page">' . $label . '</span></li>';
+            $breadcrumbItems[] = '<li><span aria-current="page"' . $langAttr . '>' . $label . '</span></li>';
         } else {
-            $breadcrumbItems[] = '<li><a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '">' . $label . '</a></li>';
+            $breadcrumbItems[] = '<li><a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '"' . $langAttr . '>' . $label . '</a></li>';
         }
     }
 

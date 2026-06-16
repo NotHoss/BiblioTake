@@ -6,8 +6,8 @@ $pageTitle = 'Gestione utenti - Amministrazione BiblioTake';
 $pageDescription = 'Gestione degli account utenti, prestiti e ruoli della biblioteca.';
 $pageKeywords = 'amministrazione, utenti, gestione, prestiti, BiblioTake';
 $breadcrumb = array(
-    array('label' => 'Home', 'href' => '../index.php'),
-    array('label' => 'Admin', 'href' => 'index.php'),
+    array('label' => 'Home', 'href' => '../index.php', 'lang' => 'en'),
+    array('label' => 'Admin', 'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Gestione utenti', 'href' => ''),
 );
 $currentPage = 'admin';

@@ -6,7 +6,7 @@ $pageDescription = 'Sfoglia il catalogo completo della biblioteca. Filtra per ca
 $pageKeywords    = 'catalogo, libri, biblioteca, ricerca, filtri, prestito';
 $currentPage     = 'catalogo';
 $breadcrumb      = array(
-    array('label' => 'Home',     'href' => 'index.php'),
+    array('label' => 'Home',     'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Catalogo', 'href' => ''),
 );
 

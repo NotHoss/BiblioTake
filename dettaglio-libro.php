@@ -26,7 +26,7 @@ $pageDescription = 'Scheda del libro ' . $libro['titolo'] . ' di ' . $libro['aut
 $pageKeywords    = $libro['titolo'] . ', ' . $libro['autore'] . ', biblioteca, prestito';
 $currentPage     = 'catalogo';
 $breadcrumb      = array(
-    array('label' => 'Home',                           'href' => 'index.php'),
+    array('label' => 'Home',                           'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Catalogo',                       'href' => 'catalogo.php'),
     array('label' => $libro['titolo'],                 'href' => ''),
 );

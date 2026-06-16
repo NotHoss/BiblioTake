@@ -6,8 +6,8 @@ $pageTitle = 'Modifica generalità biblioteca - Amministrazione BiblioTake';
 $pageDescription = 'Aggiorna indirizzo, contatti e orari della biblioteca.';
 $pageKeywords = 'amministrazione, biblioteca, modifica, generalità, BiblioTake';
 $breadcrumb = array(
-    array('label' => 'Home', 'href' => '../index.php'),
-    array('label' => 'Admin', 'href' => 'index.php'),
+    array('label' => 'Home', 'href' => '../index.php', 'lang' => 'en'),
+    array('label' => 'Admin', 'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Modifica generalità biblioteca', 'href' => ''),
 );
 $currentPage = 'admin';

@@ -10,7 +10,7 @@ $currentPage = 'recensioni';
 $errorMessage = '';
 
 $breadcrumb = array(
-    array('label' => 'Home',     'href' => '../index.php'),
+    array('label' => 'Home',     'href' => '../index.php', 'lang' => 'en'),
     array('label' => 'Profilo', 'href' => 'dashboard.php'),
     array('label' => 'Recensioni', 'href' => ''),
 );

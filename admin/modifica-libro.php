@@ -6,8 +6,8 @@ $pageTitle = 'Modifica libro - Amministrazione BiblioTake';
 $pageDescription = 'Modifica i dettagli di un libro presente nel catalogo.';
 $pageKeywords = 'amministrazione, modifica libro, catalogo, BiblioTake';
 $breadcrumb = array(
-    array('label' => 'Home', 'href' => '../index.php'),
-    array('label' => 'Admin', 'href' => 'index.php'),
+    array('label' => 'Home', 'href' => '../index.php', 'lang' => 'en'),
+    array('label' => 'Admin', 'href' => 'index.php', 'lang' => 'en'),
     array('label' => 'Gestione libri', 'href' => 'libri.php'),
     array('label' => 'Modifica libro', 'href' => ''),
 );
