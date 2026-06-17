@@ -1,11 +1,11 @@
 <?php
 session_start();
-require_once '../includes/resources.php';
+require_once __DIR__ . '/../includes/resources.php';
 requireRole('utente');
 
-$pageTitle = 'Elimina Recensione — User BiblioTake';
-$pageDescription = 'Conferma eliminazione della recensione.';
-$pageKeywords = 'user, elimina, recensione, BiblioTake';
+$pageTitle = 'Modifica Recensione — User BiblioTake';
+$pageDescription = 'Modifica una recensione che hai scritto.';
+$pageKeywords = 'user, modifica, recensione, libro, BiblioTake';
 $currentPage = 'recensioni';
 $errorMessage = '';
 $successMessage = '';
@@ -14,17 +14,17 @@ $breadcrumb = array(
     array('label' => 'Home',     'href' => '../index.php', 'lang' => 'en'),
     array('label' => 'Profilo', 'href' => 'dashboard.php'),
     array('label' => 'Recensioni', 'href' => 'recensioni.php'),
-    array('label' => 'Elimina', 'href' => ''),
+    array('label' => 'Modifica', 'href' => ''),
 );
 
 $recensioneId = isset($_GET['id']) ? (int) $_GET['id'] : (isset($_POST['id']) ? (int) $_POST['id'] : 0);
 $recensione = null;
 
-if ($conn instanceof mysqli && $errorMessage === '' && $recensioneId > 0) {
+if ($conn instanceof mysqli && $recensioneId > 0) {
     $recensione = getRecensioneSingolaUser($conn, $_SESSION['user_id'], $recensioneId);
 }
 
-// Se la recensione non esiste o non appartiene all'utente, mostra errore
+//se la recensione non esiste, non e' dell'utente o e' censurata, torna alla lista
 if (!$recensione || (int) $recensione['utente_id'] !== (int) $_SESSION['user_id']) {
     header('Location: recensioni.php');
     exit;
@@ -35,26 +35,34 @@ $return = isset($_GET['return']) ? $_GET['return'] : (isset($_POST['return']) ? 
 if ($return === 'libro') {
     $redirectSuccesso = '../dettaglio-libro.php?id=' . (int) $recensione['libro_id'];
 } else {
-    $redirectSuccesso = 'recensioni.php';
+    $redirectSuccesso = 'recensioni.php?msg=recensione_modificata';
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '' && $recensioneId > 0) {
-    try{
-        $result = deleteRecensioneUtente($conn, $recensioneId, $_SESSION['user_id']);
-        if ($result === true) {
+//gestisce l'invio del form
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $testo = isset($_POST['testo']) ? trim($_POST['testo']) : '';
+    $voto  = isset($_POST['valutazione']) ? (int) $_POST['valutazione'] : 0;
+
+    if ($voto < 1 || $voto > 5 || $testo === '') {
+        $errorMessage = 'Compila tutti i campi e seleziona una valutazione valida.';
+        //mantiene i valori inviati nel form ri-mostrato cosi' l'utente non li riscrive
+        $recensione['testo'] = $testo;
+        $recensione['valutazione'] = $voto;
+    } else {
+        $risultato = updateRecensioneUtente($conn, $recensioneId, $_SESSION['user_id'], $testo, $voto);
+        if ($risultato === true) {
             header('Location: ' . $redirectSuccesso);
             exit;
         }
-        $errorMessage = is_string($result) ? $result : 'Eliminazione non riuscita.';
-    } catch (Throwable $e) {
-        $errorMessage = 'Impossibile eliminare la recensione: ' . $e->getMessage();
+        $errorMessage = is_string($risultato) ? $risultato : 'Modifica non riuscita.';
+        $recensione['testo'] = $testo;
+        $recensione['valutazione'] = $voto;
     }
 }
 
-// Vista di conferma (da creare, oppure includere una view esistente)
 require_once __DIR__ . '/../views/template/header.php';
 require_once __DIR__ . '/../views/template/sidebar-user.php';
-require_once __DIR__ . '/../views/showEliminaRecensioneUser.php';
+require_once __DIR__ . '/../views/showModificaRecensione.php';
 require_once __DIR__ . '/../views/template/footer.php';
 
 if ($conn instanceof mysqli) {

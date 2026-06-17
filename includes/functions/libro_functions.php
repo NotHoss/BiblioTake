@@ -54,7 +54,7 @@ function getLibri($conn, $filtri, $pagina) {
     $sql = 'SELECT l.*, (
                 SELECT ROUND(AVG(r.valutazione), 1)
                 FROM recensione r
-                WHERE r.libro_id = l.id
+                WHERE r.libro_id = l.id AND r.censura = 0
             ) AS media_voti
             FROM libro l' . $joins;
 
@@ -156,7 +156,7 @@ function getLibroById($conn, $id) {
         'SELECT l.*, (
             SELECT ROUND(AVG(r.valutazione), 1)
             FROM recensione r
-            WHERE r.libro_id = l.id
+            WHERE r.libro_id = l.id AND r.censura = 0
         ) AS media_voti
         FROM libro l
         WHERE l.id = ?'
@@ -229,10 +229,10 @@ function isLibroDisponibile($conn, $libroId) {
 
 function getRecensioniByLibroId($conn, $libroId) {
     $stmt = $conn->prepare(
-        'SELECT r.valutazione, r.testo, r.data, u.username
+        'SELECT r.id AS recensione_id, r.utente_id, r.valutazione, r.testo, r.data, r.censura, u.username
          FROM recensione r
          INNER JOIN utente u ON u.id = r.utente_id
-         WHERE r.libro_id = ?
+         WHERE r.libro_id = ? AND r.censura = 0
          ORDER BY r.data DESC'
     );
     $stmt->bind_param('i', $libroId);

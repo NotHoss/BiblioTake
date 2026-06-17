@@ -1,0 +1,31 @@
+<h1>Modifica recensione</h1>
+
+[MESSAGES]
+
+<div class="page-content-user">
+    <p class="page-content-user-return"><a href="recensioni.php">Torna alle recensioni</a></p>
+
+    <form method="post" action="modifica-recensione.php" class="form form-recensione" id="form-recensione" data-validate="data-validate">
+        <input type="hidden" name="id" value="[RECENSIONE_ID]" />
+        <input type="hidden" name="return" value="[RETURN_VALUE]" />
+
+        <p>Stai modificando la recensione del libro: <strong>[LIBRO_TITOLO]</strong></p>
+
+        <label for="valutazione">Valutazione</label>
+        <select name="valutazione" id="valutazione" required>
+            <option value="">-- Seleziona --</option>
+            <option value="1"[SEL1]>1 - Pessimo</option>
+            <option value="2"[SEL2]>2 - Scarso</option>
+            <option value="3"[SEL3]>3 - Discreto</option>
+            <option value="4"[SEL4]>4 - Buono</option>
+            <option value="5"[SEL5]>5 - Eccellente</option>
+        </select>
+
+        <label for="testo">La tua recensione</label>
+        <textarea name="testo" id="testo" rows="6" placeholder="Scrivi qui la tua recensione..." required>[TESTO]</textarea>
+
+        <p>
+            <button type="submit" name="modifica-recensione">Salva modifiche</button>
+        </p>
+    </form>
+</div>

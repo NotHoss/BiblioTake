@@ -137,7 +137,7 @@ function getRecensioneById($conn, $recensioneId) {
     return $recensione;
 }
 
-//cancellazione fisica della recensione (uso admin). vedi censuraRecensioneUtente per la versione utente che si limita a nascondere.
+//cancellazione fisica della recensione (uso admin, nessun check ownership). per la versione utente con check ownership vedi deleteRecensioneUtente.
 function deleteRecensione($conn, $recensioneId) {
     $stmt = $conn->prepare('DELETE FROM recensione WHERE id = ?');
     $stmt->bind_param('i', $recensioneId);
@@ -145,9 +145,9 @@ function deleteRecensione($conn, $recensioneId) {
     return $stmt->execute();
 }
 
-//nasconde la recensione dell'utente (set censura=1) con check ownership. usata dal flusso utente: l'utente non puo' cancellare fisicamente, puo' solo nascondere la propria recensione.
-function censuraRecensioneUtente($conn, $recensioneId, $userId) {
-    $stmt = $conn->prepare('UPDATE recensione SET censura = 1 WHERE id = ? AND utente_id = ?');
+//cancellazione fisica della recensione da parte del suo autore, con check ownership. l'utente elimina davvero la propria recensione; la censura (nascondere) resta un'azione riservata all'admin.
+function deleteRecensioneUtente($conn, $recensioneId, $userId) {
+    $stmt = $conn->prepare('DELETE FROM recensione WHERE id = ? AND utente_id = ?');
     $stmt->bind_param('ii', $recensioneId, $userId);
 
     return $stmt->execute();
@@ -207,6 +207,22 @@ function aggiungiRecensione($conn, $userId, $libroId, $testo, $valutazione) {
     );
     if (!$stmt) { return 'Errore prepare SQL: ' . $conn->error; }
     if (!$stmt->bind_param('iiis', $userId, $libroId, $valutazione, $testo)) {
+        return 'Errore bind_param';
+    }
+    if (!$stmt->execute()) {
+        return 'Errore esecuzione query: ' . $stmt->error;
+    }
+    $stmt->close();
+    return true;
+}
+
+//modifica testo e valutazione di una recensione dell'utente con check ownership. il vincolo censura=0 impedisce di modificare recensioni nascoste. ritorna true o stringa errore, come aggiungiRecensione.
+function updateRecensioneUtente($conn, $recensioneId, $userId, $testo, $valutazione) {
+    $stmt = $conn->prepare(
+        'UPDATE recensione SET testo = ?, valutazione = ? WHERE id = ? AND utente_id = ? AND censura = 0'
+    );
+    if (!$stmt) { return 'Errore prepare SQL: ' . $conn->error; }
+    if (!$stmt->bind_param('siii', $testo, $valutazione, $recensioneId, $userId)) {
         return 'Errore bind_param';
     }
     if (!$stmt->execute()) {

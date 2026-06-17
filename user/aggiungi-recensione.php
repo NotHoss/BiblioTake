@@ -61,7 +61,8 @@ if ($voto < 1 || $voto > 5 || $testo === '') {
     $risultato = aggiungiRecensione($conn, $_SESSION['user_id'], $libroId, $testo, $voto);
 
     if ($risultato === true) {
-        header('Location: recensioni.php?msg=recensione_aggiunta');
+        //torna alla pagina del libro cosi' l'utente vede subito la recensione appena scritta
+        header('Location: ../dettaglio-libro.php?id=' . $libroId);
         exit;
     } else {
         $errorMessage = $risultato;

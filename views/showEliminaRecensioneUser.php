@@ -15,6 +15,9 @@ $template = file_get_contents(__DIR__ . '/../html/user/showEliminaRecensione.htm
 $libroTitolo = htmlspecialchars((string) ($recensione['libro_titolo'] ?? ''), ENT_QUOTES, 'UTF-8');
 $recensioneIdHtml = (int) ($recensione['id'] ?? 0);
 
+//propaga il flag return nel form (campo hidden) cosi' il redirect post-eliminazione sa dove tornare
+$returnValue = (isset($return) && $return === 'libro') ? 'libro' : '';
+
 if(empty($recensione)){
 	echo strtr($template, [
 		'[MESSAGES]' => $errorMsg,
@@ -22,6 +25,7 @@ if(empty($recensione)){
         '[TITOLO]' => '',
         '[CARD_RECENSIONE]' => '',
         '[RECENSIONE_ID]'     => 0,
+        '[RETURN_VALUE]'      => $returnValue,
 	]);
 	return;
 }
@@ -60,4 +64,5 @@ echo strtr($template, [
 	'[TITOLO]' => $libroTitolo,
 	'[RECENSIONE_ID]' => $recensioneIdHtml,
     '[CARD_RECENSIONE]'   => $cardRecensione,
+    '[RETURN_VALUE]'      => $returnValue,
 ]);

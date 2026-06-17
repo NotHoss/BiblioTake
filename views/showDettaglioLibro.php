@@ -75,12 +75,25 @@ if (empty($recensioni)) {
             $testoHtml = '<p>' . htmlspecialchars($recensione['testo'], ENT_QUOTES, 'UTF-8') . '</p>';
         }
 
+        //link modifica/elimina mostrati solo all'autore della recensione (loggato) e se non censurata
+        $azioniAutore = '';
+        if (isset($_SESSION['user_id'])
+            && (int) $_SESSION['user_id'] === (int) $recensione['utente_id']
+            && (int) $recensione['censura'] === 0) {
+            $recensioneId = (int) $recensione['recensione_id'];
+            $azioniAutore  = '<p class="recensione-azioni">';
+            $azioniAutore .= '<a href="user/modifica-recensione.php?id=' . $recensioneId . '&amp;return=libro">Modifica</a> ';
+            $azioniAutore .= '<a href="user/elimina-recensione.php?id=' . $recensioneId . '&amp;return=libro">Elimina</a>';
+            $azioniAutore .= '</p>';
+        }
+
         $listaRecensioni .= '<li>';
         $listaRecensioni .= '<article class="recensione-card">';
         $listaRecensioni .= '<header>';
         $listaRecensioni .= '<p><strong>' . $username . '</strong></p>';
         $listaRecensioni .= '<p><time datetime="' . $dataDatetime . '">' . $dataFormated . '</time></p>';
         $listaRecensioni .= '<p>Valutazione: ' . $valutazione . ' su 5</p>';
+        $listaRecensioni .= $azioniAutore;
         $listaRecensioni .= '</header>';
         $listaRecensioni .= $testoHtml;
         $listaRecensioni .= '</article>';

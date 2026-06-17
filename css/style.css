@@ -1958,6 +1958,19 @@ RECENSIONI LIBRO
     text-align: left;
     border-bottom: 1px solid var(--borderlightcolor);
     margin-bottom: 0.7em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/*spinge i link azione (modifica/elimina) all'estrema destra della riga header della recensione*/
+.recensione-card header .recensione-azioni,
+.recensione-card header .modifica-card{
+    margin-left: auto;
+}
+
+.recensione-card header .recensione-azioni{
+    margin-right: 0;
 }
 
 .recensione-card header p{
