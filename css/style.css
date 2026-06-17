@@ -167,6 +167,12 @@ header nav{
     margin-top: 0.5em;
 }
 
+/*hamburger nav principale: nascosto su desktop (la lista e' sempre visibile). compare solo sotto 880px, vedi mini.css*/
+.nav-toggle,
+.nav-hamburger{
+    display: none;
+}
+
 header nav ul{
     list-style-type: none;
     text-align: center;
