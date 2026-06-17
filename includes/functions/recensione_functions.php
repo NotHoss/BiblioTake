@@ -148,6 +148,7 @@ function deleteRecensione($conn, $recensioneId) {
 //cancellazione fisica della recensione da parte del suo autore, con check ownership. l'utente elimina davvero la propria recensione; la censura (nascondere) resta un'azione riservata all'admin.
 function deleteRecensioneUtente($conn, $recensioneId, $userId) {
     $stmt = $conn->prepare('DELETE FROM recensione WHERE id = ? AND utente_id = ?');
+    //$stmt = $conn->prepare('UPDATE recensione SET censura = 1 WHERE id = ? AND utente_id = ?');
     $stmt->bind_param('ii', $recensioneId, $userId);
 
     return $stmt->execute();

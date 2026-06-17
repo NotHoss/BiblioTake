@@ -2338,6 +2338,30 @@ footer ul li{
     margin: 0 0.3em;
 }
 
+#back-to-top {
+    position: fixed;
+    bottom: 1.5em;
+    right: 1.5em;
+    width: 3em;
+    height: 3em;
+    border: none;
+    border-radius: 50%;
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    font-size: 1.2em;
+    cursor: pointer;
+    z-index: 1000;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#back-to-top:hover {
+    background: var(--txtcolor);
+    color: var(--bgcolor);
+}
+
 /*
 ==========================
 SIDEBAR UTENTE
