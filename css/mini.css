@@ -664,6 +664,27 @@
     ==========================
     */
     
+    /*checkbox nascosto ma ancora focalizzabile da tastiera: non si usa display:none perchè toglierebbe il controllo dal tab order (un utente da tastiera/screen reader non potrebbe aprire il menu)*/
+    .sidebar-toggle {
+        display: block;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    /*focus visibile: quando il checkbox riceve focus l'outline appare sull'hamburger visibile (label fratello successivo). si usa :focus oltre a :focus-visible per garantire l'indicatore in tutti i browser. colore scuro (--focuscolor) perchè l'hamburger sta su sfondo chiaro del contenuto: il bianco sarebbe invisibile*/
+    .sidebar-toggle:focus ~ .sidebar-hamburger,
+    .sidebar-toggle:focus-visible ~ .sidebar-hamburger {
+        outline: 3px solid var(--focuscolor);
+        outline-offset: 2px;
+    }
+
     .sidebar-hamburger {
         display: flex;
         flex-direction: column;
