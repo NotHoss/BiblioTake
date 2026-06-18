@@ -1042,6 +1042,8 @@ colore rosso #B00020 scelto per contrasto 8.2:1 su sfondo #FFFAF5 (WCAG AAA).
 .generalita-list > li.actions{
     padding: 0.8rem 0 0;
     border-bottom: 0;
+    display: flex;
+    gap: 0.5em;
 }
 
 .generalita-list .actions a{
@@ -1544,15 +1546,7 @@ FILTRI (aside)
     min-width: 8rem;
 }
 
-/*User*/
 
-.sidebar-toggle {
-    display: none;
-}
-
-.sidebar-hamburger {
-    display: none;
-}
 
 /*========= MODIFICA PROFILO UTENTE =========*/
 
@@ -1657,6 +1651,25 @@ FILTRI (aside)
 
 .form-button:hover {
     background: var(--hovercolor);
+}
+
+.delete-error {
+    display: block;
+    width: 100%;
+    text-align: center;
+    min-height: 2.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: 0.45rem;
+    border: 2px solid var(--deletecolor);
+    background: #fff;
+    color: var(--txtlinkcolor);
+    font-weight: normal;
+    line-height: 1.2;
+    margin: 2em;
+}
+
+.delete-error:empty {
+    display: none;
 }
 
 /*
@@ -2176,7 +2189,13 @@ DASHBOARD
     display: flex; 
     width: 100%; 
     justify-content: space-between; 
-    flex-wrap: wrap;
+    align-items: center;
+}
+
+.page-content-user .generalita-list .btn-primary,
+.page-content-user .generalita-list .btn-danger{
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
@@ -2192,7 +2211,7 @@ DASHBOARD
     padding: 1em 1em 1em 0;
 }
 
-#username{
+.username{
     text-align: left;
     padding: 0.5em 0;
     overflow: hidden; /*remove*/ 
@@ -2368,14 +2387,6 @@ SIDEBAR UTENTE
 ==========================
 */
 
-.sidebar-toggle {
-    display: none;
-}
-
-.sidebar-hamburger {
-    display: none;
-}
-
 .sidebar-user{
     float: left;
     width: 24%;
@@ -2401,7 +2412,6 @@ SIDEBAR UTENTE
 }
 
 .sidebar-user li{
-    /*padding: 0.5em 0 0.5em 0.7em;*/
     border-bottom: 2px solid #ece0f8;
 }
 
@@ -2414,7 +2424,6 @@ SIDEBAR UTENTE
 
 .sidebar-user li a:visited{
     color: var(--txtlinkvisited);
-    /*padding: 0.4em 0.7em;*/
     text-decoration: none;
 }
 
@@ -2429,4 +2438,3 @@ SIDEBAR UTENTE
     color: var(--txtcolor);
     text-decoration: underline;
 }
-

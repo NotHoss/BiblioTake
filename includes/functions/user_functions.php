@@ -117,9 +117,19 @@ function changeFotoProfilo($conn, $userId, $fotoPath) {
 }
 
 function deleteUtente($conn, $userId) {
+    $stmt = $conn->prepare('SELECT COUNT(*) FROM prestito WHERE utente_id = ? AND stato IN ("attivo", "in_ritardo")');
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($count > 0) {
+        return 'Impossibile eliminare l\'account se ci sono prestiti attivi';
+    }
+
     $stmt = $conn->prepare('DELETE FROM utente WHERE id = ?');
     $stmt->bind_param('i', $userId);
-
     return $stmt->execute();
 }
 ?>

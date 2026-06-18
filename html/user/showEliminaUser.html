@@ -1,12 +1,20 @@
 <h2>Elimina Utente</h2>
-<p class="page-content-user page-content-user-return"><a href="dashboard.php">Torna alla pagina del profilo</a></p>
 
 <div class="page-content-user page-content-user-elimina">
+    [MESSAGES]
     <p>Vuoi eliminare il tuo account <strong>[USERNAME]</strong>?</p>
+    <li class="user-avatar-item user-info">
+        <h2 class="username" title="[USERNAME]">[USERNAME]</h2>
+            <div>
+                <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="profile-image-small">
+            </div>
+        <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="profile-image-big">
+    </li>
     <div>
         <form method="post" action="elimina-user.php" class="form-elimina">
             <p><input type="checkbox" name="confirm_delete" id="confirm_delete" required="required" /> <label for="confirm_delete">Confermo di voler eliminare il mio account</label></p>
             <button class="elimina" type="submit">Elimina Account</button>
+            <a href="dashboard.php" class="btn-secondary-link">Annulla</a>
         </form>
     </div>
 </div>
