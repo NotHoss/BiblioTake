@@ -552,7 +552,7 @@ function getUtentiConPrestitiFiltrati($conn, array $filtri, $pagina, $limit = 10
 
     $sql = "SELECT u.id, u.username, u.email, u.attivo, u.foto_profilo,
         (SELECT COUNT(*) FROM prestito p WHERE p.utente_id = u.id) AS prestiti_totali,
-        (SELECT COUNT(*) FROM prestito p WHERE p.utente_id = u.id AND p.stato = 'attivo') AS prestiti_attivi,
+        (SELECT COUNT(*) FROM prestito p WHERE p.utente_id = u.id AND p.stato IN ('attivo', 'in_ritardo')) AS prestiti_attivi,
         (SELECT COUNT(*) FROM recensione r WHERE r.utente_id = u.id) AS recensioni_totali
      FROM utente u";
 
@@ -586,6 +586,52 @@ function getUtenteById($conn, $utenteId) {
     $stmt->close();
 
     return $utente;
+}
+
+function setUtenteAttivoAdmin($conn, $utenteId, $attivo) {
+    $utenteId = (int) $utenteId;
+    if ($utenteId <= 0) {
+        return 'Utente non valido.';
+    }
+
+    $stmt = $conn->prepare('SELECT id, username, ruolo, attivo FROM utente WHERE id = ? LIMIT 1');
+    $stmt->bind_param('i', $utenteId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $utente = $result->fetch_assoc();
+    $stmt->close();
+
+    if (!$utente) {
+        return 'Utente non trovato.';
+    }
+    if (($utente['ruolo'] ?? '') === 'admin') {
+        return 'Non e possibile modificare lo stato di un amministratore.';
+    }
+
+    $nuovoStato = $attivo ? 1 : 0;
+    if ((int) ($utente['attivo'] ?? 0) === $nuovoStato) {
+        return 'Nessuna modifica effettuata.';
+    }
+
+    if (!$attivo) {
+        $stmt = $conn->prepare('SELECT COUNT(*) AS totale FROM prestito WHERE utente_id = ? AND stato IN ("attivo", "in_ritardo")');
+        $stmt->bind_param('i', $utenteId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+
+        if ((int) ($row['totale'] ?? 0) > 0) {
+            return 'Impossibile disattivare un utente con prestiti attivi o in ritardo.';
+        }
+    }
+
+    $stmt = $conn->prepare('UPDATE utente SET attivo = ? WHERE id = ?');
+    $stmt->bind_param('ii', $nuovoStato, $utenteId);
+    $ok = $stmt->execute();
+    $stmt->close();
+
+    return $ok;
 }
 
 function buildAdminLibroFilterParts(array $filtri) {
