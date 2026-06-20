@@ -168,8 +168,7 @@ header nav{
 }
 
 /*hamburger nav principale: nascosto su desktop (la lista e' sempre visibile). compare solo sotto 880px, vedi mini.css*/
-.nav-toggle,
-.nav-hamburger{
+.nav-toggle{
     display: none;
 }
 
@@ -1576,6 +1575,17 @@ FILTRI (aside)
     margin-bottom: 1em;
 }
 
+.avatar-fieldset{
+    border: 0;
+    padding: 0;
+    margin: 0 0 1em;
+}
+
+.avatar-fieldset legend{
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
 .avatar-option {
     display: block;
     cursor: pointer;
@@ -1594,6 +1604,12 @@ FILTRI (aside)
     background: var(--eventablecolor);
 }
 
+.avatar-option:focus-within {
+    outline: 3px solid var(--focuscolor);
+    outline-offset: 2px;
+    border-color: var(--breadbgcolor);
+}
+
 .avatar-option img {
     width: 100px;
     height: 100px;
@@ -1603,7 +1619,11 @@ FILTRI (aside)
 }
 
 .avatar-option input[type="radio"]{
-    display: none;
+    display: block;
+    width: 1.25em;
+    height: 1.25em;
+    margin: 0 auto 0.35em;
+    accent-color: var(--breadbgcolor);
 }
 
 .password-fields {
@@ -2363,7 +2383,7 @@ footer ul li{
     right: 1.5em;
     width: 3em;
     height: 3em;
-    border: none;
+    border: 2px solid var(--bordercolor);
     border-radius: 50%;
     background: var(--breadbgcolor);
     color: var(--txtcolor);
@@ -2437,4 +2457,81 @@ SIDEBAR UTENTE
 .sidebar-user .sidebar-link:hover a{
     color: var(--txtcolor);
     text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    header nav a,
+    a.table-action,
+    button.table-action,
+    .admin-page-actions .button-link,
+    .admin-page-actions .admin-return-link,
+    .admin-page-actions .admin-primary-link,
+    #ricerca-rapida button,
+    #categorie a,
+    #ultimi-arrivi article,
+    #ricerca-rapida input[type="search"],
+    .form input[type="search"],
+    .form input[type="text"],
+    .form input[type="number"],
+    .form input[type="email"],
+    .form input[type="password"],
+    .form input[type="file"],
+    .form input[type="datetime-local"],
+    .form textarea,
+    .form select,
+    .form button,
+    .admin-links-list a,
+    .generalita-list .actions a,
+    .generalita-list .btn-primary,
+    .generalita-list .btn-danger,
+    .admin-search-form .search-form-actions button,
+    .admin-search-form .search-form-actions a,
+    .avatar-option,
+    .modifica-form input[type="text"],
+    .modifica-form input[type="email"],
+    .modifica-form input[type="password"],
+    .form-button,
+    .libro-card,
+    nav[aria-label="Navigazione pagine risultati"] a,
+    #tag-libro a,
+    #azioni-libro a,
+    main .elimina a,
+    main .elimina button,
+    main .form-elimina button,
+    main .elimina-card a {
+        transition: none;
+    }
+
+    .admin-page-actions .button-link:hover,
+    .admin-page-actions .button-link:focus,
+    .admin-page-actions .admin-return-link:hover,
+    .admin-page-actions .admin-return-link:focus,
+    .admin-page-actions .admin-primary-link:hover,
+    .admin-page-actions .admin-primary-link:focus,
+    #ricerca-rapida button:hover,
+    #ricerca-rapida button:focus,
+    .form button:hover,
+    .form button:focus,
+    .form a:hover,
+    .form a:focus,
+    #ultimi-arrivi article:hover,
+    .search-form-actions button:hover,
+    .search-form-actions button:focus,
+    .search-form-actions a:hover,
+    .search-form-actions a:focus,
+    .admin-search-form .search-form-actions button:hover,
+    .admin-search-form .search-form-actions button:focus,
+    .admin-search-form .search-form-actions a:hover,
+    .admin-search-form .search-form-actions a:focus,
+    .admin-links-list a:hover,
+    .admin-links-list a:focus,
+    .generalita-list .actions a:hover,
+    .generalita-list .actions a:focus,
+    .generalita-list .btn-primary:hover,
+    .generalita-list .btn-primary:focus,
+    .generalita-list .btn-danger:hover,
+    .generalita-list .btn-danger:focus,
+    .libro-card:hover {
+        transform: none;
+    }
 }

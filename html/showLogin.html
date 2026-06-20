@@ -5,12 +5,12 @@
 
 <form class="form" action="[FORM_ACTION]" method="post" data-validate="data-validate">
     <p>
-        <label for="login"><span lang="en">Email</span></label>
-        <input type="text" id="login" name="login" value="[LOGIN_VALUE]" required="required" />
+        <label for="login"><span lang="en">Email</span> o <span lang="en">username</span></label>
+        <input type="text" id="login" name="login" value="[LOGIN_VALUE]" required="required" autocomplete="username" />
     </p>
     <p>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required="required" />
+        <label for="password"><span lang="en">Password</span></label>
+        <input type="password" id="password" name="password" required="required" autocomplete="current-password" />
     </p>
     <p>
         <button type="submit">Accedi</button>

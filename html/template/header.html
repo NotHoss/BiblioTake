@@ -23,11 +23,10 @@
     </div>
 
     <nav aria-label="Navigazione principale">
-        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-        <label for="nav-toggle" class="nav-hamburger" aria-label="Apri menu di navigazione">
-            <span></span><span></span><span></span>
-        </label>
-        <ul>
+        <button type="button" id="nav-toggle" class="nav-toggle" aria-expanded="true" aria-controls="primary-navigation" aria-label="Chiudi menu di navigazione">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+        <ul id="primary-navigation">
             [NAVIGATION]
         </ul>
     </nav>

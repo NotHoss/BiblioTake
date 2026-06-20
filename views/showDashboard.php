@@ -21,8 +21,8 @@ $template = file_get_contents(__DIR__ . '/../html/user/showDashboard.html');
 
 if (empty($user)) {
     echo '<div class="empty-result">';
-    echo '<p>Effettuare il login per visualizzare le informazioni utente</p>';
-    echo '<a href="../login.php">Vai alla pagina di login</a>';
+    echo '<p>Effettuare l\'accesso per visualizzare le informazioni utente</p>';
+    echo '<a href="../login.php">Vai alla pagina di accesso</a>';
     echo '</div>';
     return;
     

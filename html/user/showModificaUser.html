@@ -1,5 +1,5 @@
 <div class="page-content-user">
-    <div id="error-message"></div>
+    [MESSAGES]
 
     <noscript>
         <div id="no-js-message">
@@ -17,6 +17,8 @@
 
                 <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="current-avatar">
                 <!-- lista di immagini tra cui può scegliere -->
+                <fieldset class="avatar-fieldset">
+                    <legend>Scegli immagine profilo</legend>
                 <div class="avatar-grid">
                     <label class="avatar-option">
                         <input type="radio" name="selected_avatar" value="images/avatar/avatar1.webp">
@@ -59,18 +61,19 @@
                         <img src="../images/avatar/avatar10.webp" alt="Avatar 10">
                     </label>
                 </div>
+                </fieldset>
 
                 <label for="new_username"><span lang="en">Username</span></label>
-                <input type="text" id="new_username" name="new_username" value="[USERNAME]" placeholder="Nome utente">
+                <input type="text" id="new_username" name="new_username" value="[USERNAME]" placeholder="Nome utente" autocomplete="username">
                 <label for="new_email"><span lang="en">Email</span></label>
-                <input type="email" id="new_email" name="new_email" value="[EMAIL]" placeholder="Indirizzo email">
+                <input type="email" id="new_email" name="new_email" value="[EMAIL]" placeholder="Indirizzo email" autocomplete="email">
                 <div class="password-fields">
-                    <label for="current_password">Password attuale</label>
-                    <input type="password" id="current_password" name="current_password" placeholder="Password attuale"/>
-                    <label for="new_password">Nuova password</label>
-                    <input type="password" id="new_password" name="new_password" placeholder="Nuova password"/>
-                    <label for="confirm_new_password">Conferma nuova password</label>
-                    <input type="password" id="confirm_new_password" name="confirm_new_password" placeholder="Conferma nuova password"/>
+                    <label for="current_password"><span lang="en">Password</span> attuale</label>
+                    <input type="password" id="current_password" name="current_password" placeholder="Attuale" autocomplete="current-password"/>
+                    <label for="new_password">Nuova <span lang="en">password</span></label>
+                    <input type="password" id="new_password" name="new_password" placeholder="Nuova" autocomplete="new-password"/>
+                    <label for="confirm_new_password">Conferma nuova <span lang="en">password</span></label>
+                    <input type="password" id="confirm_new_password" name="confirm_new_password" placeholder="Conferma nuova" autocomplete="new-password"/>
                 </div>
             </section>
 

@@ -1,7 +1,7 @@
 <?php
 if (empty($userInfo)) {
-    echo '<p>Effettuare il login per visualizzare le informazioni dell\'utente.</p>';
-    echo '<a href="../login.php">Vai alla pagina di login</a>';    //ricontrolla il percorso
+    echo '<p>Effettuare l\'accesso per visualizzare le informazioni dell\'utente.</p>';
+    echo '<a href="../login.php">Vai alla pagina di accesso</a>';    //ricontrolla il percorso
 } else {
     $template = file_get_contents(__DIR__ . '/../html/user/showEliminaUser.html');
 

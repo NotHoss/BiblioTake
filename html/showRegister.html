@@ -6,19 +6,19 @@
 <form class="form" action="register.php" method="post" data-validate="data-validate">
     <p>
         <label for="email"><span lang="en">Email</span></label>
-        <input type="email" id="email" name="email" value="[EMAIL_VALUE]" required="required" />
+        <input type="email" id="email" name="email" value="[EMAIL_VALUE]" required="required" autocomplete="email" />
     </p>
     <p>
         <label for="username"><span lang="en">Username</span></label>
-        <input type="text" id="username" name="username" value="[USERNAME_VALUE]" required="required" />
+        <input type="text" id="username" name="username" value="[USERNAME_VALUE]" required="required" autocomplete="username" />
     </p>
     <p>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required="required" />
+        <label for="password"><span lang="en">Password</span></label>
+        <input type="password" id="password" name="password" required="required" autocomplete="new-password" />
     </p>
     <p>
-        <label for="password-conferma">Conferma password</label>
-        <input type="password" id="password-conferma" name="password-conferma" required="required" data-match="password" />
+        <label for="password-conferma">Conferma <span lang="en">password</span></label>
+        <input type="password" id="password-conferma" name="password-conferma" required="required" data-match="password" autocomplete="new-password" />
     </p>
     <p>
         <button type="submit">Registrati</button>
