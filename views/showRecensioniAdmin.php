@@ -94,7 +94,7 @@ foreach ($recensioni as $recensione) {
         '[TESTO]' => htmlspecialchars((string) mb_substr($recensione['testo'], 0, 80), ENT_QUOTES, 'UTF-8') . '...',
         '[DATA]' => formatDateForAdminDisplay($recensione['data']),
         '[STATO]' => $recensione['censura'] ? 'Censurata' : 'Visibile',
-        '[AZIONI]' => '<div class="table-actions-list"><form class="table-action-form" action="' . $returnUrlSafe . '" method="post"><input type="hidden" name="recensione_id" value="' . $id . '" /><input type="hidden" name="return" value="' . $returnUrlSafe . '" /><button class="table-action table-action-primary" type="submit" name="azione" value="censura" aria-label="' . $censuraAriaLabel . '">' . $censuraLabel . '</button></form><a class="table-action" href="elimina-recensione.php?id=' . $id . '&return=' . $returnParam . '" aria-label="' . $eliminaAriaLabel . '">Elimina</a></div>',
+        '[AZIONI]' => '<div class="table-actions-list"><form class="table-action-form" action="' . $returnUrlSafe . '" method="post"><input type="hidden" name="recensione_id" value="' . $id . '" /><input type="hidden" name="return" value="' . $returnUrlSafe . '" /><button class="table-action table-action-primary" type="submit" name="azione" value="censura" aria-label="' . $censuraAriaLabel . '">' . $censuraLabel . '</button></form><a class="table-action" href="elimina-recensione.php?id=' . $id . '&amp;return=' . $returnParam . '" aria-label="' . $eliminaAriaLabel . '">Elimina</a></div>',
     ]) . "\n";
 }
 
