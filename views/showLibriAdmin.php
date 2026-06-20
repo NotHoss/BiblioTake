@@ -130,8 +130,8 @@ foreach ($libri as $libroRow) {
     $titoloLibro = htmlspecialchars((string) $libroRow['titolo'], ENT_QUOTES, 'UTF-8');
     $prestitiAttivi = (int) ($libroRow['prestiti_attivi'] ?? 0);
     $prestiti = 'Disponibile';
-    $azioni = '<div class="table-actions-list"><a class="table-action" href="modifica-libro.php?id=' . $id . '&return=' . $returnParam . '" aria-label="Modifica libro ' . $titoloLibro . '">Modifica</a>'
-        . '<a class="table-action" href="elimina-libro.php?id=' . $id . '&return=' . $returnParam . '" aria-label="Elimina libro ' . $titoloLibro . '">Elimina</a></div>';
+    $azioni = '<div class="table-actions-list"><a class="table-action" href="modifica-libro.php?id=' . $id . '&amp;return=' . $returnParam . '" aria-label="Modifica libro ' . $titoloLibro . '">Modifica</a>'
+        . '<a class="table-action" href="elimina-libro.php?id=' . $id . '&amp;return=' . $returnParam . '" aria-label="Elimina libro ' . $titoloLibro . '">Elimina</a></div>';
     if ($prestitiAttivi > 0) {
         $prestiti = 'Prestato';
             $prestitoId = (int) ($libroRow['prestito_id'] ?? 0);

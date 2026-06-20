@@ -98,8 +98,8 @@ if ($utenteId >= 0) {
             $statoPrestito = $statoRaw;
 
             // Link-based actions for modify/delete (dedicated pages)
-            $modificaLink = '<a class="table-action" href="modifica-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '&return=' . $returnParam . '" aria-label="Modifica ' . $prestitoContext . '">Modifica</a>';
-            $eliminaLink = '<a class="table-action" href="elimina-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '&return=' . $returnParam . '" aria-label="Elimina ' . $prestitoContext . '">Elimina</a>';
+            $modificaLink = '<a class="table-action" href="modifica-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '&amp;return=' . $returnParam . '" aria-label="Modifica ' . $prestitoContext . '">Modifica</a>';
+            $eliminaLink = '<a class="table-action" href="elimina-prestito.php?prestito_id=' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '&amp;return=' . $returnParam . '" aria-label="Elimina ' . $prestitoContext . '">Elimina</a>';
 
             // Actions that require POST remain as inline form (concludi/proroga)
             $postActions = '';
