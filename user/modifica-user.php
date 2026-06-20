@@ -4,7 +4,9 @@ require_once '../includes/resources.php';
 //require_once '../includes/functions/user_functions.php';
 requireRole('utente');
 
-$pageTitle = 'Profilo | BiblioTake';
+$pageTitle = 'Modifica profilo — BiblioTake';
+$pageDescription = 'Modifica i dati del tuo profilo BiblioTake: aggiorna nome utente, email, password e immagine del profilo in modo sicuro.';
+$pageKeywords = 'BiblioTake, modifica profilo, cambia password, aggiorna email, account';
 $currentPage = 'modifica-profilo';
 $errorMessage = '';
 $successMessage = '';

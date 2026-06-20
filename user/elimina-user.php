@@ -4,7 +4,9 @@ require_once '../includes/resources.php';
 //require_once '../includes/functions/user_functions.php';
 requireRole('utente');
 
-$pageTitle = 'Profilo | BiblioTake';
+$pageTitle = 'Elimina account — BiblioTake';
+$pageDescription = 'Elimina definitivamente il tuo account BiblioTake. Operazione irreversibile che rimuove i tuoi dati dalla biblioteca online.';
+$pageKeywords = 'BiblioTake, elimina account, cancella profilo, rimuovi utente';
 $currentPage = 'elimina-profilo';
 $errorMessage = '';
 $successMessage = '';

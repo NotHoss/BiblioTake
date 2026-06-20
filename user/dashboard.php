@@ -4,7 +4,9 @@ require_once __DIR__ . '/../includes/resources.php';
 //pagina protetta: solo utenti loggati con ruolo utente. coerente con le altre pagine in user/.
 requireRole('utente');
 
-$pageTitle = 'Profilo | BiblioTake';
+$pageTitle = 'Area personale — BiblioTake';
+$pageDescription = 'Area personale di BiblioTake: gestisci il tuo profilo, consulta i prestiti attivi e passati e le recensioni dei libri della biblioteca.';
+$pageKeywords = 'BiblioTake, area personale, profilo utente, prestiti, recensioni';
 $currentPage = 'dashboard';
 $errorMessage = '';
 $successMessage = '';
