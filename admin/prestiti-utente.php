@@ -16,6 +16,7 @@ $message = '';
 $errorMessage = '';
 
 $prestitoId = isset($_GET['prestito_id']) ? (int) $_GET['prestito_id'] : 0;
+$prestitoIdRichiesto = $prestitoId;
 $utenteId = isset($_GET['utente_id']) ? (int) $_GET['utente_id'] : (isset($_POST['utente_id']) ? (int) $_POST['utente_id'] : 0);
 $filtri = [
     'cerca' => isset($_GET['cerca']) ? trim((string) $_GET['cerca']) : '',
@@ -39,14 +40,14 @@ $res = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMessage === '' && isset($_POST['prestito_id'], $_POST['azione'])) {
     $res = ['message' => '', 'prestitoInModifica' => null, 'utenteId' => isset($_POST['utente_id']) ? (int) $_POST['utente_id'] : 0, 'cerca' => trim((string) ($_POST['cerca'] ?? ''))];
 
-    $prestitoId = (int) ($_POST['prestito_id'] ?? 0);
+    $prestitoIdAzione = (int) ($_POST['prestito_id'] ?? 0);
     $azione = (string) ($_POST['azione'] ?? '');
 
     try {
         if ($azione === 'concludi') {
-            $res['message'] = concludePrestito($conn, $prestitoId) ? 'Prestito concluso con successo.' : 'Operazione non riuscita.';
+            $res['message'] = concludePrestito($conn, $prestitoIdAzione) ? 'Prestito concluso con successo.' : 'Operazione non riuscita.';
         } elseif ($azione === 'proroga') {
-            $tmp = prorogaPrestito($conn, $prestitoId);
+            $tmp = prorogaPrestito($conn, $prestitoIdAzione);
             if (is_array($tmp)) {
                 $res['message'] = $tmp['message'] ?? 'Operazione non riuscita.';
             } elseif ($tmp === true) {
@@ -55,9 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                 $res['message'] = 'Operazione non riuscita.';
             }
         } elseif ($azione === 'elimina') {
-            $res['message'] = deletePrestitoWithReferences($conn, $prestitoId) ? 'Prestito eliminato con successo.' : 'Operazione non riuscita.';
+            $res['message'] = deletePrestitoWithReferences($conn, $prestitoIdAzione) ? 'Prestito eliminato con successo.' : 'Operazione non riuscita.';
         } elseif ($azione === 'modifica') {
-            $prestito = getPrestitoById($conn, $prestitoId);
+            $prestito = getPrestitoById($conn, $prestitoIdAzione);
             if (!$prestito) {
                 $res['message'] = 'Prestito non trovato.';
             } else {
@@ -103,9 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
 
             if (!$formValido) {
                 if ($res['message'] === '') $res['message'] = 'Dati non validi: controlla campi, stato e date.';
-                $res['prestitoInModifica'] = getPrestitoById($conn, $prestitoId);
+                $res['prestitoInModifica'] = getPrestitoById($conn, $prestitoIdAzione);
             } else {
-                if (updatePrestito($conn, $prestitoId, $dati)) {
+                if (updatePrestito($conn, $prestitoIdAzione, $dati)) {
                     $res['message'] = 'Prestito aggiornato con successo.';
                     $res['utenteId'] = $dati['utente_id'];
                     if (function_exists('aggiornaPrestitiScaduti')) {
@@ -113,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
                     }
                 } else {
                     $res['message'] = 'Aggiornamento non riuscito.';
-                    $res['prestitoInModifica'] = getPrestitoById($conn, $prestitoId);
+                    $res['prestitoInModifica'] = getPrestitoById($conn, $prestitoIdAzione);
                 }
             }
         }
@@ -130,14 +131,14 @@ $utenti = [];
 $prestiti = [];
 if ($conn instanceof mysqli && $errorMessage === '') {
     // If a specific prestito is requested, load its owner and later filter results
-    if ($prestitoId > 0) {
-        $prestitoInRequest = getPrestitoById($conn, $prestitoId);
+    if ($prestitoIdRichiesto > 0) {
+        $prestitoInRequest = getPrestitoById($conn, $prestitoIdRichiesto);
         if (!empty($prestitoInRequest) && !empty($prestitoInRequest['utente_id'])) {
             $utenteId = (int) $prestitoInRequest['utente_id'];
         }
         // If a specific prestito was requested, prefill the search box with its ID
         if (empty($filtri['cerca'])) {
-            $filtri['cerca'] = (string) $prestitoId;
+            $filtri['cerca'] = (string) $prestitoIdRichiesto;
         }
     }
 
@@ -147,9 +148,9 @@ if ($conn instanceof mysqli && $errorMessage === '') {
     $prestiti = getPrestitiAdminFiltrati($conn, $filtri, $pagina, $resultsPerPage);
 
     // If a specific prestito was requested, filter the list to only that prestito
-    if ($prestitoId > 0) {
-        $prestiti = array_values(array_filter($prestiti, function ($p) use ($prestitoId) {
-            return (int) ($p['id'] ?? 0) === $prestitoId;
+    if ($prestitoIdRichiesto > 0) {
+        $prestiti = array_values(array_filter($prestiti, function ($p) use ($prestitoIdRichiesto) {
+            return (int) ($p['id'] ?? 0) === $prestitoIdRichiesto;
         }));
         $totalPrestiti = count($prestiti);
         $totalPagine = 1;
