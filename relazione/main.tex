@@ -65,9 +65,9 @@
             \rowcolor{gray!30}
             Nome utente & Password\\
             \hline
-            \textit{[utente amministratore]} & \textit{[password]}\\
+            admin &admin\\
             \hline
-            \textit{[utente registrato]} & \textit{[password]}\\
+            user & user\\
             \hline
         \end{tabular}
     \end{table}
@@ -80,60 +80,88 @@
 \newpage
 
 \section{Introduzione}
-Questa sezione presenta il contesto del progetto, gli obiettivi generali del sito e il problema che il sistema intende risolvere.
+\nomeprogetto{} e' un sito web dedicato alla gestione digitale di una biblioteca. Il progetto nasce con l'obiettivo di rendere consultabile il catalogo dei libri anche a utenti non registrati e, allo stesso tempo, di offrire strumenti operativi per la gestione dei prestiti, delle recensioni e degli utenti.
 
-Descrivere brevemente:
-\begin{itemize}
-    \item il dominio applicativo;
-    \item il pubblico di riferimento;
-    \item gli obiettivi principali del sito;
-    \item i benefici attesi per utenti e amministratori.
-\end{itemize}
+Il sito distingue chiaramente le funzionalita pubbliche da quelle riservate. Il visitatore puo navigare il catalogo, cercare un libro, consultarne la scheda e leggere le informazioni generali della biblioteca. L'utente registrato puo invece richiedere prestiti, controllare lo stato dei propri libri, prorogare i prestiti quando consentito e gestire le proprie recensioni. L'amministratore dispone di un'area separata per il controllo dei contenuti e dei dati del sistema.
+
+La scelta del dominio applicativo ha portato a privilegiare la chiarezza delle informazioni, la tracciabilita delle operazioni e l'accessibilita. Le pagine sono state progettate per permettere una consultazione semplice del catalogo, mantenendo pero funzioni reali di gestione: disponibilita dei libri, storico dei prestiti, censura delle recensioni, disattivazione degli utenti e aggiornamento automatico dei prestiti scaduti.
 
 \newpage
 
 \section{Analisi dei requisiti}
-Questa sezione descrive il processo di raccolta dei requisiti e le necessita individuate per la realizzazione del sito.
+L'analisi dei requisiti e' stata condotta distinguendo i bisogni dei diversi profili di utilizzo e confrontando le funzionalita previste nei documenti di progetto con quelle effettivamente implementate nel codice.
 
 \subsection{Tipi di utenti}
-Descrivere le categorie di utenti previste dal sistema e le relative possibilita di interazione.
+Il sistema prevede tre categorie principali di utenti:
 
 \begin{itemize}
-    \item \textbf{Visitatore}: utente non autenticato che puo consultare le parti pubbliche del sito.
-    \item \textbf{Utente registrato}: utente autenticato con accesso alle funzionalita personali.
-    \item \textbf{Amministratore}: utente con privilegi di gestione dei contenuti e dei dati del sito.
+    \item \textbf{Visitatore}: utente non autenticato che puo accedere alle pagine pubbliche, consultare il catalogo, filtrare i libri, aprire le schede di dettaglio e raggiungere le pagine informative della biblioteca.
+    \item \textbf{Utente registrato}: utente autenticato con ruolo \texttt{utente}. Puo accedere alla propria area personale, richiedere prestiti, visualizzare prestiti attivi e conclusi, prorogare un prestito quando permesso, inserire o modificare recensioni e gestire i dati del proprio profilo.
+    \item \textbf{Amministratore}: utente autenticato con ruolo \texttt{admin}. Puo accedere alla dashboard amministrativa e gestire libri, prestiti, utenti, recensioni e informazioni generali della biblioteca.
 \end{itemize}
 
 \subsection{Funzionalita}
-Elencare le funzionalita principali offerte dal sito, distinguendo tra area pubblica, area utente e area amministrativa.
+Le funzionalita sono state organizzate in tre aree.
+
+\paragraph{Area pubblica.}
+L'area pubblica comprende la home page, il catalogo, le pagine di dettaglio dei libri, le informazioni sulla biblioteca, la pagina dei contatti e le pagine di errore. Nel catalogo e' possibile cercare per testo libero e filtrare per categoria, autore, anno, disponibilita e tag. I risultati sono paginati e ordinabili anche in base alla valutazione media.
+
+\paragraph{Area utente.}
+L'area utente permette la gestione del profilo personale e delle operazioni legate ai prestiti. La richiesta di prestito avviene dalla scheda del libro ed e' consentita solo se il libro e' disponibile e l'utente non possiede gia un prestito attivo sullo stesso libro. I prestiti hanno una durata iniziale di trenta giorni e possono essere prorogati solo negli ultimi sette giorni prima della scadenza, se risultano ancora attivi. Le recensioni possono essere inserite, modificate e rimosse dall'utente proprietario; la rimozione lato utente viene gestita tramite oscuramento della recensione, in modo da non mostrare piu il contenuto pubblico.
+
+\paragraph{Area amministrativa.}
+L'amministratore dispone di una dashboard con statistiche generali, dati della biblioteca e collegamenti alle sezioni operative. Puo gestire il catalogo dei libri, inclusi dati bibliografici, copertine e tag; puo modificare, concludere, prorogare o cancellare prestiti; puo censurare o eliminare recensioni; puo disattivare o riattivare utenti. La disattivazione amministrativa non e' permessa per gli amministratori e viene bloccata se l'utente ha prestiti attivi o in ritardo.
+
+\subsection{Requisiti non funzionali}
+Oltre alle funzionalita applicative, il progetto richiede una separazione chiara tra struttura, presentazione e comportamento. Il markup deve essere semantico, i fogli di stile devono essere separati dal contenuto e JavaScript deve essere usato come supporto progressivo, soprattutto per validazione e interazioni di interfaccia.
 
 \begin{itemize}
-    \item consultazione dei contenuti pubblici;
-    \item registrazione, autenticazione e gestione del profilo;
-    \item gestione delle funzionalita personali dell'utente;
-    \item strumenti di amministrazione;
-    \item ricerca, filtri e navigazione dei contenuti;
-    \item gestione degli errori e dei casi limite.
+    \item uso di HTML semantico e gerarchia corretta dei titoli;
+    \item fogli CSS dedicati a schermo, dispositivi mobili e stampa;
+    \item navigazione da tastiera con stati di focus visibili;
+    \item messaggi di errore associati ai campi dei form;
+    \item controllo dei permessi lato server per le pagine riservate;
+    \item uso di query preparate per l'accesso al database;
+    \item conservazione dell'integrita dei dati tramite vincoli e chiavi esterne.
 \end{itemize}
 
 \newpage
 
 \section{Progettazione}
-Questa sezione descrive le scelte progettuali adottate per struttura informativa, navigazione, organizzazione delle pagine e usabilita.
+La progettazione del sito segue una struttura modulare. Le pagine PHP principali hanno il ruolo di controller: caricano le risorse comuni, preparano i dati necessari alla vista, impostano titolo, descrizione, parole chiave e breadcrumb, quindi includono il template di intestazione, la vista specifica e il footer.
+
+Sono state inoltre definite convenzioni comuni per mantenere omogeneo il codice: nel database i nomi seguono lo stile \texttt{snake\_case} al singolare, nelle funzioni PHP viene usato prevalentemente \texttt{camelCase}, mentre file HTML, classi CSS e identificativi di pagina usano nomi descrittivi e coerenti. Le pagine impostano metadati specifici, come titolo, descrizione e parole chiave, cosi da rendere ogni vista piu riconoscibile anche fuori dal solo contenuto visibile.
 
 \subsection{Schema organizzativo}
-Descrivere la struttura generale del sito, le sezioni principali e il percorso di navigazione previsto per le diverse tipologie di utenti.
+Il progetto e' organizzato separando pagine pubbliche, area utente, area amministrativa, viste, template, funzioni PHP e risorse statiche. Il file \texttt{includes/resources.php} centralizza il caricamento della configurazione, della connessione al database e dei file di funzioni. Lo stesso file richiama anche l'aggiornamento automatico dei prestiti scaduti, in modo che lo stato dei prestiti sia mantenuto coerente durante l'uso del sito.
+
+Le viste si trovano nella cartella \texttt{views/}, mentre i frammenti HTML riutilizzabili sono nella cartella \texttt{html/}. Questa scelta permette di mantenere separata la logica PHP dalla struttura HTML, pur consentendo il rendering dinamico dei dati provenienti dal database.
+
+Le aree principali del sito sono:
+
+\begin{itemize}
+    \item pagine pubbliche: home, catalogo, dettaglio libro, biblioteca, contatti ed errori;
+    \item area utente: profilo, dashboard, prestiti, recensioni e gestione account;
+    \item area amministrativa: dashboard, libri, prestiti, utenti, recensioni e dati della biblioteca;
+    \item risorse comuni: template, funzioni PHP, fogli di stile, script JavaScript e immagini.
+\end{itemize}
 
 \subsection{Navigazione e contenuti principali}
-Descrivere come sono organizzati menu, breadcrumb, collegamenti interni, contenuti principali e azioni disponibili nelle pagine piu importanti.
+La navigazione principale viene generata dinamicamente dal template PHP. Il menu cambia in base allo stato di autenticazione e al ruolo dell'utente: un visitatore vede le sezioni pubbliche e i collegamenti ad accesso e registrazione, un utente registrato vede la propria area personale, mentre un amministratore accede alle funzioni gestionali.
+
+La pagina corrente viene indicata con l'attributo \texttt{aria-current} e non viene presentata come collegamento attivo a se stessa. Il sito utilizza inoltre breadcrumb contestuali, generati a partire dai dati impostati dalle singole pagine. Questo aiuta l'utente a comprendere la posizione corrente e facilita il ritorno alle sezioni superiori.
+
+Nel catalogo, la progettazione dei contenuti e' centrata sulla ricerca. Il form permette di combinare piu filtri e la paginazione evita pagine troppo lunghe. Nella scheda libro sono raccolte le informazioni bibliografiche, la disponibilita, i tag, la valutazione media e le recensioni non censurate. Le azioni riservate, come la richiesta di prestito o la modifica di una recensione, vengono mostrate solo quando l'utente possiede i permessi necessari.
 
 \subsection{Design responsive}
-Descrivere le scelte adottate per garantire una corretta fruizione del sito da desktop, tablet e dispositivi mobili.
+Il design responsive e' affidato ai fogli di stile \texttt{css/style.css} e \texttt{css/mini.css}. Il primo contiene le regole generali, mentre il secondo raccoglie gli adattamenti per schermi piccoli. La navigazione su dispositivi mobili e' supportata da un pulsante di apertura e chiusura del menu con attributi ARIA aggiornati tramite JavaScript.
+
+Le tabelle, le schede dei libri, i form e le griglie sono state pensate per rimanere leggibili anche in spazi ridotti. Nei punti in cui il contenuto tabellare sarebbe troppo ampio, il layout prevede contenitori scorrevoli o una disposizione piu compatta.
 
 \newpage
 
 \section{Organizzazione e suddivisione del lavoro}
-Indicare la suddivisione del lavoro tra i componenti del gruppo senza inserire dati personali nella versione preliminare.
+La suddivisione del lavoro potra essere completata con i dati del gruppo. In questa versione sono mantenuti solo segnaposto, cosi da non includere dati personali nella relazione preliminare.
 
 \begin{itemize}
     \item \textbf{Componente 1}: \textit{[attivita svolte]}.
@@ -147,59 +175,127 @@ Indicare la suddivisione del lavoro tra i componenti del gruppo senza inserire d
 \section{Implementazione front-end}
 
 \subsection{Struttura delle pagine HTML}
-Descrivere la struttura HTML comune delle pagine, l'uso di elementi semantici e la separazione tra template e contenuti dinamici.
+La struttura comune delle pagine e' definita dai template \texttt{html/template/header.html} e \texttt{html/template/footer.html}, compilati dai corrispondenti file PHP presenti in \texttt{views/template/}. Il documento usa lingua italiana tramite \texttt{lang="it"} e \texttt{xml:lang="it"}, include i metadati descrittivi e collega i fogli di stile per schermo e stampa.
 
 \begin{center}
     \texttt{<header> - <nav> - <main> - <footer>}
 \end{center}
 
+L'intestazione contiene il logo testuale del sito, il collegamento per saltare direttamente al contenuto principale e il menu di navigazione. Il contenuto specifico della pagina viene inserito nel \texttt{main}, mentre il footer contiene collegamenti di servizio, il ritorno a inizio pagina e i riferimenti alle validazioni.
+
+Nelle viste sono usati elementi semantici coerenti con il contenuto: liste per collezioni di elementi, tabelle con \texttt{caption} per dati amministrativi, form con etichette associate ai campi, immagini dei libri con testo alternativo e date rappresentate tramite elementi \texttt{time} quando opportuno.
+
 \subsection{Design e stile CSS}
-Descrivere il foglio di stile, le convenzioni grafiche, l'uso di layout responsive e le scelte relative a colori, spaziature, tabelle, form e componenti ricorrenti.
+La presentazione e' separata dal contenuto tramite tre fogli di stile principali:
+
+\begin{itemize}
+    \item \texttt{css/style.css}: regole generali, palette, tipografia, layout, componenti, form, tabelle e stati interattivi;
+    \item \texttt{css/mini.css}: adattamenti responsive per schermi di dimensione ridotta;
+    \item \texttt{css/print.css}: regole dedicate alla stampa.
+\end{itemize}
+
+La tipografia utilizza font senza grazie, con attenzione alla leggibilita e alla spaziatura. Il CSS definisce stati di focus ben visibili per collegamenti, pulsanti e campi dei form. Sono presenti classi di supporto per contenuti destinati solo agli screen reader, come \texttt{sr-only}, e regole per ridurre le animazioni quando l'utente ha impostato la preferenza \texttt{prefers-reduced-motion}.
+
+I componenti ricorrenti, come schede libro, messaggi di stato, form di ricerca, pulsanti e tabelle amministrative, seguono uno stile uniforme. Questo consente di mantenere coerenza tra l'area pubblica, l'area utente e l'area amministrativa.
 
 \subsection{JavaScript}
-Descrivere gli script utilizzati per interazioni, validazione lato client, menu responsive o altri comportamenti dinamici.
+JavaScript viene usato per migliorare l'esperienza senza sostituire i controlli lato server. Gli script principali sono:
+
+\begin{itemize}
+    \item \texttt{nav-toggle.js}, che gestisce l'apertura e chiusura del menu su schermi piccoli aggiornando \texttt{aria-expanded};
+    \item \texttt{back-to-top.js}, che supporta il collegamento di ritorno a inizio pagina;
+    \item \texttt{validation.js}, che applica validazione lato client ai form con attributo \texttt{data-validate};
+    \item \texttt{modifica-user.js}, usato per la gestione dinamica dei campi nella modifica del profilo;
+    \item \texttt{admin-book-category.js}, usato nell'area amministrativa per la gestione della categoria del libro.
+\end{itemize}
+
+Il file \texttt{validation.js} legge attributi HTML standard come \texttt{required}, \texttt{minlength}, \texttt{pattern}, \texttt{min} e \texttt{max}, oltre ad attributi personalizzati per confronti tra campi, valori gia esistenti e controlli sulle immagini. Gli errori vengono inseriti vicino ai campi, associati tramite attributi ARIA e annunciati con \texttt{role="alert"}.
 
 \subsection{Gestione della stampa}
-Descrivere le regole CSS dedicate alla stampa e quali contenuti vengono mantenuti o rimossi nella versione stampabile.
+La versione stampabile e' gestita dal foglio \texttt{css/print.css}. Le regole di stampa rimuovono elementi non necessari su carta, come menu, pulsanti, form, sidebar e componenti interattivi, mantenendo invece i contenuti principali. In questo modo le pagine informative e le schede consultabili risultano leggibili anche fuori dal contesto del browser.
 
 \newpage
 
 \section{Implementazione back-end}
 
 \subsection{PHP}
-Descrivere il ruolo di PHP nel rendering delle pagine, nella gestione delle sessioni, nella validazione lato server e nell'interazione con il database.
+Il back-end e' realizzato in PHP procedurale, con funzioni organizzate per responsabilita nella cartella \texttt{includes/functions/}. La configurazione generale si trova in \texttt{includes/config.php}, dove sono definiti parametri del database, nome del sito, limiti di paginazione, requisiti minimi per username e password, percorsi predefiniti per avatar e copertine e fuso orario.
+
+L'autenticazione e' gestita da \texttt{auth.php}. Il login accetta email o username, verifica che l'account sia attivo, controlla la password con \texttt{password\_verify} e rigenera l'identificativo di sessione dopo l'accesso. La registrazione salva password cifrate con \texttt{password\_hash} e assegna di default il ruolo \texttt{utente}. Le funzioni \texttt{requireLogin} e \texttt{requireRole} proteggono le pagine riservate e reindirizzano l'utente quando non ha i permessi necessari.
+
+Le pagine che ricevono azioni modificanti usano il metodo POST e verificano lato server i dati ricevuti. Per esempio, la richiesta di prestito controlla che il libro esista, sia disponibile e non sia gia prestato allo stesso utente. L'aggiornamento dei prestiti scaduti viene eseguito automaticamente attraverso \texttt{aggiornaPrestitiScaduti}, che porta a \texttt{in\_ritardo} i prestiti attivi con data di fine superata.
 
 \subsection{Database}
-Descrivere la struttura del database, le entita principali, le relazioni e i vincoli di integrita referenziale.
+Il database \texttt{bibliotake} e' definito nel file \texttt{database/db.sql}. Le entita principali sono:
+
+\begin{itemize}
+    \item \texttt{biblioteca}: contiene indirizzo, telefono, email, note e orari;
+    \item \texttt{utente}: contiene credenziali, foto profilo, stato di attivazione e ruolo;
+    \item \texttt{libro}: contiene dati bibliografici, descrizione, categoria e copertina;
+    \item \texttt{tag} e \texttt{libro\_tag}: modellano la relazione molti-a-molti tra libri e tag;
+    \item \texttt{prestito}: collega biblioteca, libro e utente, con data di inizio, data di fine e stato;
+    \item \texttt{recensione}: collega utente e libro, con valutazione, testo, data e stato di censura.
+\end{itemize}
+
+I prestiti usano lo stato \texttt{attivo}, \texttt{concluso} o \texttt{in\_ritardo}. Le recensioni hanno valutazione compresa tra 1 e 5 e possono essere oscurate tramite il campo \texttt{censura}. I vincoli di integrita referenziale preservano la coerenza dei dati: ad esempio, la cronologia dei prestiti resta collegata agli utenti e ai libri tramite chiavi esterne con eliminazione ristretta, mentre le recensioni sono eliminate a cascata quando viene rimosso il libro o l'utente collegato.
+
+Sono presenti anche vincoli di validita sui dati, come pagine ed edizione maggiori di zero, valutazioni comprese tra 1 e 5 e data di fine del prestito non precedente alla data di inizio. Alcuni indici supportano le ricerche piu frequenti, in particolare sui prestiti per libro e stato e sulle recensioni per libro.
 
 \subsection{Sicurezza e validazione}
-Descrivere le misure adottate per sanitizzazione dei dati, controllo dei permessi, gestione delle sessioni e protezione delle operazioni riservate.
+Le interazioni con il database avvengono tramite prepared statement di MySQLi. I dati mostrati nelle pagine vengono protetti con funzioni di escaping come \texttt{htmlspecialchars}, in modo da ridurre il rischio di inserimento di markup non desiderato.
+
+La gestione dei permessi e' centralizzata: le pagine utente richiedono autenticazione e ruolo \texttt{utente}, mentre le pagine di amministrazione richiedono ruolo \texttt{admin}. Anche i reindirizzamenti dopo il login vengono controllati per evitare destinazioni esterne non previste.
+
+La validazione e' duplicata tra client e server. Il client fornisce messaggi immediati e migliora l'usabilita dei form, ma il server ripete i controlli fondamentali su campi obbligatori, formato email, lunghezza dello username, robustezza della password, permessi e coerenza dello stato applicativo. Per le copertine dei libri, l'area amministrativa controlla tipo, dimensione e risoluzione dell'immagine prima di salvarla.
 
 \newpage
 
 \section{Accessibilita}
-Descrivere le scelte adottate per rendere il sito accessibile e conforme agli obiettivi del progetto.
+\nomeprogetto{} e' stato sviluppato con attenzione all'accessibilita, sia nella struttura HTML sia nei comportamenti interattivi. L'obiettivo e' permettere l'uso del sito anche tramite tastiera e tecnologie assistive, mantenendo chiara la relazione tra contenuti, controlli e feedback di errore.
 
 \subsection{Validazione HTML}
-Indicare gli strumenti usati per la validazione del markup e riportare eventuali avvisi motivati.
+Il markup e' generato a partire da template comuni e viste specifiche. Le pagine utilizzano elementi semantici come \texttt{header}, \texttt{nav}, \texttt{main} e \texttt{footer}; i form presentano etichette associate ai campi; le tabelle amministrative includono didascalie, rese disponibili agli screen reader anche quando non visibili graficamente.
+
+Nel footer sono presenti i riferimenti alle validazioni HTML e WCAG. L'intestazione imposta lingua, metadati descrittivi e viewport, mentre i contenuti principali mantengono una gerarchia di titoli coerente con la pagina.
 
 \subsection{Validazione CSS}
-Indicare gli strumenti usati per la validazione CSS e l'esito dei controlli.
+I fogli di stile sono separati in base alla destinazione: stile generale, responsive e stampa. Le regole evitano l'uso di presentazione direttamente nel markup e definiscono in modo centralizzato colori, spaziature, componenti e stati interattivi. La presenza di un foglio dedicato alla stampa consente inoltre una resa specifica per il supporto cartaceo senza duplicare il contenuto HTML.
 
 \subsection{Contrasti e leggibilita}
-Descrivere i controlli effettuati sui contrasti cromatici, sugli stati di focus e sulla leggibilita dei contenuti.
+La leggibilita e' supportata da font chiari, altezza di riga adeguata, spaziature coerenti e stati di focus visibili. I link, i pulsanti, i campi input, le select e le textarea ricevono un'evidenziazione quando sono raggiunti da tastiera. Sono inoltre presenti regole per la preferenza \texttt{prefers-reduced-motion}, cosi da limitare animazioni o transizioni per utenti sensibili al movimento.
 
 \subsection{Navigazione da tastiera e screen reader}
-Descrivere i test effettuati con tastiera e screen reader, specificando eventuali criticita risolte.
+La navigazione da tastiera e' facilitata da un collegamento iniziale per saltare direttamente al contenuto principale. La pagina corrente nel menu viene indicata con \texttt{aria-current}, mentre il menu mobile espone lo stato di apertura tramite \texttt{aria-expanded} e il riferimento al contenuto controllato tramite \texttt{aria-controls}.
+
+I messaggi di errore generati dalla validazione JavaScript sono collegati ai campi e annunciati tramite \texttt{role="alert"}. Quando un campo non e' valido viene impostato \texttt{aria-invalid}, e al submit il focus viene spostato sul primo errore. Questa scelta riduce il rischio che un utente da tastiera o con screen reader non percepisca l'errore.
 
 \newpage
 
 \section{Test e validazione}
-Descrivere i test funzionali effettuati sulle principali aree del sito e gli strumenti utilizzati per verificare correttezza, robustezza e compatibilita.
+La fase di verifica comprende controlli funzionali sulle principali aree del sito e controlli tecnici su markup, stile e accessibilita. In particolare, sono stati individuati i seguenti scenari di test:
+
+\begin{itemize}
+    \item navigazione pubblica tra home, catalogo, dettaglio libro e pagine informative;
+    \item ricerca nel catalogo con combinazione di filtri, ordinamento e paginazione;
+    \item registrazione, login, logout e protezione delle pagine riservate;
+    \item richiesta di prestito da parte di un utente registrato;
+    \item gestione di prestiti attivi, conclusi e in ritardo;
+    \item inserimento, modifica e oscuramento delle recensioni;
+    \item gestione amministrativa di libri, utenti, prestiti, recensioni e dati della biblioteca;
+    \item verifica dei messaggi di errore nei form lato client e lato server;
+    \item navigazione tramite tastiera e controllo degli stati di focus;
+    \item verifica della resa responsive e della versione stampabile.
+\end{itemize}
+
+Dal punto di vista dei dati, i test devono verificare anche il rispetto dei vincoli del database: impossibilita di creare prestiti incoerenti, controllo degli stati dei prestiti, mantenimento della cronologia e blocco delle operazioni amministrative non consentite.
 
 \newpage
 
 \section{Conclusioni}
-Riassumere il risultato del progetto, le principali scelte tecniche, i punti di forza e gli eventuali sviluppi futuri.
+\nomeprogetto{} realizza una piattaforma completa per la consultazione e la gestione di una biblioteca. Il progetto combina una parte pubblica orientata alla ricerca dei libri con aree riservate per utenti e amministratori, mantenendo una separazione chiara tra contenuto, presentazione, comportamento e logica server.
+
+Tra i punti di forza emergono la struttura modulare del codice PHP, l'uso di template comuni, la gestione dei ruoli, la modellazione dei prestiti e delle recensioni, l'attenzione all'accessibilita e la presenza di controlli sia lato client sia lato server. La base dati supporta le relazioni principali del dominio e conserva la coerenza delle operazioni tramite vincoli e chiavi esterne.
+
+Possibili sviluppi futuri includono il miglioramento della reportistica amministrativa, notifiche automatiche per prestiti in scadenza o in ritardo, una gestione piu avanzata delle prenotazioni e ulteriori test automatici sulle funzioni principali.
 
 \end{document}
