@@ -788,6 +788,10 @@
         padding: 0;
     }
 
+    .sidebar-links-list .username > p{
+        padding: 0 1em 0 1em;
+    }
+
     .sidebar-user .sidebar-link a{
         padding: 0.65rem 1rem;
     }
@@ -830,6 +834,14 @@
         display: block;
         margin-right: 0;
         margin-bottom: 0.3em;
+    }
+
+    .modifica-card .btn-secondary{
+        margin-right: 0.5em;
+    }
+
+    main .elimina-card.btn-elimina{
+        margin-left: 0.5em;
     }
 
     /*

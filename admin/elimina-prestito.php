@@ -7,7 +7,7 @@ $pageDescription = 'Elimina un prestito dal pannello amministrativo.';
 $pageKeywords = 'amministrazione, prestiti, eliminazione, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php', 'lang' => 'en'),
-    array('label' => 'Admin', 'href' => 'index.php', 'lang' => 'en'),
+    array('label_parts' => array(array('text' => 'Dashboard', 'lang' => 'en'), array('text' => ' amministrazione')), 'href' => 'index.php'),
     array('label' => 'Gestione prestiti', 'href' => 'prestiti-utente.php?utente_id=0'),
     array('label' => 'Elimina prestito', 'href' => ''),
 );

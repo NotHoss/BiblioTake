@@ -89,10 +89,30 @@ $breadcrumbHtml = '';
 if (!empty($breadcrumb) && is_array($breadcrumb)) {
     $breadcrumbItems = array();
     $lastIndex = count($breadcrumb) - 1;
+    $renderBreadcrumbLabel = function ($crumb) {
+        if (!empty($crumb['label_parts']) && is_array($crumb['label_parts'])) {
+            $parts = array();
+            foreach ($crumb['label_parts'] as $part) {
+                $text = htmlspecialchars((string) ($part['text'] ?? ''), ENT_QUOTES, 'UTF-8');
+                if ($text === '') {
+                    continue;
+                }
+                if (!empty($part['lang'])) {
+                    $lang = htmlspecialchars((string) $part['lang'], ENT_QUOTES, 'UTF-8');
+                    $parts[] = '<span lang="' . $lang . '">' . $text . '</span>';
+                } else {
+                    $parts[] = $text;
+                }
+            }
+            return implode('', $parts);
+        }
+
+        return isset($crumb['label']) ? htmlspecialchars($crumb['label'], ENT_QUOTES, 'UTF-8') : '';
+    };
 
     foreach ($breadcrumb as $index => $crumb) {
-        $label = isset($crumb['label']) ? htmlspecialchars($crumb['label'], ENT_QUOTES, 'UTF-8') : '';
-        $langAttr = isset($crumb['lang']) ? ' lang="' . htmlspecialchars($crumb['lang'], ENT_QUOTES, 'UTF-8') . '"' : '';
+        $label = $renderBreadcrumbLabel($crumb);
+        $langAttr = empty($crumb['label_parts']) && isset($crumb['lang']) ? ' lang="' . htmlspecialchars($crumb['lang'], ENT_QUOTES, 'UTF-8') . '"' : '';
         $href = isset($crumb['href']) ? trim($crumb['href']) : '';
 
         if ($index === $lastIndex || $href === '') {

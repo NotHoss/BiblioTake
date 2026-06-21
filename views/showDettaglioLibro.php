@@ -117,7 +117,7 @@ $template = str_replace('[ISBN]',                   $isbn,                  $tem
 //aggiungi recensione
 $linkRecensione = '';
 if (isset($_SESSION['user_id'])) {
-    $linkRecensione = '<a href="user/aggiungi-recensione.php?libro_id=' . (int) $libro['id'] . '">Aggiungi recensione</a>';
+    $linkRecensione = '<a class="btn-primary aggiungi-recensione" href="user/aggiungi-recensione.php?libro_id=' . (int) $libro['id'] . '">Aggiungi recensione</a>';
 }
 $template = str_replace('[LINK_RECENSIONE]', $linkRecensione, $template);
 $template = str_replace('[DISPONIBILITA]',          $disponibilitaTesto,    $template);

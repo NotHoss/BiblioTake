@@ -7,7 +7,7 @@ $pageDescription = 'Visualizza e gestisci i prestiti di uno specifico utente.';
 $pageKeywords = 'amministrazione, prestiti, utente, gestione, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php', 'lang' => 'en'),
-    array('label' => 'Admin', 'href' => 'index.php', 'lang' => 'en'),
+    array('label_parts' => array(array('text' => 'Dashboard', 'lang' => 'en'), array('text' => ' amministrazione')), 'href' => 'index.php'),
     array('label' => 'Gestione utenti', 'href' => 'utenti.php'),
     array('label' => 'Gestione prestiti', 'href' => ''),
 );
@@ -28,6 +28,9 @@ if ($filtri['cerca'] === '' && $utenteId > 0 && $conn instanceof mysqli) {
     if (!empty($utenteFiltro['Nome Utente'])) {
         $filtri['cerca'] = (string) $utenteFiltro['Nome Utente'];
     }
+}
+if ($utenteId > 0) {
+    $filtri['utente_id'] = $utenteId;
 }
 $resultsPerPage = 10;
 $totalPrestiti = 0;

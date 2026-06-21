@@ -30,9 +30,9 @@ foreach ($navItems as $item) {
 if(isset($_SESSION['user_id'])){
     if(isset($currentPage)){
         if ($currentPage === 'dashboard') {
-            $usernameHtml = '<li aria-current="page" class="sidebar-current-page username">' . htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8') . '</li>';
+            $usernameHtml = '<li aria-current="page" class="sidebar-current-page username"><p class="username">' . htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8') . '</p></li>';
         } else {
-            $usernameHtml = '<li class="sidebar-link username"><a href="dashboard.php">' . htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8') . '</a></li>';
+            $usernameHtml = '<li class="sidebar-link username"><a class="username" href="dashboard.php">' . htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8') . '</a></li>';
         }
         if ($currentPage === 'prestiti-attivi') {
             $prestitiAttiviHtml = '<li aria-current="page" class="sidebar-current-page">Prestiti Attivi</li>';
@@ -57,10 +57,30 @@ if(isset($_SESSION['user_id'])){
     if (!empty($breadcrumb) && is_array($breadcrumb)) {
         $breadcrumbItems = array();
         $lastIndex = count($breadcrumb) - 1;
+        $renderBreadcrumbLabel = function ($crumb) {
+            if (!empty($crumb['label_parts']) && is_array($crumb['label_parts'])) {
+                $parts = array();
+                foreach ($crumb['label_parts'] as $part) {
+                    $text = htmlspecialchars((string) ($part['text'] ?? ''), ENT_QUOTES, 'UTF-8');
+                    if ($text === '') {
+                        continue;
+                    }
+                    if (!empty($part['lang'])) {
+                        $lang = htmlspecialchars((string) $part['lang'], ENT_QUOTES, 'UTF-8');
+                        $parts[] = '<span lang="' . $lang . '">' . $text . '</span>';
+                    } else {
+                        $parts[] = $text;
+                    }
+                }
+                return implode('', $parts);
+            }
+
+            return isset($crumb['label']) ? htmlspecialchars($crumb['label'], ENT_QUOTES, 'UTF-8') : '';
+        };
 
         foreach ($breadcrumb as $index => $crumb) {
-            $label = isset($crumb['label']) ? htmlspecialchars($crumb['label'], ENT_QUOTES, 'UTF-8') : '';
-            $langAttr = isset($crumb['lang']) ? ' lang="' . htmlspecialchars($crumb['lang'], ENT_QUOTES, 'UTF-8') . '"' : '';
+            $label = $renderBreadcrumbLabel($crumb);
+            $langAttr = empty($crumb['label_parts']) && isset($crumb['lang']) ? ' lang="' . htmlspecialchars($crumb['lang'], ENT_QUOTES, 'UTF-8') . '"' : '';
             $href = isset($crumb['href']) ? trim($crumb['href']) : '';
 
             if ($index === $lastIndex || $href === '') {

@@ -7,7 +7,7 @@ $pageDescription = 'Aggiungi un nuovo libro al catalogo della biblioteca.';
 $pageKeywords = 'amministrazione, aggiungi libro, catalogo, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php', 'lang' => 'en'),
-    array('label' => 'Admin', 'href' => 'index.php', 'lang' => 'en'),
+    array('label_parts' => array(array('text' => 'Dashboard', 'lang' => 'en'), array('text' => ' amministrazione')), 'href' => 'index.php'),
     array('label' => 'Gestione libri', 'href' => 'libri.php'),
     array('label' => 'Aggiungi libro', 'href' => ''),
 );
