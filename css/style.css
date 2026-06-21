@@ -6,24 +6,26 @@
 
 :root{
     --bgcolor:#5B4B9E; /*colore background sito*/
-    --txtcolor:#FFFAF5; /*colore testo sopra background sito*/
-    --breadcolor:#9530DD; /*colore accento (link, tag, hover)*/
+    --lightbgcolor:#fff;
+    --txtcolor:#FFFAFF; /*colore testo sopra background sito*/
     --focuscolor:#000; /*colore focus su sfondo chiaro*/
-    --focuscolorlight:#FFFAF5; /*colore focus su sfondo scuro*/
+    --focuscolorlight:#FFFAFF; /*colore focus su sfondo scuro*/
     --breadbgcolor:#4E4090; /*colore background bottoni*/
     --txtlinkcolor:#000; /*colore link nel contenuto*/
-    --txtlinkvisited:#9530DD; /*colore link visitati nel contenuto*/
-    --linkcolor:#FFFAF5; /*colore link su sfondo scuro*/
+    --txtlinkvisited:#A147E1; /*colore link visitati nel contenuto*/
+    --linkcolor:#FFFAFF; /*colore link su sfondo scuro*/
     --linkvisited:#D4CEE8; /*colore link visitati su sfondo scuro*/
-    --hovercolor:#616294; /*colore hover navigazione*/
+    --hovercolor: #6F70A2; /*colore hover navigazione*/
     --bordercolor:#000; /*colore bordi principali*/
-    --eventablecolor:#EBFFFE; /*colore sfondo tabella eventi*/
-    --contentbgcolor:#FFFAF5; /*colore background contenuto*/
+    --eventablecolor:#F0FFFE; /*colore sfondo tabella eventi*/
+    --contentbgcolor:#FFFAFF; /*colore background contenuto*/
     --contenttxtcolor:#000; /*colore testo sopra background contenuto*/
     --shadowcolor:rgba(62, 62, 107, 0.18); /*colore ombra*/
-    --borderlightcolor:#e5e0ee; /*colore bordi leggeri*/
+    --borderlightcolor:#988AB7; /*colore bordi leggeri*/
     --deletecolor: #DC2626;       /* rosso accessibile - stato normale */
-    --deletebordercolor: #000;    /* bordo con contrasto 4.35:1 sul rosso */
+    --deletebordercolor: #000;    /* bordo con contrasto 4.34:1 sul rosso */
+    --errorcolor:#B00020;
+    --designcolor:#ece0f8;
 }
 
 html, body{ 
@@ -31,7 +33,6 @@ html, body{
     font-family: "Lexend", Roboto, sans-serif; /*font accessibili, Roboto c´è sui sistemi operativi invece Lexend no quindi lo importiamo da google*/
     line-height: 1.5em;
 }
-
 
 body{
     background-color: var(--contentbgcolor);
@@ -188,7 +189,8 @@ header nav a{
     text-decoration: none;
     padding: 0.4em 0.7em;
     border-radius: 0.3em;
-    transition: background 0.2s;
+    border-bottom: 2px solid transparent;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 header nav a:visited{
@@ -197,16 +199,19 @@ header nav a:visited{
 
 header nav a:hover,
 header nav a:focus{
-    background:var(--hovercolor);
+    background: var(--lightbgcolor);
+    color: var(--bgcolor);
+    border-bottom-color: var(--hovercolor);
     text-decoration: underline;
 }
 
 .current-page{
     font-weight: bold;
-    background: var(--hovercolor);
+    background: var(--lightbgcolor);
+    color: var(--bgcolor);
     padding: 0.4em 0.7em;
     border-radius: 0.3em;
-    border-bottom: 2px solid var(--txtcolor);
+    border-bottom: 2px solid var(--hovercolor);
 }
 
 /*
@@ -219,7 +224,7 @@ BREADCRUMB
     color: var(--txtcolor);
     font-size: 0.95em;
     padding: 0.5em 4%;
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1px solid var(--borderlightcolor);
 }
 
 .breadcrumb ul{
@@ -381,7 +386,7 @@ button.table-action{
     min-height: 2.5em;
     border: 1px solid var(--breadbgcolor);
     border-radius: 0.35em;
-    background: #fff;
+    background: var(--lightbgcolor);
     color: var(--txtlinkcolor);
     text-decoration: none;
     font-size: 0.9em;
@@ -442,7 +447,7 @@ button.table-action-primary{
     margin: 0;
     border-radius: 0.45rem;
     border: 2px solid var(--breadbgcolor);
-    background: #fff;
+    background: var(--lightbgcolor);
     color: var(--txtlinkcolor);
     text-decoration: none;
     font-weight: normal;
@@ -652,7 +657,7 @@ main > article > section > h3{
     color: var(--contenttxtcolor);
     margin-bottom: 0.8em;
     padding-bottom: 0.35em;
-    border-bottom: 2px solid var(--borderlightcolor);
+    border-bottom: 2px solid var(--designcolor);
 }
 
 /*
@@ -683,7 +688,7 @@ SEZIONE CATEGORIE (Homepage)
 #categorie a{
     display: block;
     padding: 0.4em 1.1em;
-    background: #fff;
+    background: var(--lightbgcolor);
     color: var(--txtlinkcolor);
     text-decoration: none;
     border-radius: 1.5em;
@@ -727,16 +732,16 @@ SEZIONE ULTIMI ARRIVI (Homepage)
 }
 
 #ultimi-arrivi article{
-    background: #fff;
+    background: var(--lightbgcolor);
     border: 1px solid var(--borderlightcolor);
     border-radius: 0.5em;
     padding: 1.3em;
-    box-shadow: 0 2px 8px rgba(62, 62, 107, 0.07);
+    box-shadow: 0 2px 8px var(--shadowcolor);
     transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
 }
 
 #ultimi-arrivi article:hover{
-    box-shadow: 0 6px 20px rgba(62, 62, 107, 0.14);
+    box-shadow: 0 6px 20px var(--shadowcolor);
     border-color: var(--breadbgcolor);
     transform: translateY(-2px);
 }
@@ -788,11 +793,11 @@ FORM
 .form select{
     width: 100%;
     padding: 0.55em 0.8em;
-    border: 2px solid #c5c5c5;
+    border: 2px solid var(--borderlightcolor);
     border-radius: 0.35em;
     font-size: 1em;
     font-family: inherit;
-    background: #fff;
+    background: var(--lightbgcolor);
     color: var(--contenttxtcolor);
     line-height: 1.5;
     min-height: 2.5em;
@@ -805,6 +810,12 @@ FORM
 .form textarea:focus,
 .form select:focus{
     border-color: var(--breadbgcolor);
+}
+
+#ricerca-rapida input:focus,
+#ricerca-rapida button:focus{
+    outline-color: var(--focuscolorlight);
+    border-color: var(--focuscolorlight);
 }
 
 .form input[type="checkbox"]{
@@ -862,13 +873,13 @@ VALIDAZIONE FORM (lato client JS)
 classi usate da js/validation.js:
 - .input-error sull'input/textarea/select quando ha un errore
 - .campo-errore sullo <span role="alert"> mostrato sotto l'input
-colore rosso #B00020 scelto per contrasto 8.2:1 su sfondo #FFFAF5 (WCAG AAA).
+colore rosso #B00020 scelto per contrasto 7.1:1 su sfondo #FFFAFF (WCAG AAA).
 */
 
 .form input.input-error,
 .form textarea.input-error,
 .form select.input-error{
-    border-color: #B00020;
+    border-color: var(--errorcolor);
     border-width: 2px;
     background-color: #FFF5F6;
 }
@@ -876,14 +887,14 @@ colore rosso #B00020 scelto per contrasto 8.2:1 su sfondo #FFFAF5 (WCAG AAA).
 .form input.input-error:focus,
 .form textarea.input-error:focus,
 .form select.input-error:focus{
-    border-color: #B00020;
-    outline: 2px solid #B00020;
+    border-color: var(--errorcolor);
+    outline: 2px solid var(--errorcolor);
     outline-offset: 2px;
 }
 
 .campo-errore{
     display: block;
-    color: #B00020;
+    color: var(--errorcolor);
     font-size: 0.9em;
     line-height: 1.4;
     margin-top: 0.3em;
@@ -904,7 +915,7 @@ colore rosso #B00020 scelto per contrasto 8.2:1 su sfondo #FFFAF5 (WCAG AAA).
     margin: 0 0 1rem;
     padding: 1rem;
     border: 0;
-    border-top: 1px solid #ece0f8;
+    border-top: 1px solid var(--designcolor);
 }
 
 .admin-form fieldset::after{
@@ -964,7 +975,7 @@ colore rosso #B00020 scelto per contrasto 8.2:1 su sfondo #FFFAF5 (WCAG AAA).
 
 .admin-dashboard-list > li,
 .admin-summary-list > li{
-    background: #fff;
+    background: var(--lightbgcolor);
     border: 1px solid var(--borderlightcolor);
     border-left: 0.35rem solid var(--breadbgcolor);
     border-radius: 0.45rem;
@@ -1001,7 +1012,7 @@ colore rosso #B00020 scelto per contrasto 8.2:1 su sfondo #FFFAF5 (WCAG AAA).
     padding: 0.65rem 1rem;
     border-radius: 0.45rem;
     border: 2px solid var(--breadbgcolor);
-    background: #fff;
+    background: var(--lightbgcolor);
     color: var(--txtlinkcolor);
     font-weight: normal;
     line-height: 1.2;
@@ -1029,13 +1040,13 @@ colore rosso #B00020 scelto per contrasto 8.2:1 su sfondo #FFFAF5 (WCAG AAA).
     border: 1px solid var(--borderlightcolor);
     border-left: 0.35rem solid var(--breadbgcolor);
     border-radius: 0.45rem;
-    background: #fff;
+    background: var(--lightbgcolor);
 }
 
 .generalita-list > li{
     margin: 0;
     padding: 0.45rem 0;
-    border-bottom: 1px solid #ece0f8;
+    border-bottom: 1px solid var(--designcolor);
 }
 
 .generalita-list > li.actions{
@@ -1051,7 +1062,7 @@ colore rosso #B00020 scelto per contrasto 8.2:1 su sfondo #FFFAF5 (WCAG AAA).
     padding: 0.65rem 1rem;
     border-radius: 0.45rem;
     border: 2px solid var(--breadbgcolor);
-    background: #fff;
+    background: var(--lightbgcolor);
     color: var(--txtlinkcolor);
     font-weight: normal;
     line-height: 1.2;
@@ -1098,7 +1109,7 @@ colore rosso #B00020 scelto per contrasto 8.2:1 su sfondo #FFFAF5 (WCAG AAA).
 .admin-form .field-help{
     display: block;
     margin-top: 0.35rem;
-    color: #444;
+    color: var(--contenttxtcolor);
     font-size: 0.9em;
     line-height: 1.4;
 }
@@ -1159,7 +1170,7 @@ AUTH (login / registrazione)
 .auth-wrapper{
     max-width: 26em;
     margin: 2em auto;
-    background: #fff;
+    background: var(--lightbgcolor);
     border: 1px solid var(--borderlightcolor);
     border-left: 0.35rem solid var(--breadbgcolor);
     border-radius: 0.45rem;
@@ -1298,9 +1309,9 @@ AREA UTENTE
 .btn-danger{
     display: inline-block;
     padding: 0.55em 1.2em;
-    background: #a82020;
-    color: #fff;
-    border: 2px solid #a82020;
+    background: var(--contenttxtcolor);
+    color: var(--lightbgcolor);
+    border: 2px solid var(--contenttxtcolor);
     border-radius: 0.35em;
     font-size: 1em;
     font-family: inherit;
@@ -1312,15 +1323,15 @@ AREA UTENTE
 
 .btn-danger:hover,
 .btn-danger:focus{
-    background: #8a1a1a;
-    border-color: #8a1a1a;
+    background: var(--contenttxtcolor);
+    border-color: var(--contenttxtcolor);
     transform: translateY(-1px);
 }
 
 .btn-secondary{
     display: inline-block;
     padding: 0.55em 1.2em;
-    background: #fff;
+    background: var(--lightbgcolor);
     color: var(--contenttxtcolor);
     border: 2px solid var(--borderlightcolor);
     border-radius: 0.35em;
@@ -1340,7 +1351,7 @@ AREA UTENTE
 .btn-secondary-link{
     display: inline-block;
     padding: 0.55em 1.2em;
-    background: #fff;
+    background: var(--lightbgcolor);
     color: var(--contenttxtcolor);
     border: 2px solid var(--borderlightcolor);
     border-radius: 0.35em;
@@ -1380,7 +1391,7 @@ AREA UTENTE
 }
 
 .confirm-modal-box{
-    background: #fff;
+    background: var(--lightbgcolor);
     border: 1px solid var(--borderlightcolor);
     border-radius: 0.45em;
     padding: 1.8em 2em;
@@ -1458,7 +1469,7 @@ FILTRI (aside)
     float: left;
     width: 24%;
     padding-right: 1.5em;
-    border-right: 2px solid #ece0f8;
+    border-right: 2px solid var(--designcolor);
 }
 
 /*Admin*/
@@ -1644,7 +1655,7 @@ FILTRI (aside)
     border-radius: 0.35em;
     font-size: 1em;
     font-family: inherit;
-    background: #fff;
+    background: var(--lightbgcolor);
     color: var(--contenttxtcolor);
     line-height: 1.5;
     min-height: 2.5em;
@@ -1685,7 +1696,7 @@ FILTRI (aside)
     padding: 0.65rem 1rem;
     border-radius: 0.45rem;
     border: 2px solid var(--deletecolor);
-    background: #fff;
+    background: var(--lightbgcolor);
     color: var(--txtlinkcolor);
     font-weight: normal;
     line-height: 1.2;
@@ -1778,7 +1789,7 @@ CARD LIBRO (catalogo + homepage)
 */
 
 .libro-card{
-    background: #fff;
+    background: var(--lightbgcolor);
     border: 1px solid var(--borderlightcolor);
     border-radius: 0.5em;
     padding: 1em;
@@ -1843,7 +1854,7 @@ nav[aria-label="Navigazione pagine risultati"]{
     text-align: center;
     margin: 1.5em 0 0.5em;
     padding-top: 1.2em;
-    border-top: 1px solid #e8e3f0;
+    border-top: 1px solid var(--designcolor);
 }
 
 nav[aria-label="Navigazione pagine risultati"] ul{
@@ -1865,7 +1876,7 @@ nav[aria-label="Navigazione pagine risultati"] a{
     border: 1px solid var(--breadbgcolor);
     border-radius: 0.35em;
     color: var(--bgcolor);
-    background: #fff;
+    background: var(--lightbgcolor);
     line-height: 1.5;
     transition: background 0.2s, color 0.2s;
 }
@@ -1881,11 +1892,25 @@ nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"]{
     display: inline-block;
     padding: 0.4em 0.85em;
     min-width: 2.5em;
+    min-height: 2.5em;
     background: var(--breadbgcolor);
     color: var(--txtcolor);
     border-radius: 0.35em;
-    font-weight: bold;
+    font-weight: normal;
     border: 1px solid var(--breadbgcolor);
+    line-height: 1.5;
+    text-align: center;
+}
+
+nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"] a,
+nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"] span{
+    display: inline;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
 }
 
 .page-content-user ~ nav[aria-label="Navigazione pagine risultati"] {
@@ -1970,7 +1995,7 @@ DESCRIZIONE, TAG, AZIONI
 #tag-libro a{
     display: block;
     padding: 0.3em 0.9em;
-    background: #fff;
+    background: var(--lightbgcolor);
     color: var(--contenttxtcolor);
     text-decoration: none;
     border-radius: 1.5em;
@@ -2022,7 +2047,7 @@ RECENSIONI LIBRO
 #recensioni-libro{
     margin-top: 2.5em;
     padding-top: 1.5em;
-    border-top: 2px solid #ece0f8;
+    border-top: 2px solid var(--designcolor);
 }
 
 #recensioni-libro > ul{
@@ -2034,7 +2059,7 @@ RECENSIONI LIBRO
 }
 
 .recensione-card{
-    background: #fff;
+    background: var(--lightbgcolor);
     border: 1px solid var(--borderlightcolor);
     border-radius: 0.5em;
     padding: 1.2em 1.4em;
@@ -2152,12 +2177,12 @@ FONDATORI
     object-fit: cover;
     border-radius: 50%;
     border: 3px solid var(--borderlightcolor);
-    box-shadow: 0 2px 8px rgba(62, 62, 107, 0.1);
+    box-shadow: 0 2px 8px var(--shadowcolor);
 }
 
 #fondatori p{
     font-weight: bold;
-    color: #3D3E6B;
+    color: var(--breadbgcolor);
     margin-top: 0.5em;
     font-size: 1.05em;
 }
@@ -2177,11 +2202,11 @@ CONTATTI
 }
 
 #contatti a{
-    color: var(--breadcolor);
+    color: var(--txtlinkcolor);
 }
 
-#contatti a:hover{
-    color: var(--breadbgcolor);
+#contatti a:visited{
+    color: var(--txtlinkvisited);
 }
 
 /*
@@ -2197,7 +2222,7 @@ OVERRIDE PARTE B (.public-area)
 
 .public-area > section > h3,
 .public-area > article > section > h3{
-    border-bottom-color: var(--breadbgcolor);
+    border-bottom-color: var(--designcolor);
 }
 
 #filtri-catalogo{
@@ -2330,7 +2355,7 @@ DASHBOARD
 }
 
 main .elimina a, main .elimina button, main .form-elimina button{
-    background-color: var(--deletecolor);
+    background-color: var(--contenttxtcolor);
     border: 1px solid var(--deletebordercolor);
     color: var(--txtcolor);
     text-decoration: none;
@@ -2345,13 +2370,13 @@ main .elimina a, main .elimina button, main .form-elimina button{
 main .elimina a:hover, main .elimina a:focus,
 main .elimina button:hover, main .elimina button:focus,
 main .form-elimina button:hover, main .form-elimina button:focus{
-    background-color: var(--deletecolor);
+    background-color: var(--contenttxtcolor);
     border-color: var(--deletebordercolor);
     color: var(--txtcolor);
 }
 
 main .elimina-card.btn-elimina a{
-    background-color: var(--deletecolor);
+    background-color: var(--contenttxtcolor);
     border: 1px solid var(--deletebordercolor);
     color: var(--txtcolor);
     text-decoration: none;
@@ -2364,7 +2389,7 @@ main .elimina-card.btn-elimina a{
 }
 
 main .elimina-card.btn-elimina a:hover, main .elimina-card.btn-elimina a:focus{
-    background-color: var(--deletecolor);
+    background-color: var(--contenttxtcolor);
     border-color: var(--deletebordercolor);
     color: var(--txtcolor);
 }
@@ -2435,7 +2460,7 @@ footer ul li{
     right: 1.5em;
     width: 3em;
     height: 3em;
-    border: 2px solid var(--bordercolor);
+    border: 2px solid var(--focuscolorlight);
     border-radius: 50%;
     background: var(--breadbgcolor);
     color: var(--txtcolor);
@@ -2449,8 +2474,10 @@ footer ul li{
     justify-content: center;
 }
 
-#back-to-top:hover {
+#back-to-top:hover,
+#back-to-top:focus {
     background: var(--txtcolor);
+    border-color: var(--bordercolor);
     color: var(--bgcolor);
 }
 
@@ -2464,7 +2491,7 @@ SIDEBAR UTENTE
     float: left;
     width: 24%;
     padding-right: 1.5em;
-    border-right: 2px solid #ece0f8;
+    border-right: 2px solid var(--designcolor);
     position: sticky;
     top: 0;
     height: 100vh;
@@ -2475,7 +2502,7 @@ SIDEBAR UTENTE
     font-weight: bold;
     background: var(--bgcolor);
     padding: 0.5em 0 0.5em 0.7em;
-    border-bottom: 2px solid #ece0f8;
+    border-bottom: 2px solid var(--designcolor);
     color: var(--txtcolor);
 }
 
@@ -2485,7 +2512,7 @@ SIDEBAR UTENTE
 }
 
 .sidebar-user li{
-    border-bottom: 2px solid #ece0f8;
+    border-bottom: 2px solid var(--designcolor);
 }
 
 .sidebar-user .sidebar-link a {

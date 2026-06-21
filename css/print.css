@@ -168,6 +168,61 @@
         page-break-inside: avoid;
     }
 
+    #catalogo-layout,
+    #risultati-catalogo {
+        display: block;
+        width: 100%;
+        margin-left: 0;
+        padding: 0;
+    }
+
+    #risultati-catalogo > h3 {
+        text-align: center;
+    }
+
+    #lista-libri {
+        display: block;
+        list-style-type: none;
+        margin: 0;
+        padding-left: 0;
+        text-align: center;
+    }
+
+    #lista-libri::after {
+        content: none;
+        display: none;
+    }
+
+    #lista-libri > li {
+        display: inline-block;
+        vertical-align: top;
+        float: none;
+        width: 47%;
+        margin: 0 1% 0.8em;
+        padding: 0;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        text-align: left;
+    }
+
+    .libro-card,
+    a.libro-card {
+        display: block;
+        min-height: 100%;
+        padding: 0.7em;
+        border: 1px solid var(--bordercolor);
+        background: var(--contentbgcolor);
+        color: var(--contenttxtcolor);
+    }
+
+    .libro-card img {
+        float: none;
+        width: auto;
+        max-width: 4.5em;
+        margin: 0 auto 0.5em;
+        border: 1px solid var(--bordercolor);
+    }
+
     .form,
     .content-form,
     .admin-form,
@@ -403,6 +458,16 @@
         background: var(--contentbgcolor);
     }
 
+    .admin-filter-panel,
+    .admin-results-panel {
+        width: 100%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
+        text-align: center;
+    }
+
     .admin-form fieldset {
         clear: both;
     }
@@ -524,15 +589,19 @@
 
     #gestione {
         overflow: visible;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
         color: var(--contenttxtcolor);
         background: var(--contentbgcolor);
     }
 
     #gestione table {
         min-width: 0;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 1em auto;
         font-size: 10pt;
+        text-align: left;
         background: var(--contentbgcolor);
     }
 
