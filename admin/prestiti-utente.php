@@ -29,6 +29,9 @@ if ($filtri['cerca'] === '' && $utenteId > 0 && $conn instanceof mysqli) {
         $filtri['cerca'] = (string) $utenteFiltro['Nome Utente'];
     }
 }
+if ($utenteId > 0) {
+    $filtri['utente_id'] = $utenteId;
+}
 $resultsPerPage = 10;
 $totalPrestiti = 0;
 $totalPagine = 1;

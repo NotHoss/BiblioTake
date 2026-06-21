@@ -594,7 +594,7 @@ function setUtenteAttivoAdmin($conn, $utenteId, $attivo) {
         return 'Utente non valido.';
     }
 
-    $stmt = $conn->prepare('SELECT id, username, ruolo, attivo FROM utente WHERE id = ? LIMIT 1');
+    $stmt = $conn->prepare('SELECT id, username, email, ruolo, attivo FROM utente WHERE id = ? LIMIT 1');
     $stmt->bind_param('i', $utenteId);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -606,6 +606,16 @@ function setUtenteAttivoAdmin($conn, $utenteId, $attivo) {
     }
     if (($utente['ruolo'] ?? '') === 'admin') {
         return 'Non e possibile modificare lo stato di un amministratore.';
+    }
+
+    $deletedEmailSuffix = '@deleted.local';
+    $email = strtolower(trim((string) ($utente['email'] ?? '')));
+    $isDeletedUser = (int) ($utente['attivo'] ?? 0) === 0
+        && strcasecmp(trim((string) ($utente['username'] ?? '')), 'Utente Eliminato') === 0
+        && substr($email, -strlen($deletedEmailSuffix)) === $deletedEmailSuffix;
+
+    if ($attivo && $isDeletedUser) {
+        return 'Impossibile riattivare un account eliminato.';
     }
 
     $nuovoStato = $attivo ? 1 : 0;
