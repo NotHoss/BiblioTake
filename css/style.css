@@ -2355,7 +2355,7 @@ DASHBOARD
 }
 
 main .elimina a, main .elimina button, main .form-elimina button{
-    background-color: var(--contenttxtcolor);
+    background-color: var(--deletecolor);
     border: 1px solid var(--deletebordercolor);
     color: var(--txtcolor);
     text-decoration: none;
@@ -2370,13 +2370,13 @@ main .elimina a, main .elimina button, main .form-elimina button{
 main .elimina a:hover, main .elimina a:focus,
 main .elimina button:hover, main .elimina button:focus,
 main .form-elimina button:hover, main .form-elimina button:focus{
-    background-color: var(--contenttxtcolor);
+    background-color: var(--deletecolor);
     border-color: var(--deletebordercolor);
     color: var(--txtcolor);
 }
 
 main .elimina-card.btn-elimina a{
-    background-color: var(--contenttxtcolor);
+    background-color: var(--deletecolor);
     border: 1px solid var(--deletebordercolor);
     color: var(--txtcolor);
     text-decoration: none;
@@ -2389,7 +2389,7 @@ main .elimina-card.btn-elimina a{
 }
 
 main .elimina-card.btn-elimina a:hover, main .elimina-card.btn-elimina a:focus{
-    background-color: var(--contenttxtcolor);
+    background-color: var(--deletecolor);
     border-color: var(--deletebordercolor);
     color: var(--txtcolor);
 }
