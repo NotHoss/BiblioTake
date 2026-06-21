@@ -21,7 +21,7 @@ $valutazione  = (int) ($recensione['valutazione'] ?? 0);
 //preseleziona l'opzione della valutazione corrente nel select
 $selected = array(1 => '', 2 => '', 3 => '', 4 => '', 5 => '');
 if (isset($selected[$valutazione])) {
-    $selected[$valutazione] = ' selected';
+    $selected[$valutazione] = ' selected="selected"';
 }
 
 //propaga il flag return nel form (campo hidden) cosi' il redirect post-submit sa dove tornare

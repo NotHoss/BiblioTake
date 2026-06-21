@@ -21,7 +21,7 @@ function renderSearchForm(array $config) {
         $min = array_key_exists('min', $field) ? ' min="' . htmlspecialchars((string) $field['min'], ENT_QUOTES, 'UTF-8') . '"' : '';
         $max = array_key_exists('max', $field) ? ' max="' . htmlspecialchars((string) $field['max'], ENT_QUOTES, 'UTF-8') . '"' : '';
         $step = array_key_exists('step', $field) ? ' step="' . htmlspecialchars((string) $field['step'], ENT_QUOTES, 'UTF-8') . '"' : '';
-        $checked = !empty($field['checked']) ? ' checked' : '';
+        $checked = !empty($field['checked']) ? ' checked="checked"' : '';
         $selected = (string) ($field['selected'] ?? $value);
 
         // handle optional group wrappers
@@ -41,7 +41,7 @@ function renderSearchForm(array $config) {
             foreach (($field['options'] ?? []) as $optionValue => $optionLabel) {
                 $optionValueSafe = htmlspecialchars((string) $optionValue, ENT_QUOTES, 'UTF-8');
                 $optionLabelSafe = htmlspecialchars((string) $optionLabel, ENT_QUOTES, 'UTF-8');
-                $optionSelected = ((string) $optionValue === $selected) ? ' selected' : '';
+                $optionSelected = ((string) $optionValue === $selected) ? ' selected="selected"' : '';
                 $fieldsHtml .= '<option value="' . $optionValueSafe . '"' . $optionSelected . '>' . $optionLabelSafe . '</option>';
             }
             $fieldsHtml .= '</select>';

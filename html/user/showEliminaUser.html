@@ -2,8 +2,8 @@
 
 <div class="page-content-user page-content-user-elimina">
     [MESSAGES]
-    <div class="confirm-delete">Vuoi eliminare il tuo account <p class="username"><strong> [USERNAME] </strong></p>?</div>
-    
+    <p class="confirm-delete">Vuoi eliminare il tuo account <span class="username"><strong>[USERNAME]</strong></span>?</p>
+
     <div class="delete-warning">
         <h3>Attenzione</h3>
         <p>L'eliminazione dell'account non comporta la rimozione definitiva dei dati dal database, ma la loro <strong>anonimizzazione</strong>.</p>
@@ -16,16 +16,16 @@
         <p>Le <strong>recensioni</strong> scritte rimarranno visibili associate a un nome anonimizzato, ad esempio "Utente 123 Eliminato".</p>
     </div>
 
-    <li class="user-avatar-item user-info">
+    <div class="user-avatar-item user-info">
         <h2 class="username" title="[USERNAME]">[USERNAME]</h2>
             <div>
                 <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="profile-image-small" />
             </div>
         <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="profile-image-big" />
-    </li>
+    </div>
     <div>
         <form method="post" action="elimina-user.php" class="form-elimina">
-            <p><input type="checkbox" name="confirm_delete" id="confirm_delete" required="required" /> <label for="confirm_delete">Confermo di voler eliminare il mio account</label></p />
+            <p><input type="checkbox" name="confirm_delete" id="confirm_delete" required="required" /> <label for="confirm_delete">Confermo di voler eliminare il mio account</label></p>
             <button class="elimina" type="submit">Elimina Account</button>
             <a href="dashboard.php" class="btn-secondary-link">Annulla</a>
         </form>

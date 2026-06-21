@@ -38,7 +38,7 @@ if (empty($prestitoInModifica)) {
 $statiPrestito = ['attivo', 'in_ritardo', 'concluso'];
 $statiOptions = '';
 foreach ($statiPrestito as $stato) {
-    $sel = ($prestitoInModifica['stato'] === $stato) ? ' selected' : '';
+    $sel = ($prestitoInModifica['stato'] === $stato) ? ' selected="selected"' : '';
     $label = [
         'attivo' => 'Attivo',
         'in_ritardo' => 'In ritardo',

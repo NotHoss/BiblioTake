@@ -51,7 +51,7 @@ $categoriaCorrente = (string) ($libro['categoria'] ?? '');
 $categoriaIsNew = $categoriaCorrente !== '' && !in_array($categoriaCorrente, array_map('strval', $categorie ?? []), true);
 $categoriaNuovaValue = $categoriaIsNew ? $categoriaCorrente : '';
 foreach (($categorie ?? []) as $cat) {
-    $selected = (!$categoriaIsNew && $libro['categoria'] === $cat ? 'selected' : '');
+    $selected = (!$categoriaIsNew && $libro['categoria'] === $cat ? 'selected="selected"' : '');
     $catHtml = htmlspecialchars($cat, ENT_QUOTES, 'UTF-8');
     $categorieOptions .= '<option value="' . $catHtml . '" ' . $selected . '>' . $catHtml . '</option>';
 }
@@ -68,7 +68,7 @@ if (!empty($libro['copertina']) && basename($libro['copertina']) !== basename(DE
     $canDeleteCover = true;
 }
     
-$disabledAttr = !$canDeleteCover ? 'disabled' : '';
+$disabledAttr = !$canDeleteCover ? 'disabled="disabled"' : '';
 $deleteCoverDescribedBy = '';
 $deleteCoverHelp = '';
 if (!$canDeleteCover) {
@@ -104,7 +104,7 @@ echo strtr($template, [
     '[DELETE_COPERTINA_HELP]' => $deleteCoverHelp,
     '[CATEGORIE_OPTIONS]' => $categorieOptions,
     '[CATEGORIA_NUOVA]' => htmlspecialchars($categoriaNuovaValue, ENT_QUOTES, 'UTF-8'),
-    '[CATEGORIA_NUOVA_SELECTED]' => $categoriaIsNew ? 'selected' : '',
+    '[CATEGORIA_NUOVA_SELECTED]' => $categoriaIsNew ? 'selected="selected"' : '',
     '[CURRENT_YEAR]' => date('Y'),
     '[RETURN_URL]' => $returnUrlSafe,
     '[ANNULLA_HREF]' => $returnUrlSafe,
