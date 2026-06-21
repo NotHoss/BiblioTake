@@ -38,7 +38,7 @@ $summary = '<ul class="admin-summary-list">'
 	. '<li><strong>Utente</strong>: ' . $nomeUtente . '</li>'
 	. '<li><strong>Libro</strong>: ' . htmlspecialchars((string) ($recensione['libro_titolo'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
 	. '<li><strong>Voto</strong>: ' . htmlspecialchars((string) ($recensione['valutazione'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
-	. '<li><strong>Data</strong>: ' . formatDateForAdminDisplay($recensione['data'] ?? '') . '</li>'
+	. '<li><strong>Data</strong>: ' . formatDateDisplay($recensione['data'] ?? '') . '</li>'
 	. '<li><strong>Stato</strong>: ' . (($recensione['censura'] ?? false) ? 'Censurata' : 'Visibile') . '</li>'
 	. '<li><strong>Testo</strong>: ' . htmlspecialchars(mb_substr((string) ($recensione['testo'] ?? ''), 0, 120), ENT_QUOTES, 'UTF-8') . '</li>'
 	. '</ul>';

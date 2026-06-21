@@ -68,7 +68,7 @@ function formatDateTimeForInput($dbDatetime) {
     return $dt->format('Y-m-d\\TH:i');
 }
 
-function formatDateForAdminDisplay($dbDatetime) {
+function formatDateDisplay($dbDatetime) {
     if (empty($dbDatetime)) {
         return '';
     }

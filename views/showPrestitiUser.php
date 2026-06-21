@@ -38,8 +38,8 @@ foreach($prestiti as $prestitoRow){
     $autore = htmlspecialchars((string) $prestitoRow['autore'], ENT_QUOTES, 'UTF-8');
     $anno = htmlspecialchars((string) $prestitoRow['anno'], ENT_QUOTES, 'UTF-8');
     $categoria = htmlspecialchars((string) $prestitoRow['categoria'], ENT_QUOTES, 'UTF-8');
-    $data_inizio = formatDateForAdminDisplay($prestitoRow['data_inizio']);
-    $data_fine = formatDateForAdminDisplay($prestitoRow['data_fine']);
+    $data_inizio = formatDateDisplay($prestitoRow['data_inizio']);
+    $data_fine = formatDateDisplay($prestitoRow['data_fine']);
     
     $statoRaw = (string) $prestitoRow['stato'];
     $statoLabel = match($statoRaw) {

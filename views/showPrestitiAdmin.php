@@ -91,8 +91,8 @@ if ($utenteId >= 0) {
                 'in_ritardo' => 'In ritardo',
                 'concluso' => 'Concluso',
             ][$statoRaw] ?? htmlspecialchars($statoRaw, ENT_QUOTES, 'UTF-8');
-            $inizio = formatDateForAdminDisplay($prestito['data_inizio']);
-            $fine = formatDateForAdminDisplay($prestito['data_fine']);
+            $inizio = formatDateDisplay($prestito['data_inizio']);
+            $fine = formatDateDisplay($prestito['data_fine']);
             $utenteIdSafe = htmlspecialchars((string) $utenteId, ENT_QUOTES, 'UTF-8');
             
             $statoPrestito = $statoRaw;
