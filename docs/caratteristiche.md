@@ -31,7 +31,7 @@
 ## Area Utente (accessibile dopo login)
 
 - **Dashboard utente**
-    - Riepilogo attività (recensioni scritte, prestiti attivi)
+    - Riepilogo attività (recensioni scritte, prestiti attivie)
 - **Gestione recensioni**
     - Creazione di nuove recensioni
     - Modifica e cancellazione delle recensioni esistenti
@@ -45,6 +45,7 @@
 
 - **Dashboard admin**
     - Panoramica generale: statistiche (libri tot, prenotati, non prenotati, nuovi iscritti, lista utenti, ecc.)
+    - Modifica generalità della biblioteca
     - Accesso rapido alle funzionalità di gestione
 - **Gestione libri**
     - Inserimento nuovi libri
@@ -54,7 +55,7 @@
     - Visualizzazione utenti registrati
     - Controllo dei prestiti effettuati dagli utenti
     - Controllo recensioni utenti (elimina, censura)
-    - Ban utente (opzionale) 
+    - Disattiva utente
 
 ## Ruoli utente
 
