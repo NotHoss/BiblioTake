@@ -84,7 +84,7 @@
 
 Il sito distingue chiaramente le funzionalita pubbliche da quelle riservate. Il visitatore puo navigare il catalogo, cercare un libro, consultarne la scheda e leggere le informazioni generali della biblioteca. L'utente registrato puo invece richiedere prestiti, controllare lo stato dei propri libri, prorogare i prestiti quando consentito e gestire le proprie recensioni. L'amministratore dispone di un'area separata per il controllo dei contenuti e dei dati del sistema.
 
-La scelta del dominio applicativo ha portato a privilegiare la chiarezza delle informazioni, la tracciabilita delle operazioni e l'accessibilita. Le pagine sono state progettate per permettere una consultazione semplice del catalogo, mantenendo pero funzioni reali di gestione: disponibilita dei libri, storico dei prestiti, censura delle recensioni, disattivazione degli utenti e aggiornamento automatico dei prestiti scaduti.
+La scelta del dominio applicativo ha portato a privilegiare la chiarezza delle informazioni, la tracciabilita delle operazioni e l'accessibilita. Le pagine sono state progettate per permettere una consultazione semplice del catalogo, mantenendo pero funzioni reali di gestione: disponibilita dei libri, storico dei prestiti, censura delle recensioni, disattivazione degli utenti, anonimizzazione degli account eliminati e aggiornamento automatico dei prestiti scaduti.
 
 \newpage
 
@@ -107,10 +107,10 @@ Le funzionalita sono state organizzate in tre aree.
 L'area pubblica comprende la home page, il catalogo, le pagine di dettaglio dei libri, le informazioni sulla biblioteca, la pagina dei contatti e le pagine di errore. Nel catalogo e' possibile cercare per testo libero e filtrare per categoria, autore, anno, disponibilita e tag. I risultati sono paginati e ordinabili anche in base alla valutazione media.
 
 \paragraph{Area utente.}
-L'area utente permette la gestione del profilo personale e delle operazioni legate ai prestiti. La richiesta di prestito avviene dalla scheda del libro ed e' consentita solo se il libro e' disponibile e l'utente non possiede gia un prestito attivo sullo stesso libro. I prestiti hanno una durata iniziale di trenta giorni e possono essere prorogati solo negli ultimi sette giorni prima della scadenza, se risultano ancora attivi. Le recensioni possono essere inserite, modificate e rimosse dall'utente proprietario; la rimozione lato utente viene gestita tramite oscuramento della recensione, in modo da non mostrare piu il contenuto pubblico.
+L'area utente permette la gestione del profilo personale e delle operazioni legate ai prestiti. La richiesta di prestito avviene dalla scheda del libro ed e' consentita solo se il libro e' disponibile e l'utente non possiede gia un prestito attivo sullo stesso libro. I prestiti hanno una durata iniziale di trenta giorni e possono essere prorogati solo negli ultimi sette giorni prima della scadenza, se risultano ancora attivi. Le recensioni possono essere inserite, modificate e rimosse dall'utente proprietario; la rimozione lato utente viene gestita tramite oscuramento della recensione, in modo da non mostrare piu il contenuto pubblico. L'eliminazione dell'account utente non rimuove fisicamente la riga dal database: se non sono presenti prestiti attivi o in ritardo, l'account viene disattivato e anonimizzato.
 
 \paragraph{Area amministrativa.}
-L'amministratore dispone di una dashboard con statistiche generali, dati della biblioteca e collegamenti alle sezioni operative. Puo gestire il catalogo dei libri, inclusi dati bibliografici, copertine e tag; puo modificare, concludere, prorogare o cancellare prestiti; puo censurare o eliminare recensioni; puo disattivare o riattivare utenti. La disattivazione amministrativa non e' permessa per gli amministratori e viene bloccata se l'utente ha prestiti attivi o in ritardo.
+L'amministratore dispone di una dashboard con statistiche generali, dati della biblioteca e collegamenti alle sezioni operative. Puo gestire il catalogo dei libri, inclusi dati bibliografici, copertine e tag; puo modificare, concludere, prorogare o cancellare prestiti; puo censurare o eliminare recensioni; puo disattivare o riattivare utenti. La disattivazione amministrativa non e' permessa per gli amministratori e viene bloccata se l'utente ha prestiti attivi o in ritardo. Gli account eliminati dagli utenti sono riconosciuti come account anonimizzati e non possono essere riattivati dall'amministrazione.
 
 \subsection{Requisiti non funzionali}
 Oltre alle funzionalita applicative, il progetto richiede una separazione chiara tra struttura, presentazione e comportamento. Il markup deve essere semantico, i fogli di stile devono essere separati dal contenuto e JavaScript deve essere usato come supporto progressivo, soprattutto per validazione e interazioni di interfaccia.
@@ -149,7 +149,7 @@ Le aree principali del sito sono:
 \subsection{Navigazione e contenuti principali}
 La navigazione principale viene generata dinamicamente dal template PHP. Il menu cambia in base allo stato di autenticazione e al ruolo dell'utente: un visitatore vede le sezioni pubbliche e i collegamenti ad accesso e registrazione, un utente registrato vede la propria area personale, mentre un amministratore accede alle funzioni gestionali.
 
-La pagina corrente viene indicata con l'attributo \texttt{aria-current} e non viene presentata come collegamento attivo a se stessa. Il sito utilizza inoltre breadcrumb contestuali, generati a partire dai dati impostati dalle singole pagine. Questo aiuta l'utente a comprendere la posizione corrente e facilita il ritorno alle sezioni superiori.
+La pagina corrente viene indicata con l'attributo \texttt{aria-current} e non viene presentata come collegamento attivo a se stessa. Il sito utilizza inoltre breadcrumb contestuali, generati a partire dai dati impostati dalle singole pagine. Questo aiuta l'utente a comprendere la posizione corrente e facilita il ritorno alle sezioni superiori. I breadcrumb supportano anche etichette composte con parti in lingua diversa: nell'area amministrativa, ad esempio, la voce \texttt{Dashboard amministrazione} marca \texttt{Dashboard} con \texttt{lang="en"} e lascia il resto in italiano.
 
 Nel catalogo, la progettazione dei contenuti e' centrata sulla ricerca. Il form permette di combinare piu filtri e la paginazione evita pagine troppo lunghe. Nella scheda libro sono raccolte le informazioni bibliografiche, la disponibilita, i tag, la valutazione media e le recensioni non censurate. Le azioni riservate, come la richiesta di prestito o la modifica di una recensione, vengono mostrate solo quando l'utente possiede i permessi necessari.
 
@@ -225,6 +225,8 @@ L'autenticazione e' gestita da \texttt{auth.php}. Il login accetta email o usern
 
 Le pagine che ricevono azioni modificanti usano il metodo POST e verificano lato server i dati ricevuti. Per esempio, la richiesta di prestito controlla che il libro esista, sia disponibile e non sia gia prestato allo stesso utente. L'aggiornamento dei prestiti scaduti viene eseguito automaticamente attraverso \texttt{aggiornaPrestitiScaduti}, che porta a \texttt{in\_ritardo} i prestiti attivi con data di fine superata.
 
+La gestione dell'eliminazione dell'account utente e' stata progettata come anonimizzazione. La funzione controlla prima che l'utente non abbia prestiti attivi o in ritardo; in caso positivo aggiorna email, username, password, avatar e stato dell'account. L'email viene sostituita con un valore tecnico nel dominio \texttt{@deleted.local}, lo username assume la forma \texttt{Utente 123 Eliminato} e l'account viene impostato come non attivo. In questo modo rimangono consultabili prestiti storici e recensioni, ma non vengono piu esposti i dati identificativi dell'utente.
+
 \subsection{Database}
 Il database \texttt{bibliotake} e' definito nel file \texttt{database/db.sql}. Le entita principali sono:
 
@@ -237,14 +239,14 @@ Il database \texttt{bibliotake} e' definito nel file \texttt{database/db.sql}. L
     \item \texttt{recensione}: collega utente e libro, con valutazione, testo, data e stato di censura.
 \end{itemize}
 
-I prestiti usano lo stato \texttt{attivo}, \texttt{concluso} o \texttt{in\_ritardo}. Le recensioni hanno valutazione compresa tra 1 e 5 e possono essere oscurate tramite il campo \texttt{censura}. I vincoli di integrita referenziale preservano la coerenza dei dati: ad esempio, la cronologia dei prestiti resta collegata agli utenti e ai libri tramite chiavi esterne con eliminazione ristretta, mentre le recensioni sono eliminate a cascata quando viene rimosso il libro o l'utente collegato.
+I prestiti usano lo stato \texttt{attivo}, \texttt{concluso} o \texttt{in\_ritardo}. Le recensioni hanno valutazione compresa tra 1 e 5 e possono essere oscurate tramite il campo \texttt{censura}. I vincoli di integrita referenziale preservano la coerenza dei dati: la cronologia dei prestiti resta collegata agli utenti e ai libri tramite chiavi esterne con eliminazione ristretta. Le recensioni sono collegate a utente e libro; nell'uso applicativo ordinario l'eliminazione dell'account non cancella tali recensioni, ma le mantiene associate al profilo anonimizzato.
 
 Sono presenti anche vincoli di validita sui dati, come pagine ed edizione maggiori di zero, valutazioni comprese tra 1 e 5 e data di fine del prestito non precedente alla data di inizio. Alcuni indici supportano le ricerche piu frequenti, in particolare sui prestiti per libro e stato e sulle recensioni per libro.
 
 \subsection{Sicurezza e validazione}
 Le interazioni con il database avvengono tramite prepared statement di MySQLi. I dati mostrati nelle pagine vengono protetti con funzioni di escaping come \texttt{htmlspecialchars}, in modo da ridurre il rischio di inserimento di markup non desiderato.
 
-La gestione dei permessi e' centralizzata: le pagine utente richiedono autenticazione e ruolo \texttt{utente}, mentre le pagine di amministrazione richiedono ruolo \texttt{admin}. Anche i reindirizzamenti dopo il login vengono controllati per evitare destinazioni esterne non previste.
+La gestione dei permessi e' centralizzata: le pagine utente richiedono autenticazione e ruolo \texttt{utente}, mentre le pagine di amministrazione richiedono ruolo \texttt{admin}. Anche i reindirizzamenti dopo il login vengono controllati per evitare destinazioni esterne non previste. Le operazioni amministrative sugli utenti sono protette anche lato server: un account anonimizzato con email \texttt{@deleted.local}, username nel formato \texttt{Utente 123 Eliminato} e stato non attivo non puo essere riattivato, anche se la richiesta venisse inviata manualmente.
 
 La validazione e' duplicata tra client e server. Il client fornisce messaggi immediati e migliora l'usabilita dei form, ma il server ripete i controlli fondamentali su campi obbligatori, formato email, lunghezza dello username, robustezza della password, permessi e coerenza dello stato applicativo. Per le copertine dei libri, l'area amministrativa controlla tipo, dimensione e risoluzione dell'immagine prima di salvarla.
 
@@ -257,6 +259,8 @@ La validazione e' duplicata tra client e server. Il client fornisce messaggi imm
 Il markup e' generato a partire da template comuni e viste specifiche. Le pagine utilizzano elementi semantici come \texttt{header}, \texttt{nav}, \texttt{main} e \texttt{footer}; i form presentano etichette associate ai campi; le tabelle amministrative includono didascalie, rese disponibili agli screen reader anche quando non visibili graficamente.
 
 Nel footer sono presenti i riferimenti alle validazioni HTML e WCAG. L'intestazione imposta lingua, metadati descrittivi e viewport, mentre i contenuti principali mantengono una gerarchia di titoli coerente con la pagina.
+
+Per i breadcrumb e' stato previsto il supporto a etichette composte. Questo permette di inserire marcature linguistiche puntuali, ad esempio su parole inglesi come \texttt{Dashboard}, senza applicare erroneamente la lingua inglese a tutta la voce del percorso.
 
 \subsection{Validazione CSS}
 I fogli di stile sono separati in base alla destinazione: stile generale, responsive e stampa. Le regole evitano l'uso di presentazione direttamente nel markup e definiscono in modo centralizzato colori, spaziature, componenti e stati interattivi. La presenza di un foglio dedicato alla stampa consente inoltre una resa specifica per il supporto cartaceo senza duplicare il contenuto HTML.
@@ -282,6 +286,7 @@ La fase di verifica comprende controlli funzionali sulle principali aree del sit
     \item gestione di prestiti attivi, conclusi e in ritardo;
     \item inserimento, modifica e oscuramento delle recensioni;
     \item gestione amministrativa di libri, utenti, prestiti, recensioni e dati della biblioteca;
+    \item eliminazione account utente con anonimizzazione dei dati e blocco della riattivazione amministrativa;
     \item verifica dei messaggi di errore nei form lato client e lato server;
     \item navigazione tramite tastiera e controllo degli stati di focus;
     \item verifica della resa responsive e della versione stampabile.
