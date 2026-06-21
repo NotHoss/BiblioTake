@@ -109,14 +109,13 @@ if (empty($libri)) {
         }
 
         $listaLibri .= '<li>';
-        $listaLibri .= '<article class="libro-card">';
+        $listaLibri .= '<a href="dettaglio-libro.php?id=' . $libroId . '" class="libro-card">';
         $listaLibri .= '<img src="' . $copertinaSrc . '" alt="' . $copertinAlt . '" />';
-        $listaLibri .= '<h4><a href="dettaglio-libro.php?id=' . $libroId . '">' . $titolo . '</a></h4>';
+        $listaLibri .= '<h4>' . $titolo . '</h4>';
         $listaLibri .= '<p><strong>Autore:</strong> ' . $autore . '</p>';
         $listaLibri .= '<p><strong>Categoria:</strong> ' . $categoria . '</p>';
         $listaLibri .= '<p><strong>Anno:</strong> <time datetime="' . $anno . '">' . $anno . '</time></p>';
         $listaLibri .= $valutazioneHtml;
-        $listaLibri .= '</article>';
         $listaLibri .= '</li>';
     }
     $listaLibri .= '</ul>';

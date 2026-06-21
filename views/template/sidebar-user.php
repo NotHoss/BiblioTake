@@ -30,9 +30,9 @@ foreach ($navItems as $item) {
 if(isset($_SESSION['user_id'])){
     if(isset($currentPage)){
         if ($currentPage === 'dashboard') {
-            $usernameHtml = '<li aria-current="page" class="sidebar-current-page username">' . htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8') . '</li>';
+            $usernameHtml = '<li aria-current="page" class="sidebar-current-page username"><p class="username">' . htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8') . '</p></li>';
         } else {
-            $usernameHtml = '<li class="sidebar-link username"><a href="dashboard.php">' . htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8') . '</a></li>';
+            $usernameHtml = '<li class="sidebar-link username"><a class="username" href="dashboard.php">' . htmlspecialchars($user['username'] ?? '', ENT_QUOTES, 'UTF-8') . '</a></li>';
         }
         if ($currentPage === 'prestiti-attivi') {
             $prestitiAttiviHtml = '<li aria-current="page" class="sidebar-current-page">Prestiti Attivi</li>';

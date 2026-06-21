@@ -1269,7 +1269,7 @@ AREA UTENTE
     display: inline-block;
     padding: 0.55em 1.2em;
     background: var(--breadbgcolor);
-    color: var(--txtcolor);
+    color: var(--txtcolor) !important;
     text-decoration: none;
     border: 2px solid var(--breadbgcolor);
     border-radius: 0.35em;
@@ -1784,6 +1784,13 @@ CARD LIBRO (catalogo + homepage)
     padding: 1em;
     box-shadow: 0 2px 8px var(--shadowcolor);
     overflow: hidden;
+    transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
+}
+
+a.libro-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
     transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
 }
 
@@ -2343,12 +2350,12 @@ main .form-elimina button:hover, main .form-elimina button:focus{
     color: var(--txtcolor);
 }
 
-main .elimina-card a{
+main .elimina-card.btn-elimina a{
     background-color: var(--deletecolor);
     border: 1px solid var(--deletebordercolor);
     color: var(--txtcolor);
     text-decoration: none;
-    padding: 0.2em 0.5em 0.2em 0.5em;
+    padding: 0.5em 1em 0.5em 1em;
     border-radius: 0.35em;
     font-family: inherit;
     font-size: inherit;
@@ -2356,7 +2363,7 @@ main .elimina-card a{
     transition: background-color 0.2s;
 }
 
-main .elimina-card a:hover, main .elimina-card a:focus{
+main .elimina-card.btn-elimina a:hover, main .elimina-card.btn-elimina a:focus{
     background-color: var(--deletecolor);
     border-color: var(--deletebordercolor);
     color: var(--txtcolor);
@@ -2505,6 +2512,10 @@ SIDEBAR UTENTE
     text-decoration: underline;
 }
 
+.sidebar-links-list{
+    margin-top: 1em;
+}
+
 @media (prefers-reduced-motion: reduce) {
     header nav a,
     a.table-action,
@@ -2544,7 +2555,7 @@ SIDEBAR UTENTE
     main .elimina a,
     main .elimina button,
     main .form-elimina button,
-    main .elimina-card a {
+    main .elimina-card.btn-elimina a{
         transition: none;
     }
 
