@@ -2066,7 +2066,7 @@ RECENSIONI LIBRO
     background: var(--lightbgcolor);
     border: 1px solid var(--borderlightcolor);
     border-radius: 0.5em;
-    padding: 1.2em 1.4em;
+    padding: 1em 1.2em;
     box-shadow: 0 1px 5px var(--shadowcolor);;
 }
 
@@ -2100,11 +2100,19 @@ RECENSIONI LIBRO
     color: #555;
 }
 
-.recensione-card header .recensione-titolo{
+.recensione-card header .recensione-titolo {
     display: inline;
-    margin: 0 1.2em 0 0;
-    font-size: 0.9em;
+    margin: 0 1em 0 0;
     color: var(--contenttxtcolor);
+    text-align: left;
+}
+
+.recensione-card header h2.recensione-titolo {
+    font-size: 1.2em;
+}
+
+.recensione-card header h4.recensione-titolo {
+    font-size: 1em;
 }
 
 .recensione-card header p:first-child{

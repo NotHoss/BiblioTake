@@ -529,6 +529,18 @@
         margin-bottom: 0.2em;
     }
 
+    .card-autore, .card-date{
+        margin-left: auto;
+    }
+    
+    main .modifica-card.btn-secondary{
+        padding: 0.55em 0.5em;
+    }
+
+    main .elimina-card.btn-elimina a{
+        padding: 0.5em 0.5em 0.5em 0.5em;
+    }
+
     /*
     ==========================
     FONDATORI

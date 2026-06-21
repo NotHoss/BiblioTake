@@ -50,8 +50,8 @@ foreach ($recensioni as $rec) {
     $listaCard .= '<article class="recensione-card">';
     $listaCard .= '<header>';
     $listaCard .= '<h2 class="recensione-titolo"><a href="../dettaglio-libro.php?id=' . $libroId . '">' . $titolo . '</a></h2>';
-    $listaCard .= '<p>' . $autore . '</p>';
-    $listaCard .= '<p><time datetime="' . $dataAttr . '">' . $dataHtml . '</time></p>';
+    $listaCard .= '<p class="card-autore">' . $autore . '</p>';
+    $listaCard .= '<p class="card-date"><time datetime="' . $dataAttr . '">' . $dataHtml . '</time></p>';
     $listaCard .= '<p><strong>Valutazione: </strong>' . $valutazione . '</p>';
     $listaCard .= '<p class="modifica-card btn-secondary"><a href="modifica-recensione.php?id=' . $id . '">Modifica</a></p>';
     $listaCard .= '<p class="elimina-card btn-elimina"><a href="elimina-recensione.php?id=' . $id . '">Elimina</a></p>';
