@@ -82,8 +82,8 @@ if (empty($recensioni)) {
             && (int) $recensione['censura'] === 0) {
             $recensioneId = (int) $recensione['recensione_id'];
             $azioniAutore  = '<p class="recensione-azioni">';
-            $azioniAutore .= '<a href="user/modifica-recensione.php?id=' . $recensioneId . '&amp;return=libro">Modifica</a> ';
-            $azioniAutore .= '<a href="user/elimina-recensione.php?id=' . $recensioneId . '&amp;return=libro">Elimina</a>';
+            $azioniAutore .= '<p class="modifica-card btn-secondary"><a href="user/modifica-recensione.php?id=' . $recensioneId . '&amp;return=libro">Modifica</a></p>';
+            $azioniAutore .= '<p class="elimina-card btn-elimina"><a href="user/elimina-recensione.php?id=' . $recensioneId . '&amp;return=libro">Elimina</a></p>';
             $azioniAutore .= '</p>';
         }
 
