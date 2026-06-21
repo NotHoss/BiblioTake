@@ -1291,6 +1291,10 @@ AREA UTENTE
     transform: translateY(-1px);
 }
 
+.aggiungi-recensione{
+    margin-bottom: 0.5em;
+}
+
 .btn-danger{
     display: inline-block;
     padding: 0.55em 1.2em;
@@ -1690,6 +1694,47 @@ FILTRI (aside)
 
 .delete-error:empty {
     display: none;
+}
+
+.confirm-delete{
+    display: flex;
+}
+
+.confirm-delete .username{
+    padding: 0 0.5em;
+}
+
+.delete-warning {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.65rem 1rem;
+    border-radius: 0.45rem;
+    border: 2px solid var(--deletecolor);
+    background: #FFFBEB;
+    color: var(--txtlinkcolor);
+    font-weight: normal;
+    line-height: 1.2;
+    margin: 1.5em 0;
+}
+
+.delete-warning h3 {
+    margin: 0 0 0.5em 0;
+    color: var(--deletecolor);
+    font-size: 1.1em;
+}
+
+.delete-warning ul {
+    margin: 0.5em 0;
+    padding-left: 1.5em;
+}
+
+.delete-warning ul li {
+    margin-bottom: 0.3em;
+}
+
+.delete-warning p + p {
+    margin-top: 0.5em;
 }
 
 /*

@@ -141,7 +141,8 @@ INSERT INTO utente (id, email, username, password, foto_profilo, attivo, ruolo) 
 	(127, 'chiara.vitali@gmail.com', 'chiara.vitali', '$2y$10$CMi/jExR0PTN.f4K6TJwkejd3hL4yV03Gkyt/3v7ALhq7rWcHHO7y', 'images/avatar/avatar10.webp', TRUE, 'utente'),
 	(128, 'simone.costa@gmail.com', 'simone.costa', '$2y$10$CMi/jExR0PTN.f4K6TJwkejd3hL4yV03Gkyt/3v7ALhq7rWcHHO7y', 'images/avatar/avatar4.webp', TRUE, 'utente'),
 	(129, 'laura.fontana@gmail.com', 'laura.fontana', '$2y$10$CMi/jExR0PTN.f4K6TJwkejd3hL4yV03Gkyt/3v7ALhq7rWcHHO7y', 'images/avatar/avatar6.webp', TRUE, 'utente'),
-	(130, 'diego.pellegrini@gmail.com', 'diego.pellegrini', '$2y$10$CMi/jExR0PTN.f4K6TJwkejd3hL4yV03Gkyt/3v7ALhq7rWcHHO7y', 'images/avatar/avatar1.webp', TRUE, 'utente');
+	(130, 'diego.pellegrini@gmail.com', 'diego.pellegrini', '$2y$10$CMi/jExR0PTN.f4K6TJwkejd3hL4yV03Gkyt/3v7ALhq7rWcHHO7y', 'images/avatar/avatar1.webp', TRUE, 'utente')
+	(131, 'Utente Eliminato 131', 'Utente Eliminato', 'Eliminato', 'images/avatar/default-avatar.webp', FALSE, 'utente');
 
 INSERT INTO libro (
 	id, codice_isbn, titolo, autore, casa_editrice, edizione, anno, lingua, descrizione, pagine, copertina, categoria

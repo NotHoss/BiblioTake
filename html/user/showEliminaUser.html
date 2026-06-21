@@ -2,7 +2,20 @@
 
 <div class="page-content-user page-content-user-elimina">
     [MESSAGES]
-    <p>Vuoi eliminare il tuo account <strong>[USERNAME]</strong>?</p>
+    <div class="confirm-delete">Vuoi eliminare il tuo account <p class="username"><strong> [USERNAME] </strong></p>?</div>
+    
+    <div class="delete-warning">
+        <h3>Attenzione</h3>
+        <p>L'eliminazione dell'account non comporta la rimozione definitiva dei dati dal database, ma la loro <strong>anonimizzazione</strong>.</p>
+        <p>Saranno eseguite le seguenti operazioni:</p>
+        <ul class="delete-warning-list">
+            <li>Email, username e password verranno sostituiti con valori generici</li>
+            <li>La foto profilo verrà ripristinata con l'avatar predefinito</li>
+            <li>L'account verrà disattivato</li>
+        </ul>
+        <p>Le <strong>recensioni</strong> scritte rimarranno visibili associate all'utente "Utente Eliminato".</p>
+    </div>
+
     <li class="user-avatar-item user-info">
         <h2 class="username" title="[USERNAME]">[USERNAME]</h2>
             <div>
