@@ -33,8 +33,8 @@ $summary = '<ul class="admin-summary-list">'
     . '<li><strong>Utente</strong>: ' . htmlspecialchars((string) ($prestito['username'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Libro</strong>: ' . htmlspecialchars((string) ($prestito['libro_titolo'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
     . '<li><strong>Stato</strong>: ' . htmlspecialchars((string) ($prestito['stato'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>'
-    . '<li><strong>Data inizio</strong>: ' . formatDateForAdminDisplay($prestito['data_inizio'] ?? '') . '</li>'
-    . '<li><strong>Data fine</strong>: ' . formatDateForAdminDisplay($prestito['data_fine'] ?? '') . '</li>'
+    . '<li><strong>Data inizio</strong>: ' . formatDateDisplay($prestito['data_inizio'] ?? '') . '</li>'
+    . '<li><strong>Data fine</strong>: ' . formatDateDisplay($prestito['data_fine'] ?? '') . '</li>'
     . '</ul>';
 
 echo strtr($template, [

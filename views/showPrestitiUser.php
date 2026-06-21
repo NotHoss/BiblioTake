@@ -38,9 +38,18 @@ foreach($prestiti as $prestitoRow){
     $autore = htmlspecialchars((string) $prestitoRow['autore'], ENT_QUOTES, 'UTF-8');
     $anno = htmlspecialchars((string) $prestitoRow['anno'], ENT_QUOTES, 'UTF-8');
     $categoria = htmlspecialchars((string) $prestitoRow['categoria'], ENT_QUOTES, 'UTF-8');
-    $data_inizio = htmlspecialchars((string) $prestitoRow['data_inizio'], ENT_QUOTES, 'UTF-8');
-    $data_fine = htmlspecialchars((string) $prestitoRow['data_fine'], ENT_QUOTES, 'UTF-8');
-    $stato = htmlspecialchars((string) $prestitoRow['stato'], ENT_QUOTES, 'UTF-8');
+    $data_inizio = formatDateDisplay($prestitoRow['data_inizio']);
+    $data_fine = formatDateDisplay($prestitoRow['data_fine']);
+    
+    $statoRaw = (string) $prestitoRow['stato'];
+    $statoLabel = match($statoRaw) {
+        'attivo'    => 'Attivo',
+        'in_ritardo'=> 'In ritardo',
+        'concluso'  => 'Concluso',
+        default     => ucfirst($statoRaw),
+    };
+    $stato = htmlspecialchars($statoLabel, ENT_QUOTES, 'UTF-8');
+
 
     $tableRows .= "<tr>
         <td data-label=\"Titolo\">{$titolo}</td>

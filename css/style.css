@@ -1280,7 +1280,7 @@ AREA UTENTE
     display: inline-block;
     padding: 0.55em 1.2em;
     background: var(--breadbgcolor);
-    color: var(--txtcolor) !important;
+    color: var(--txtcolor);
     text-decoration: none;
     border: 2px solid var(--breadbgcolor);
     border-radius: 0.35em;
@@ -1293,6 +1293,10 @@ AREA UTENTE
 }
 
 .btn-primary:visited{
+    color: var(--txtcolor);
+}
+
+.btn-primary:not(:visited){
     color: var(--txtcolor);
 }
 
@@ -2377,8 +2381,8 @@ main .elimina a, main .elimina button, main .form-elimina button{
 main .elimina a:hover, main .elimina a:focus,
 main .elimina button:hover, main .elimina button:focus,
 main .form-elimina button:hover, main .form-elimina button:focus{
-    background-color: var(--deletecolor);
-    border-color: var(--deletebordercolor);
+    background-color: var(--errorcolor);
+    border-color: var(--deletecolor);
     color: var(--txtcolor);
 }
 
