@@ -1,0 +1,205 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+
+\title{\textbf{Relazione Progetto di Tecnologie Web}}
+\date{}
+
+\newcommand{\nomeprogetto}{BiblioTake}
+\newcommand{\indirizzosito}{\textit{[indirizzo del sito]}}
+\newcommand{\emailreferente}{\textit{[email referente del gruppo]}}
+
+\newcommand{\componenti}{
+    & \textit{[Nome Cognome]} - \textit{[matricola]} - \textit{[email]}\\
+    & \textit{[Nome Cognome]} - \textit{[matricola]} - \textit{[email]}\\
+    & \textit{[Nome Cognome]} - \textit{[matricola]} - \textit{[email]}\\
+    & \textit{[Nome Cognome]} - \textit{[matricola]} - \textit{[email]}\\
+}
+
+\renewcommand{\contentsname}{Indice}
+
+\begin{document}
+
+\maketitle
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{img/logo_unipd.png}
+    \label{fig:logo_unipd}
+\end{figure}
+
+\vspace{0.5cm}
+
+\begin{center}
+    \begin{tabular}{r|l}
+        \textbf{Componenti} \componenti
+    \end{tabular}
+
+    \vspace{1cm}
+    \rule{\linewidth}{0.2mm}
+
+    \vspace{0.3cm}
+
+    \textbf{Informazioni sul sito}\\
+    \textbf{Nome progetto:} \nomeprogetto\\
+    \textbf{Indirizzo sito web:} \indirizzosito\\
+    \textbf{Email referente del gruppo:} \emailreferente
+
+    \vspace{0.3cm}
+    \rule{\linewidth}{0.2mm}
+
+    \vspace{0.5cm}
+    \textbf{Accessi predisposti al sito}
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|p{5cm}|p{5cm}|}
+            \hline
+            \rowcolor{gray!30}
+            Nome utente & Password\\
+            \hline
+            \textit{[utente amministratore]} & \textit{[password]}\\
+            \hline
+            \textit{[utente registrato]} & \textit{[password]}\\
+            \hline
+        \end{tabular}
+    \end{table}
+\end{center}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Introduzione}
+Questa sezione presenta il contesto del progetto, gli obiettivi generali del sito e il problema che il sistema intende risolvere.
+
+Descrivere brevemente:
+\begin{itemize}
+    \item il dominio applicativo;
+    \item il pubblico di riferimento;
+    \item gli obiettivi principali del sito;
+    \item i benefici attesi per utenti e amministratori.
+\end{itemize}
+
+\newpage
+
+\section{Analisi dei requisiti}
+Questa sezione descrive il processo di raccolta dei requisiti e le necessita individuate per la realizzazione del sito.
+
+\subsection{Tipi di utenti}
+Descrivere le categorie di utenti previste dal sistema e le relative possibilita di interazione.
+
+\begin{itemize}
+    \item \textbf{Visitatore}: utente non autenticato che puo consultare le parti pubbliche del sito.
+    \item \textbf{Utente registrato}: utente autenticato con accesso alle funzionalita personali.
+    \item \textbf{Amministratore}: utente con privilegi di gestione dei contenuti e dei dati del sito.
+\end{itemize}
+
+\subsection{Funzionalita}
+Elencare le funzionalita principali offerte dal sito, distinguendo tra area pubblica, area utente e area amministrativa.
+
+\begin{itemize}
+    \item consultazione dei contenuti pubblici;
+    \item registrazione, autenticazione e gestione del profilo;
+    \item gestione delle funzionalita personali dell'utente;
+    \item strumenti di amministrazione;
+    \item ricerca, filtri e navigazione dei contenuti;
+    \item gestione degli errori e dei casi limite.
+\end{itemize}
+
+\newpage
+
+\section{Progettazione}
+Questa sezione descrive le scelte progettuali adottate per struttura informativa, navigazione, organizzazione delle pagine e usabilita.
+
+\subsection{Schema organizzativo}
+Descrivere la struttura generale del sito, le sezioni principali e il percorso di navigazione previsto per le diverse tipologie di utenti.
+
+\subsection{Navigazione e contenuti principali}
+Descrivere come sono organizzati menu, breadcrumb, collegamenti interni, contenuti principali e azioni disponibili nelle pagine piu importanti.
+
+\subsection{Design responsive}
+Descrivere le scelte adottate per garantire una corretta fruizione del sito da desktop, tablet e dispositivi mobili.
+
+\newpage
+
+\section{Organizzazione e suddivisione del lavoro}
+Indicare la suddivisione del lavoro tra i componenti del gruppo senza inserire dati personali nella versione preliminare.
+
+\begin{itemize}
+    \item \textbf{Componente 1}: \textit{[attivita svolte]}.
+    \item \textbf{Componente 2}: \textit{[attivita svolte]}.
+    \item \textbf{Componente 3}: \textit{[attivita svolte]}.
+    \item \textbf{Componente 4}: \textit{[attivita svolte]}.
+\end{itemize}
+
+\newpage
+
+\section{Implementazione front-end}
+
+\subsection{Struttura delle pagine HTML}
+Descrivere la struttura HTML comune delle pagine, l'uso di elementi semantici e la separazione tra template e contenuti dinamici.
+
+\begin{center}
+    \texttt{<header> - <nav> - <main> - <footer>}
+\end{center}
+
+\subsection{Design e stile CSS}
+Descrivere il foglio di stile, le convenzioni grafiche, l'uso di layout responsive e le scelte relative a colori, spaziature, tabelle, form e componenti ricorrenti.
+
+\subsection{JavaScript}
+Descrivere gli script utilizzati per interazioni, validazione lato client, menu responsive o altri comportamenti dinamici.
+
+\subsection{Gestione della stampa}
+Descrivere le regole CSS dedicate alla stampa e quali contenuti vengono mantenuti o rimossi nella versione stampabile.
+
+\newpage
+
+\section{Implementazione back-end}
+
+\subsection{PHP}
+Descrivere il ruolo di PHP nel rendering delle pagine, nella gestione delle sessioni, nella validazione lato server e nell'interazione con il database.
+
+\subsection{Database}
+Descrivere la struttura del database, le entita principali, le relazioni e i vincoli di integrita referenziale.
+
+\subsection{Sicurezza e validazione}
+Descrivere le misure adottate per sanitizzazione dei dati, controllo dei permessi, gestione delle sessioni e protezione delle operazioni riservate.
+
+\newpage
+
+\section{Accessibilita}
+Descrivere le scelte adottate per rendere il sito accessibile e conforme agli obiettivi del progetto.
+
+\subsection{Validazione HTML}
+Indicare gli strumenti usati per la validazione del markup e riportare eventuali avvisi motivati.
+
+\subsection{Validazione CSS}
+Indicare gli strumenti usati per la validazione CSS e l'esito dei controlli.
+
+\subsection{Contrasti e leggibilita}
+Descrivere i controlli effettuati sui contrasti cromatici, sugli stati di focus e sulla leggibilita dei contenuti.
+
+\subsection{Navigazione da tastiera e screen reader}
+Descrivere i test effettuati con tastiera e screen reader, specificando eventuali criticita risolte.
+
+\newpage
+
+\section{Test e validazione}
+Descrivere i test funzionali effettuati sulle principali aree del sito e gli strumenti utilizzati per verificare correttezza, robustezza e compatibilita.
+
+\newpage
+
+\section{Conclusioni}
+Riassumere il risultato del progetto, le principali scelte tecniche, i punti di forza e gli eventuali sviluppi futuri.
+
+\end{document}

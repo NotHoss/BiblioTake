@@ -39,9 +39,9 @@ main          ← codice stabile, riceve solo merge da develop
 | `docs/convenzioni.md` | Convenzioni di naming per tutto il progetto |
 
 ## Login
-### Admin
+### admin
 - Email: admin@bibliotake.it
-- Password: adminadmin
-### User
+- Password: admin
+### user
 - Email: user@gmail.com
-- Password: useruser
+- Password: user
