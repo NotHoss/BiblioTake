@@ -343,7 +343,8 @@
         margin-bottom: 0.7em;
     }
 
-    .recensione-card header p {
+    .recensione-card header p,
+    .recensione-card header .recensione-titolo {
         display: inline;
         margin-right: 1em;
     }

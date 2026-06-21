@@ -50,7 +50,7 @@ $testo = htmlspecialchars((string) ($recensione['testo'] ?? ''), ENT_QUOTES, 'UT
 
 $cardRecensione = '<article class="recensione-card">';
 $cardRecensione .= '<header>';
-$cardRecensione .= '<p class="recensione-titolo"><a href="../dettaglio-libro.php?id=' . $libroId . '">' . $titolo . '</a></p>';
+$cardRecensione .= '<h2 class="recensione-titolo"><a href="../dettaglio-libro.php?id=' . $libroId . '">' . $titolo . '</a></h2>';
 $cardRecensione .= '<p>' . $autore . '</p>';
 $cardRecensione .= '<p><time datetime="' . $dataAttr . '">' . $dataHtml . '</time></p>';
 $cardRecensione .= '<p><strong>Valutazione: </strong>' . $valutazione . '</p>';

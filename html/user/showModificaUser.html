@@ -13,7 +13,7 @@
     <div>
         <h3>Modifica Profilo</h3>
         <form method="POST" action="modifica-user.php" id="modifica-profilo" class="modifica-form" data-validate="data-validate">
-            <section>
+            <div>
 
                 <img src="[IMMAGINE_PROFILO]" alt="Foto profilo di [USERNAME]" class="current-avatar" />
                 <!-- lista di immagini tra cui può scegliere -->
@@ -75,7 +75,7 @@
                     <label for="confirm_new_password">Conferma nuova <span lang="en">password</span></label>
                     <input type="password" id="confirm_new_password" name="confirm_new_password" placeholder="Conferma nuova" autocomplete="new-password"/>
                 </div>
-            </section>
+            </div>
 
             <input type="submit" class="form-button" name="salva-modifiche" value="Salva Modifiche"/>
             <a href="dashboard.php" class="btn-secondary-link">Annulla</a>

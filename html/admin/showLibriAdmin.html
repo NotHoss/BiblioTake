@@ -10,6 +10,8 @@
 </aside>
 
 <section class="admin-results-panel">
+    <h3 class="sr-only">Risultati gestione libri</h3>
+
     [RESULTS_INFO]
 
     [MESSAGES]
@@ -17,7 +19,7 @@
     [EMPTY_MESSAGE]
 
 <p id="libri-table-summary" class="sr-only">Questa tabella elenca i libri gestiti dall'amministrazione con <abbr title="International Standard Book Number" lang="en">ISBN</abbr>, titolo, autore, anno, categoria, stato del libro e azioni disponibili.</p>
-<section id="gestione" [TABLE_DISPLAY]>
+<div id="gestione" [TABLE_DISPLAY]>
             <table aria-describedby="libri-table-summary">
                 <caption>Elenco libri</caption>
                 <thead>
@@ -46,7 +48,7 @@
                     [TABLE_ROWS]
                 </tbody>
             </table>
-        </section>
+        </div>
 
     [PAGINATION]
 </section>

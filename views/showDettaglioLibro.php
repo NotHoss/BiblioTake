@@ -90,7 +90,7 @@ if (empty($recensioni)) {
         $listaRecensioni .= '<li>';
         $listaRecensioni .= '<article class="recensione-card">';
         $listaRecensioni .= '<header>';
-        $listaRecensioni .= '<p><strong>' . $username . '</strong></p>';
+        $listaRecensioni .= '<h4 class="recensione-titolo">Recensione di ' . $username . '</h4>';
         $listaRecensioni .= '<p><time datetime="' . $dataDatetime . '">' . $dataFormated . '</time></p>';
         $listaRecensioni .= '<p>Valutazione: ' . $valutazione . ' su 5</p>';
         $listaRecensioni .= $azioniAutore;

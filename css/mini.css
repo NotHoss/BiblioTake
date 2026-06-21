@@ -522,7 +522,8 @@
         padding: 1em;
     }
 
-    .recensione-card header p{
+    .recensione-card header p,
+    .recensione-card header .recensione-titolo{
         display: block;
         margin-right: 0;
         margin-bottom: 0.2em;

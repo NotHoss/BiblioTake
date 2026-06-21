@@ -116,6 +116,7 @@ if (empty($libri)) {
         $listaLibri .= '<p><strong>Categoria:</strong> ' . $categoria . '</p>';
         $listaLibri .= '<p><strong>Anno:</strong> <time datetime="' . $anno . '">' . $anno . '</time></p>';
         $listaLibri .= $valutazioneHtml;
+        $listaLibri .= '</a>';
         $listaLibri .= '</li>';
     }
     $listaLibri .= '</ul>';

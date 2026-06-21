@@ -2096,6 +2096,13 @@ RECENSIONI LIBRO
     color: #555;
 }
 
+.recensione-card header .recensione-titolo{
+    display: inline;
+    margin: 0 1.2em 0 0;
+    font-size: 0.9em;
+    color: var(--contenttxtcolor);
+}
+
 .recensione-card header p:first-child{
     color: var(--contenttxtcolor);
 }
