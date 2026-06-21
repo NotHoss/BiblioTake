@@ -7,7 +7,7 @@ $pageDescription = 'Visualizza e gestisci i prestiti di uno specifico utente.';
 $pageKeywords = 'amministrazione, prestiti, utente, gestione, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php', 'lang' => 'en'),
-    array('label' => 'Admin', 'href' => 'index.php', 'lang' => 'en'),
+    array('label_parts' => array(array('text' => 'Dashboard', 'lang' => 'en'), array('text' => ' amministrazione')), 'href' => 'index.php'),
     array('label' => 'Gestione utenti', 'href' => 'utenti.php'),
     array('label' => 'Gestione prestiti', 'href' => ''),
 );

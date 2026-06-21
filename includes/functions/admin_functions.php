@@ -610,8 +610,12 @@ function setUtenteAttivoAdmin($conn, $utenteId, $attivo) {
 
     $deletedEmailSuffix = '@deleted.local';
     $email = strtolower(trim((string) ($utente['email'] ?? '')));
+    $username = trim((string) ($utente['username'] ?? ''));
     $isDeletedUser = (int) ($utente['attivo'] ?? 0) === 0
-        && strcasecmp(trim((string) ($utente['username'] ?? '')), 'Utente Eliminato') === 0
+        && (
+            strcasecmp($username, 'Utente Eliminato') === 0
+            || preg_match('/^Utente\s+\d+\s+Eliminato$/i', $username)
+        )
         && substr($email, -strlen($deletedEmailSuffix)) === $deletedEmailSuffix;
 
     if ($attivo && $isDeletedUser) {

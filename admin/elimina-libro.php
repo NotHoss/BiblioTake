@@ -7,7 +7,7 @@ $pageDescription = 'Rimuovi un libro dal catalogo (operazione irreversibile).';
 $pageKeywords = 'amministrazione, elimina libro, catalogo, BiblioTake';
 $breadcrumb = array(
     array('label' => 'Home', 'href' => '../index.php', 'lang' => 'en'),
-    array('label' => 'Admin', 'href' => 'index.php', 'lang' => 'en'),
+    array('label_parts' => array(array('text' => 'Dashboard', 'lang' => 'en'), array('text' => ' amministrazione')), 'href' => 'index.php'),
     array('label' => 'Gestione libri', 'href' => 'libri.php'),
     array('label' => 'Elimina libro', 'href' => ''),
 );

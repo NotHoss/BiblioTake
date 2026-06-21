@@ -88,8 +88,12 @@ foreach ($utenti as $utente) {
     $prestitiAttivi = (int) ($utente['prestiti_attivi'] ?? 0);
     $utenteAttivo = (int) ($utente['attivo'] ?? 0) === 1;
     $deletedEmailSuffix = '@deleted.local';
+    $deletedUsername = trim($usernameRaw);
     $utenteEliminato = !$utenteAttivo
-        && strcasecmp(trim($usernameRaw), 'Utente Eliminato') === 0
+        && (
+            strcasecmp($deletedUsername, 'Utente Eliminato') === 0
+            || preg_match('/^Utente\s+\d+\s+Eliminato$/i', $deletedUsername)
+        )
         && substr(strtolower(trim($emailRaw)), -strlen($deletedEmailSuffix)) === $deletedEmailSuffix;
 
     if ((int) ($utente['prestiti_totali'] ?? 0) > 0) {

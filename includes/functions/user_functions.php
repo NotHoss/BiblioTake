@@ -130,7 +130,7 @@ function deleteUtente($conn, $userId) {
 
     $randomToken = bin2hex(random_bytes(16));
     $email = "deleted_{$randomToken}@deleted.local";
-    $username = "Utente Eliminato";
+    $username = "Utente {$userId} Eliminato";
     $password = password_hash(bin2hex(random_bytes(32)), PASSWORD_DEFAULT);
 
     $stmt = $conn->prepare('UPDATE utente SET email = ?, username = ?, password = ?, foto_profilo = "images/avatar/default-avatar.webp", attivo = 0 WHERE id = ?');
