@@ -93,6 +93,7 @@ if (empty($libri)) {
     $contenutoRisultati = '<p>Nessun libro corrisponde ai criteri di ricerca. <a href="catalogo.php">Mostra tutti i libri</a>.</p>';
 } else {
     $listaLibri = '<ul id="lista-libri">';
+    $primaCopertina = true;
     foreach ($libri as $libro) {
         $copertinaSrc = htmlspecialchars(!empty($libro['copertina']) ? $libro['copertina'] : 'images/place-holder.jpg', ENT_QUOTES, 'UTF-8');
         $copertinAlt  = htmlspecialchars('Copertina del libro ' . $libro['titolo'] . ' di ' . $libro['autore'], ENT_QUOTES, 'UTF-8');
@@ -110,7 +111,9 @@ if (empty($libri)) {
 
         $listaLibri .= '<li>';
         $listaLibri .= '<a href="dettaglio-libro.php?id=' . $libroId . '" class="libro-card">';
-        $listaLibri .= '<img src="' . $copertinaSrc . '" alt="' . $copertinAlt . '" />';
+        $fetchPriority = $primaCopertina ? ' fetchpriority="high"' : '';
+        $listaLibri .= '<img src="' . $copertinaSrc . '" alt="' . $copertinAlt . '" width="705" height="1125"' . $fetchPriority . ' />';
+        $primaCopertina = false;
         $listaLibri .= '<h4>' . $titolo . '</h4>';
         $listaLibri .= '<p><strong>Autore:</strong> ' . $autore . '</p>';
         $listaLibri .= '<p><strong>Categoria:</strong> ' . $categoria . '</p>';
