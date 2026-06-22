@@ -22,8 +22,9 @@
     --contenttxtcolor:#000; /*colore testo sopra background contenuto*/
     --shadowcolor:rgba(62, 62, 107, 0.18); /*colore ombra*/
     --borderlightcolor:#988AB7; /*colore bordi leggeri*/
-    --deletecolor: #DC2626;       /* rosso accessibile - stato normale */
-    --deletebordercolor: #000;    /* bordo con contrasto 4.34:1 sul rosso */
+    --deletecolor: #DC2626;       /* rosso accessibile - stato normale contrasto 4.68:1 su FFFAFF */
+    --deletecolorhover: #991B1B;  /* rosso accessibile - stato hover  contrasto 8.06:1 su FFFAFF*/
+    --deletebordercolor: #991B1B;    /* bordo con contrasto 4.34:1 sul rosso */
     --errorcolor:#B00020;
     --designcolor:#ece0f8;
 }
@@ -1056,31 +1057,27 @@ colore rosso #B00020 scelto per contrasto 7.1:1 su sfondo #FFFAFF (WCAG AAA).
     gap: 0.5em;
 }
 
-.generalita-list .actions a{
+.generalita-list .actions .btn-danger{
     display: inline-block;
     min-height: 2.75rem;
     padding: 0.65rem 1rem;
     border-radius: 0.45rem;
-    border: 2px solid var(--breadbgcolor);
-    background: var(--lightbgcolor);
-    color: var(--txtlinkcolor);
+    border: 2px solid var(--deletebordercolor);
+    background: var(--deletecolor);
+    color: var(--txtcolor);
     font-weight: normal;
     line-height: 1.2;
     text-decoration: none;
     transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
 }
 
-.generalita-list .actions a:visited{
-    color: var(--txtlinkcolor);
-}
-
-.generalita-list .actions a:hover,
-.generalita-list .actions a:focus{
-    background: var(--breadbgcolor);
+.generalita-list .actions .btn-danger:hover,
+.generalita-list .actions .btn-danger:focus{
+    background: var(--deletecolorhover);
     color: var(--txtcolor);
-    border-color: var(--breadbgcolor);
+    border-color: var(--deletecolor);
     transform: translateY(-1px);
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .admin-summary-list{
@@ -1371,7 +1368,8 @@ AREA UTENTE
 
 .btn-secondary-link:hover,
 .btn-secondary-link:focus{
-    background: var(--borderlightcolor);
+    background: var(--hovercolor);
+    color: var(--txtcolor);
     text-decoration: none;
 }
 
@@ -2391,7 +2389,7 @@ main .elimina a, main .elimina button, main .form-elimina button{
 main .elimina a:hover, main .elimina a:focus,
 main .elimina button:hover, main .elimina button:focus,
 main .form-elimina button:hover, main .form-elimina button:focus{
-    background-color: var(--errorcolor);
+    background-color: var(--deletecolorhover);
     border-color: var(--deletecolor);
     color: var(--txtcolor);
 }
@@ -2410,8 +2408,8 @@ main .elimina-card.btn-elimina a{
 }
 
 main .elimina-card.btn-elimina a:hover, main .elimina-card.btn-elimina a:focus{
-    background-color: var(--deletecolor);
-    border-color: var(--deletebordercolor);
+    background-color: var(--deletecolorhover);
+    border-color: var(--deletecolor);
     color: var(--txtcolor);
 }
 
