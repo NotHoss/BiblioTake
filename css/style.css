@@ -10,7 +10,12 @@
     --txtcolor:#FFFAFF; /*colore testo sopra background sito*/
     --focuscolor:#000; /*colore focus su sfondo chiaro*/
     --focuscolorlight:#FFFAFF; /*colore focus su sfondo scuro*/
-    --breadbgcolor:#4E4090; /*colore background bottoni*/
+    --buttonprimarycolor:#4E4090; /*viola scuro dei bottoni primari*/
+    --buttoncancelhovercolor:#6F70A2; /*hover dei link Annulla*/
+    --buttontransition:background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s; /* transizione dei link-bottone */
+    --primarybuttontransition:transform 0.2s; /* i bottoni viola cambiano solo posizione */
+    --primarybuttonhovermove:translateY(-1px);
+    --breadbgcolor:#4E4090; /*colore background breadcrumb e hover link-bottone*/
     --txtlinkcolor:#000; /*colore link nel contenuto*/
     --txtlinkvisited:#A147E1; /*colore link visitati nel contenuto*/
     --linkcolor:#FFFAFF; /*colore link su sfondo scuro*/
@@ -20,6 +25,7 @@
     --eventablecolor:#F0FFFE; /*colore sfondo tabella eventi*/
     --contentbgcolor:#FFFAFF; /*colore background contenuto*/
     --contenttxtcolor:#000; /*colore testo sopra background contenuto*/
+    --contenttxtlightcolor:#444;
     --shadowcolor:rgba(62, 62, 107, 0.18); /*colore ombra*/
     --borderlightcolor:#988AB7; /*colore bordi leggeri*/
     --deletecolor: #DC2626;       /* rosso accessibile - stato normale contrasto 4.68:1 su FFFAFF */
@@ -69,7 +75,7 @@ table caption{
     padding: 0;
     margin: -1px;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
 }
@@ -385,14 +391,14 @@ button.table-action{
     padding: 0.45em 0.45em;
     margin: 0 0.5em 0.5em 0;
     min-height: 2.5em;
-    border: 1px solid var(--breadbgcolor);
+    border: 1px solid var(--bordercolor);
     border-radius: 0.35em;
     background: var(--lightbgcolor);
     color: var(--txtlinkcolor);
     text-decoration: none;
     font-size: 0.9em;
     line-height: 1.2;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    transition: var(--buttontransition);
     min-width: 5.2rem;
     box-sizing: border-box;
 }
@@ -408,6 +414,8 @@ button.table-action:focus{
     background: var(--breadbgcolor);
     color: var(--txtcolor);
     border-color: var(--breadbgcolor);
+    text-decoration: underline;
+    transform: translateY(-1px);
 }
 
 button.table-action{
@@ -416,10 +424,20 @@ button.table-action{
 }
 
 button.table-action-primary{
-    background: var(--breadbgcolor);
+    background: var(--buttonprimarycolor);
     color: var(--txtcolor);
-    border-color: var(--breadbgcolor);
+    border-color: var(--buttonprimarycolor);
     font-weight: normal;
+    transition: var(--primarybuttontransition);
+}
+
+button.table-action-primary:hover,
+button.table-action-primary:focus{
+    background: var(--buttonprimarycolor);
+    color: var(--txtcolor);
+    border-color: var(--buttonprimarycolor);
+    transform: var(--primarybuttonhovermove);
+    text-decoration: none;
 }
 
 .admin-page-actions{
@@ -447,30 +465,41 @@ button.table-action-primary{
     padding: 0.5rem 1rem;
     margin: 0;
     border-radius: 0.45rem;
-    border: 2px solid var(--breadbgcolor);
+    border: 1px solid var(--bordercolor);
     background: var(--lightbgcolor);
     color: var(--txtlinkcolor);
     text-decoration: none;
     font-weight: normal;
     line-height: 1.2;
-    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+    transition: var(--buttontransition);
 }
 
-.admin-page-actions .admin-primary-link{
-    background: var(--breadbgcolor);
+.admin-page-actions .admin-primary-link,
+.admin-page-actions .admin-primary-link:visited{
+    background: var(--buttonprimarycolor);
     color: var(--txtcolor);
+    border-color: var(--buttonprimarycolor);
+    transition: var(--primarybuttontransition);
 }
 
 .admin-page-actions .button-link:hover,
 .admin-page-actions .button-link:focus,
 .admin-page-actions .admin-return-link:hover,
-.admin-page-actions .admin-return-link:focus,
-.admin-page-actions .admin-primary-link:hover,
-.admin-page-actions .admin-primary-link:focus{
+.admin-page-actions .admin-return-link:focus{
     background: var(--breadbgcolor);
     color: var(--txtcolor);
     border-color: var(--breadbgcolor);
     transform: translateY(-1px);
+    text-decoration: underline;
+}
+
+.admin-page-actions .admin-primary-link:hover,
+.admin-page-actions .admin-primary-link:focus{
+    background: var(--buttonprimarycolor);
+    color: var(--txtcolor);
+    border-color: var(--buttonprimarycolor);
+    transform: var(--primarybuttonhovermove);
+    text-decoration: none;
 }
 
 /* Container wrapper when `.table-action` is used as a wrapper div */
@@ -632,7 +661,7 @@ SEZIONE HERO (Homepage)
 #ricerca-rapida button{
     width: 100%;
     float: none;
-    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+    transition: var(--primarybuttontransition);
     min-height: 2.8em;
     padding: 0.55em 0.5em;
     margin-top: 0;
@@ -641,7 +670,10 @@ SEZIONE HERO (Homepage)
 #ricerca-rapida button:hover,
 #ricerca-rapida button:focus,
 .form button:hover,
-.form button:focus,
+.form button:focus{
+    transform: var(--primarybuttonhovermove);
+}
+
 .form a:hover,
 .form a:focus{
     transform: translateY(-1px);
@@ -693,9 +725,9 @@ SEZIONE CATEGORIE (Homepage)
     color: var(--txtlinkcolor);
     text-decoration: none;
     border-radius: 1.5em;
-    border: 1px solid var(--breadbgcolor) ;
+    border: 1px solid var(--bordercolor);
     font-size: 0.9em;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    transition: var(--buttontransition);
 }
 
 #categorie a:hover,
@@ -703,7 +735,8 @@ SEZIONE CATEGORIE (Homepage)
     background: var(--breadbgcolor);
     color: var(--txtcolor);
     border-color: var(--breadbgcolor);
-    box-shadow: 0 2px 8px var(--shadowcolor);
+    text-decoration: underline;
+    transform: translateY(-1px);
 }
 
 /*
@@ -831,9 +864,9 @@ FORM
 .form button{
     display: inline-block;
     padding: 0.55em 1.5em;
-    background: var(--breadbgcolor);
+    background: var(--buttonprimarycolor);
     color: var(--txtcolor);
-    border: 2px solid transparent;
+    border: 2px solid var(--buttonprimarycolor);
     border-radius: 0.35em;
     font-size: 1em;
     font-family: inherit;
@@ -841,7 +874,7 @@ FORM
     min-height: 2.5em;
     font-weight: normal;
     letter-spacing: 0.02em;
-    transition: background 0.2s;
+    transition: var(--primarybuttontransition);
 }
 
 .search-form-actions button,
@@ -863,8 +896,40 @@ FORM
 }
 
 #ricerca-rapida button:hover,
-.form button:hover{
-    background: var(--breadbgcolor);
+.form button:hover,
+#ricerca-rapida button:focus,
+.form button:focus{
+    background: var(--buttonprimarycolor);
+    color: var(--txtcolor);
+    border-color: var(--buttonprimarycolor);
+    transform: var(--primarybuttonhovermove);
+    text-decoration: none;
+}
+
+.admin-form fieldset > p > a{
+    display: inline-block;
+    padding: 0.55em 1.2em;
+    background: var(--lightbgcolor);
+    color: var(--contenttxtcolor);
+    border: 1px solid var(--bordercolor);
+    border-radius: 0.35em;
+    text-decoration: none;
+    min-height: 2.5em;
+    line-height: 1.5;
+    transition: var(--buttontransition);
+}
+
+.admin-form fieldset > p > a:visited{
+    color: var(--contenttxtcolor);
+}
+
+.admin-form fieldset > p > a:hover,
+.admin-form fieldset > p > a:focus{
+    background: var(--buttoncancelhovercolor);
+    color: var(--txtcolor);
+    border-color: var(--buttoncancelhovercolor);
+    transform: translateY(-1px);
+    text-decoration: underline;
 }
 
 /*
@@ -1012,13 +1077,13 @@ colore rosso #B00020 scelto per contrasto 7.1:1 su sfondo #FFFAFF (WCAG AAA).
     min-height: 2.75rem;
     padding: 0.65rem 1rem;
     border-radius: 0.45rem;
-    border: 2px solid var(--breadbgcolor);
+    border: 1px solid var(--bordercolor);
     background: var(--lightbgcolor);
     color: var(--txtlinkcolor);
     font-weight: normal;
     line-height: 1.2;
     text-decoration: none;
-    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+    transition: var(--buttontransition);
 }
 
 .admin-links-list a:visited{
@@ -1057,6 +1122,33 @@ colore rosso #B00020 scelto per contrasto 7.1:1 su sfondo #FFFAFF (WCAG AAA).
     gap: 0.5em;
 }
 
+.generalita-list .actions a:not(.btn-danger){
+    display: inline-block;
+    min-height: 2.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: 0.45rem;
+    border: 1px solid var(--bordercolor);
+    background: var(--lightbgcolor);
+    color: var(--contenttxtcolor);
+    font-weight: normal;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: var(--buttontransition);
+}
+
+.generalita-list .actions a:not(.btn-danger):visited{
+    color: var(--contenttxtcolor);
+}
+
+.generalita-list .actions a:not(.btn-danger):hover,
+.generalita-list .actions a:not(.btn-danger):focus{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
+    transform: translateY(-1px);
+    text-decoration: underline;
+}
+
 .generalita-list .actions .btn-danger{
     display: inline-block;
     min-height: 2.75rem;
@@ -1068,7 +1160,7 @@ colore rosso #B00020 scelto per contrasto 7.1:1 su sfondo #FFFAFF (WCAG AAA).
     font-weight: normal;
     line-height: 1.2;
     text-decoration: none;
-    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+    transition: var(--buttontransition);
 }
 
 .generalita-list .actions .btn-danger:hover,
@@ -1141,8 +1233,7 @@ colore rosso #B00020 scelto per contrasto 7.1:1 su sfondo #FFFAFF (WCAG AAA).
     padding: 0.35em 0;
 }
 
-.admin-form input[type="file"]::file-selector-button,
-.admin-form input[type="file"]::-webkit-file-upload-button{
+.admin-form input[type="file"]::file-selector-button{
     border: 0;
     border-right: 1px solid var(--breadbgcolor);
     background: var(--breadbgcolor);
@@ -1154,6 +1245,16 @@ colore rosso #B00020 scelto per contrasto 7.1:1 su sfondo #FFFAFF (WCAG AAA).
     cursor: pointer;
     font: inherit;
     font-weight: normal;
+    transition: var(--primarybuttontransition);
+}
+
+.admin-form input[type="file"]:hover::file-selector-button,
+.admin-form input[type="file"]:focus::file-selector-button,
+.admin-form input[type="file"]::file-selector-button:hover,
+.admin-form input[type="file"]::file-selector-button:focus{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    transform: var(--primarybuttonhovermove);
 }
 /*User*/
 
@@ -1233,21 +1334,23 @@ AREA UTENTE
     display: block;
 }
 
-/* Override: .generalita-list .actions a ha specificity alta, ripristino btn-primary */
+/* Override: .generalita-list .actions a ha specificity alta, ripristino link-bottone */
 
 .generalita-list .actions .btn-primary,
 .generalita-list .actions .btn-primary:visited{
-    background: var(--breadbgcolor);
-    color: var(--txtcolor);
-    border-color: var(--breadbgcolor);
+    background: var(--lightbgcolor);
+    color: var(--contenttxtcolor);
+    border-width: 1px;
+    border-color: var(--bordercolor);
 }
 
 .generalita-list .actions .btn-primary:hover,
 .generalita-list .actions .btn-primary:focus{
     background: var(--breadbgcolor);
     color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
     transform: translateY(-1px);
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 /* Edit form */
@@ -1276,17 +1379,17 @@ AREA UTENTE
 .btn-primary{
     display: inline-block;
     padding: 0.55em 1.2em;
-    background: var(--breadbgcolor);
+    background: var(--buttonprimarycolor);
     color: var(--txtcolor);
     text-decoration: none;
-    border: 2px solid var(--breadbgcolor);
+    border: 2px solid var(--buttonprimarycolor);
     border-radius: 0.35em;
     font-size: 1em;
     font-family: inherit;
     cursor: pointer;
     min-height: 2.5em;
     line-height: 1.5;
-    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    transition: var(--primarybuttontransition);
 }
 
 .btn-primary:visited{
@@ -1299,8 +1402,30 @@ AREA UTENTE
 
 .btn-primary:hover,
 .btn-primary:focus{
-    box-shadow: 0 3px 10px var(--shadowcolor);
-    transform: translateY(-1px);
+    background: var(--buttonprimarycolor);
+    color: var(--txtcolor);
+    border-color: var(--buttonprimarycolor);
+    transform: var(--primarybuttonhovermove);
+    text-decoration: none;
+}
+
+a.btn-primary,
+a.btn-primary:visited,
+a.btn-primary:not(:visited){
+    background: var(--lightbgcolor);
+    color: var(--contenttxtcolor);
+    border-width: 1px;
+    border-color: var(--bordercolor);
+    transition: var(--buttontransition);
+}
+
+a.btn-primary:hover,
+a.btn-primary:focus{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
+    transform: var(--primarybuttonhovermove);
+    text-decoration: underline;
 }
 
 .aggiungi-recensione{
@@ -1310,23 +1435,25 @@ AREA UTENTE
 .btn-danger{
     display: inline-block;
     padding: 0.55em 1.2em;
-    background: var(--contenttxtcolor);
-    color: var(--lightbgcolor);
-    border: 2px solid var(--contenttxtcolor);
+    background: var(--deletecolor);
+    color: var(--txtcolor);
+    border: 2px solid var(--deletebordercolor);
     border-radius: 0.35em;
     font-size: 1em;
     font-family: inherit;
     cursor: pointer;
     min-height: 2.5em;
     line-height: 1.5;
-    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    transition: var(--buttontransition);
 }
 
 .btn-danger:hover,
 .btn-danger:focus{
-    background: var(--contenttxtcolor);
-    border-color: var(--contenttxtcolor);
+    background: var(--deletecolorhover);
+    border-color: var(--deletecolorhover);
+    color: var(--txtcolor);
     transform: translateY(-1px);
+    text-decoration: none;
 }
 
 .btn-secondary{
@@ -1334,19 +1461,38 @@ AREA UTENTE
     padding: 0.55em 1.2em;
     background: var(--lightbgcolor);
     color: var(--contenttxtcolor);
-    border: 2px solid var(--borderlightcolor);
+    border: 1px solid var(--bordercolor);
     border-radius: 0.35em;
     font-size: 1em;
     font-family: inherit;
     cursor: pointer;
     min-height: 2.5em;
     line-height: 1.5;
-    transition: background 0.2s, border-color 0.2s;
+    transition: var(--buttontransition);
+}
+
+.btn-secondary a,
+.btn-secondary a:visited{
+    color: inherit;
+    text-decoration: none;
 }
 
 .btn-secondary:hover,
-.btn-secondary:focus{
-    background: var(--borderlightcolor);
+.btn-secondary:focus,
+.btn-secondary:focus-within{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
+    transform: translateY(-1px);
+}
+
+.btn-secondary:hover a,
+.btn-secondary:focus a,
+.btn-secondary:focus-within a,
+.btn-secondary a:hover,
+.btn-secondary a:focus{
+    color: var(--txtcolor);
+    text-decoration: underline;
 }
 
 .btn-secondary-link{
@@ -1354,12 +1500,12 @@ AREA UTENTE
     padding: 0.55em 1.2em;
     background: var(--lightbgcolor);
     color: var(--contenttxtcolor);
-    border: 2px solid var(--borderlightcolor);
+    border: 1px solid var(--bordercolor);
     border-radius: 0.35em;
     text-decoration: none;
     min-height: 2.5em;
     line-height: 1.5;
-    transition: background 0.2s, border-color 0.2s;
+    transition: var(--buttontransition);
 }
 
 .btn-secondary-link:visited{
@@ -1368,9 +1514,11 @@ AREA UTENTE
 
 .btn-secondary-link:hover,
 .btn-secondary-link:focus{
-    background: var(--hovercolor);
+    background: var(--buttoncancelhovercolor);
     color: var(--txtcolor);
-    text-decoration: none;
+    border-color: var(--buttoncancelhovercolor);
+    transform: translateY(-1px);
+    text-decoration: underline;
 }
 
 /* Modal conferma eliminazione */
@@ -1447,24 +1595,109 @@ FILTRI (aside)
 .search-form-actions a{
     display: inline-block;
     margin-top: 0.6em;
+    padding: 0.55em 1.2em;
+    background: var(--lightbgcolor);
+    color: var(--contenttxtcolor);
+    border: 1px solid var(--bordercolor);
+    border-radius: 0.35em;
+    text-decoration: none;
+    min-height: 2.5em;
+    line-height: 1.5;
+}
+
+.search-form-actions a,
+.admin-search-form .search-form-actions a{
+    transition: var(--buttontransition);
 }
 
 .search-form-actions button,
-.search-form-actions a,
-.admin-search-form .search-form-actions button,
-.admin-search-form .search-form-actions a{
-    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+.admin-search-form .search-form-actions button{
+    transition: var(--primarybuttontransition);
+}
+
+.search-form-actions a:visited,
+.admin-search-form .search-form-actions a:visited{
+    color: var(--contenttxtcolor);
 }
 
 .search-form-actions button:hover,
 .search-form-actions button:focus,
+.admin-search-form .search-form-actions button:hover,
+.admin-search-form .search-form-actions button:focus{
+    transform: var(--primarybuttonhovermove);
+}
+
 .search-form-actions a:hover,
 .search-form-actions a:focus,
-.admin-search-form .search-form-actions button:hover,
-.admin-search-form .search-form-actions button:focus,
 .admin-search-form .search-form-actions a:hover,
 .admin-search-form .search-form-actions a:focus{
     transform: translateY(-1px);
+}
+
+.search-form-actions button:hover,
+.search-form-actions button:focus,
+.admin-search-form .search-form-actions button:hover,
+.admin-search-form .search-form-actions button:focus{
+    background: var(--buttonprimarycolor);
+    color: var(--txtcolor);
+    border-color: var(--buttonprimarycolor);
+    text-decoration: none;
+}
+
+.search-form-actions a:hover,
+.search-form-actions a:focus,
+.admin-search-form .search-form-actions a:hover,
+.admin-search-form .search-form-actions a:focus{
+    background: var(--breadbgcolor);
+    color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
+    text-decoration: underline;
+}
+
+button.table-action-primary,
+.form button,
+.search-form-actions button,
+.admin-search-form .search-form-actions button,
+.form-button,
+.admin-page-actions .admin-primary-link,
+.admin-page-actions .admin-primary-link:visited,
+.admin-form input[type="file"]::file-selector-button{
+    background: var(--buttonprimarycolor);
+    color: var(--txtcolor);
+    border-color: var(--buttonprimarycolor);
+    transition: var(--primarybuttontransition);
+}
+
+button.table-action-primary:hover,
+button.table-action-primary:focus,
+.form button:hover,
+.form button:focus,
+.search-form-actions button:hover,
+.search-form-actions button:focus,
+.admin-search-form .search-form-actions button:hover,
+.admin-search-form .search-form-actions button:focus,
+.form-button:hover,
+.form-button:focus,
+.admin-page-actions .admin-primary-link:hover,
+.admin-page-actions .admin-primary-link:focus,
+.admin-form input[type="file"]:hover::file-selector-button,
+.admin-form input[type="file"]:focus::file-selector-button,
+.admin-form input[type="file"]::file-selector-button:hover,
+.admin-form input[type="file"]::file-selector-button:focus{
+    background: var(--buttonprimarycolor);
+    color: var(--txtcolor);
+    border-color: var(--buttonprimarycolor);
+    transform: var(--primarybuttonhovermove);
+    text-decoration: none;
+}
+
+#ricerca-rapida button{
+    transition: none;
+}
+
+#ricerca-rapida button:hover,
+#ricerca-rapida button:focus{
+    transform: none;
 }
 
 #filtri-catalogo{
@@ -1673,9 +1906,9 @@ FILTRI (aside)
 .form-button {
     display: inline-block;
     padding: 0.55em 1.5em;
-    background: var(--breadbgcolor);
+    background: var(--buttonprimarycolor);
     color: var(--txtcolor);
-    border: 2px solid transparent;
+    border: 2px solid var(--buttonprimarycolor);
     border-radius: 0.35em;
     font-size: 1em;
     font-family: inherit;
@@ -1683,11 +1916,16 @@ FILTRI (aside)
     min-height: 2.5em;
     font-weight: bold;
     letter-spacing: 0.02em;
-    transition: background 0.2s;
+    transition: var(--primarybuttontransition);
 }
 
-.form-button:hover {
-    background: var(--hovercolor);
+.form-button:hover,
+.form-button:focus{
+    background: var(--buttonprimarycolor);
+    color: var(--txtcolor);
+    border-color: var(--buttonprimarycolor);
+    transform: var(--primarybuttonhovermove);
+    text-decoration: none;
 }
 
 .delete-error {
@@ -1762,7 +2000,7 @@ CATALOGO - RISULTATI
 
 #risultati-catalogo > h3{
     border-bottom: none;
-    color: #555;
+    color: var(--contenttxtlightcolor);
     font-size: 1em;
     font-weight: normal;
     margin-bottom: 1em;
@@ -1876,12 +2114,12 @@ nav[aria-label="Navigazione pagine risultati"] a{
     min-height: 2.5em;
     text-align: center;
     text-decoration: none;
-    border: 1px solid var(--breadbgcolor);
+    border: 1px solid var(--bordercolor);
     border-radius: 0.35em;
-    color: var(--bgcolor);
+    color: var(--contenttxtcolor);
     background: var(--lightbgcolor);
     line-height: 1.5;
-    transition: background 0.2s, color 0.2s;
+    transition: var(--buttontransition);
 }
 
 nav[aria-label="Navigazione pagine risultati"] a:hover,
@@ -1889,6 +2127,8 @@ nav[aria-label="Navigazione pagine risultati"] a:focus{
     background: var(--breadbgcolor);
     color: var(--txtcolor);
     border-color: var(--breadbgcolor);
+    text-decoration: underline;
+    transform: translateY(-1px);
 }
 
 nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"]{
@@ -1978,7 +2218,7 @@ DESCRIZIONE, TAG, AZIONI
 
 #descrizione-libro p{
     line-height: 1.75;
-    color: #444;
+    color: var(--contenttxtlightcolor);
 }
 
 #tag-libro ul{
@@ -2003,21 +2243,23 @@ DESCRIZIONE, TAG, AZIONI
     color: var(--contenttxtcolor);
     text-decoration: none;
     border-radius: 1.5em;
-    border: 1px solid var(--breadbgcolor) ;
+    border: 1px solid var(--bordercolor);
     font-size: 0.85em;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    transition: var(--buttontransition);
 }
 
 #tag-libro a:hover,
 #tag-libro a:focus{
     background: var(--breadbgcolor);
     color: var(--txtcolor);
-    box-shadow: 0 2px 8px var(--shadowcolor);
+    border-color: var(--breadbgcolor);
+    text-decoration: underline;
+    transform: translateY(-1px);
 }
 
 #azioni-libro p{
     margin-bottom: 0.8em;
-    color: #444;
+    color: var(--contenttxtlightcolor);
 }
 
 #azioni-libro .info-prestito{
@@ -2027,19 +2269,23 @@ DESCRIZIONE, TAG, AZIONI
 #azioni-libro a{
     display: inline-block;
     padding: 0.6em 1.5em;
-    background: var(--breadbgcolor);
-    color: var(--txtcolor);
+    background: var(--lightbgcolor);
+    color: var(--contenttxtcolor);
     text-decoration: none;
     border-radius: 0.35em;
+    border: 1px solid var(--bordercolor);
     font-weight: bold;
     min-height: 2.5em;
-    transition: background 0.2s, box-shadow 0.2s;
+    transition: var(--buttontransition);
 }
 
 #azioni-libro a:hover,
 #azioni-libro a:focus{
     background: var(--breadbgcolor);
-    box-shadow: 0 3px 10px var(--shadowcolor);;
+    color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
+    transform: translateY(-1px);
+    text-decoration: underline;
 }
 
 /*
@@ -2097,7 +2343,7 @@ RECENSIONI LIBRO
     display: inline;
     margin-right: 1.2em;
     font-size: 0.9em;
-    color: #555;
+    color: var(--contenttxtlightcolor);
 }
 
 .recensione-card header .recensione-titolo {
@@ -2120,7 +2366,7 @@ RECENSIONI LIBRO
 }
 
 .recensione-card > p{
-    color: #444;
+    color: var(--contenttxtlightcolor);
     line-height: 1.65;
 }
 
@@ -2143,7 +2389,7 @@ CHI SIAMO
 
 #chi-siamo p{
     line-height: 1.75;
-    color: #444;
+    color: var(--contenttxtlightcolor);
     margin-bottom: 0.8em;
 }
 
@@ -2155,7 +2401,7 @@ CHI SIAMO
     padding: 0.55em 0 0.55em 1.8em;
     position: relative;
     line-height: 1.6;
-    color: #444;
+    color: var(--contenttxtlightcolor);
 }
 
 #servizi li::before{
@@ -2375,7 +2621,7 @@ DASHBOARD
 
 main .elimina a, main .elimina button, main .form-elimina button{
     background-color: var(--deletecolor);
-    border: 1px solid var(--deletebordercolor);
+    border: 2px solid var(--deletebordercolor);
     color: var(--txtcolor);
     text-decoration: none;
     padding: 0.5em;
@@ -2383,20 +2629,22 @@ main .elimina a, main .elimina button, main .form-elimina button{
     font-family: inherit;
     font-size: inherit;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: var(--buttontransition);
 }
 
 main .elimina a:hover, main .elimina a:focus,
 main .elimina button:hover, main .elimina button:focus,
 main .form-elimina button:hover, main .form-elimina button:focus{
     background-color: var(--deletecolorhover);
-    border-color: var(--deletecolor);
+    border-color: var(--deletecolorhover);
     color: var(--txtcolor);
+    transform: translateY(-1px);
+    text-decoration: none;
 }
 
 main .elimina-card.btn-elimina a{
     background-color: var(--deletecolor);
-    border: 1px solid var(--deletebordercolor);
+    border: 2px solid var(--deletebordercolor);
     color: var(--txtcolor);
     text-decoration: none;
     padding: 0.5em 1em 0.5em 1em;
@@ -2404,13 +2652,15 @@ main .elimina-card.btn-elimina a{
     font-family: inherit;
     font-size: inherit;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: var(--buttontransition);
 }
 
 main .elimina-card.btn-elimina a:hover, main .elimina-card.btn-elimina a:focus{
     background-color: var(--deletecolorhover);
-    border-color: var(--deletecolor);
+    border-color: var(--deletecolorhover);
     color: var(--txtcolor);
+    transform: translateY(-1px);
+    text-decoration: none;
 }
 
 #modifica-account a:hover{
@@ -2565,10 +2815,8 @@ SIDEBAR UTENTE
 @media (prefers-reduced-motion: reduce) {
     header nav a,
     a.table-action,
-    button.table-action,
     .admin-page-actions .button-link,
     .admin-page-actions .admin-return-link,
-    .admin-page-actions .admin-primary-link,
     #ricerca-rapida button,
     #categorie a,
     #ultimi-arrivi article,
@@ -2582,18 +2830,16 @@ SIDEBAR UTENTE
     .form input[type="datetime-local"],
     .form textarea,
     .form select,
-    .form button,
     .admin-links-list a,
     .generalita-list .actions a,
     .generalita-list .btn-primary,
     .generalita-list .btn-danger,
-    .admin-search-form .search-form-actions button,
     .admin-search-form .search-form-actions a,
     .avatar-option,
     .modifica-form input[type="text"],
     .modifica-form input[type="email"],
     .modifica-form input[type="password"],
-    .form-button,
+    .btn-primary,
     .libro-card,
     nav[aria-label="Navigazione pagine risultati"] a,
     #tag-libro a,
@@ -2609,21 +2855,13 @@ SIDEBAR UTENTE
     .admin-page-actions .button-link:focus,
     .admin-page-actions .admin-return-link:hover,
     .admin-page-actions .admin-return-link:focus,
-    .admin-page-actions .admin-primary-link:hover,
-    .admin-page-actions .admin-primary-link:focus,
     #ricerca-rapida button:hover,
     #ricerca-rapida button:focus,
-    .form button:hover,
-    .form button:focus,
     .form a:hover,
     .form a:focus,
     #ultimi-arrivi article:hover,
-    .search-form-actions button:hover,
-    .search-form-actions button:focus,
     .search-form-actions a:hover,
     .search-form-actions a:focus,
-    .admin-search-form .search-form-actions button:hover,
-    .admin-search-form .search-form-actions button:focus,
     .admin-search-form .search-form-actions a:hover,
     .admin-search-form .search-form-actions a:focus,
     .admin-links-list a:hover,

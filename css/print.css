@@ -404,7 +404,6 @@
         border: 1px solid var(--bordercolor);
         background: var(--contenttxtcolor);
         color: var(--contentbgcolor);
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
@@ -412,7 +411,6 @@
     a.button-link,
     a.table-action,
     a.admin-return-link,
-    a.admin-primary-link,
     .admin-page-actions a,
     .form a,
     .form-button {
@@ -479,8 +477,7 @@
         page-break-inside: avoid;
     }
 
-    .admin-form input[type="file"]::file-selector-button,
-    .admin-form input[type="file"]::-webkit-file-upload-button {
+    .admin-form input[type="file"]::file-selector-button {
         border: 1px solid var(--bordercolor);
         background: var(--eventablecolor);
         color: var(--contenttxtcolor);
@@ -492,7 +489,6 @@
         background: var(--contenttxtcolor);
         color: var(--contentbgcolor);
         border-color: var(--bordercolor);
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
@@ -510,7 +506,6 @@
         border: var(--print-table-border-width) solid var(--bordercolor);
         border-collapse: collapse;
         page-break-inside: avoid;
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
@@ -519,7 +514,6 @@
         width: auto;
         height: auto;
         margin-bottom: 0.4em;
-        clip: auto;
         overflow: visible;
         white-space: normal;
         font-weight: bold;
@@ -530,7 +524,6 @@
         position: static;
         background: var(--hovercolor);
         color: var(--contenttxtcolor);
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
@@ -548,14 +541,12 @@
         border: 1px solid var(--bordercolor);
         background: var(--print-table-header-bg);
         color: var(--print-table-header-text);
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
     tbody tr:nth-child(even),
     #gestione table tbody tr:nth-child(even) {
         background: var(--print-table-row-alt-bg);
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
@@ -566,14 +557,12 @@
         border-color: var(--bordercolor);
         background: var(--print-table-row-alt-bg);
         color: var(--contenttxtcolor);
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
     tbody tr:nth-child(odd),
     #gestione table tbody tr:nth-child(odd) {
         background: var(--print-table-row-bg);
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
@@ -584,7 +573,6 @@
         border-color: var(--bordercolor);
         background: var(--print-table-row-bg);
         color: var(--contenttxtcolor);
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
@@ -612,7 +600,6 @@
         background: var(--print-table-header-bg);
         color: var(--print-table-header-text);
         border: 1px solid var(--bordercolor);
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
@@ -703,12 +690,10 @@
         box-shadow: none;
     }
 
-    .admin-page-actions .admin-primary-link,
     button.table-action-primary {
         background: var(--contenttxtcolor);
         color: var(--contentbgcolor);
         border-color: var(--bordercolor);
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
@@ -743,7 +728,6 @@
     nav[aria-label="Navigazione pagine risultati"] li[aria-current="page"] {
         background: var(--contenttxtcolor);
         color: var(--contentbgcolor);
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 

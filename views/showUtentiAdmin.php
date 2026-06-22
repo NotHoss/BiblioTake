@@ -21,7 +21,7 @@ $searchForm = renderSearchForm([
     'action' => 'utenti.php',
     'class' => 'form admin-search-form',
     'validate' => true,
-    'submitLabel' => 'Filtra',
+    'submitLabel' => 'Applica filtri',
     'resetHref' => 'utenti.php',
     'fields' => [
         [
