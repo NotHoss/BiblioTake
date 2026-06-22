@@ -61,7 +61,12 @@ if ($utenteLoggato && $haPrestitoAttivo) {
 
 //lista recensioni
 if (empty($recensioni)) {
-    $listaRecensioni = '<p>Nessuna recensione ancora. <a href="login.php">Accedi</a> per essere il primo a recensire questo libro.</p>';
+    //utente loggato: niente invito ad accedere (il bottone "aggiungi recensione" e' gia mostrato sotto). anonimo: invito al login
+    if (isset($_SESSION['user_id'])) {
+        $listaRecensioni = '<p>Nessuna recensione ancora. Sii il primo a recensire questo libro!</p>';
+    } else {
+        $listaRecensioni = '<p>Nessuna recensione ancora. <a href="login.php">Accedi</a> per essere il primo a recensire questo libro.</p>';
+    }
 } else {
     $listaRecensioni = '<ul>';
     foreach ($recensioni as $recensione) {
