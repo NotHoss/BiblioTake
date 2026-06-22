@@ -125,6 +125,12 @@ if (!empty($breadcrumb) && is_array($breadcrumb)) {
     $breadcrumbHtml = '<nav class="breadcrumb" aria-label="Percorso nel sito"><ul>' . implode('', $breadcrumbItems) . '</ul></nav>';
 }
 
+$resourceHints = '';
+if (isset($currentPage) && $currentPage === 'home') {
+    $heroImageHref = htmlspecialchars($relativeRoot . '/images/sfondo-biblio.webp', ENT_QUOTES, 'UTF-8');
+    $resourceHints = '<link rel="preload" as="image" href="' . $heroImageHref . '" fetchpriority="high" />';
+}
+
 $replacements = array(
     '[PAGE_TITLE]' => htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'),
     '[PAGE_DESCRIPTION]' => htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'),
@@ -132,6 +138,7 @@ $replacements = array(
     '[SITE_NAME]' => $siteName,
     '[NAVIGATION]' => implode('', $navigation),
     '[RELATIVE_ROOT]' => $relativeRoot,
+    '[RESOURCE_HINTS]' => $resourceHints,
     '[BREADCRUMB]' => $breadcrumbHtml,
 );
 

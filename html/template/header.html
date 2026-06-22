@@ -6,12 +6,15 @@
     <title>[PAGE_TITLE]</title>
     <meta name="description" content="[PAGE_DESCRIPTION]" />
     <meta name="keywords" content="[PAGE_KEYWORDS]" />
+    [RESOURCE_HINTS]
     <link rel="stylesheet" href="[RELATIVE_ROOT]/css/style.css" />
-    <link rel="stylesheet" href="[RELATIVE_ROOT]/css/mini.css" media="screen" />
+    <link rel="stylesheet" href="[RELATIVE_ROOT]/css/mini.css" media="screen and (max-width: 1250px)" />
     <link rel="stylesheet" href="[RELATIVE_ROOT]/css/print.css" media="print" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" /></noscript>
 </head>
 <body id="top">
 

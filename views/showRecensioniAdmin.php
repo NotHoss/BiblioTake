@@ -91,7 +91,7 @@ foreach ($recensioni as $recensione) {
         '[UTENTE]' => '<a href="utenti.php?cerca=' . rawurlencode((string) $recensione['username']) . '">' . $usernameSafe . '</a>',
         '[LIBRO]' => '<a href="../dettaglio-libro.php?id=' . $libroIdRow . '">' . $titoloLibroSafe . '</a>',
         '[VOTO]' => htmlspecialchars((string) $recensione['valutazione'], ENT_QUOTES, 'UTF-8'),
-        '[TESTO]' => htmlspecialchars((string) mb_substr($recensione['testo'], 0, 80), ENT_QUOTES, 'UTF-8') . '...',
+        '[TESTO]' => htmlspecialchars((string) $recensione['testo'], ENT_QUOTES, 'UTF-8'),
         '[DATA]' => formatDateDisplay($recensione['data']),
         '[STATO]' => $recensione['censura'] ? 'Censurata' : 'Visibile',
         '[AZIONI]' => '<div class="table-actions-list"><form class="table-action-form" action="' . $returnUrlSafe . '" method="post"><input type="hidden" name="recensione_id" value="' . $id . '" /><input type="hidden" name="return" value="' . $returnUrlSafe . '" /><button class="table-action table-action-primary" type="submit" name="azione" value="censura" aria-label="' . $censuraAriaLabel . '">' . $censuraLabel . '</button></form><a class="table-action" href="elimina-recensione.php?id=' . $id . '&amp;return=' . $returnParam . '" aria-label="' . $eliminaAriaLabel . '">Elimina</a></div>',
