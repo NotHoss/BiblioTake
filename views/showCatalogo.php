@@ -95,7 +95,7 @@ if (empty($libri)) {
     $listaLibri = '<ul id="lista-libri">';
     foreach ($libri as $libro) {
         $copertinaPath = !empty($libro['copertina']) ? $libro['copertina'] : DEFAULT_COVER;
-        $copertinaSrc = htmlspecialchars(str_replace("'", '%27', $copertinaPath), ENT_QUOTES, 'UTF-8');
+        $copertinaSrc = htmlspecialchars($copertinaPath, ENT_QUOTES, 'UTF-8');
         $titolo       = htmlspecialchars($libro['titolo'], ENT_QUOTES, 'UTF-8');
         $autore       = htmlspecialchars($libro['autore'], ENT_QUOTES, 'UTF-8');
         $categoria    = htmlspecialchars($libro['categoria'], ENT_QUOTES, 'UTF-8');
@@ -109,14 +109,14 @@ if (empty($libri)) {
         }
 
         $listaLibri .= '<li>';
-        $listaLibri .= '<a href="dettaglio-libro.php?id=' . $libroId . '" class="libro-card">';
-        $listaLibri .= '<span class="libro-card-cover" aria-hidden="true" style="background-image: url(\'' . $copertinaSrc . '\');"></span>';
-        $listaLibri .= '<h4>' . $titolo . '</h4>';
+        $listaLibri .= '<article class="libro-card">';
+        $listaLibri .= '<img class="libro-card-cover" src="' . $copertinaSrc . '" alt="" width="705" height="1125" />';
+        $listaLibri .= '<h4><a href="dettaglio-libro.php?id=' . $libroId . '">' . $titolo . '</a></h4>';
         $listaLibri .= '<p><strong>Autore:</strong> ' . $autore . '</p>';
         $listaLibri .= '<p><strong>Categoria:</strong> ' . $categoria . '</p>';
         $listaLibri .= '<p><strong>Anno:</strong> <time datetime="' . $anno . '">' . $anno . '</time></p>';
         $listaLibri .= $valutazioneHtml;
-        $listaLibri .= '</a>';
+        $listaLibri .= '</article>';
         $listaLibri .= '</li>';
     }
     $listaLibri .= '</ul>';
