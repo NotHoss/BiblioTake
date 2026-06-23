@@ -6,6 +6,14 @@ define('DB_USER', 'root');
 define('DB_PASS', 'root');
 define('DB_NAME', 'bibliotake');
 
+// Connessione database Tecweb (nome database: username_laboratorio, user: username_laboratorio, password: copiata da pwd_db_2526.txt)
+/*
+define('DB_HOST', 'localhost');
+define('DB_USER', '');
+define('DB_PASS', '');
+define('DB_NAME', '');
+*/
+
 // Identita del sito
 define('SITE_NAME',        'BiblioTake');
 define('SITE_DESCRIPTION', 'Biblioteca digitale del corso di Tecnologie Web');
