@@ -421,6 +421,20 @@
         color: var(--txtlinkcolor);
     }
 
+    .btn-danger,
+    .btn-danger:visited,
+    .generalita-list .actions .btn-danger,
+    .generalita-list .actions .btn-danger:visited,
+    main .elimina a,
+    main .elimina button,
+    main .form-elimina button,
+    main .elimina-card.btn-elimina a {
+        border: 1px solid var(--bordercolor);
+        background: var(--contenttxtcolor);
+        color: var(--contentbgcolor);
+        print-color-adjust: exact;
+    }
+
     .current-avatar {
         display: block;
         width: 100px;

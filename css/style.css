@@ -19,7 +19,7 @@
     --txtlinkcolor:#000; /*colore link nel contenuto*/
     --txtlinkvisited:#A147E1; /*colore link visitati nel contenuto*/
     --linkcolor:#FFFAFF; /*colore link su sfondo scuro*/
-    --linkvisited:#D4CEE8; /*colore link visitati su sfondo scuro*/
+    --linkvisited:#6F70A2; /*colore link visitati su sfondo scuro*/
     --hovercolor: #6F70A2; /*colore hover navigazione*/
     --bordercolor:#000; /*colore bordi principali*/
     --eventablecolor:#F0FFFE; /*colore sfondo tabella eventi*/
@@ -133,16 +133,17 @@ header button:focus,
 /*Link nel contenuto*/
 main a:link{
     color: var(--txtlinkcolor);
-    /*text-decoration: underline;*/
+    text-decoration: none;
 }
 
 main a:visited{
     color: var(--txtlinkvisited);
+    text-decoration: none;
 }
 
 main a:hover,
 main a:focus{
-    color: var(--focuscolor);
+    text-decoration: underline;
 }
 
 /*
@@ -787,12 +788,11 @@ SEZIONE ULTIMI ARRIVI (Homepage)
 
 #ultimi-arrivi h4 a{
     text-decoration: none;
-    color: var(--contenttxtcolor);
     font-size: 1.05em;
 }
 
-#ultimi-arrivi h4 a:hover{
-    color: var(--breadbgcolor);
+#ultimi-arrivi h4 a:hover,
+#ultimi-arrivi h4 a:focus{
     text-decoration: underline;
 }
 
@@ -2064,11 +2064,10 @@ CARD LIBRO (catalogo + homepage)
 
 .libro-card h4 a{
     text-decoration: none;
-    color: var(--contenttxtcolor);
 }
 
-.libro-card h4 a:hover{
-    color: var(--breadbgcolor);
+.libro-card h4 a:hover,
+.libro-card h4 a:focus{
     text-decoration: underline;
 }
 
@@ -2463,10 +2462,16 @@ CONTATTI
 
 #contatti a{
     color: var(--txtlinkcolor);
+    text-decoration: none;
 }
 
 #contatti a:visited{
     color: var(--txtlinkvisited);
+}
+
+#contatti a:hover,
+#contatti a:focus{
+    text-decoration: underline;
 }
 
 /*
@@ -2674,7 +2679,6 @@ main .elimina-card.btn-elimina a:hover, main .elimina-card.btn-elimina a:focus{
 
 .recensione-titolo a{
     font-weight: bold;
-    color: var(--txtlinkcolor);
     text-decoration: none;
 }
 /*
