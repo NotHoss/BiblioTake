@@ -2035,31 +2035,33 @@ CARD LIBRO (catalogo + homepage)
     padding: 1em;
     box-shadow: 0 2px 8px var(--shadowcolor);
     overflow: hidden;
-    transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
+    transition: box-shadow 0.25s, border-color 0.25s;
 }
 
 a.libro-card {
     display: block;
     text-decoration: none;
     color: inherit;
-    transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
+    transition: box-shadow 0.25s, border-color 0.25s;
 }
 
 .libro-card:hover{
     box-shadow: 0 6px 20px var(--shadowcolor);
     border-color: var(--breadbgcolor);
-    transform: translateY(-2px);
 }
 
-.libro-card img{
+.libro-card-cover{
     float: left;
+    display: block;
     width: 35%;
-    height: auto;
     max-width: 7em;
+    aspect-ratio: 705 / 1125;
     margin-right: 1em;
     margin-bottom: 0.5em;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
     border-radius: 0.35em;
-    border: 1px solid var(--borderlightcolor);
 }
 
 .libro-card h4{
