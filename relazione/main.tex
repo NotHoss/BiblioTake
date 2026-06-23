@@ -151,7 +151,7 @@ La navigazione principale viene generata dinamicamente dal template PHP. Il menu
 
 La pagina corrente viene indicata con l'attributo \texttt{aria-current} e non viene presentata come collegamento attivo a se stessa. Il sito utilizza inoltre breadcrumb contestuali, generati a partire dai dati impostati dalle singole pagine. Questo aiuta l'utente a comprendere la posizione corrente e facilita il ritorno alle sezioni superiori. I breadcrumb supportano anche etichette composte con parti in lingua diversa: nell'area amministrativa, ad esempio, la voce \texttt{Dashboard amministrazione} marca \texttt{Dashboard} con \texttt{lang="en"} e lascia il resto in italiano.
 
-Nel catalogo, la progettazione dei contenuti e' centrata sulla ricerca. Il form permette di combinare piu filtri e la paginazione evita pagine troppo lunghe. Nella scheda libro sono raccolte le informazioni bibliografiche, la disponibilita, i tag, la valutazione media e le recensioni non censurate. Le azioni riservate, come la richiesta di prestito o la modifica di una recensione, vengono mostrate solo quando l'utente possiede i permessi necessari.
+Nel catalogo, la progettazione dei contenuti e' centrata sulla ricerca. Il form permette di combinare piu filtri e la paginazione evita pagine troppo lunghe. Le schede risultato mostrano titolo, autore, categoria, anno ed eventuale valutazione media, accompagnati dalla copertina del libro. Durante i test cross-browser e' stato rilevato un comportamento anomalo di Firefox: le copertine, inserite inizialmente come elementi \texttt{img} all'interno delle schede cliccabili, venivano caricate per un istante e poi non ridisegnate, mentre in Chrome/Brave rimanevano visibili. Per rendere la resa stabile tra browser, nel catalogo la copertina e' stata trattata come immagine di sfondo della scheda, mantenendo nel markup le informazioni testuali realmente necessarie alla comprensione del risultato. Nella scheda libro sono invece raccolte le informazioni bibliografiche, la disponibilita, i tag, la valutazione media e le recensioni non censurate. Le azioni riservate, come la richiesta di prestito o la modifica di una recensione, vengono mostrate solo quando l'utente possiede i permessi necessari.
 
 \subsection{Design responsive}
 Il design responsive e' affidato ai fogli di stile \texttt{css/style.css} e \texttt{css/mini.css}. Il primo contiene le regole generali, mentre il secondo raccoglie gli adattamenti per schermi piccoli. La navigazione su dispositivi mobili e' supportata da un pulsante di apertura e chiusura del menu con attributi ARIA aggiornati tramite JavaScript.
@@ -183,7 +183,7 @@ La struttura comune delle pagine e' definita dai template \texttt{html/template/
 
 L'intestazione contiene il logo testuale del sito, il collegamento per saltare direttamente al contenuto principale e il menu di navigazione. Il contenuto specifico della pagina viene inserito nel \texttt{main}, mentre il footer contiene collegamenti di servizio, il ritorno a inizio pagina e i riferimenti alle validazioni.
 
-Nelle viste sono usati elementi semantici coerenti con il contenuto: liste per collezioni di elementi, tabelle con \texttt{caption} per dati amministrativi, form con etichette associate ai campi, immagini dei libri con testo alternativo e date rappresentate tramite elementi \texttt{time} quando opportuno.
+Nelle viste sono usati elementi semantici coerenti con il contenuto: liste per collezioni di elementi, tabelle con \texttt{caption} per dati amministrativi, form con etichette associate ai campi, immagini informative dei libri con testo alternativo e date rappresentate tramite elementi \texttt{time} quando opportuno. Nel catalogo, dove titolo e autore sono gia presenti come testo nel collegamento della scheda, la copertina e' invece considerata decorativa e ridondante rispetto al contenuto testuale.
 
 \subsection{Design e stile CSS}
 La presentazione e' separata dal contenuto tramite tre fogli di stile principali:
@@ -262,6 +262,8 @@ Nel footer sono presenti i riferimenti alle validazioni HTML e WCAG. L'intestazi
 
 Per i breadcrumb e' stato previsto il supporto a etichette composte. Questo permette di inserire marcature linguistiche puntuali, ad esempio su parole inglesi come \texttt{Dashboard}, senza applicare erroneamente la lingua inglese a tutta la voce del percorso.
 
+Le copertine dei libri sono gestite in modo diverso a seconda del contesto. Nella pagina di dettaglio la copertina e' un contenuto informativo e viene quindi mantenuta come \texttt{img} con testo alternativo. Nel catalogo, invece, la copertina accompagna una scheda che contiene gia titolo, autore e metadati del libro: per evitare letture ridondanti da parte degli screen reader e, allo stesso tempo, risolvere il problema di rendering osservato in Firefox, essa e' resa come immagine di sfondo di uno \texttt{span} marcato con \texttt{aria-hidden="true"}. Questa scelta e' coerente con il requisito che prevede testo alternativo vuoto per immagini puramente decorative o di sfondo.
+
 \subsection{Validazione CSS}
 I fogli di stile sono separati in base alla destinazione: stile generale, responsive e stampa. Le regole evitano l'uso di presentazione direttamente nel markup e definiscono in modo centralizzato colori, spaziature, componenti e stati interattivi. La presenza di un foglio dedicato alla stampa consente inoltre una resa specifica per il supporto cartaceo senza duplicare il contenuto HTML.
 
@@ -289,7 +291,8 @@ La fase di verifica comprende controlli funzionali sulle principali aree del sit
     \item eliminazione account utente con anonimizzazione dei dati e blocco della riattivazione amministrativa;
     \item verifica dei messaggi di errore nei form lato client e lato server;
     \item navigazione tramite tastiera e controllo degli stati di focus;
-    \item verifica della resa responsive e della versione stampabile.
+    \item verifica della resa responsive e della versione stampabile;
+    \item verifica cross-browser del catalogo, con particolare attenzione alla resa delle copertine in Firefox e nei browser basati su Chromium.
 \end{itemize}
 
 Dal punto di vista dei dati, i test devono verificare anche il rispetto dei vincoli del database: impossibilita di creare prestiti incoerenti, controllo degli stati dei prestiti, mantenimento della cronologia e blocco delle operazioni amministrative non consentite.
