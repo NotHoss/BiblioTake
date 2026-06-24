@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
             if (isset($_FILES['copertina_file']) && $_FILES['copertina_file']['error'] === UPLOAD_ERR_OK) {
                 $fileCopertina = validateAndProcessCopertina($_FILES['copertina_file']);
                 if (!$fileCopertina) {
-                    $res['errorMessage'] = 'Il file della copertina deve essere un .jpg valido, massimo 5 megabyte, con dimensioni esatte 705 x 1125 pixel.';
+                    $res['errorMessage'] = 'Il file della copertina deve essere un .jpg valido, massimo 5 megabyte, con dimensioni esatte 222 x 354 pixel.';
                     $res['dati'] = $dati;
                 }
             }

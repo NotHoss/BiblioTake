@@ -821,7 +821,7 @@ function validateAndProcessCopertina($file) {
         return null;
     }
 
-    if ((int) $imageInfo[0] !== 705 || (int) $imageInfo[1] !== 1125) {
+    if ((int) $imageInfo[0] !== 222 || (int) $imageInfo[1] !== 354) {
         return null;
     }
     

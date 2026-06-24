@@ -22,8 +22,8 @@
 //  data-existing-values="a,b"  valori gia presenti da non riutilizzare
 //  data-duplicate-msg="..."    messaggio se il valore e gia presente
 //  data-max-mb="2"             dimensione massima file in MB
-//  data-image-width="705"      larghezza richiesta per immagini
-//  data-image-height="1125"    altezza richiesta per immagini
+//  data-image-width="222"      larghezza richiesta per immagini
+//  data-image-height="354"     altezza richiesta per immagini
 //  data-image-dimensions-msg="..." messaggio per dimensioni immagine errate
 //
 //l'attributo title se presente viene usato come messaggio sostitutivo

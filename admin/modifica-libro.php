@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $conn instanceof mysqli && $errorMe
             if (isset($_FILES['copertina_file']) && $_FILES['copertina_file']['error'] === UPLOAD_ERR_OK) {
                 $file = validateAndProcessCopertina($_FILES['copertina_file']);
                 if ($file === null) {
-                    throw new RuntimeException('File copertina non valido. Usa un .jpg di massimo 5 megabyte con dimensioni esatte 705 x 1125 pixel.');
+                    throw new RuntimeException('File copertina non valido. Usa un .jpg di massimo 5 megabyte con dimensioni esatte 222 x 354 pixel.');
                 }
 
                 if (!empty($libro['copertina'])) {
