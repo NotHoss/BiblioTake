@@ -2771,6 +2771,8 @@ SIDEBAR UTENTE
 .sidebar-user .sidebar-current-page{
     background: var(--buttonprimarycolor);
     color: var(--txtcolor);
+    padding: 0.65rem 1rem;
+    text-align: left;
 }
 
 .sidebar-user ul{
@@ -2821,6 +2823,8 @@ SIDEBAR UTENTE
 .sidebar-current-page p{
     display: block;
     color: inherit;
+    padding: 0;
+    text-align: inherit;
 }
 
 .sidebar-links-list{

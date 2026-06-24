@@ -796,8 +796,12 @@
         padding: 0;
     }
 
+    .sidebar-links-list .sidebar-current-page.username{
+        padding: 0.65rem 1rem;
+    }
+
     .sidebar-links-list .username > p{
-        padding: 0 1em 0 1em;
+        padding: 0;
     }
 
     .sidebar-user .sidebar-link a{
