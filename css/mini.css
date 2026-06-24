@@ -589,20 +589,9 @@
     ==========================
     */
 
-    .admin-page-actions .button-link,
-    .admin-page-actions .admin-return-link,
-    .admin-page-actions .admin-primary-link {
-        float: none;
-        display: block;
-        width: 100%;
-        margin: 0 0 0.5rem;
-        text-align: center;
-    }
-
     .admin-page-actions {
         width: 100%;
         margin-left: 0;
-        display: block;
     }
 
     .admin-form fieldset > p,
@@ -651,9 +640,11 @@
         margin-left: 0;
     }
 
-    .admin-quick-nav,
-    .admin-dashboard-main,
-    .admin-library-details {
+    .admin-content {
+        margin-left: 0;
+    }
+
+    .admin-quick-nav {
         float: none;
         width: 100%;
         margin-left: 0;
@@ -664,7 +655,7 @@
         padding-bottom: 1rem;
         margin-bottom: 1.2rem;
         border-right: 0;
-        border-bottom: 2px solid var(--borderlightcolor);
+        border-bottom: 2px solid var(--designcolor);
     }
 
     .admin-links-list,
@@ -685,7 +676,8 @@
         margin: 0;
     }
 
-    .admin-links-list a {
+    .admin-links-list a,
+    .admin-links-list .admin-quick-current {
         height: 100%;
         text-align: center;
     }

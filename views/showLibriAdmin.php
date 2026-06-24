@@ -112,6 +112,7 @@ $template = preg_replace('/<!-- ROW_TEMPLATE_START -->.*?<!-- ROW_TEMPLATE_END -
 
 if (empty($libri)) {
     echo strtr($template, [
+        '[ADMIN_SECTION_NAV]' => renderAdminSectionNav('libri.php', true),
         '[SEARCH_FORM]' => $searchForm,
         '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
@@ -156,6 +157,7 @@ foreach ($libri as $libroRow) {
 }
 
 echo strtr($template, [
+    '[ADMIN_SECTION_NAV]' => renderAdminSectionNav('libri.php', true),
     '[SEARCH_FORM]' => $searchForm,
     '[RESULTS_INFO]' => $resultsInfo,
     '[MESSAGES]' => $messages,

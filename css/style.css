@@ -445,62 +445,34 @@ button.table-action-primary:focus{
     margin: 0 0 1rem;
     width: min(94vw, 1692px);
     margin-left: calc(50% - min(47vw, 846px));
+}
+
+.admin-section-nav{
+    padding-bottom: 1rem;
+    margin-bottom: 1.2rem;
+    border-bottom: 2px solid var(--designcolor);
+}
+
+.admin-section-nav .admin-links-list{
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
 }
 
-.admin-page-actions::after{
+.admin-section-nav .admin-links-list::after{
     content: none;
     display: none;
 }
 
-.admin-page-actions .button-link,
-.admin-page-actions .admin-return-link,
-.admin-page-actions .admin-primary-link{
-    float: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 2.75rem;
-    padding: 0.5rem 1rem;
+.admin-section-nav .admin-links-list > li{
+    flex: 1 1 11rem;
     margin: 0;
-    border-radius: 0.45rem;
-    border: 1px solid var(--bordercolor);
-    background: var(--lightbgcolor);
-    color: var(--txtlinkcolor);
-    text-decoration: none;
-    font-weight: normal;
-    line-height: 1.2;
-    transition: var(--buttontransition);
 }
 
-.admin-page-actions .admin-primary-link,
-.admin-page-actions .admin-primary-link:visited{
-    background: var(--buttonprimarycolor);
-    color: var(--txtcolor);
-    border-color: var(--buttonprimarycolor);
-    transition: var(--primarybuttontransition);
-}
-
-.admin-page-actions .button-link:hover,
-.admin-page-actions .button-link:focus,
-.admin-page-actions .admin-return-link:hover,
-.admin-page-actions .admin-return-link:focus{
-    background: var(--breadbgcolor);
-    color: var(--txtcolor);
-    border-color: var(--breadbgcolor);
-    transform: translateY(-1px);
-    text-decoration: underline;
-}
-
-.admin-page-actions .admin-primary-link:hover,
-.admin-page-actions .admin-primary-link:focus{
-    background: var(--buttonprimarycolor);
-    color: var(--txtcolor);
-    border-color: var(--buttonprimarycolor);
-    transform: var(--primarybuttonhovermove);
-    text-decoration: none;
+.admin-section-nav .admin-links-list a,
+.admin-section-nav .admin-links-list .admin-quick-current{
+    height: 100%;
+    text-align: center;
 }
 
 /* Container wrapper when `.table-action` is used as a wrapper div */
@@ -1015,14 +987,21 @@ colore rosso #B00020 scelto per contrasto 7.1:1 su sfondo #FFFAFF (WCAG AAA).
     float: left;
     width: 24%;
     padding-right: 1.5em;
-    border-right: 2px solid var(--borderlightcolor);
+    border-right: 2px solid var(--designcolor);
 }
 
-.admin-dashboard-main{
+.admin-layout::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.admin-content{
     margin-left: 26%;
 }
 
-.admin-library-details{
+.admin-content .admin-dashboard-layout{
+    width: 100%;
     margin-left: 0;
 }
 
@@ -1084,6 +1063,23 @@ colore rosso #B00020 scelto per contrasto 7.1:1 su sfondo #FFFAFF (WCAG AAA).
     line-height: 1.2;
     text-decoration: none;
     transition: var(--buttontransition);
+}
+
+.admin-links-list .admin-quick-current{
+    display: block;
+    min-height: 2.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: 0.45rem;
+    border: 1px solid var(--buttonprimarycolor);
+    background: var(--buttonprimarycolor);
+    color: var(--txtcolor);
+    font-weight: bold;
+    line-height: 1.2;
+    box-shadow: none;
+}
+
+.admin-links-list .admin-quick-current span{
+    display: block;
 }
 
 .admin-links-list a:visited{
@@ -1659,8 +1655,6 @@ button.table-action-primary,
 .search-form-actions button,
 .admin-search-form .search-form-actions button,
 .form-button,
-.admin-page-actions .admin-primary-link,
-.admin-page-actions .admin-primary-link:visited,
 .admin-form input[type="file"]::file-selector-button{
     background: var(--buttonprimarycolor);
     color: var(--txtcolor);
@@ -1678,8 +1672,6 @@ button.table-action-primary:focus,
 .admin-search-form .search-form-actions button:focus,
 .form-button:hover,
 .form-button:focus,
-.admin-page-actions .admin-primary-link:hover,
-.admin-page-actions .admin-primary-link:focus,
 .admin-form input[type="file"]:hover::file-selector-button,
 .admin-form input[type="file"]:focus::file-selector-button,
 .admin-form input[type="file"]::file-selector-button:hover,
@@ -2760,62 +2752,84 @@ SIDEBAR UTENTE
     width: 24%;
     padding-right: 1.5em;
     border-right: 2px solid var(--designcolor);
-    position: sticky;
-    top: 0;
-    height: 100vh;
     text-decoration: none;
 }
 
 .sidebar-current-page{
+    display: block;
+    min-height: 2.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: 0.45rem;
+    border: 1px solid var(--buttonprimarycolor);
+    background: var(--buttonprimarycolor);
+    color: var(--txtcolor);
     font-weight: bold;
-    background: var(--bgcolor);
-    padding: 0.5em 0 0.5em 0.7em;
-    border-bottom: 2px solid var(--designcolor);
+    line-height: 1.2;
+    box-shadow: none;
+}
+
+.sidebar-user .sidebar-current-page{
+    background: var(--buttonprimarycolor);
     color: var(--txtcolor);
 }
 
 .sidebar-user ul{
     list-style-type: none;
     padding: 0;
+    margin: 0.8rem 0 1rem;
 }
 
 .sidebar-user li{
-    border-bottom: 2px solid var(--designcolor);
+    float: none;
+    width: 100%;
+    margin: 0 0 0.6rem;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
 }
 
 .sidebar-user .sidebar-link a {
     display: block;
-    padding: 0.5em 0 0.5em 0.7em;
+    min-height: 2.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: 0.45rem;
+    border: 1px solid var(--bordercolor);
+    background: var(--lightbgcolor);
+    color: var(--txtlinkcolor);
+    font-weight: normal;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: var(--buttontransition);
+}
+
+.sidebar-user li a:visited{
     color: var(--txtlinkcolor);
     text-decoration: none;
 }
 
-.sidebar-user li a:visited{
-    color: var(--txtlinkvisited);
-    text-decoration: none;
-}
-
-.sidebar-user li:not(.sidebar-current-page):hover{
-    background-color: var(--hovercolor);
-    border-bottom: 2px solid var(--txtcolor);
+.sidebar-user .sidebar-link a:hover,
+.sidebar-user .sidebar-link a:focus{
+    background: var(--breadbgcolor);
     color: var(--txtcolor);
+    border-color: var(--breadbgcolor);
+    transform: translateY(-1px);
     text-decoration: underline;
 }
 
-.sidebar-user .sidebar-link:hover a{
-    color: var(--txtcolor);
-    text-decoration: underline;
+.sidebar-current-page span,
+.sidebar-current-page p{
+    display: block;
+    color: inherit;
 }
 
 .sidebar-links-list{
-    margin-top: 1em;
+    margin-top: 0.8rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
     header nav a,
     a.table-action,
-    .admin-page-actions .button-link,
-    .admin-page-actions .admin-return-link,
     #ricerca-rapida button,
     #categorie a,
     #ultimi-arrivi article,
@@ -2850,10 +2864,6 @@ SIDEBAR UTENTE
         transition: none;
     }
 
-    .admin-page-actions .button-link:hover,
-    .admin-page-actions .button-link:focus,
-    .admin-page-actions .admin-return-link:hover,
-    .admin-page-actions .admin-return-link:focus,
     #ricerca-rapida button:hover,
     #ricerca-rapida button:focus,
     .form a:hover,

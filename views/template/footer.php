@@ -21,4 +21,7 @@ $replacements = array(
     '[VALIDATION_VERSION]' => htmlspecialchars($validationVersion, ENT_QUOTES, 'UTF-8'),
 );
 
-echo strtr($template, $replacements);
+$currentScript = basename((string) ($_SERVER['SCRIPT_NAME'] ?? ''));
+$adminLayoutClose = (isset($currentPage) && $currentPage === 'admin' && $currentScript === 'index.php' && function_exists('renderAdminQuickNav')) ? '</div></div>' : '';
+
+echo $adminLayoutClose . strtr($template, $replacements);

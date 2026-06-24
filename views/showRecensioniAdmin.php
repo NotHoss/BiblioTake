@@ -65,6 +65,7 @@ $returnParam = rawurlencode($returnUrl);
     
 if (empty($recensioni)) {
     echo strtr($template, [
+        '[ADMIN_SECTION_NAV]' => renderAdminSectionNav('recensioni.php'),
         '[SEARCH_FORM]' => $searchForm,
         '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
@@ -99,6 +100,7 @@ foreach ($recensioni as $recensione) {
 }
 
 echo strtr($template, [
+    '[ADMIN_SECTION_NAV]' => renderAdminSectionNav('recensioni.php'),
     '[SEARCH_FORM]' => $searchForm,
     '[RESULTS_INFO]' => $resultsInfo,
     '[MESSAGES]' => $messages,

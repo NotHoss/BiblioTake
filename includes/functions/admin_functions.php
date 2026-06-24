@@ -61,6 +61,103 @@ function renderAdminStatusMessage($message, $type = 'info') {
         . '</p>';
 }
 
+function renderAdminQuickNav($currentScript = null) {
+    $currentScript = $currentScript !== null
+        ? basename((string) $currentScript)
+        : basename((string) ($_SERVER['SCRIPT_NAME'] ?? ''));
+
+    $items = array(
+        array('key' => 'index.php', 'href' => 'index.php', 'label' => 'Dashboard', 'lang' => 'en'),
+        array('key' => 'libri.php', 'href' => 'libri.php', 'label' => 'Gestione libri'),
+        array('key' => 'utenti.php', 'href' => 'utenti.php', 'label' => 'Gestione utenti'),
+        array('key' => 'prestiti-utente.php', 'href' => 'prestiti-utente.php', 'label' => 'Gestione prestiti'),
+        array('key' => 'recensioni.php', 'href' => 'recensioni.php', 'label' => 'Gestione recensioni'),
+    );
+
+    $aliases = array(
+        'aggiungi-libro.php' => 'libri.php',
+        'modifica-libro.php' => 'libri.php',
+        'elimina-libro.php' => 'libri.php',
+        'modifica-prestito.php' => 'prestiti-utente.php',
+        'elimina-prestito.php' => 'prestiti-utente.php',
+        'elimina-recensione.php' => 'recensioni.php',
+        'modifica-biblio-admin.php' => 'index.php',
+    );
+    $currentKey = isset($aliases[$currentScript]) ? $aliases[$currentScript] : $currentScript;
+
+    $links = array();
+    foreach ($items as $item) {
+        $label = htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8');
+        $langAttr = isset($item['lang']) ? ' lang="' . htmlspecialchars($item['lang'], ENT_QUOTES, 'UTF-8') . '"' : '';
+        if ($item['key'] === $currentKey) {
+            $links[] = '<li aria-current="page" class="admin-quick-current"><span' . $langAttr . '>' . $label . '</span></li>';
+            continue;
+        }
+
+        $links[] = '<li><a href="' . htmlspecialchars($item['href'], ENT_QUOTES, 'UTF-8') . '"' . $langAttr . '>' . $label . '</a></li>';
+    }
+
+    return '<aside class="admin-quick-nav" aria-labelledby="admin-quick-title">'
+        . '<h2 id="admin-quick-title">Gestione rapida</h2>'
+        . '<ul class="admin-dashboard-list admin-links-list">'
+        . implode('', $links)
+        . '</ul>'
+        . '</aside>';
+}
+
+function renderAdminSectionNav($currentScript = null, $includeBookAction = false) {
+    $currentScript = $currentScript !== null
+        ? basename((string) $currentScript)
+        : basename((string) ($_SERVER['SCRIPT_NAME'] ?? ''));
+
+    $items = array(
+        array('key' => 'index.php', 'href' => 'index.php', 'label' => 'Dashboard', 'lang' => 'en'),
+        array('key' => 'libri.php', 'href' => 'libri.php', 'label' => 'Gestione libri'),
+        array('key' => 'utenti.php', 'href' => 'utenti.php', 'label' => 'Gestione utenti'),
+        array('key' => 'prestiti-utente.php', 'href' => 'prestiti-utente.php', 'label' => 'Gestione prestiti'),
+        array('key' => 'recensioni.php', 'href' => 'recensioni.php', 'label' => 'Gestione recensioni'),
+    );
+
+    $aliases = array(
+        'modifica-libro.php' => 'libri.php',
+        'elimina-libro.php' => 'libri.php',
+        'modifica-prestito.php' => 'prestiti-utente.php',
+        'elimina-prestito.php' => 'prestiti-utente.php',
+        'elimina-recensione.php' => 'recensioni.php',
+        'modifica-biblio-admin.php' => 'index.php',
+    );
+    $currentKey = isset($aliases[$currentScript]) ? $aliases[$currentScript] : $currentScript;
+
+    if ($includeBookAction && $currentKey === 'libri.php') {
+        $returnUrl = rawurlencode(getCurrentAdminReturnUrl('libri.php'));
+        $items[] = array(
+            'key' => 'aggiungi-libro.php',
+            'href' => 'aggiungi-libro.php?return=' . $returnUrl,
+            'label' => 'Aggiungi libro',
+        );
+    }
+
+    $links = array();
+    foreach ($items as $item) {
+        $label = htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8');
+        $langAttr = isset($item['lang']) ? ' lang="' . htmlspecialchars($item['lang'], ENT_QUOTES, 'UTF-8') . '"' : '';
+
+        if ($item['key'] === $currentKey) {
+            $links[] = '<li aria-current="page" class="admin-quick-current"><span' . $langAttr . '>' . $label . '</span></li>';
+            continue;
+        }
+
+        $links[] = '<li><a href="' . htmlspecialchars($item['href'], ENT_QUOTES, 'UTF-8') . '"' . $langAttr . '>' . $label . '</a></li>';
+    }
+
+    return '<nav class="admin-page-actions admin-section-nav" aria-labelledby="admin-section-nav-title">'
+        . '<h2 id="admin-section-nav-title">Gestione rapida</h2>'
+        . '<ul class="admin-dashboard-list admin-links-list">'
+        . implode('', $links)
+        . '</ul>'
+        . '</nav>';
+}
+
 function getStatisticheGenerali($conn) {
     $stats = [
         'libri_totali' => 0,

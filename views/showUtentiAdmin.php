@@ -66,6 +66,7 @@ $template = preg_replace('/<!-- ROW_TEMPLATE_START -->.*?<!-- ROW_TEMPLATE_END -
 
 if (empty($utenti)) {
     echo strtr($template, [
+        '[ADMIN_SECTION_NAV]' => renderAdminSectionNav('utenti.php'),
         '[SEARCH_FORM]' => $searchForm,
         '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
@@ -130,6 +131,7 @@ foreach ($utenti as $utente) {
 }
 
 echo strtr($template, [
+    '[ADMIN_SECTION_NAV]' => renderAdminSectionNav('utenti.php'),
     '[SEARCH_FORM]' => $searchForm,
     '[RESULTS_INFO]' => $resultsInfo,
     '[MESSAGES]' => $messages,

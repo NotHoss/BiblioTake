@@ -137,6 +137,7 @@ if ($utenteId >= 0) {
     }
 
     echo strtr($template, array_merge([
+        '[ADMIN_SECTION_NAV]' => renderAdminSectionNav('prestiti-utente.php'),
         '[SEARCH_FORM]' => $searchForm,
         '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,
@@ -150,6 +151,7 @@ if ($utenteId >= 0) {
 
 } else {
     echo strtr($template, [
+        '[ADMIN_SECTION_NAV]' => renderAdminSectionNav('prestiti-utente.php'),
         '[SEARCH_FORM]' => $searchForm,
         '[RESULTS_INFO]' => $resultsInfo,
         '[MESSAGES]' => $messages,

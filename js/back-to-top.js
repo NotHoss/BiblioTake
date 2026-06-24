@@ -27,5 +27,14 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+
+        if (!document.body.hasAttribute('tabindex')) {
+            document.body.setAttribute('tabindex', '-1');
+        }
+        try {
+            document.body.focus({ preventScroll: true });
+        } catch (error) {
+            document.body.focus();
+        }
     });
 });

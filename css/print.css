@@ -408,10 +408,7 @@
     }
 
     a.button,
-    a.button-link,
     a.table-action,
-    a.admin-return-link,
-    .admin-page-actions a,
     .form a,
     .form-button {
         display: inline-block;
@@ -663,7 +660,6 @@
 
     .admin-dashboard-list,
     .admin-stats-list,
-    .admin-links-list,
     .generalita-list,
     .admin-summary-list {
         list-style-type: none;
@@ -675,7 +671,6 @@
 
     .admin-dashboard-list > li,
     .admin-stats-list > li,
-    .admin-links-list > li,
     .generalita-list > li,
     .admin-summary-list > li {
         float: none;
@@ -690,14 +685,11 @@
 
     .admin-dashboard-list > li:last-child,
     .admin-stats-list > li:last-child,
-    .admin-links-list > li:last-child,
     .generalita-list > li:last-child,
     .admin-summary-list > li:last-child {
         border-bottom: 0;
     }
 
-    .admin-page-actions,
-    .admin-links-list a,
     .generalita-list .actions a {
         color: var(--contenttxtcolor);
         background: var(--contentbgcolor);

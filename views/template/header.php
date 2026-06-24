@@ -144,5 +144,10 @@ $replacements = array(
 
 $parteBPages = array('home', 'catalogo', 'about', 'contatti');
 $mainClass = (isset($currentPage) && in_array($currentPage, $parteBPages)) ? ' class="public-area"' : '';
+$adminLayoutOpen = '';
+$currentScript = basename((string) ($_SERVER['SCRIPT_NAME'] ?? ''));
+if (isset($currentPage) && $currentPage === 'admin' && $currentScript === 'index.php' && function_exists('renderAdminQuickNav')) {
+    $adminLayoutOpen = '<div class="admin-layout">' . renderAdminQuickNav() . '<div class="admin-content">';
+}
 $output = strtr($template, $replacements);
-echo str_replace('<main id="main-content">', '<main id="main-content"' . $mainClass . '>', $output);
+echo str_replace('<main id="main-content">', '<main id="main-content"' . $mainClass . '>' . $adminLayoutOpen, $output);
