@@ -12,7 +12,7 @@ $successMessage = '';
 
 $breadcrumb = array(
     array('label' => 'Home',     'href' => '../index.php', 'lang' => 'en'),
-    array('label' => 'Libro', 'href' => 'dashboard.php'),
+    array('label' => 'Libro',    'href' => ''),
     array('label' => 'Aggiungi Recensione', 'href' => ''),
 );
 
@@ -30,6 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         header('Location: ../404.php');
         exit;
     }
+
+    $breadcrumb[1] = array('label' => $libro['titolo'], 'href' => '../dettaglio-libro.php?id=' . $libroId);
 
     require_once __DIR__ . '/../views/template/header.php';
     require_once __DIR__ . '/../views/showAggiungiRecensione.php';
@@ -52,6 +54,7 @@ if ($libroId <= 0) {
 $libro = getLibroById($conn, $libroId);
 if (!$libro) {
     header('Location: ../404.php');
+    $breadcrumb[1] = array('label' => $libro['titolo'], 'href' => '../dettaglio-libro.php?id=' . $libroId);
     exit;
 }
 
