@@ -34,7 +34,7 @@ if (!empty($libro['descrizione'])) {
 //sezione tags (opzionale)
 $sezioneTags = '';
 if (!empty($tags)) {
-    $sezioneTags = '<section id="tag-libro"><h3>Tag</h3><ul>';
+    $sezioneTags = '<section id="tag-libro"><h3>Etichette</h3><ul>';
     foreach ($tags as $tag) {
         $tagNome     = htmlspecialchars($tag['nome'], ENT_QUOTES, 'UTF-8');
         $sezioneTags .= '<li><a href="catalogo.php?tag=' . urlencode($tag['nome']) . '">' . $tagNome . '</a></li>';

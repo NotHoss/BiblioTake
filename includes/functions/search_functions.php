@@ -32,11 +32,10 @@ function renderSearchForm(array $config) {
         }
 
         $fieldsHtml .= '<div>';
-        if ($label !== '') {
-            $fieldsHtml .= '<label for="' . $id . '">' . $label . '</label>';
-        }
-
         if ($type === 'select') {
+            if ($label !== '') {
+                $fieldsHtml .= '<label for="' . $id . '">' . $label . '</label>';
+            }
             $fieldsHtml .= '<select id="' . $id . '" name="' . $name . '">';
             foreach (($field['options'] ?? []) as $optionValue => $optionLabel) {
                 $optionValueSafe = htmlspecialchars((string) $optionValue, ENT_QUOTES, 'UTF-8');
@@ -47,8 +46,15 @@ function renderSearchForm(array $config) {
             $fieldsHtml .= '</select>';
         } elseif ($type === 'checkbox') {
             $fieldsHtml .= '<input type="checkbox" id="' . $id . '" name="' . $name . '" value="1"' . $checked . ' />';
+            if ($label !== '') {
+                $fieldsHtml .= '<label for="' . $id . '">' . $label . '</label>';
+            }
         } else {
-            $fieldsHtml .= '<input type="' . htmlspecialchars($type, ENT_QUOTES, 'UTF-8') . '" id="' . $id . '" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '" placeholder="' . $placeholder . '"' . $min . $max . $step . ' />';
+            if ($label !== '') {
+                $fieldsHtml .= '<label for="' . $id . '">' . $label . '</label>';
+            }
+            $valueAttr = ($type === 'number' && $value === '') ? '' : ' value="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '"';
+            $fieldsHtml .= '<input type="' . htmlspecialchars($type, ENT_QUOTES, 'UTF-8') . '" id="' . $id . '" name="' . $name . '"' . $valueAttr . ' placeholder="' . $placeholder . '"' . $min . $max . $step . ' />';
         }
 
         $fieldsHtml .= '</div>';
