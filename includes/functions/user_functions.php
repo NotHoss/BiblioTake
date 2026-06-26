@@ -60,6 +60,17 @@ function changeUsername($conn, $userId, $newUsername) {
         return 'Il nome utente non può essere vuoto.';
     }
 
+    //controllo unicità username
+    $stmt = $conn->prepare('SELECT id FROM utente WHERE username = ? AND id != ?');
+    $stmt->bind_param('si', $newUsername, $userId);
+    $stmt->execute();
+    $exists = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if ($exists !== null) {
+        return 'Questo username è già in uso.';
+    }
+
     $stmt = $conn->prepare("UPDATE utente SET username = ? WHERE id = ?");
     
     if(!$stmt){throw new RuntimeException("Errore prepare SQL: " . $conn->error);}    //errore inizializzazione query
@@ -73,6 +84,17 @@ function changeEmail($conn, $userId, $newEmail) {
 
     if(empty($newEmail) || trim($newEmail) === ''){
         return 'L\'email non può essere vuota.';
+    }
+
+    //controllo unicità email
+    $stmt = $conn->prepare('SELECT id FROM utente WHERE email = ? AND id != ?');
+    $stmt->bind_param('si', $newEmail, $userId);
+    $stmt->execute();
+    $exists = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if ($exists !== null) {
+        return 'Esiste già un account con questa email.';
     }
 
     $stmt = $conn->prepare("UPDATE utente SET email = ? WHERE id = ?");
