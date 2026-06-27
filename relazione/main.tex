@@ -14,13 +14,13 @@
 
 \newcommand{\nomeprogetto}{BiblioTake}
 \newcommand{\indirizzosito}{\textit{[indirizzo del sito]}}
-\newcommand{\emailreferente}{\textit{[email referente del gruppo]}}
+\newcommand{\emailreferente}{\textit{hossam.ezzemouri@studenti.unipd.it}}
 
 \newcommand{\componenti}{
-    & \textit{[Nome Cognome]} - \textit{[matricola]} - \textit{[email]}\\
-    & \textit{[Nome Cognome]} - \textit{[matricola]} - \textit{[email]}\\
-    & \textit{[Nome Cognome]} - \textit{[matricola]} - \textit{[email]}\\
-    & \textit{[Nome Cognome]} - \textit{[matricola]} - \textit{[email]}\\
+    & Claut Tobia - 2079245 - tobia.claut@studenti.unipd.it\\
+    & De Piccoli Edoardo - 2101055 - edoardo.depiccoli@studenti.unipd.it\\
+    & Ezzemouri Hossam - 2070250 - hossam.ezzemouri@studenti.unipd.it\\
+    & Pontello Riccardo - 2076441 - riccardo.pontello@studenti.unipd.it\\
 }
 
 \renewcommand{\contentsname}{Indice}
@@ -165,7 +165,7 @@ La suddivisione del lavoro potra essere completata con i dati del gruppo. In que
 
 \begin{itemize}
     \item \textbf{Componente 1}: \textit{[attivita svolte]}.
-    \item \textbf{Componente 2}: \textit{[attivita svolte]}.
+    \item \textbf{Hossam Ezzemouri}: si e' occupato dell'area pubblica del sito, realizzando la home page con la ricerca rapida, le categorie e gli ultimi arrivi, il catalogo con filtri combinabili, ordinamento per valutazione e paginazione, la scheda di dettaglio del libro con disponibilita calcolata in tempo reale, i tag e l'elenco delle recensioni, e le pagine informative Chi siamo e Contatti; ha inoltre scritto le relative funzioni di accesso al database per la ricerca, il conteggio e il recupero dei libri e delle recensioni. Ha curato la presentazione di queste pagine nei fogli di stile per schermo, dispositivi mobili e stampa, con una palette verificata per il contrasto secondo le linee guida WCAG AA e uno scoping degli stili che non interferisce con le altre aree del progetto. Ha realizzato la libreria JavaScript comune per la validazione dei form, basata sugli attributi HTML standard e con messaggi di errore accessibili annunciati alle tecnologie assistive, integrata in tutto il sito, oltre al menu di navigazione mobile utilizzabile da tastiera. Ha infine implementato la modifica e la gestione delle recensioni lato utente con la loro integrazione nella scheda del libro, e alcuni interventi di portabilita che hanno reso il sito eseguibile in modo coerente nei diversi ambienti server.
     \item \textbf{Componente 3}: \textit{[attivita svolte]}.
     \item \textbf{Componente 4}: \textit{[attivita svolte]}.
 \end{itemize}
@@ -256,7 +256,9 @@ La validazione e' duplicata tra client e server. Il client fornisce messaggi imm
 \nomeprogetto{} e' stato sviluppato con attenzione all'accessibilita, sia nella struttura HTML sia nei comportamenti interattivi. L'obiettivo e' permettere l'uso del sito anche tramite tastiera e tecnologie assistive, mantenendo chiara la relazione tra contenuti, controlli e feedback di errore.
 
 \subsection{Validazione HTML}
-Il markup e' generato a partire da template comuni e viste specifiche. Le pagine utilizzano elementi semantici come \texttt{header}, \texttt{nav}, \texttt{main} e \texttt{footer}; i form presentano etichette associate ai campi; le tabelle amministrative includono didascalie, rese disponibili agli screen reader anche quando non visibili graficamente.
+Il markup e' generato a partire da template comuni e viste specifiche. Le pagine utilizzano elementi semantici come \texttt{header}, \texttt{nav}, \texttt{main} e \texttt{footer}.I form presentano etichette associate ai campi.Le tabelle amministrative includono didascalie, rese disponibili agli screen reader anche quando non visibili graficamente.
+
+Il markup rispetta le regole della sintassi XML: i nomi dei tag sono in minuscolo, gli attributi sono sempre racchiusi tra virgolette, gli elementi vuoti sono auto-chiusi (\texttt{<br />}, \texttt{<img />}, \texttt{<input />}, \texttt{<meta />}, \texttt{<link />}) e i caratteri speciali nei testi e negli URL sono codificati come entita, ad esempio \texttt{\&} diventa \texttt{\&amp;}. Tutte le pagine, sia pubbliche sia riservate, sono state sottoposte al validatore del W3C e non presentano errori.
 
 Nel footer sono presenti i riferimenti alle validazioni HTML e WCAG. L'intestazione imposta lingua, metadati descrittivi e viewport, mentre i contenuti principali mantengono una gerarchia di titoli coerente con la pagina.
 
