@@ -8,6 +8,7 @@
 \usepackage{float}
 \usepackage[table]{xcolor}
 \usepackage{hyperref}
+\usepackage[a4paper,margin=2cm]{geometry}
 
 \title{\textbf{Relazione Progetto di Tecnologie Web}}
 \date{}
@@ -130,7 +131,8 @@ Oltre alle funzionalità applicative, il progetto richiede una separazione chiar
 \section{Progettazione}
 La progettazione del sito segue una struttura modulare. Le pagine PHP principali hanno il ruolo di controller: caricano le risorse comuni, preparano i dati necessari alla vista, impostano titolo, descrizione, parole chiave e breadcrumb, quindi includono il template di intestazione, la vista specifica e il footer.
 
-Sono state inoltre definite convenzioni comuni per mantenere omogeneo il codice: nel database i nomi seguono lo stile \texttt{snake\_case} al singolare, nelle funzioni PHP viene usato prevalentemente \texttt{camelCase}, mentre file HTML, classi CSS e identificativi di pagina usano nomi descrittivi e coerenti. Le pagine impostano metadati specifici, come titolo, descrizione e parole chiave, così da rendere ogni vista più riconoscibile anche fuori dal solo contenuto visibile.
+\subsection{Convenzioni di sviluppo}
+Sono state definite convenzioni comuni per mantenere omogeneo il codice: nel database i nomi seguono lo stile \texttt{snake\_case} al singolare, nelle funzioni PHP viene usato prevalentemente \texttt{camelCase}, mentre file HTML, classi CSS e identificativi di pagina usano nomi descrittivi e coerenti. Le pagine impostano metadati specifici, come titolo, descrizione e parole chiave, così da rendere ogni vista più riconoscibile anche fuori dal solo contenuto visibile.
 
 \subsection{Schema organizzativo}
 Il progetto è organizzato separando pagine pubbliche, area utente, area amministrativa, viste, template, funzioni PHP e risorse statiche. Il file \texttt{includes/resources.php} centralizza il caricamento della configurazione, della connessione al database e dei file di funzioni. Lo stesso file richiama anche l'aggiornamento automatico dei prestiti scaduti, in modo che lo stato dei prestiti sia mantenuto coerente durante l'uso del sito.
@@ -157,6 +159,21 @@ Nel catalogo, la progettazione dei contenuti è centrata sulla ricerca. Il form 
 Il design responsive è affidato ai fogli di stile \texttt{css/style.css} e \texttt{css/mini.css}. Il primo contiene le regole generali, mentre il secondo raccoglie gli adattamenti per schermi piccoli. La navigazione su dispositivi mobili è supportata da un pulsante di apertura e chiusura del menu con attributi ARIA aggiornati tramite JavaScript.
 
 Le tabelle, le schede dei libri, i form e le griglie sono state pensate per rimanere leggibili anche in spazi ridotti. Nei punti in cui il contenuto tabellare fosse troppo ampio, il layout prevede contenitori scorrevoli o una disposizione più compatta. Abbiamo inserito due breakpoint: uno a 1250px per ridurre solo le tabelle troppo grandi e uno a 880px per tutti gli altri elementi.
+
+\subsection{Convenzioni interne del sito}
+Si riportano di seguito le principali convenzioni interne adottate nell'interfaccia del sito:
+
+\begin{itemize}
+    \item \textbf{Link}: i collegamenti sono sempre riconoscibili tramite sottolineatura o tramite uno stile equivalente nei componenti d'azione. Nei contenuti principali i link non visitati usano testo scuro, mentre quelli visitati assumono il colore viola della palette; su sfondi scuri, come intestazione e breadcrumb, i link usano invece testo chiaro e una variante più tenue per lo stato visitato. Gli stati di hover e focus sono visibili e coerenti in tutte le aree.
+    \item \textbf{Pagina corrente e link circolari}: le voci che rimanderebbero alla pagina già visualizzata non vengono presentate come link attivi. Nel menu principale, nella sidebar utente, nella paginazione e nei breadcrumb la pagina corrente viene indicata con \texttt{aria-current="page"} e resa come testo non cliccabile. In questo modo l'utente non trova collegamenti inutili verso la stessa risorsa e le tecnologie assistive ricevono un'indicazione esplicita della posizione corrente.
+    \item \textbf{Navigazione tra aree}: il menu principale cambia in base allo stato dell'utente. Un visitatore vede le sezioni pubbliche e i collegamenti ad accesso e registrazione; un utente autenticato vede il collegamento alla propria area personale e l'uscita; un amministratore vede invece il collegamento all'area di amministrazione. I percorsi vengono generati in modo relativo alla posizione della pagina, così da mantenere corretti i collegamenti tra catalogo, area utente e area amministrativa.
+    \item \textbf{Breadcrumb}: le pagine interne usano un percorso contestuale per indicare la posizione nel sito e permettere il ritorno alle sezioni superiori. L'ultimo elemento del breadcrumb è sempre la pagina corrente e non è cliccabile. Quando una voce contiene parole in lingua diversa dall'italiano, la marcatura linguistica viene applicata solo alla parte interessata.
+    \item \textbf{Area amministrativa}: le azioni nelle tabelle sono raggruppate nella colonna dedicata e hanno etichette esplicite, ad esempio modifica, elimina, prestiti o recensioni. Le azioni di sola navigazione sono link, mentre quelle che modificano lo stato dei dati, come disattivare o riattivare un utente, sono inviate tramite form e metodo POST. I pulsanti e i link d'azione usano uno stile comune, con \texttt{aria-label} specifici per distinguere elementi ripetuti nelle tabelle.
+    \item \textbf{Area utente}: le pagine riservate all'utente usano una sidebar laterale con le sezioni del profilo, dei prestiti e delle recensioni. Anche in questo menu la voce corrente è separata dai link navigabili, così da rendere chiara la posizione dell'utente all'interno dell'area personale.
+    \item \textbf{Catalogo e schede libro}: nel catalogo il collegamento principale alla scheda del libro è posto sul titolo, mentre la copertina è trattata come immagine decorativa quando le stesse informazioni sono già presenti nel testo della scheda. Le azioni riservate, come richiesta di prestito o modifica di una recensione, vengono mostrate solo quando l'utente possiede i permessi necessari.
+    \item \textbf{Form}: i form usano etichette associate ai campi, messaggi di errore vicini all'input e attributi di validazione HTML quando disponibili. Gli errori generati lato client sono collegati ai campi tramite attributi ARIA e annunciati con \texttt{role="alert"}; i controlli vengono comunque ripetuti lato server. I campi di ricerca e filtro mantengono la stessa struttura sia nel catalogo sia nelle sezioni amministrative, adattando solo i criteri disponibili.
+    \item \textbf{Azioni principali e distruttive}: i comandi positivi o principali usano lo stile primario della palette, mentre le azioni potenzialmente distruttive, come eliminazioni o disattivazioni, sono evidenziate con uno stile rosso dedicato. Questo aiuta a distinguere rapidamente navigazione, conferma e operazioni irreversibili o sensibili.
+\end{itemize}
 
 \newpage
 
