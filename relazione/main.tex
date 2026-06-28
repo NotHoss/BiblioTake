@@ -1,4 +1,4 @@
-\documentclass{article}
+﻿\documentclass{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -96,7 +96,7 @@ Il sistema prevede tre categorie principali di utenti:
 
 \begin{itemize}
     \item \textbf{Visitatore}: utente non autenticato che puo accedere alle pagine pubbliche, consultare il catalogo, filtrare i libri, aprire le schede di dettaglio e raggiungere le pagine informative della biblioteca.
-    \item \textbf{Utente registrato}: utente autenticato con ruolo \texttt{utente}. Puo accedere alla propria area personale, richiedere prestiti, visualizzare prestiti attivi e conclusi, prorogare un prestito quando permesso, inserire o modificare recensioni e gestire i dati del proprio profilo.
+    \item \textbf{Utente registrato}: utente autenticato con ruolo \texttt{utente}. Puo accedere alla propria area personale, richiedere prestiti, visualizzare prestiti attivi e conclusi, inserire o modificare recensioni e gestire i dati del proprio profilo.
     \item \textbf{Amministratore}: utente autenticato con ruolo \texttt{admin}. Puo accedere alla dashboard amministrativa e gestire libri, prestiti, utenti, recensioni e informazioni generali della biblioteca.
 \end{itemize}
 
@@ -151,12 +151,12 @@ La navigazione principale viene generata dinamicamente dal template PHP. Il menu
 
 La pagina corrente viene indicata con l'attributo \texttt{aria-current} e non viene presentata come collegamento attivo a se stessa. Il sito utilizza inoltre breadcrumb contestuali, generati a partire dai dati impostati dalle singole pagine. Questo aiuta l'utente a comprendere la posizione corrente e facilita il ritorno alle sezioni superiori. I breadcrumb supportano anche etichette composte con parti in lingua diversa: nell'area amministrativa, ad esempio, la voce \texttt{Dashboard amministrazione} marca \texttt{Dashboard} con \texttt{lang="en"} e lascia il resto in italiano.
 
-Nel catalogo, la progettazione dei contenuti e' centrata sulla ricerca. Il form permette di combinare piu filtri e la paginazione evita pagine troppo lunghe. Le schede risultato mostrano titolo, autore, categoria, anno ed eventuale valutazione media, accompagnati dalla copertina del libro. Durante i test cross-browser e' stato rilevato un comportamento anomalo di Firefox: le copertine, inserite inizialmente come elementi \texttt{img} all'interno di schede interamente cliccabili, venivano caricate per un istante e poi non ridisegnate, mentre in Chrome/Brave rimanevano visibili. Per rendere la resa stabile tra browser senza mescolare struttura e presentazione, la scheda e' stata riorganizzata come \texttt{article}: la copertina resta un normale elemento \texttt{img} decorativo con \texttt{alt=""}, mentre il collegamento alla scheda di dettaglio e' posto sul titolo del libro. Dimensioni, proporzioni e posizionamento della copertina sono definiti nei fogli CSS. Nella scheda libro sono invece raccolte le informazioni bibliografiche, la disponibilita, i tag, la valutazione media e le recensioni non censurate. Le azioni riservate, come la richiesta di prestito o la modifica di una recensione, vengono mostrate solo quando l'utente possiede i permessi necessari.
+Nel catalogo, la progettazione dei contenuti e' centrata sulla ricerca. Il form permette di combinare piu filtri e la paginazione evita pagine troppo lunghe. Le schede risultato mostrano titolo, autore, categoria, anno ed eventuale valutazione media, accompagnati dalla copertina del libro. Le azioni riservate, come la richiesta di prestito o la modifica di una recensione, vengono mostrate solo quando l'utente possiede i permessi necessari.
 
 \subsection{Design responsive}
 Il design responsive e' affidato ai fogli di stile \texttt{css/style.css} e \texttt{css/mini.css}. Il primo contiene le regole generali, mentre il secondo raccoglie gli adattamenti per schermi piccoli. La navigazione su dispositivi mobili e' supportata da un pulsante di apertura e chiusura del menu con attributi ARIA aggiornati tramite JavaScript.
 
-Le tabelle, le schede dei libri, i form e le griglie sono state pensate per rimanere leggibili anche in spazi ridotti. Nei punti in cui il contenuto tabellare fosse troppo ampio, il layout prevede contenitori scorrevoli o una disposizione piu compatta. Abbiamo inserito due breakpoint: uno a 1235px per ridurre solo le tabelle troppo grandi e uno a 880px che per tutti gli altri elementi.
+Le tabelle, le schede dei libri, i form e le griglie sono state pensate per rimanere leggibili anche in spazi ridotti. Nei punti in cui il contenuto tabellare fosse troppo ampio, il layout prevede contenitori scorrevoli o una disposizione piu compatta. Abbiamo inserito due breakpoint: uno a 1250px per ridurre solo le tabelle troppo grandi e uno a 880px per tutti gli altri elementi.
 
 \newpage
 
