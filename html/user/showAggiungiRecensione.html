@@ -9,7 +9,7 @@
         <p>Stai recensendo: <strong>[LIBRO_TITOLO]</strong></p>
 
         <label for="valutazione">Valutazione</label>
-        <select name="valutazione" id="valutazione" required="required">
+        <select name="valutazione" id="valutazione" required="required" min="1" max="5">
             <option value="">-- Seleziona --</option>
             <option value="1">1 - Pessimo</option>
             <option value="2">2 - Scarso</option>
@@ -19,8 +19,7 @@
         </select>
 
         <label for="testo">La tua recensione</label>
-        <textarea name="testo" id="testo" rows="6" placeholder="Scrivi qui la tua recensione..." required="required"></textarea>
-
+        <p class="full-row"><textarea name="testo" id="testo" rows="6" placeholder="Scrivi qui la tua recensione..." required="required" minlength="1" maxlength="500" aria-describedby="recensione_help"></textarea><span class="field-help" id="recensione_help">Inserisci una recensione compresa tra 1 e 500 caratteri.</span></p>
         <p>
             <button type="submit" name="invia-recensione">Invia recensione</button>
             <a href="../dettaglio-libro.php?id=[LIBRO_ID]" class="btn-secondary-link">Annulla</a>

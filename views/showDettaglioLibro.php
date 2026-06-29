@@ -77,7 +77,7 @@ if (empty($recensioni)) {
 
         $testoHtml = '';
         if (!empty($recensione['testo'])) {
-            $testoHtml = '<p>' . htmlspecialchars($recensione['testo'], ENT_QUOTES, 'UTF-8') . '</p>';
+            $testoHtml = '<p class="recensione-testo">' . htmlspecialchars($recensione['testo'], ENT_QUOTES, 'UTF-8') . '</p>';
         }
 
         //link modifica/elimina mostrati solo all'autore della recensione (loggato) e se non censurata

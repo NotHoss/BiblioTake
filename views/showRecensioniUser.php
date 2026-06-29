@@ -56,7 +56,7 @@ foreach ($recensioni as $rec) {
     $listaCard .= '<p class="modifica-card btn-secondary"><a href="modifica-recensione.php?id=' . $id . '" aria-label="Modifica recensione del libro ' . $titolo . '">Modifica</a></p>';
     $listaCard .= '<p class="elimina-card btn-elimina"><a href="elimina-recensione.php?id=' . $id . '" aria-label="Elimina recensione del libro ' . $titolo . '">Elimina</a></p>';
     $listaCard .= '</header>';
-    $listaCard .= '<p>' . $testo . '</p>';
+    $listaCard .= '<p class="recensione-testo">' . $testo . '</p>';
     $listaCard .= '</article>';
     $listaCard .= '</li>';
 }

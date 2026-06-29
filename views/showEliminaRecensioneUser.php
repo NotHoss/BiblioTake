@@ -55,7 +55,7 @@ $cardRecensione .= '<p>' . $autore . '</p>';
 $cardRecensione .= '<p><time datetime="' . $dataAttr . '">' . $dataHtml . '</time></p>';
 $cardRecensione .= '<p><strong>Valutazione: </strong>' . $valutazione . '</p>';
 $cardRecensione .= '</header>';
-$cardRecensione .= '<p>' . $testo . '</p>';
+$cardRecensione .= '<p class="recensione-testo">' . $testo . '</p>';
 $cardRecensione .= '</article>';
 
 echo strtr($template, [

@@ -99,6 +99,12 @@ BiblioTake/
 │       ├── recensione_functions.php
 │       ├── search-functions.php
 │       └── user_functions.php
+├── js/
+│   ├── admin-book-category.js
+│   ├── back-to-top.js
+│   ├── modifica-user.js
+│   ├── nav-toggle.js
+│   └── validation.js
 ├── login.php
 ├── logout.php
 ├── register.php

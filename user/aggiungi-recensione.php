@@ -51,17 +51,12 @@ if ($libroId <= 0) {
     exit;
 }
 
-$libro = getLibroById($conn, $libroId);
-if (!$libro) {
-    header('Location: ../404.php');
-    $breadcrumb[1] = array('label' => $libro['titolo'], 'href' => '../dettaglio-libro.php?id=' . $libroId);
-    exit;
-}
-
-if ($voto < 1 || $voto > 5 || $testo === '') {
-    $errorMessage = 'Compila tutti i campi e seleziona una valutazione valida.';
-} else {
-    $risultato = aggiungiRecensione($conn, $_SESSION['user_id'], $libroId, $testo, $voto);
+$validazione = validateRecensioneUserData(['testo' => $testo, 'valutazione' => $voto]);
+if (!$validazione['ok']) {
+    $errorMessage = $validazione['errorMessage'];
+} 
+else{
+    $risultato = aggiungiRecensione($conn, $_SESSION['user_id'], $libroId, $validazione['dati']['testo'], $validazione['dati']['valutazione']);
 
     if ($risultato === true) {
         //torna alla pagina del libro cosi' l'utente vede subito la recensione appena scritta

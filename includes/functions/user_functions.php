@@ -7,11 +7,9 @@ function getPrestitiUser($conn, $userId, $tipo = 'attivi') {        //la variabi
     }
 
     if($tipo === 'passati'){
-        $pageTitle = 'Prestiti Passati — User BiblioinTake';
         $where = "p.stato = 'concluso'";
     } 
     else{
-        $pageTitle = 'Prestiti Attivi— BiblioTake';
         $where = "p.stato IN ('attivo', 'in_ritardo')";
     }
 
@@ -36,12 +34,7 @@ function getPrestitiUser($conn, $userId, $tipo = 'attivi') {        //la variabi
 
 function getUserInfo($conn, $userId) {
     $stmt = $conn->prepare("SELECT id, email, username, foto_profilo, ruolo FROM utente WHERE id = ?");
-    
-    if (!$stmt) {
-        $errorMessage = $conn->error;
-        throw new RuntimeException($errorMessage);
-    }
-    
+
     if (!$stmt) {throw new RuntimeException("Errore prepare SQL: " . $conn->error);}    //errore inizializzazione query
     if (!$stmt->bind_param('i', $userId)) {throw new RuntimeException("Errore bind_param");}    //errore bind parametri
     if (!$stmt->execute()) {throw new RuntimeException("Errore esecuzione query");}   //errore esecuzione query

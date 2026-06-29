@@ -2717,6 +2717,14 @@ main .elimina-card.btn-elimina a:hover, main .elimina-card.btn-elimina a:focus{
     font-weight: bold;
     text-decoration: none;
 }
+
+.recensione-testo{
+    text-align: left;
+    padding: 0.5em 0;
+    overflow: hidden; 
+    overflow-wrap: anywhere;
+}
+
 /*
 ==========================
 SEZIONE FOOTER
@@ -2797,6 +2805,7 @@ SIDEBAR UTENTE
     padding-right: 1.5em;
     border-right: 2px solid var(--designcolor);
     text-decoration: none;
+    height: 70vh;
 }
 
 .sidebar-user h3{

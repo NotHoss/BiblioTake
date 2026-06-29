@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once '../includes/resources.php';
-//require_once '../includes/functions/user_functions.php';
 requireRole('utente');
 
 $pageTitle = 'Modifica profilo — BiblioTake';

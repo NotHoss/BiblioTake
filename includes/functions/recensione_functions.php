@@ -145,9 +145,8 @@ function deleteRecensione($conn, $recensioneId) {
     return $stmt->execute();
 }
 
-//cancellazione fisica della recensione da parte del suo autore, con check ownership. l'utente elimina davvero la propria recensione; la censura (nascondere) resta un'azione riservata all'admin.
+//soft delete della recensione da parte del suo autore, con check ownership. l'utente elimina davvero la propria recensione; la censura (nascondere) resta un'azione riservata all'admin.
 function deleteRecensioneUtente($conn, $recensioneId, $userId) {
-    //$stmt = $conn->prepare('DELETE FROM recensione WHERE id = ? AND utente_id = ?');
     $stmt = $conn->prepare('UPDATE recensione SET censura = 1 WHERE id = ? AND utente_id = ?');
     $stmt->bind_param('ii', $recensioneId, $userId);
 
@@ -171,7 +170,7 @@ function getRecensioniUser($conn, $userId) {
     );
     
     if (!$stmt) {throw new RuntimeException("Errore prepare SQL: " . $conn->error);}
-    if (!$stmt->bind_param('i', $userId)) {throw new RuntimeException("Errore bind_param");;}
+    if (!$stmt->bind_param('i', $userId)) {throw new RuntimeException("Errore bind_param");}
     if (!$stmt->execute()) {throw new RuntimeException("Errore esecuzione query");}
 
     $result = $stmt->get_result();
@@ -203,6 +202,12 @@ function getRecensioneSingolaUser($conn, $userId, $recensioneId){
 }
 
 function aggiungiRecensione($conn, $userId, $libroId, $testo, $valutazione) {
+    if($valutazione < 1 || $valutazione > 5){
+        return 'Valutazione non valida: scegliere un valore tra 1 e 5';
+    }
+    if (mb_strlen($testo, 'UTF-8') < 1 || mb_strlen($testo, 'UTF-8') > 500) {
+        return 'Recensione non valida: la recensione non può essere vuota, e deve avere meno di 500 caratteri';
+    }
     $stmt = $conn->prepare(
         'INSERT INTO recensione (utente_id, libro_id, valutazione, testo) VALUES (?, ?, ?, ?)'
     );
@@ -217,8 +222,41 @@ function aggiungiRecensione($conn, $userId, $libroId, $testo, $valutazione) {
     return true;
 }
 
+function validateRecensioneUserData(array $input) {
+    $testo = trim((string) ($input['testo'] ?? ''));
+    $valutazione = (int) ($input['valutazione'] ?? 0);
+
+    $data = [
+        'testo' => $testo,
+        'valutazione' => $valutazione,
+    ];
+    $errors = [];
+
+    if ($valutazione < 1 || $valutazione > 5) {
+        $errors[] = 'Valutazione non valida: scegliere un valore tra 1 e 5.';
+    }
+    if ($testo === '') {
+        $errors[] = 'La recensione non può essere vuota.';
+    } elseif (mb_strlen($testo, 'UTF-8') > 500) {
+        $errors[] = 'Recensione troppo lunga: inserisci al massimo 500 caratteri.';
+    }
+
+    return [
+        'ok' => empty($errors),
+        'errorMessage' => implode(' ', $errors),
+        'dati' => $data,
+    ];
+}
+
+
 //modifica testo e valutazione di una recensione dell'utente con check ownership. il vincolo censura=0 impedisce di modificare recensioni nascoste. ritorna true o stringa errore, come aggiungiRecensione.
 function updateRecensioneUtente($conn, $recensioneId, $userId, $testo, $valutazione) {
+    if ($valutazione < 1 || $valutazione > 5) {
+        return 'Valutazione non valida: scegliere un valore tra 1 e 5.';
+    }
+    if (mb_strlen($testo, 'UTF-8') < 1 || mb_strlen($testo, 'UTF-8') > 500) {
+        return 'Recensione non valida: la recensione deve avere tra 1 e 500 caratteri.';
+    }
     $stmt = $conn->prepare(
         'UPDATE recensione SET testo = ?, valutazione = ? WHERE id = ? AND utente_id = ? AND censura = 0'
     );

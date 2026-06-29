@@ -43,13 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $testo = isset($_POST['testo']) ? trim($_POST['testo']) : '';
     $voto  = isset($_POST['valutazione']) ? (int) $_POST['valutazione'] : 0;
 
-    if ($voto < 1 || $voto > 5 || $testo === '') {
-        $errorMessage = 'Compila tutti i campi e seleziona una valutazione valida.';
-        //mantiene i valori inviati nel form ri-mostrato cosi' l'utente non li riscrive
+    $validazione = validateRecensioneUserData(['testo' => $testo, 'valutazione' => $voto]);
+    if (!$validazione['ok']) {
+        $errorMessage = $validazione['errorMessage'];
         $recensione['testo'] = $testo;
         $recensione['valutazione'] = $voto;
     } else {
-        $risultato = updateRecensioneUtente($conn, $recensioneId, $_SESSION['user_id'], $testo, $voto);
+        $risultato = updateRecensioneUtente($conn, $recensioneId, $_SESSION['user_id'], $validazione['dati']['testo'], $validazione['dati']['valutazione']);
         if ($risultato === true) {
             header('Location: ' . $redirectSuccesso);
             exit;
