@@ -19,7 +19,6 @@
     --txtlinkcolor:#000; /*colore link nel contenuto*/
     --txtlinkvisited:#A147E1; /*colore link visitati nel contenuto*/
     --linkcolor:#FFFAFF; /*colore link su sfondo scuro*/
-    --linkvisited:#6F70A2; /*colore link visitati su sfondo scuro*/
     --hovercolor: #6F70A2; /*colore hover navigazione*/
     --bordercolor:#000; /*colore bordi principali*/
     --eventablecolor:#F0FFFE; /*colore sfondo tabella eventi*/
@@ -107,7 +106,8 @@ a {
 }
 
 a:visited {
-  color: var(--linkvisited);
+  color: var(--linkcolor);
+  text-decoration: underline;
 }
 
 a:hover {
@@ -241,7 +241,7 @@ BREADCRUMB
     color: var(--txtcolor);
     font-size: 0.95em;
     padding: 0.5em 4%;
-    border-top: 1px solid var(--borderlightcolor);
+    border-top: 1px solid var(--designcolor);
 }
 
 .breadcrumb ul{

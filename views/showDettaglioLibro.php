@@ -45,7 +45,7 @@ if (!empty($tags)) {
 //azione prestito
 if ($utenteLoggato && $haPrestitoAttivo) {
     $azionePrestito = '<p role="alert"><strong>Richiesta di prestito effettuata.</strong></p>';
-    $azionePrestito .= '<p class="info-prestito">Il prestito inizia il giorno stesso della richiesta e ha una durata di 30 giorni. Se hai bisogno di più tempo, contatta un amministratore entro una settimana dalla scadenza per ottenere una proroga di un mese.</p>';
+    $azionePrestito .= '<p class="info-prestito">Il prestito inizia il giorno stesso della richiesta e ha una durata di 30 giorni. Se hai bisogno di più tempo, contatta un amministratore una settimana prima della scadenza per ottenere una proroga di un mese.</p>';
 } elseif (!$disponibile) {
     $azionePrestito = '<p>Questo libro non è al momento disponibile per il prestito.</p>';
 } elseif ($utenteLoggato) {
@@ -53,7 +53,7 @@ if ($utenteLoggato && $haPrestitoAttivo) {
     $azionePrestito .= '<input type="hidden" name="libro_id" value="' . (int) $libro['id'] . '" />';
     $azionePrestito .= '<button type="submit" class="btn-primary">Richiedi prestito</button>';
     $azionePrestito .= '</form>';
-    $azionePrestito .= '<p class="info-prestito">Il prestito inizia il giorno stesso della richiesta e ha una durata di 30 giorni. Se hai bisogno di più tempo, contatta un amministratore entro una settimana dalla scadenza per ottenere una proroga di un mese.</p>';
+    $azionePrestito .= '<p class="info-prestito">Il prestito inizia il giorno stesso della richiesta e ha una durata di 30 giorni. Se hai bisogno di più tempo, contatta un amministratore una settimana prima della scadenza per ottenere una proroga di un mese.</p>';
 } else {
     $azionePrestito  = '<p>Per richiedere il prestito devi aver effettuato l\'accesso.</p>';
     $azionePrestito .= '<a href="login.php?intended=dettaglio-libro.php?id=' . (int) $libro['id'] . '">Accedi per richiedere il prestito</a>';
