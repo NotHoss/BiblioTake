@@ -65,7 +65,17 @@ function registerUser($conn, $email, $username, $password) {
     $stmt->close();
 
     if ($exists !== null) {
-        return false;
+        return 'email';
+    }
+
+    $stmt = $conn->prepare('SELECT id FROM utente WHERE username = ?');
+    $stmt->bind_param('s', $username);
+    $stmt->execute();
+    $existsUsername = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if ($existsUsername !== null) {
+        return 'username';
     }
 
     $hash   = password_hash($password, PASSWORD_BCRYPT);

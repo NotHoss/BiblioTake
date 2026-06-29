@@ -40,7 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        if (registerUser($conn, $emailValore, $usernameValore, $password)) {
+        $result = registerUser($conn, $emailValore, $usernameValore, $password);
+        if ($result === true) {
                 if (loginUser($conn, $emailValore, $password)) {
                 header('Location: user/dashboard.php?benvenuto=1');
                 exit;
@@ -48,7 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: login.php?registrato=1');
             exit;
         }
-        $errors[] = 'Esiste gia un account con questa email.';
+        if ($result === 'email') {
+            $errors[] = 'Esiste già un account con questa email.';
+        } elseif ($result === 'username') {
+            $errors[] = 'Questo username è già in uso.';
+        } else {
+            $errors[] = 'Si è verificato un errore durante la registrazione.';
+        }
     }
 }
 
