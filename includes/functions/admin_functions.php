@@ -97,7 +97,7 @@ function renderAdminQuickNav($currentScript = null) {
         $links[] = '<li><a href="' . htmlspecialchars($item['href'], ENT_QUOTES, 'UTF-8') . '"' . $langAttr . '>' . $label . '</a></li>';
     }
 
-    return '<aside class="admin-quick-nav" aria-labelledby="admin-quick-title">'
+    return '<aside class="admin-quick-nav">'
         . '<h2 id="admin-quick-title">Gestione rapida</h2>'
         . '<ul class="admin-dashboard-list admin-links-list">'
         . implode('', $links)
@@ -150,7 +150,7 @@ function renderAdminSectionNav($currentScript = null, $includeBookAction = false
         $links[] = '<li><a href="' . htmlspecialchars($item['href'], ENT_QUOTES, 'UTF-8') . '"' . $langAttr . '>' . $label . '</a></li>';
     }
 
-    return '<nav class="admin-page-actions admin-section-nav" aria-labelledby="admin-section-nav-title">'
+    return '<nav class="admin-page-actions admin-section-nav">'
         . '<h2 id="admin-section-nav-title">Gestione rapida</h2>'
         . '<ul class="admin-dashboard-list admin-links-list">'
         . implode('', $links)

@@ -30,7 +30,7 @@
         if (!empty($biblioteca['note'])) {
             $items[] = '<li><strong>Note:</strong> ' . htmlspecialchars($biblioteca['note'], ENT_QUOTES, 'UTF-8') . '</li>';
         }
-        $items[] = '<li class="actions"><a href="modifica-biblio-admin.php">Modifica</a></li>';
+        $items[] = '<li class="actions"><a href="modifica-biblio-admin.php" aria-label="Modifica le generalità della biblioteca">Modifica</a></li>';
 
         $bibliotecaContent = '<ul class="generalita-list">' . implode("\n", $items) . '</ul>';
     }

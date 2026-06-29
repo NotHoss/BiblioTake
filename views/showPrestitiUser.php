@@ -5,11 +5,11 @@ $totalPagine = $totalPagine ?? 1;
 
 $errorMsg = '';
 if ($errorMessage !== '') {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = '<div role="alert">' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
 }
 $successMsg = '';
 if (!empty($successMessage)) {
-    $successMsg = '<div>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $successMsg = '<div role="status">' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
 }
 $messages = $errorMsg . $successMsg;
 
@@ -52,13 +52,13 @@ foreach($prestiti as $prestitoRow){
 
 
     $tableRows .= "<tr>
-        <td data-label=\"Titolo\">{$titolo}</td>
-        <td data-label=\"Autore\">{$autore}</td>
-        <td data-label=\"Anno\">{$anno}</td>
-        <td data-label=\"Categoria\">{$categoria}</td>
-        <td data-label=\"Inizio Prestito\">{$data_inizio}</td>
-        <td data-label=\"Fine Prestito\">{$data_fine}</td>
-        <td data-label=\"Stato\">{$stato}</td>
+        <th scope='row' data-label='Titolo'>{$titolo}</th>
+        <td data-label='Autore'>{$autore}</td>
+        <td data-label='Anno'>{$anno}</td>
+        <td data-label='Categoria'>{$categoria}</td>
+        <td data-label='Inizio Prestito'>{$data_inizio}</td>
+        <td data-label='Fine Prestito'>{$data_fine}</td>
+        <td data-label='Stato'>{$stato}</td>
     </tr>\n";
 }
 

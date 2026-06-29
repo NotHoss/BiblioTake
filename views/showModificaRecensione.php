@@ -1,12 +1,12 @@
 <?php
 $errorMsg = '';
 if (!empty($errorMessage)) {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = '<div role="alert">' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
 }
 
 $successMsg = '';
 if (!empty($successMessage)) {
-    $successMsg = '<div>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $successMsg = '<div role="status">' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
 }
 
 $messages = $errorMsg . $successMsg;

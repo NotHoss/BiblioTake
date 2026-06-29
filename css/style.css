@@ -222,6 +222,15 @@ header nav a:focus{
     border-bottom: 2px solid var(--hovercolor);
 }
 
+header nav li.current-page:focus {
+    outline: 2px solid var(--focuscolorlight);
+    outline-offset: 2px;
+}
+
+.sidebar-current-page:focus {
+    outline: 2px solid var(--buttonprimarycolor);
+    outline-offset: 2px;
+}
 /*
 ==========================
 BREADCRUMB
@@ -265,6 +274,11 @@ BREADCRUMB
 
 .breadcrumb span[aria-current="page"]{
     font-weight: bold;
+}
+
+.breadcrumb span[tabindex="0"]:focus {
+    outline: 2px solid var(--focuscolorlight);
+    outline-offset: 2px;
 }
 
 /*
@@ -382,6 +396,10 @@ table a:visited {
   background-color: var(--contentbgcolor);
 }
 
+#info-libro[tabindex="0"]:focus, #descrizione-libro[tabindex="0"]:focus{
+    outline: 2px solid var(--focuscolorlight);
+    outline-offset: 2px;
+}
 
 /* Action items (links/buttons) */
 a.table-action,
@@ -552,6 +570,11 @@ div.table-action{
     border: 1px solid var(--bordercolor);
     text-align: center;
 }
+
+ #prestiti-table td{
+    border: 1px solid var(--bordercolor);
+    text-align: center;
+ }
 
 #prestiti-table tbody tr:nth-child(even) {
     background-color: var(--eventablecolor);
@@ -1711,6 +1734,14 @@ button.table-action-primary:focus,
     margin-left: calc(50% - min(47vw, 846px));
 }
 
+.admin-results-panel article h3 {
+    font-size: 1.5em;
+    text-align: center;
+    line-height: 1.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
 .admin-filter-panel h3{
     margin-bottom: 0.8em;
 }
@@ -2321,6 +2352,12 @@ RECENSIONI LIBRO
     margin-left: auto;
 }
 
+.recensione-card header span.modifica-card,
+.recensione-card header span.elimina-card{
+    display: inline;
+    margin-right: 1.2em;
+}
+
 .recensione-card header .recensione-azioni{
     margin-right: 0;
 }
@@ -2574,6 +2611,13 @@ DASHBOARD
     overflow-wrap: anywhere;
 }
 
+.page-content-user h3.username {
+    font-size: 1.5em;
+    line-height: 1.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
 .profile-image-big{
     width: 150px;
     height: 150px;
@@ -2753,6 +2797,14 @@ SIDEBAR UTENTE
     padding-right: 1.5em;
     border-right: 2px solid var(--designcolor);
     text-decoration: none;
+}
+
+.sidebar-user h3{
+    text-align: center;
+    line-height: 1.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    font-size: 1.5em;
 }
 
 .sidebar-current-page{

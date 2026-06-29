@@ -14,14 +14,14 @@ $isbn         = htmlspecialchars($libro['codice_isbn'], ENT_QUOTES, 'UTF-8');
 
 //disponibilità
 $disponibilitaTesto = $disponibile
-    ? '<strong>&#10003; Disponibile</strong>'
-    : '<strong>&#10007; Non disponibile</strong>';
+    ? '<strong><span aria-hidden="true">&#10003;</span> Disponibile</strong>'
+    : '<strong><span aria-hidden="true">&#10007;</span> Non disponibile</strong>';
 
 //riga valutazione media (opzionale)
 $rigaValutazioneMedia = '';
 if ($libro['media_voti'] !== null) {
     $valutazione          = htmlspecialchars((string) $libro['media_voti'], ENT_QUOTES, 'UTF-8');
-    $rigaValutazioneMedia = '<tr><th scope="row">Valutazione media</th><td>' . $valutazione . ' su 5</td></tr>';
+    $rigaValutazioneMedia = '<tr><th scope="row" id="th-valutazione">Valutazione media</th><td headers="th-valutazione">' . $valutazione . ' su 5</td></tr>';
 }
 
 //sezione descrizione (opzionale)
@@ -34,7 +34,7 @@ if (!empty($libro['descrizione'])) {
 //sezione tags (opzionale)
 $sezioneTags = '';
 if (!empty($tags)) {
-    $sezioneTags = '<section id="tag-libro"><h3>Etichette</h3><ul>';
+    $sezioneTags = '<section id="tag-libro"><h3 id="tag-libro-title">Etichette</h3><ul>';
     foreach ($tags as $tag) {
         $tagNome     = htmlspecialchars($tag['nome'], ENT_QUOTES, 'UTF-8');
         $sezioneTags .= '<li><a href="catalogo.php?tag=' . urlencode($tag['nome']) . '">' . $tagNome . '</a></li>';
@@ -87,8 +87,8 @@ if (empty($recensioni)) {
             && (int) $recensione['censura'] === 0) {
             $recensioneId = (int) $recensione['recensione_id'];
             $azioniAutore  = '<p class="recensione-azioni">';
-            $azioniAutore .= '<p class="modifica-card btn-secondary"><a href="user/modifica-recensione.php?id=' . $recensioneId . '&amp;return=libro">Modifica</a></p>';
-            $azioniAutore .= '<p class="elimina-card btn-elimina"><a href="user/elimina-recensione.php?id=' . $recensioneId . '&amp;return=libro">Elimina</a></p>';
+            $azioniAutore .= '<span class="modifica-card btn-secondary"><a href="user/modifica-recensione.php?id=' . $recensioneId . '&amp;return=libro" aria-label="Modifica recensione di ' . $username . '">Modifica</a></span>';
+            $azioniAutore .= '<span class="elimina-card btn-elimina"><a href="user/elimina-recensione.php?id=' . $recensioneId . '&amp;return=libro" aria-label="Elimina recensione di ' . $username . '">Elimina</a></span>';
             $azioniAutore .= '</p>';
         }
 

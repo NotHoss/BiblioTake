@@ -200,7 +200,7 @@
     #prestiti-table tbody,
     #prestiti-table tr,
     #prestiti-table th,
-    #prestiti-table td {
+    #prestiti-table td{
         display: block;
         width: 100%;
     }
@@ -219,7 +219,7 @@
         background: var(--eventablecolor);
     }
 
-    #prestiti-table tbody td {
+    #prestiti-table tbody td, #prestiti-table tbody th{
         display: grid;
         grid-template-columns: minmax(8rem, 40%) minmax(0, 1fr);
         gap: 0;
@@ -229,11 +229,11 @@
         text-align: left;
     }
 
-    #prestiti-table tbody tr:nth-child(odd) td::before{
+    #prestiti-table tbody tr:nth-child(odd) td::before, #prestiti-table tbody tr:nth-child(odd) th::before{
         border-bottom: 1px solid var(--contentbgcolor);
     }
 
-    #prestiti-table tbody tr:nth-child(even) td::before{
+    #prestiti-table tbody tr:nth-child(even) td::before, #prestiti-table tbody tr:nth-child(even) th::before{
         border-bottom: 1px solid var(--eventablecolor);
     }
 
@@ -242,7 +242,7 @@
         border-bottom: 0;
     }
 
-    #prestiti-table tbody td::before {
+    #prestiti-table tbody td::before, #prestiti-table tbody th::before{
         content: attr(data-label);
         display: flex;
         align-items: center;

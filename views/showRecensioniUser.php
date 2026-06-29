@@ -4,11 +4,11 @@ $totalPagine = $totalPagine ?? 1;
 
 $errorMsg = '';
 if ($errorMessage !== '') {
-    $errorMsg = '<div>' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $errorMsg = '<div role="alert">' . htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') . '</div>';
 }
 $successMsg = '';
 if (!empty($successMessage)) {
-    $successMsg = '<div>' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
+    $successMsg = '<div role="status">' . htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') . '</div>';
 }
 $messages = $errorMsg . $successMsg;
 
@@ -22,7 +22,7 @@ $template = file_get_contents(__DIR__ . '/../html/user/showRecensioni.html');
 if (empty($recensioni)) {
     echo strtr($template, [
     '[MESSAGES]' => $messages,
-    '[EMPTY_MESSAGE]' => '<p class="empty-result">Nessuna recensione trovata.</p>',
+    '[EMPTY_MESSAGE]' => '<p class="empty-result" tabindex="0">Nessuna recensione trovata.</p>',
     '[LISTA_RECENSIONI]' => '',
     '[PAGINATION]' => '',
     ]);
@@ -53,8 +53,8 @@ foreach ($recensioni as $rec) {
     $listaCard .= '<p class="card-autore">' . $autore . '</p>';
     $listaCard .= '<p class="card-date"><time datetime="' . $dataAttr . '">' . $dataHtml . '</time></p>';
     $listaCard .= '<p><strong>Valutazione: </strong>' . $valutazione . '</p>';
-    $listaCard .= '<p class="modifica-card btn-secondary"><a href="modifica-recensione.php?id=' . $id . '">Modifica</a></p>';
-    $listaCard .= '<p class="elimina-card btn-elimina"><a href="elimina-recensione.php?id=' . $id . '">Elimina</a></p>';
+    $listaCard .= '<p class="modifica-card btn-secondary"><a href="modifica-recensione.php?id=' . $id . '" aria-label="Modifica recensione del libro ' . $titolo . '">Modifica</a></p>';
+    $listaCard .= '<p class="elimina-card btn-elimina"><a href="elimina-recensione.php?id=' . $id . '" aria-label="Elimina recensione del libro ' . $titolo . '">Elimina</a></p>';
     $listaCard .= '</header>';
     $listaCard .= '<p>' . $testo . '</p>';
     $listaCard .= '</article>';

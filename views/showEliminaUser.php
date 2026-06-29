@@ -7,7 +7,7 @@ if (empty($userInfo)) {
 
     $messages = '';
     if (!empty($errorMessage)) {
-    $messages = !empty($errorMessage) ? '<div class="delete-error">' . htmlspecialchars($errorMessage) . '</div>' : '';
+    $messages = !empty($errorMessage) ? '<div class="delete-error" role="alert">' . htmlspecialchars($errorMessage) . '</div>' : '';
     }
 
     $fotoProfilo = !empty($userInfo['foto_profilo']) ? $userInfo['foto_profilo'] : DEFAULT_AVATAR;

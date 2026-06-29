@@ -107,10 +107,10 @@ if(isset($_SESSION['user_id'])){
         '[PAGE_DESCRIPTION]' => htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'),
         '[PAGE_KEYWORDS]' => htmlspecialchars($pageKeywords, ENT_QUOTES, 'UTF-8'),
         '[NAVIGATION]' => implode('', $navigation),
-        '[USERNAME]'          => $usernameHtml,
-        '[PRESTITI-ATTIVI]'   => $prestitiAttiviHtml,
-        '[PRESTITI-PASSATI]'  => $prestitiPassatiHtml,
-        '[RECENSIONI]'        => $recensioniHtml,
+        '[USERNAME]' => $usernameHtml,
+        '[PRESTITI-ATTIVI]' => $prestitiAttiviHtml,
+        '[PRESTITI-PASSATI]' => $prestitiPassatiHtml,
+        '[RECENSIONI]' => $recensioniHtml,
     );
 
 }
