@@ -10,66 +10,10 @@
     <h3 class="sr-only">Risultati gestione prestiti</h3>
 
     [RESULTS_INFO]
- 
+
     [MESSAGES]
 
-    <div [PRESTITI_CONTENT_DISPLAY]>
-        <article [MODIFICA_PRESTITO_DISPLAY]>
-            <h2>Modifica prestito #[PRESTITO_IN_MODIFICA_ID]</h2>
-            <noscript>
-                <p class="warning">
-                    JavaScript è disattivato. La validazione dei dati avverrà solo lato server.
-                </p>
-            </noscript>
-            <form action="prestiti-utente.php" method="post" class="form content-form" data-validate="data-validate">
-                <input type="hidden" name="azione" value="salva_modifica" />
-                <input type="hidden" name="prestito_id" value="[PRESTITO_IN_MODIFICA_ID]" />
-                <input type="hidden" name="utente_id" value="[UTENTE_ID]" />
-
-                <p>
-                    <label>Data inizio
-                        <input
-                            type="datetime-local"
-                            name="data_inizio"
-                            value="[DATA_INIZIO]"
-                            required="required"
-                        />
-                    </label>
-                </p>
-                <p>
-                    <label>Data fine
-                        <input
-                             type="datetime-local"
-                             name="data_fine"
-                             value="[DATA_FINE]"
-                             required="required"
-                        />
-                    </label>
-                </p>
-                <p>
-                    <label>Stato
-                        <select name="stato" required="required">
-                            <option value="">-- Seleziona uno stato --</option>
-                            [STATO_OPTIONS]
-                        </select>
-                    </label>
-                </p>
-                <p>
-                    <label>Libro ID
-                        <input type="number" name="libro_id" min="1" value="[LIBRO_ID]" required="required" />
-                    </label>
-                </p>
-                <p>
-                    <label>Utente ID
-                        <input type="number" name="nuovo_utente_id" min="1" value="[NUOVO_UTENTE_ID]" required="required" />
-                    </label>
-                </p>
-                <p class="form-actions"><button type="submit" class="button">Aggiorna prestito</button></p>
-            </form>
-            
-            </article>
-
-            [EMPTY_PRESTITI_MESSAGE]
+    [EMPTY_MESSAGE]
 
             <p id="prestiti-table-summary" class="sr-only">Questa tabella elenca i prestiti con identificativo, nome utente, libro, stato, data di inizio, data di fine e azioni disponibili.</p>
             <div id="gestione" [TABLE_DISPLAY]>
@@ -102,7 +46,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
 
     [PAGINATION]
 </section>
