@@ -1818,7 +1818,9 @@ button.table-action-primary:focus,
     min-width: 8rem;
 }
 
-
+.mobile-table-value .recensione-testo{
+    text-align: center;
+}
 
 /*========= MODIFICA PROFILO UTENTE =========*/
 
